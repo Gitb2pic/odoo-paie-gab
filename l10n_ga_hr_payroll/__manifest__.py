@@ -4,6 +4,8 @@
     'summary': 'Paie gabonaise : CNSS, CNAMGS, TCS, IRPP, FNH, CFP, rubriques et absences',
     'countries': ['ga'],
     'category': 'Human Resources/Payroll',
+    'author': 'OMIAS Leadership Group',
+    'maintainer': 'MPAMI MPAMI Nathan Mael Alex',
     # hr_work_entry_holidays : types d'absence reliés aux prestations (F4, décision D-15)
     'depends': ['hr_payroll', 'hr_work_entry_holidays', 'l10n_ga'],
     'data': [
