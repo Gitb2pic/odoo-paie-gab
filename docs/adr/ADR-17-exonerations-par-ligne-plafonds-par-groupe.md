@@ -1,6 +1,6 @@
 # ADR-17 — Exonérations par ligne, plafonds par groupe (registres `SOCIAL_CAPS` / `TAX_CAPS`)
 
-- **Statut** : proposé (sprint 0, 24/09/2026) — à valider par Alex
+- **Statut** : **accepté** (Alex, 24/09/2026 : « la meilleure option pour toi ») — proposé au sprint 0
 - **Origine** : `CLAUDE.md` §3 règle 7 cite ADR-17, absent de `docs/architecture/00_INDEX` (voir `docs/decisions/ouvertes.md` D-02). Rédigé à partir de cette règle ; détail des plafonds dans `docs/base_connaissance/05_elements_de_remuneration.md` et `04_impots_sur_salaires_*.md`.
 
 ## Contexte

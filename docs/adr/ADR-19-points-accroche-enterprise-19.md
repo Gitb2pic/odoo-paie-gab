@@ -1,6 +1,6 @@
 # ADR-19 — Points d'accroche Enterprise 19 corrigés après le sprint 0
 
-- **Statut** : proposé (sprint 0, 24/09/2026) — à valider par Alex
+- **Statut** : **accepté** (Alex, 24/09/2026 : « la meilleure option pour toi ») — proposé au sprint 0
 - **Origine** : `docs/sprint0_verifications_enterprise.md`, points 3, 4, 12 et 13, qui contredisent des hypothèses 🔒 de l'architecture. Cet ADR regroupe les ajustements pour ne pas modifier l'architecture en silence (CLAUDE.md §8).
 
 ## Décisions

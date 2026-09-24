@@ -384,7 +384,8 @@ sequenceDiagram
   autonumber
   actor CPT as Comptable
   actor DF as Déclarant fiscal
-  participant RUN as hr.payslip.run 🔒
+  participant RUN as hr.payslip.run
+  participant SLIP as hr.payslip
   participant ACC as account.move
   participant DEC as l10n_ga.declaration
   participant REG as Registre générateurs
@@ -392,8 +393,10 @@ sequenceDiagram
   participant CHK as Contrôles
   participant XL as XlsxRenderer / PdfRenderer
   CPT->>RUN: Valider le lot (action_validate)
-  RUN->>ACC: créer l'écriture de paie (hr_payroll_account)
-  RUN->>DEC: _l10n_ga_notify_payslips_done() → brouillon ID10 du mois de paiement
+  RUN->>SLIP: action_payslip_done() (ADR-19 : aussi appelé pour un bulletin seul)
+  SLIP->>SLIP: figer les valeurs F7/F16 avant super()
+  SLIP->>ACC: créer l'écriture de paie (hr_payroll_account, après super())
+  SLIP->>DEC: _l10n_ga_on_payslips_done() → brouillon ID10 du mois de paiement
   DF->>DEC: action_compute()
   DEC->>REG: _get("ID10")
   REG-->>DEC: GenID10

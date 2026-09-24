@@ -82,7 +82,7 @@ class HrPayslip(models.Model):
 
     def _l10n_ga_facts(self, categories):
         self.ensure_one()
-        version = self.version_id  # 🔒 à confirmer (contract_id avant la 19)
+        version = self.version_id  # ✔ sprint 0 point 1 (hr_payslip.py:114)
         return engine.PayslipFacts(
             gains_total=categories['GROSS'],
             social_excluded=categories.get('GA_SOC_EXCL', 0.0),
@@ -121,7 +121,7 @@ class FiscalParams:
 
 # côté Odoo
 def _l10n_ga_params(self):
-    get = lambda code: self._rule_parameter(code)  # 🔒 méthode hr_payroll, date = date_to du bulletin
+    get = lambda code: self._rule_parameter(code)  # ✔ sprint 0 point 11, date = date_to du bulletin (D-06)
     return engine.FiscalParams(
         cnss_employee_rate=get('l10n_ga_cnss_employee_rate'),
         irpp_brackets=tuple(get('l10n_ga_irpp_brackets')),
@@ -166,7 +166,7 @@ class GeneratorID10(models.AbstractModel):
     def _collect(self, declaration):
         lines = self.env['hr.payslip.line']._read_group(
             [('slip_id.company_id', '=', declaration.company_id.id),
-             ('slip_id.state', 'in', ('done', 'paid')),          # 🔒 états Enterprise
+             ('slip_id.state', 'in', ('validated', 'paid')),     # ✔ ADR-19 : plus d'état 'done' en 19
              ('slip_id.l10n_ga_payment_date', '>=', declaration.date_from),
              ('slip_id.l10n_ga_payment_date', '<=', declaration.date_to),
              ('code', 'in', ('IRPP', 'TCS', 'FNH', 'CFP_BASE', 'CFP'))],
@@ -276,12 +276,12 @@ Problème : un bulletin recalculé après dépôt ne doit pas modifier la décla
 Problème : exigence « génération automatique sans intervention humaine ». Solution : se brancher sur les événements du cycle de paie et sur un cron quotidien.
 
 ```python
-class HrPayslipRun(models.Model):
-    _inherit = 'hr.payslip.run'
+class HrPayslip(models.Model):
+    _inherit = 'hr.payslip'
 
-    def action_validate(self):            # 🔒 nom exact de la méthode Enterprise à vérifier
-        res = super().action_validate()
-        self.env['l10n_ga.declaration']._l10n_ga_on_payslips_done(self.slip_ids)
+    def action_payslip_done(self):        # ✔ ADR-19 : appelé par le lot ET par un bulletin seul
+        res = super().action_payslip_done()
+        self.env['l10n_ga.declaration']._l10n_ga_on_payslips_done(self)
         return res
 ```
 

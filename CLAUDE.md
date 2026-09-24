@@ -57,12 +57,14 @@ En cas de contradiction entre deux sources : ne tranche pas seul. Écris le conf
 ## 5. Commandes (voir `Makefile`, créé au sprint 0 sur l'installation Odoo existante du VPS)
 
 Sur le VPS : ne jamais toucher aux bases existantes (bases de test préfixées `test_ga_`), ne jamais arrêter le service Odoo pour lancer des tests, ne jamais modifier les autres modules présents dans `extra-addon`.
+Seule exception (décision D-09) : la base de démonstration `odoo19` d'Alex reçoit les modules `l10n_ga_*` **validés**, uniquement via `make demo MODULE=...` (installation ou mise à jour, puis redémarrage du service) ; jamais de tests ni de données de test dans `odoo19`.
 
 ```bash
 make lint                          # pre-commit run --all-files
 make test-core                     # pytest l10n_ga_hr_payroll/lib --cov (sans Odoo, < 1 s)
 make test MODULE=l10n_ga_hr_payroll   # base neuve, -i MODULE --test-tags /MODULE --stop-after-init
 make upgrade MODULE=...            # -u MODULE sur une base existante (test de mise à jour)
+make demo MODULE=...               # installe / met à jour un module validé dans la base de démo odoo19 (D-09)
 ```
 
 ## 6. Déroulé d'une session (obligatoire)

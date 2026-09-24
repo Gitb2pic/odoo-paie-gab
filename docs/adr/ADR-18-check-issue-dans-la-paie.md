@@ -1,6 +1,6 @@
 # ADR-18 — `l10n_ga.check.issue` défini dans la paie, étendu par les déclarations
 
-- **Statut** : proposé (sprint 0, 24/09/2026) — à valider par Alex
+- **Statut** : **accepté** (Alex, 24/09/2026 : « la meilleure option pour toi ») — proposé au sprint 0
 - **Origine** : incohérence relevée par le prompt 01 §4.
 
 ## Contexte

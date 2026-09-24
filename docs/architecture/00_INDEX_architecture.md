@@ -34,6 +34,10 @@ Version 1.1 — 23/09/2026 (mise à jour après le benchmark `hr_payroll_gb` / V
 | ADR-13 | DAS complète (ID19 à ID26) et retenues fournisseurs (ID18, ID27) dès la V1.0 ; seul le reste de la comptabilité (CA01, IS, patente, CFU, loyers) reste en V2.0 | La V1 existante les produit déjà : ne pas régresser pendant plusieurs mois |
 | ADR-14 | Un module de reprise jetable `l10n_ga_hr_payroll_migration` avec cumuls d'ouverture `l10n_ga.ytd.opening` | La bascule se fera en cours d'année : la régularisation IRPP, le plafond des gratifications et la DAS ont besoin des cumuls antérieurs |
 | ADR-15 | Le mode de paiement n'agit que sur l'arrondi, jamais sur la règle `NET` (unique) ; le reliquat d'arrondi est stocké sur le bulletin | Correction du défaut B1 du freelance (deux règles `NET` au même identifiant) |
+| ADR-16 | Indemnités contractuelles en lignes datées `hr.salary.attachment` (type d'entrée + règle `GA_*`), jamais un champ par rubrique | Sprint 0 point 9 : le modèle accepte les gains ; historique natif (`docs/adr/ADR-16-*.md`) |
+| ADR-17 | Exonérations par ligne dans le noyau, plafonds par groupe via registres `SOCIAL_CAPS` / `TAX_CAPS` | Plafonds partagés entre rubriques ; justification ligne à ligne (`docs/adr/ADR-17-*.md`) |
+| ADR-18 | `l10n_ga.check.issue` défini dans `l10n_ga_hr_payroll`, étendu par `l10n_ga_dgi_edi` ; bloquants relayés par `_get_errors_by_slip` | Règle de dépendance `01` §3 ; mécanisme natif d'anomalies d'Odoo 19 (`docs/adr/ADR-18-*.md`) |
+| ADR-19 | Points d'accroche Enterprise 19 : états `validated/paid`, Observer sur `hr.payslip.action_payslip_done`, bulletin figé avant `super()`, comptes par société via `_configure_payroll_account_ga`, règle courante exposée | Sprint 0 points 3, 4, 12, 13 (`docs/adr/ADR-19-*.md`, `docs/sprint0_verifications_enterprise.md`) |
 
 ## Vue d'ensemble en une image
 

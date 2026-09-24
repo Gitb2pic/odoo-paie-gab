@@ -35,6 +35,7 @@ journalctl -u odoo19 -f              # ou : make logs
 make test MODULE=<module>            # base neuve test_ga_<module>_<horodatage>, port libre, supprimée à la fin
 make upgrade MODULE=<module>         # installation puis -u sur base neuve test_ga_*
 make shell DB=test_ga_...            # odoo-bin shell (base de test uniquement)
+make demo MODULE=l10n_ga_...         # base de démo odoo19 (D-09) : -i ou -u puis redémarrage du service
 ```
 
 ## Règles d'exploitation

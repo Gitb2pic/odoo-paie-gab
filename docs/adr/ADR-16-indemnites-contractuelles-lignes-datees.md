@@ -1,6 +1,6 @@
 # ADR-16 — Indemnités contractuelles en lignes datées (`hr.salary.attachment`)
 
-- **Statut** : proposé (sprint 0, 24/09/2026) — à valider par Alex
+- **Statut** : **accepté** (Alex, 24/09/2026 : « la meilleure option pour toi ») — proposé au sprint 0
 - **Origine** : `CLAUDE.md` §3 règle 6 cite ADR-16, absent de `docs/architecture/00_INDEX` (voir `docs/decisions/ouvertes.md` D-02). Rédigé à partir de cette règle et du point 9 de `docs/sprint0_verifications_enterprise.md`.
 
 ## Contexte

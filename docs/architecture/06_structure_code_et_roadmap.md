@@ -23,6 +23,7 @@ odoo-ga-payroll/                      (dépôt Git privé, ajouté aux addons_pa
 │   │   ├── hr_salary_rule.py         indicateurs d'assiette, colonne DAS
 │   │   ├── hr_payslip.py             adaptateur, _l10n_ga_compute, cumuls
 │   │   ├── hr_payslip_run.py         date de paiement du lot, contrôles avant paie (F8)
+│   │   ├── l10n_ga_check_issue.py    F8 anomalies, périmètre lot (ADR-18)
 │   │   ├── l10n_ga_collective_agreement.py
 │   │   ├── l10n_ga_agreement_grade.py        F5 grille (catégorie, échelon, minimum, taux horaire)
 │   │   ├── l10n_ga_employee_loan.py          F1 prêt + échéances (Specification, State)
@@ -60,7 +61,7 @@ odoo-ga-payroll/                      (dépôt Git privé, ajouté aux addons_pa
 │   │   ├── checks.py                         Chain of Responsibility
 │   │   ├── hr_payslip_run.py                 Observer (fin de lot)
 │   │   ├── l10n_ga_declaration_payment.py    F11 quittances (plusieurs par déclaration)
-│   │   └── l10n_ga_check_issue.py            F8 anomalies (lot ou déclaration)
+│   │   └── l10n_ga_check_issue.py            _inherit : declaration_id, périmètre déclaration (ADR-18)
 │   ├── renderers/ xlsx_builder.py            Builder (xlsxwriter, états neufs)
 │   │              xlsm_template.py           Builder (openpyxl keep_vba, classeurs DGI — F10)
 │   ├── report/ report_id10.xml report_id28.xml report_das_id19.xml report_das_id21.xml …

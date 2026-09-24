@@ -11,10 +11,10 @@ DB        ?=
 
 export ODOO_PY ODOO_BIN ODOO_CONF
 
-.PHONY: help lint test-core test upgrade shell restart logs
+.PHONY: help lint test-core test upgrade demo shell restart logs
 
 help:
-	@echo "make lint | test-core | test MODULE=x | upgrade MODULE=x | shell DB=test_ga_x | restart | logs"
+	@echo "make lint | test-core | test MODULE=x | upgrade MODULE=x | demo MODULE=x | shell DB=test_ga_x | restart | logs"
 
 lint:
 	$(VENV)/bin/pre-commit run --all-files
@@ -37,6 +37,12 @@ test:
 upgrade:
 	@test -n "$(MODULE)" || (echo "usage : make upgrade MODULE=<module>" && exit 2)
 	tools/odoo_test.sh upgrade '$(MODULE)'
+
+# Base de démonstration d'Alex (odoo19, décision D-09) : installe ou met à jour
+# un module l10n_ga_* validé, sans tests, puis redémarre le service.
+demo:
+	@test -n "$(MODULE)" || (echo "usage : make demo MODULE=<module>" && exit 2)
+	tools/odoo_demo.sh '$(MODULE)'
 
 shell:
 	@case "$(DB)" in test_ga_*) ;; *) echo "refus : DB doit commencer par test_ga_" && exit 2 ;; esac

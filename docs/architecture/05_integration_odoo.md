@@ -150,7 +150,7 @@ result = -payslip._l10n_ga_compute('irpp', categories)
 ## 3. Module `l10n_ga_hr_payroll_account`
 
 - `depends`: `['l10n_ga_hr_payroll', 'hr_payroll_account']` 🔒, `auto_install: True`.
-- Données : écrit `account_debit` / `account_credit` 🔒 sur les règles, en référençant les comptes créés par le modèle de plan `l10n_syscohada` : xml_id de gabarit `pcg_422`, `pcg_4311`, `pcg_4312`, `pcg_4313`, `pcg_4318`, `pcg_4471`, `pcg_4472`, `pcg_6413`, `pcg_6415`, `pcg_6611` à `pcg_6618`, `pcg_6631` à `pcg_6638`, `pcg_6641`, `pcg_6642`, `pcg_4211` (avances) ✔ (fichier `l10n_syscohada/data/template/account.account-syscohada.csv`).
+- Comptes : `account_debit` / `account_credit` sont **`company_dependent`** (ADR-19 d) : pas d'écriture par données XML ; implémenter `account.chart.template._configure_payroll_account_ga` (et `_ga_syscebnl`) qui appelle `_configure_payroll_account(companies, 'GA', account_codes, rules_mapping, default_account)` (✔ `hr_payroll_account/models/account_chart_template.py:21-69`), plus une action de reconfiguration pour les sociétés existantes. Table de correspondance règles → comptes, en référençant les comptes créés par le modèle de plan `l10n_syscohada` : xml_id de gabarit `pcg_422`, `pcg_4311`, `pcg_4312`, `pcg_4313`, `pcg_4318`, `pcg_4471`, `pcg_4472`, `pcg_6413`, `pcg_6415`, `pcg_6611` à `pcg_6618`, `pcg_6631` à `pcg_6638`, `pcg_6641`, `pcg_6642`, `pcg_4211` (avances) ✔ (fichier `l10n_syscohada/data/template/account.account-syscohada.csv`).
 - Les comptes étant créés par société au chargement du plan, la liaison se fait par code (`account.account` filtré sur `company_id` et `code`) dans un hook post-installation ou via `env['account.chart.template'].ref('pcg_422')` pour la société courante (méthode `ref(xmlid)` ✔ `account/models/chart_template.py` l.1232, à appeler avec `with_company(société)`).
 - Rapprochements : solde 447x ↔ ID10 payée ; solde 431x ↔ DTS payée.
 
@@ -159,8 +159,8 @@ result = -payslip._l10n_ga_compute('irpp', categories)
 | Élément | Intégration |
 |---|---|
 | `l10n_ga.declaration` | `_inherit = ['mail.thread', 'mail.activity.mixin']` ✔ : historique des états, activités d'échéance, pièces jointes (`ir.attachment`) |
-| Lecture des bulletins | `hr.payslip.line._read_group(...)` ✔ (API `_read_group(domain, groupby, aggregates)`), filtre sur `l10n_ga_payment_date` et l'état validé 🔒 |
-| Événement fin de lot | surcharge de la méthode de validation de `hr.payslip.run` 🔒 |
+| Lecture des bulletins | `hr.payslip.line._read_group(...)` ✔ (API `_read_group(domain, groupby, aggregates)`), filtre sur `l10n_ga_payment_date` et `state in ('validated', 'paid')` ✔ (ADR-19) |
+| Événement fin de lot | surcharge de `hr.payslip.action_payslip_done()` ✔ (appelée par `hr.payslip.run.action_validate()` et par la validation d'un bulletin seul — ADR-19) |
 | Échéancier | `ir.cron` quotidien ✔ |
 | Rendus | `ir.actions.report` QWeb ✔ ; `openpyxl` (`keep_vba=True`) pour remplir les classeurs officiels `.xlsm` de la DGI (F10) et `xlsxwriter` pour les états neufs — les deux sont dans `requirements.txt` d'Odoo 19 ✔ |
 | Sécurité | groupes `l10n_ga_dgi_edi.group_declarant` (implique `hr_payroll.group_hr_payroll_user` 🔒) et « Responsable » ; règle multi-société `company_id in company_ids` |
@@ -205,6 +205,8 @@ result = -payslip._l10n_ga_compute('irpp', categories)
 | Fin de vie | désinstallé après la bascule ; les cumuls d'ouverture restent (portés par `l10n_ga_hr_payroll`) |
 
 ## 7. Points à vérifier sur le code Enterprise avant de développer
+
+> ✔ Vérifiés au sprint 0 (24/09/2026) : réponses et preuves dans `docs/sprint0_verifications_enterprise.md` (14 points), ajustements dans ADR-16 à ADR-19. Le point 8 reste à vérifier avant l'étape 6 (D-05).
 
 1. Nom du lien bulletin → version (`version_id`) et suppression de `contract_id` dans `hr.payslip` 19.0.
 2. Variables disponibles dans `amount_python_compute` (en particulier `payslip` : enregistrement réel ou objet navigable) et existence de `_rule_parameter`.

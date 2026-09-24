@@ -28,7 +28,7 @@ Mis à jour le 24/09/2026.
 | 6 | `l10n_ga_hr_payroll_migration` | reprise `hr_payroll_gb` | à faire | — | — |
 | C-5 | `l10n_ga_hr_payroll_migration` | complétude du module | à faire | — | — |
 
-## ADR proposés (à valider par Alex)
+## ADR (sprint 0) — tous **acceptés** le 24/09/2026
 
 | ADR | Objet | Fichier |
 |---|---|---|
@@ -39,7 +39,7 @@ Mis à jour le 24/09/2026.
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md` : D-04 (config de production `db_name`), D-05 (schéma `hr_payroll_gb`, avant l'étape 6), D-06 (date de référence des paramètres, étape 2.2), D-07 (code V1, avant l'étape 4), D-08 (validation ADR-18/19).
+Voir `docs/decisions/ouvertes.md`. Reste ouvert : D-04 (`db_name = odoo19` dans la configuration du service). Actions attendues d'Alex : D-05 (schéma `hr_payroll_gb` + lignes fictives, avant l'étape 6), D-07 (copie de la V1, avant l'étape 4.4). Décidés : D-06 (`date_to`), D-08 (ADR acceptés), D-09 (`make demo` sur `odoo19`).
 
 ## Prochaine étape
 
