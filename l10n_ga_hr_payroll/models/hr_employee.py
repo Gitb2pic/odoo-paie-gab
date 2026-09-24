@@ -64,3 +64,44 @@ class HrEmployee(models.Model):
     l10n_ga_seniority_date = fields.Date(
         related='version_id.l10n_ga_seniority_date', readonly=False, inherited=True, groups='hr.group_hr_user'
     )
+    # Boutons intelligents « Indemnités » (F15) et « Prêts » (F1) : compteurs non stockés.
+    l10n_ga_allowance_count = fields.Integer(
+        compute='_compute_l10n_ga_payroll_counts', groups='hr_payroll.group_hr_payroll_user'
+    )
+    l10n_ga_loan_count = fields.Integer(
+        compute='_compute_l10n_ga_payroll_counts', groups='hr_payroll.group_hr_payroll_user'
+    )
+
+    def _compute_l10n_ga_payroll_counts(self):
+        loans = dict(
+            self.env['l10n_ga.employee.loan']._read_group(
+                [('employee_id', 'in', self.ids)], ['employee_id'], ['__count']
+            )
+        )
+        for employee in self:
+            employee.l10n_ga_allowance_count = len(
+                employee.salary_attachment_ids.filtered(lambda a: a.l10n_ga_is_allowance and a.state == 'open')
+            )
+            employee.l10n_ga_loan_count = loans.get(employee, 0)
+
+    def action_l10n_ga_allowances(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._('Indemnités'),
+            'res_model': 'hr.salary.attachment',
+            'view_mode': 'list,form',
+            'domain': [('employee_ids', 'in', self.ids), ('other_input_type_id.l10n_ga_is_allowance', '=', True)],
+            'context': {'default_employee_ids': self.ids, 'default_duration_type': 'unlimited'},
+        }
+
+    def action_l10n_ga_loans(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._('Prêts'),
+            'res_model': 'l10n_ga.employee.loan',
+            'view_mode': 'list,form',
+            'domain': [('employee_id', '=', self.id)],
+            'context': {'default_employee_id': self.id, 'default_company_id': self.company_id.id},
+        }

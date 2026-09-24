@@ -47,18 +47,17 @@ class GaPayrollCase(TransactionCase):
 
     @classmethod
     def _payslip(cls, employee, date_from, date_to, inputs=None, compute_sheet=True):
-        slip = cls.env['hr.payslip'].create(
-            {
-                'name': f'{employee.name} {date_from:%m/%Y}',
-                'employee_id': employee.id,
-                'date_from': date_from,
-                'date_to': date_to,
-                'input_line_ids': [
-                    (0, 0, {'input_type_id': cls._input_type(code).id, 'amount': amount})
-                    for code, amount in (inputs or {}).items()
-                ],
-            }
-        )
+        values = {
+            'name': f'{employee.name} {date_from:%m/%Y}',
+            'employee_id': employee.id,
+            'date_from': date_from,
+            'date_to': date_to,
+        }
+        if inputs:  # sinon, les entrées sont calculées (ajustements, indemnités F15)
+            values['input_line_ids'] = [
+                (0, 0, {'input_type_id': cls._input_type(code).id, 'amount': amount}) for code, amount in inputs.items()
+            ]
+        slip = cls.env['hr.payslip'].create(values)
         if compute_sheet:
             slip.compute_sheet()
         return slip
@@ -109,7 +108,11 @@ class GaPayrollCase(TransactionCase):
 
     @staticmethod
     def _totals(slip):
-        return {line.code: line.total for line in slip.line_ids}
+        """Total par code (une ligne par entrée quand plusieurs entrées ont le même type)."""
+        totals = {}
+        for line in slip.line_ids:
+            totals[line.code] = totals.get(line.code, 0.0) + line.total
+        return totals
 
     @staticmethod
     def _line(slip, code):

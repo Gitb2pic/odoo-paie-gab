@@ -243,6 +243,7 @@ def _rule(row):
 
 def _input_type(row):
     attachment = 'True' if row['input_kind'] == 'attachment' else 'False'
+    allowance = 'True' if row['category'] == 'ALW' else 'False'  # gain : indemnité (F15, onglet « Indemnités »)
     return (
         f'        <record id="{_xml_id("input_type_ga_", row["code"])}" model="hr.payslip.input.type">\n'
         f'            <field name="name">{escape(row["name"])}</field>\n'
@@ -250,6 +251,7 @@ def _input_type(row):
         '            <field name="country_id" ref="base.ga"/>\n'
         '            <field name="struct_ids" eval="[Command.link(ref(\'structure_ga_employee\'))]"/>\n'
         f'            <field name="available_in_attachments" eval="{attachment}"/>\n'
+        f'            <field name="l10n_ga_is_allowance" eval="{allowance}"/>\n'
         '        </record>\n'
     )
 

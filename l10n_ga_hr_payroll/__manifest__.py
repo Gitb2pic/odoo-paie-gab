@@ -1,7 +1,7 @@
 {
     'name': 'Gabon - Paie',
-    'version': '19.0.1.2.0',
-    'summary': 'Paie gabonaise : CNSS, CNAMGS, TCS, IRPP, FNH, CFP, rubriques et absences',
+    'version': '19.0.1.3.0',
+    'summary': 'Paie gabonaise : CNSS, CNAMGS, TCS, IRPP, FNH, CFP, rubriques, absences, prêts et indemnités',
     'countries': ['ga'],
     'category': 'Human Resources/Payroll',
     'author': 'OMIAS Leadership Group',
@@ -27,6 +27,8 @@
         'views/hr_salary_rule_views.xml',
         'views/hr_payslip_views.xml',
         'views/l10n_ga_collective_agreement_views.xml',
+        'views/l10n_ga_employee_loan_views.xml',
+        'views/hr_salary_attachment_views.xml',
     ],
     'post_init_hook': '_post_init_hook',
     'external_dependencies': {'python': ['openpyxl', 'xlsxwriter']},

@@ -7,3 +7,8 @@ access_l10n_ga_agreement_grade_user,l10n_ga.agreement.grade user,model_l10n_ga_a
 access_l10n_ga_agreement_grade_manager,l10n_ga.agreement.grade manager,model_l10n_ga_agreement_grade,hr_payroll.group_hr_payroll_manager,1,1,1,1
 access_l10n_ga_collective_agreement_hr_user,l10n_ga.collective.agreement hr user,model_l10n_ga_collective_agreement,hr.group_hr_user,1,0,0,0
 access_l10n_ga_agreement_grade_hr_user,l10n_ga.agreement.grade hr user,model_l10n_ga_agreement_grade,hr.group_hr_user,1,0,0,0
+access_l10n_ga_employee_loan_user,l10n_ga.employee.loan user,model_l10n_ga_employee_loan,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_l10n_ga_employee_loan_manager,l10n_ga.employee.loan manager,model_l10n_ga_employee_loan,hr_payroll.group_hr_payroll_manager,1,1,1,1
+access_l10n_ga_employee_loan_line_user,l10n_ga.employee.loan.line user,model_l10n_ga_employee_loan_line,hr_payroll.group_hr_payroll_user,1,1,1,1
+access_l10n_ga_employee_loan_line_manager,l10n_ga.employee.loan.line manager,model_l10n_ga_employee_loan_line,hr_payroll.group_hr_payroll_manager,1,1,1,1
+access_l10n_ga_loan_early_repayment_user,l10n_ga.loan.early.repayment user,model_l10n_ga_loan_early_repayment,hr_payroll.group_hr_payroll_user,1,1,1,1

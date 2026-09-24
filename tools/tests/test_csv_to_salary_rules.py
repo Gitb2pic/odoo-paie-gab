@@ -241,3 +241,7 @@ def test_input_types(rows):
     assert types['GA_LOAN']['available_in_attachments'].get('eval') == 'False'
     assert types['GA_SURSAL']['available_in_attachments'].get('eval') == 'True'  # ADR-16
     assert all(f['country_id'].get('ref') == 'base.ga' for f in types.values())
+    # F15 : gains = indemnités, retenues (prêt, cessions, saisies) exclues
+    assert types['GA_TRANSP']['l10n_ga_is_allowance'].get('eval') == 'True'
+    assert types['GA_LOAN']['l10n_ga_is_allowance'].get('eval') == 'False'
+    assert types['GA_GARNISH']['l10n_ga_is_allowance'].get('eval') == 'False'

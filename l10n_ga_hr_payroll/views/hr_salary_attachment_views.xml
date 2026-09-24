@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Indemnités récurrentes (F15, ADR-16) : bloc Gabon sur l'ajustement de salaire standard. -->
+    <record id="hr_salary_attachment_view_form_l10n_ga" model="ir.ui.view">
+        <field name="name">hr.salary.attachment.form.l10n_ga</field>
+        <field name="model">hr.salary.attachment</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_form"/>
+        <field name="arch" type="xml">
+            <field name="description" position="after">
+                <field name="l10n_ga_is_allowance" invisible="1"/>
+                <separator string="Indemnité (Gabon)" invisible="not l10n_ga_is_allowance" colspan="2"/>
+                <div class="text-muted" invisible="not l10n_ga_is_allowance" colspan="2">
+                    Le montant est un gain : la rubrique Gabon qui lit ce type fixe son signe et son traitement.
+                    Revalorisation = clôture de la ligne et nouvelle ligne datée (pas de chevauchement).
+                </div>
+                <field name="l10n_ga_mode" invisible="not l10n_ga_is_allowance" readonly="has_done_payslip"/>
+                <field name="l10n_ga_rate" invisible="not l10n_ga_is_allowance or l10n_ga_mode == 'fixed'"/>
+                <field name="l10n_ga_quantity" invisible="not l10n_ga_is_allowance or l10n_ga_mode != 'quantity_rate'"/>
+                <field name="date_end" string="Fin du droit" invisible="not l10n_ga_is_allowance"/>
+                <field name="l10n_ga_forced_taxable" invisible="not l10n_ga_is_allowance"/>
+                <field name="l10n_ga_forced_reason" invisible="not l10n_ga_forced_taxable"
+                       required="l10n_ga_forced_taxable"/>
+            </field>
+            <xpath expr="(//field[@name='monthly_amount'])[1]" position="attributes">
+                <attribute name="readonly">l10n_ga_is_allowance and l10n_ga_mode != 'fixed'</attribute>
+            </xpath>
+            <xpath expr="(//field[@name='monthly_amount'])[2]" position="attributes">
+                <attribute name="readonly">l10n_ga_is_allowance and l10n_ga_mode != 'fixed'</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
