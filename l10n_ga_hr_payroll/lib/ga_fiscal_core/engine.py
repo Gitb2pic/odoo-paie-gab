@@ -114,7 +114,7 @@ def compute(facts, p):
         facts.disabled_children,
         facts.extra_half_part,
         facts.forced_parts,
-        max_children=p.max_children,
+        p=p,
     )
     irpp_base = base_tcs - tcs
     irpp = irpp_monthly(irpp_base, parts, p)

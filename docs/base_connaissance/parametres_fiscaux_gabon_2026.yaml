@@ -75,6 +75,8 @@ irpp:
     par_enfant_supplementaire: 0.5
     marie_ou_veuf_par_enfant: 0.5
     enfant_infirme_supplement: 0.5              # 1 part au lieu de 0,5
+    forcees_minimum: 1                          # RG03 : parts forcées de 1 à 6,5 (prompt 2.1)
+    forcees_maximum: 6.5
   exonerations:
     gratifications_plafond_annuel: 4000000      # instruction 144/2004 — a_verifier (point 4)
     indemnite_vehicule_plafond_mensuel: 100000  # art. 91 bis al. 5 (LFR 2026)
@@ -142,3 +144,4 @@ autres:
 
 paie:                             # paramètres propres à l'addon (D-12) ; l'arrondi espèces est une option société (500)
   coupures_billetage: [10000, 5000, 2000, 1000, 500]   # architecture 08 F2
+  arrondi_especes_defaut: 500      # F2 : défaut de l'option société l10n_ga_cash_rounding (0 = pas d'arrondi)

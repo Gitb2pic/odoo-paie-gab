@@ -7,7 +7,7 @@ plafond ni barème n'est écrit dans le code (règle d'or 1).
 """
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date as date_cls
 from types import MappingProxyType
 
@@ -38,6 +38,16 @@ class FiscalParams:
     fp_rate: float
     fp_annual_cap: float
     max_children: int
+    # Quotient familial (CGI art. 170-173, RG03)
+    parts_single: float
+    parts_single_extra: float  # personne seule sans enfant ayant élevé des enfants ou invalide
+    parts_married: float
+    parts_single_first_child: float
+    parts_single_per_extra_child: float
+    parts_married_per_child: float
+    parts_disabled_child: float  # supplément par enfant infirme
+    forced_parts_min: float
+    forced_parts_max: float
     irpp_brackets: tuple  # ((de, a, taux, constante), ...) pour 1 part, dernière borne = inf
     irpp_min_withholding: float
     # Exonérations (art. 91, 91 bis, instruction 144/2004, NC 000134/2004)
@@ -56,10 +66,10 @@ class FiscalParams:
     fnh_employee_share: float
     cfp_rate: float
     cfp_ceiling: float
-    cfp_base: str = 'social'  # D-10
-    # Paie en espèces (F2) : l'arrondi est une option société
-    cash_rounding: float = 500
-    cash_denominations: tuple = field(default=())
+    # Paie en espèces (F2) : l'arrondi vient de l'option société (défaut YAML en test)
+    cash_rounding: float
+    cash_denominations: tuple
+    cfp_base: str = 'social'  # D-10 : option, assiette sociale par défaut
 
     def __post_init__(self):
         if self.cfp_base not in CFP_BASES:
@@ -107,6 +117,7 @@ def load_from_yaml(path, on_date, **options):
         return _dated(data[section][key], on_date, f'{section}.{key}')
 
     irpp = data['irpp']
+    parts = irpp['parts']
     exo = irpp['exonerations']
     benefits = irpp['avantages_en_nature']
     values = {
@@ -127,6 +138,15 @@ def load_from_yaml(path, on_date, **options):
         'fp_rate': get('irpp', 'abattement_frais_professionnels_taux'),
         'fp_annual_cap': get('irpp', 'abattement_frais_professionnels_plafond_annuel'),
         'max_children': get('irpp', 'nombre_max_enfants'),
+        'parts_single': parts['celibataire_divorce_veuf_sans_enfant'],
+        'parts_single_extra': parts['celibataire_ayant_eleve_enfants_ou_invalide'],
+        'parts_married': parts['marie_sans_enfant'],
+        'parts_single_first_child': parts['celibataire_divorce_premier_enfant'],
+        'parts_single_per_extra_child': parts['par_enfant_supplementaire'],
+        'parts_married_per_child': parts['marie_ou_veuf_par_enfant'],
+        'parts_disabled_child': parts['enfant_infirme_supplement'],
+        'forced_parts_min': parts['forcees_minimum'],
+        'forced_parts_max': parts['forcees_maximum'],
         'irpp_brackets': _brackets(irpp['bareme_annuel_une_part']),
         'irpp_min_withholding': get('irpp', 'retenue_minimale'),
         'bonus_annual_cap': exo['gratifications_plafond_annuel'],
@@ -150,6 +170,7 @@ def load_from_yaml(path, on_date, **options):
         'cfp_rate': get('cfp', 'taux'),
         'cfp_ceiling': get('cfp', 'plafond_mensuel_par_salarie'),
         'cash_denominations': tuple(data['paie']['coupures_billetage']),
+        'cash_rounding': data['paie']['arrondi_especes_defaut'],
     }
     values.update(options)
     return FiscalParams(**values)

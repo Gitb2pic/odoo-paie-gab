@@ -23,6 +23,9 @@ def test_values_2026_after_lfr(params_2026):
     assert (p.tcs_rate, p.tcs_monthly_exemption) == (0.05, 150_000)
     assert p.tcs_deduct_cnss is True and p.tcs_deduct_cnamgs is True
     assert (p.fp_rate, p.fp_annual_cap, p.max_children) == (0.20, 10_000_000, 6)
+    assert (p.parts_single, p.parts_single_extra, p.parts_married) == (1, 1.5, 2)
+    assert (p.parts_single_first_child, p.parts_single_per_extra_child, p.parts_married_per_child) == (1, 0.5, 0.5)
+    assert (p.parts_disabled_child, p.forced_parts_min, p.forced_parts_max) == (0.5, 1, 6.5)
     assert p.irpp_min_withholding == 0
     assert (p.fnh_rate, p.fnh_ceiling, p.fnh_employee_share) == (0.03, 1_500_000, 0.0)
     assert (p.cfp_rate, p.cfp_ceiling, p.cfp_base) == (0.005, 1_500_000, 'social')
