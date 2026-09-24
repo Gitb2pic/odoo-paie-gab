@@ -18,8 +18,9 @@ from ..lib.ga_fiscal_core.engine import PayslipFacts, compute
 from ..lib.ga_fiscal_core.exemptions import GainLine
 from ..lib.ga_fiscal_core.labour import GAIN_VALUES, completed_years, leave_allowance, overtime_amount
 from ..lib.ga_fiscal_core.loans import seizable_portion
-from ..lib.ga_fiscal_core.rounding import round_fcfa
+from ..lib.ga_fiscal_core.rounding import CASH_ADJUST, CASH_PAY, CASH_PREV, CASH_VALUES, cash_round, round_fcfa
 from ..lib.ga_fiscal_core.treatment import NONE, social_group, tax_group
+from .l10n_ga_payroll_check import BLOCKING
 
 GA_CODE = 'GA'
 AIK_CATEGORY = 'GA_AIK'
@@ -32,6 +33,7 @@ ALLOWANCE_PAY_MODE = 'allowance'  # congé payé : hors BASIC, payé par GA_CONG
 MONTHS_PER_YEAR = 12  # période de référence de l'allocation de congé et droits annuels (base 05 §5)
 LOAN_INPUT_XMLID = 'l10n_ga_hr_payroll.input_type_ga_loan'
 ACTIVE_LOAN_STATES = ('approved', 'running')
+CASH_MODE = 'cash'
 
 # Champ figé du bulletin → attribut de PayResult (montants du mois).
 FROZEN_RESULT_FIELDS = {
@@ -109,12 +111,14 @@ class HrPayslip(models.Model):
     l10n_ga_ytd_tcs = _frozen_amount('Cumul TCS')
     l10n_ga_ytd_cnss = _frozen_amount('Cumul CNSS salariale')
     l10n_ga_ytd_bonus_exempt = _frozen_amount('Cumul gratifications exonérées')
+    l10n_ga_rounding_carry = _frozen_amount('Reliquat d’arrondi reporté')
+    l10n_ga_issue_ids = fields.One2many('l10n_ga.check.issue', 'payslip_id', string='Anomalies Gabon')
     l10n_ga_is_ga = fields.Boolean(compute='_compute_l10n_ga_is_ga')
 
-    @api.depends('date_to')
+    @api.depends('date_to', 'payslip_run_id.l10n_ga_payment_date')
     def _compute_l10n_ga_payment_date(self):
         for slip in self:
-            slip.l10n_ga_payment_date = slip.date_to
+            slip.l10n_ga_payment_date = slip.payslip_run_id.l10n_ga_payment_date or slip.date_to
 
     @api.depends('struct_id.country_id')
     def _compute_l10n_ga_is_ga(self):
@@ -152,11 +156,64 @@ class HrPayslip(models.Model):
             ('id', '!=', self.id),
         ]
 
+    def _l10n_ga_ytd_opening(self):
+        """Cumul d'ouverture de l'année (F12, RG25), s'il couvre une période antérieure au bulletin."""
+        self.ensure_one()
+        return self.env['l10n_ga.ytd.opening'].search(
+            [
+                ('employee_id', '=', self.employee_id.id),
+                ('company_id', '=', self.company_id.id),
+                ('year', '=', self.date_to.year),
+                ('date_to', '<', self.date_from),
+            ],
+            limit=1,
+        )
+
     def _l10n_ga_ytd(self, field_name):
-        """Cumul d'un champ figé sur les bulletins validés antérieurs de l'année civile."""
+        """Cumul d'un champ figé : cumul d'ouverture + bulletins validés antérieurs de l'année civile."""
         self.ensure_one()
         [(total,)] = self.env['hr.payslip']._read_group(self._l10n_ga_ytd_domain(), aggregates=[f'{field_name}:sum'])
-        return total or 0.0
+        opening = self._l10n_ga_ytd_opening()
+        return (total or 0.0) + (opening._value(field_name) if opening else 0.0)
+
+    def _l10n_ga_previous_carry(self):
+        """Reliquat d'arrondi du dernier bulletin validé du salarié (F2, RG23)."""
+        self.ensure_one()
+        previous = self.env['hr.payslip'].search(
+            [
+                ('employee_id', '=', self.employee_id.id),
+                ('company_id', '=', self.company_id.id),
+                ('state', 'in', VALIDATED_STATES),
+                ('date_to', '<', self.date_from),
+                ('id', '!=', self.id),
+            ],
+            order='date_to desc, id desc',
+            limit=1,
+        )
+        return previous.l10n_ga_rounding_carry
+
+    def _l10n_ga_cash(self, net):
+        """Arrondi espèces (patron 15, D-44) : ``(reliquat précédent, CashRounding)``.
+
+        Pas = arrondi société en espèces, 0 sinon (le reliquat antérieur est alors versé) ;
+        au départ du salarié (solde de tout compte), tout est versé.
+        """
+        static = self._l10n_ga_static()
+        if 'cash_prev' not in static:
+            static['cash_prev'] = self._l10n_ga_previous_carry()
+        step = static['params'].cash_rounding if self.version_id.l10n_ga_payment_mode == CASH_MODE else 0
+        previous = static['cash_prev']
+        return previous, cash_round(net, previous, int(step), final=self._l10n_ga_is_departure())
+
+    def _l10n_ga_cash_value(self, code, net):
+        previous, rounding = self._l10n_ga_cash(net)
+        if code == CASH_PREV:
+            return round_fcfa(previous)
+        if code == CASH_ADJUST:
+            return rounding.paid - round_fcfa(net) - round_fcfa(previous)
+        if code == CASH_PAY:
+            return rounding.paid
+        raise ValueError(f'Valeur d’arrondi inconnue : {code!r}')
 
     def _l10n_ga_regularize(self):
         """Régularisation annuelle de l'IRPP : dernier bulletin de l'année ou départ dans la période."""
@@ -431,27 +488,50 @@ class HrPayslip(models.Model):
             'version_id.l10n_ga_grade_id',
             'version_id.l10n_ga_agreement_id',
             'worked_days_line_ids',
+            'l10n_ga_issue_ids.severity',
         ]
+
+    def _l10n_ga_issue_entry(self, issue):
+        """Anomalie du lot (F8) au format des anomalies natives du bulletin (pont ADR-18 §4)."""
+        record = self.env[issue.res_model].browse(issue.res_id) if issue.res_model else self.employee_id
+        return {
+            'message': issue.message,
+            'action_text': self.env._('Corriger'),
+            'action': record._get_records_action(target='new'),
+            'level': 'danger' if issue.severity == BLOCKING else 'warning',
+        }
 
     def _get_errors_by_slip(self):
         errors_by_slip = super()._get_errors_by_slip()
-        for slip in self.filtered(lambda s: s.state == 'draft' and s.l10n_ga_is_ga and s.version_id):
-            for message in slip._l10n_ga_blocking_issues():
-                errors_by_slip[slip].append(
-                    {
-                        'message': message,
-                        'action_text': self.env._('Salarié'),
-                        'action': slip.employee_id._get_records_action(name=self.env._('Salarié'), target='new'),
-                        'level': 'danger',
-                    }
-                )
+        for slip in self.filtered(lambda s: s.state == 'draft' and s.l10n_ga_is_ga):
+            if slip.version_id:
+                for message in slip._l10n_ga_blocking_issues():
+                    errors_by_slip[slip].append(
+                        {
+                            'message': message,
+                            'action_text': self.env._('Salarié'),
+                            'action': slip.employee_id._get_records_action(name=self.env._('Salarié'), target='new'),
+                            'level': 'danger',
+                        }
+                    )
+            for issue in slip.l10n_ga_issue_ids.filtered(lambda i: i.severity == BLOCKING):
+                errors_by_slip[slip].append(slip._l10n_ga_issue_entry(issue))
         return errors_by_slip
+
+    def _get_warnings_by_slip(self):
+        warnings_by_slip = super()._get_warnings_by_slip()
+        for slip in self.filtered(lambda s: s.state == 'draft' and s.l10n_ga_is_ga):
+            for issue in slip.l10n_ga_issue_ids.filtered(lambda i: i.severity != BLOCKING):
+                warnings_by_slip[slip].append(slip._l10n_ga_issue_entry(issue))
+        return warnings_by_slip
 
     def _l10n_ga_compute(self, code, categories, result_rules):
         """Point d'entrée des règles salariales (une ligne) : gain calculé ou montant du ``PayResult``."""
         self.ensure_one()
         if code in GAIN_VALUES:
             return self._l10n_ga_gain(code)
+        if code in CASH_VALUES:
+            return self._l10n_ga_cash_value(code, result_rules['NET']['total'])
         totals = {rule_code: values['total'] for rule_code, values in result_rules.items()}
         return self._l10n_ga_value(self._l10n_ga_result(categories[BASIC_CATEGORY], totals), code)
 
@@ -479,7 +559,7 @@ class HrPayslip(models.Model):
     def _l10n_ga_check_lines(self, result, totals):
         """Refuse le figement si le noyau, rejoué, ne retrouve pas les montants des lignes."""
         for rule in self.struct_id.rule_ids.filtered('l10n_ga_core_value'):
-            expected = rule._l10n_ga_sign() * self._l10n_ga_expected(rule, result)
+            expected = rule._l10n_ga_sign() * self._l10n_ga_expected(rule, result, totals)
             if abs(totals.get(rule.code, 0.0) - expected) >= 1:
                 raise UserError(
                     self.env._(
@@ -493,9 +573,11 @@ class HrPayslip(models.Model):
                     )
                 )
 
-    def _l10n_ga_expected(self, rule, result):
+    def _l10n_ga_expected(self, rule, result, totals):
         """Montant attendu d'une règle liée au noyau (gain proratisé comme dans ``_compute_rule``)."""
         code = rule.l10n_ga_core_value
+        if code in CASH_VALUES:
+            return self._l10n_ga_cash_value(code, totals.get('NET', 0.0))
         if code not in GAIN_VALUES:
             return self._l10n_ga_value(result, code)
         amount = self._l10n_ga_gain(code)
@@ -556,6 +638,7 @@ class HrPayslip(models.Model):
                 l10n_ga_cnss_ceiling_used=params.cnss_ceiling,
                 l10n_ga_cnamgs_ceiling_used=params.cnamgs_ceiling,
                 l10n_ga_frozen_date=fields.Datetime.now(),
+                l10n_ga_rounding_carry=-totals.get('GA_ROUND', 0.0),
             )
             for ytd_field, month_field in YTD_FIELDS.items():
                 values[ytd_field] = slip._l10n_ga_ytd(month_field) + values[month_field]
@@ -716,9 +799,14 @@ class HrPayslip(models.Model):
 
     def compute_sheet(self):
         ga_slips = self.filtered(lambda s: s.state == 'draft' and s.l10n_ga_is_ga)
+        # RG26, D-38 : contrôles du lot avant calcul ; un lot bloqué n'est pas calculé.
+        ga_slips.payslip_run_id._l10n_ga_run_checks()
+        blocked = ga_slips.filtered(lambda s: s.payslip_run_id.l10n_ga_blocking_count)
+        blocked.line_ids.unlink()
+        ga_slips -= blocked
         ga_slips._l10n_ga_allowance_inputs()
         ga_slips._l10n_ga_loan_inputs()
-        result = super().compute_sheet()
+        result = super(HrPayslip, self - blocked).compute_sheet()
         capped = ga_slips.filtered(lambda s: s._l10n_ga_cap_departure_loan())
         if capped:
             super(HrPayslip, capped).compute_sheet()

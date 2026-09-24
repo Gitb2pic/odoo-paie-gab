@@ -18,6 +18,7 @@ from ga_fiscal_core.engine import PayResult  # noqa: E402
 from ga_fiscal_core.exemptions import SOCIAL_CAPS, TAX_CAPS  # noqa: E402
 from ga_fiscal_core.labour import GAIN_VALUES  # noqa: E402
 from ga_fiscal_core.params import BENEFIT_KINDS  # noqa: E402
+from ga_fiscal_core.rounding import CASH_VALUES  # noqa: E402
 
 ODOO_PATH = Path(os.environ.get('ODOO_PATH', '/home/ubuntu/odoo/odoo'))
 SYSCOHADA_ACCOUNTS = ODOO_PATH / 'addons' / 'l10n_syscohada' / 'data' / 'template' / 'account.account-syscohada.csv'
@@ -209,7 +210,7 @@ def test_core_values_are_payresult_fields(rows):
     fields = {f.name for f in dataclasses.fields(PayResult)}
     for row in rows:
         if row['kind'] == 'core' and not row['core_value'].startswith('benefit:'):
-            assert row['core_value'] in fields | GAIN_VALUES, row['code']
+            assert row['core_value'] in fields | GAIN_VALUES | CASH_VALUES, row['code']
 
 
 def test_labour_rubrics_computed(rows):
@@ -226,6 +227,22 @@ def test_labour_rubrics_computed(rows):
     for code, value in expected.items():
         assert (by_code[code]['kind'], by_code[code]['core_value'], by_code[code]['category']) == ('core', value, 'ALW')
     assert {row['core_value'] for row in rows if row['core_value'] in GAIN_VALUES} == GAIN_VALUES
+
+
+def test_cash_rounding_rules_after_single_net(rows):
+    """F2, D-44 : trois règles GA_CASH après le NET unique, sans traitement social ni fiscal."""
+    by_code = {row['code']: row for row in rows}
+    net_sequence = int(by_code['NET']['sequence'])
+    expected = {'GA_ROUND_PREV': 'cash_prev', 'GA_ROUND': 'cash_adjust', 'GA_NET_PAY': 'cash_pay'}
+    sequences = []
+    for code, value in expected.items():
+        row = by_code[code]
+        assert (row['kind'], row['category'], row['core_value']) == ('core', 'GA_CASH', value)
+        assert (row['social_base'], row['tax_base'], row['das_column']) == ('none', 'none', 'none')
+        sequences.append(int(row['sequence']))
+    assert net_sequence < sequences[0] < sequences[1] < sequences[2]
+    assert {row['core_value'] for row in rows if row['category'] == 'GA_CASH'} == CASH_VALUES
+    assert [row['code'] for row in rows if row['category'] == 'NET'] == ['NET']
 
 
 def test_cash_gains_computed_before_benefits_in_kind(rows):

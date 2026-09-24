@@ -46,6 +46,7 @@
                             <field name="l10n_ga_ytd_tcs"/>
                             <field name="l10n_ga_ytd_cnss"/>
                             <field name="l10n_ga_ytd_bonus_exempt"/>
+                            <field name="l10n_ga_rounding_carry"/>
                         </group>
                     </group>
                 </page>

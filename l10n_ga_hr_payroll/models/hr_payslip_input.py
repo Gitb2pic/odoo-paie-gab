@@ -18,3 +18,6 @@ class HrPayslipInput(models.Model):
     l10n_ga_forced_taxable = fields.Boolean(
         string='Forcée imposable', readonly=True, help='Recopié de l’indemnité : aucune exonération fiscale (F15).'
     )
+    l10n_ga_imported = fields.Boolean(
+        string='Importée', readonly=True, help='Créée par l’import Excel des variables (F3) : remplacée au réimport.'
+    )

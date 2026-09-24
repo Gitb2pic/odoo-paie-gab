@@ -225,9 +225,7 @@ def run(header, raw_rows, ctx):
         return (), issues
     layout, column_issues = resolve_columns(headers, ctx)
     issues += column_issues
-    rows = tuple(
-        ImportRow(number, tuple(cells)) for number, cells in raw_rows if any(_text(cell) for cell in cells)
-    )
+    rows = tuple(ImportRow(number, tuple(cells)) for number, cells in raw_rows if any(_text(cell) for cell in cells))
     for step in ROW_PIPELINE:
         rows, step_issues = step(rows, layout, ctx)
         issues += step_issues

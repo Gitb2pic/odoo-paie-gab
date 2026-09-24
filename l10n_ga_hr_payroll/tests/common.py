@@ -7,6 +7,7 @@ from odoo.tests import TransactionCase
 from ..lib.ga_fiscal_core.engine import PayslipFacts, compute
 from ..lib.ga_fiscal_core.exemptions import GainLine
 from ..lib.ga_fiscal_core.labour import GAIN_VALUES
+from ..lib.ga_fiscal_core.rounding import CASH_VALUES
 
 MODULE = 'l10n_ga_hr_payroll'
 
@@ -128,7 +129,9 @@ class GaPayrollCase(TransactionCase):
     def assertCoreParity(self, slip, result, other_deductions=0):
         """Chaque règle liée au noyau = valeur du noyau au franc près ; brut et net cohérents."""
         totals = self._totals(slip)
-        for rule in slip.struct_id.rule_ids.filtered(lambda r: r.l10n_ga_core_value not in (False, *GAIN_VALUES)):
+        for rule in slip.struct_id.rule_ids.filtered(
+            lambda r: r.l10n_ga_core_value not in (False, *GAIN_VALUES, *CASH_VALUES)
+        ):
             expected = rule._l10n_ga_sign() * slip._l10n_ga_value(result, rule.l10n_ga_core_value)
             self.assertAlmostEqual(totals.get(rule.code, 0.0), expected, delta=1, msg=rule.code)
             if not expected:

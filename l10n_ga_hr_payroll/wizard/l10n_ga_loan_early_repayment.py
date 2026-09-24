@@ -19,11 +19,10 @@ class L10nGaLoanEarlyRepayment(models.TransientModel):
     amount = fields.Monetary(string='Montant remboursé', required=True)
     mode = fields.Selection(
         [('outside', 'Hors paie (espèces, virement)'), ('payslip', 'Sur le bulletin du mois choisi')],
-        string='Mode',
         required=True,
         default='outside',
     )
-    date = fields.Date(string='Date', required=True, default=fields.Date.context_today)
+    date = fields.Date(required=True, default=fields.Date.context_today)
     note = fields.Char(string='Référence')
 
     @api.onchange('loan_id')

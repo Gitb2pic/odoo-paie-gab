@@ -11,6 +11,12 @@ from decimal import ROUND_HALF_UP, Decimal
 # Chiffres significatifs conservés avant l'arrondi au franc : absorbe le bruit
 # binaire (13057.500000000002, 2.4999999999999996) sans toucher aux montants réels.
 _NOISE_DIGITS = 6
+# Valeurs des règles d'arrondi espèces (F2, D-44), après le NET unique : reliquat du bulletin
+# précédent, ajustement d'arrondi (≤ 0), montant versé.
+CASH_PREV = 'cash_prev'
+CASH_ADJUST = 'cash_adjust'
+CASH_PAY = 'cash_pay'
+CASH_VALUES = frozenset({CASH_PREV, CASH_ADJUST, CASH_PAY})
 
 
 def round_fcfa(value):

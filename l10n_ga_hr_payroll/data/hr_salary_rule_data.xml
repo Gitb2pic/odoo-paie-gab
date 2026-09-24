@@ -1371,6 +1371,63 @@ result_name = inputs['GA_GARNISH'].name</field>
             <field name="l10n_ga_das_column">none</field>
             <field name="l10n_ga_das_exempt_column">none</field>
         </record>
+        <record id="rule_ga_round_prev" model="hr.salary.rule">
+            <field name="name">Reliquat d'arrondi précédent</field>
+            <field name="code">GA_ROUND_PREV</field>
+            <field name="sequence">201</field>
+            <field name="category_id" ref="category_ga_cash"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cash_prev', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cash_prev', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cash_prev</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_round" model="hr.salary.rule">
+            <field name="name">Arrondi espèces</field>
+            <field name="code">GA_ROUND</field>
+            <field name="sequence">202</field>
+            <field name="category_id" ref="category_ga_cash"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cash_adjust', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cash_adjust', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cash_adjust</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_net_pay" model="hr.salary.rule">
+            <field name="name">Net à payer</field>
+            <field name="code">GA_NET_PAY</field>
+            <field name="sequence">203</field>
+            <field name="category_id" ref="category_ga_cash"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cash_pay', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cash_pay', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cash_pay</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
         <record id="rule_ga_cnss_pf" model="hr.salary.rule">
             <field name="name">CNSS patronale : prestations familiales</field>
             <field name="code">GA_CNSS_PF</field>

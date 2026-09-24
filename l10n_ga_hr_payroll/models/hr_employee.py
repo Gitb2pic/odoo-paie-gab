@@ -71,6 +71,9 @@ class HrEmployee(models.Model):
     l10n_ga_loan_count = fields.Integer(
         compute='_compute_l10n_ga_payroll_counts', groups='hr_payroll.group_hr_payroll_user'
     )
+    l10n_ga_ytd_opening_count = fields.Integer(
+        compute='_compute_l10n_ga_payroll_counts', groups='hr_payroll.group_hr_payroll_user'
+    )
 
     def _compute_l10n_ga_payroll_counts(self):
         loans = dict(
@@ -78,7 +81,11 @@ class HrEmployee(models.Model):
                 [('employee_id', 'in', self.ids)], ['employee_id'], ['__count']
             )
         )
+        openings = dict(
+            self.env['l10n_ga.ytd.opening']._read_group([('employee_id', 'in', self.ids)], ['employee_id'], ['__count'])
+        )
         for employee in self:
+            employee.l10n_ga_ytd_opening_count = openings.get(employee, 0)
             employee.l10n_ga_allowance_count = len(
                 employee.salary_attachment_ids.filtered(lambda a: a.l10n_ga_is_allowance and a.state == 'open')
             )
@@ -101,6 +108,17 @@ class HrEmployee(models.Model):
             'type': 'ir.actions.act_window',
             'name': self.env._('Prêts'),
             'res_model': 'l10n_ga.employee.loan',
+            'view_mode': 'list,form',
+            'domain': [('employee_id', '=', self.id)],
+            'context': {'default_employee_id': self.id, 'default_company_id': self.company_id.id},
+        }
+
+    def action_l10n_ga_ytd_openings(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._('Cumuls d’ouverture'),
+            'res_model': 'l10n_ga.ytd.opening',
             'view_mode': 'list,form',
             'domain': [('employee_id', '=', self.id)],
             'context': {'default_employee_id': self.id, 'default_company_id': self.company_id.id},

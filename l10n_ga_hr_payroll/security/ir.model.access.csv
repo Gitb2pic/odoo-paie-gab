@@ -12,3 +12,8 @@ access_l10n_ga_employee_loan_manager,l10n_ga.employee.loan manager,model_l10n_ga
 access_l10n_ga_employee_loan_line_user,l10n_ga.employee.loan.line user,model_l10n_ga_employee_loan_line,hr_payroll.group_hr_payroll_user,1,1,1,1
 access_l10n_ga_employee_loan_line_manager,l10n_ga.employee.loan.line manager,model_l10n_ga_employee_loan_line,hr_payroll.group_hr_payroll_manager,1,1,1,1
 access_l10n_ga_loan_early_repayment_user,l10n_ga.loan.early.repayment user,model_l10n_ga_loan_early_repayment,hr_payroll.group_hr_payroll_user,1,1,1,1
+access_l10n_ga_check_issue_user,l10n_ga.check.issue user,model_l10n_ga_check_issue,hr_payroll.group_hr_payroll_user,1,0,0,0
+access_l10n_ga_check_issue_manager,l10n_ga.check.issue manager,model_l10n_ga_check_issue,hr_payroll.group_hr_payroll_manager,1,0,0,1
+access_l10n_ga_ytd_opening_user,l10n_ga.ytd.opening user,model_l10n_ga_ytd_opening,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_l10n_ga_ytd_opening_manager,l10n_ga.ytd.opening manager,model_l10n_ga_ytd_opening,hr_payroll.group_hr_payroll_manager,1,1,1,1
+access_l10n_ga_payslip_input_import_user,l10n_ga.payslip.input.import user,model_l10n_ga_payslip_input_import,hr_payroll.group_hr_payroll_user,1,1,1,1

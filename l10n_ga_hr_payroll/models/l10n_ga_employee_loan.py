@@ -312,7 +312,7 @@ class L10nGaEmployeeLoanLine(models.Model):
     )
     # RG21 : une échéance est retenue par au plus un bulletin.
     payslip_id = fields.Many2one('hr.payslip', string='Bulletin', readonly=True, copy=False, check_company=True)
-    note = fields.Char(string='Note')
+    note = fields.Char()
 
     _amount_positive = models.Constraint('CHECK (amount > 0)', 'Le montant d’une échéance doit être positif.')
 

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Lot de paie (F3, F8, D-46) : date de paiement, contrôles avant paie, import des variables. -->
+    <record id="hr_payslip_run_form_l10n_ga" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form.l10n_ga</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_row')]" position="after">
+                <field name="l10n_ga_is_ga" invisible="1"/>
+                <field name="l10n_ga_payment_date" invisible="not l10n_ga_is_ga"/>
+            </xpath>
+            <xpath expr="//form/group" position="after">
+                <field name="l10n_ga_issue_ids" invisible="not l10n_ga_issue_ids" readonly="1">
+                    <list decoration-danger="severity == 'blocking'" decoration-warning="severity == 'warning'">
+                        <field name="severity"/>
+                        <field name="employee_id"/>
+                        <field name="message"/>
+                        <field name="code" optional="hide"/>
+                    </list>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_payslip_run_view_kanban_l10n_ga" model="ir.ui.view">
+        <field name="name">hr.payslip.run.kanban.l10n_ga</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_view_kanban"/>
+        <field name="arch" type="xml">
+            <field name="has_error" position="after">
+                <field name="l10n_ga_is_ga"/>
+                <field name="l10n_ga_blocking_count"/>
+                <field name="l10n_ga_warning_count"/>
+            </field>
+            <xpath expr="//t[@t-name='menu']/button[@name='action_payroll_hr_version_list_view_payrun']" position="after">
+                <button name="action_l10n_ga_check" type="object" class="btn btn-secondary" string="Contrôler"
+                        invisible="not l10n_ga_is_ga or state != '01_ready'"/>
+                <button name="action_l10n_ga_input_import" type="object" class="btn btn-secondary"
+                        string="Importer les variables" invisible="not l10n_ga_is_ga or state != '01_ready'"/>
+                <button name="action_l10n_ga_issues" type="object" class="btn btn-secondary" string="Anomalies"
+                        invisible="not l10n_ga_blocking_count and not l10n_ga_warning_count"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="l10n_ga_check_issue_view_list" model="ir.ui.view">
+        <field name="name">l10n_ga.check.issue.list</field>
+        <field name="model">l10n_ga.check.issue</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0"
+                  decoration-danger="severity == 'blocking'" decoration-warning="severity == 'warning'">
+                <field name="payslip_run_id"/>
+                <field name="severity"/>
+                <field name="employee_id"/>
+                <field name="message"/>
+                <field name="code" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="res_model" column_invisible="1"/>
+                <button name="action_open_record" type="object" string="Corriger" icon="fa-pencil"
+                        invisible="not res_model"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="l10n_ga_check_issue_view_form" model="ir.ui.view">
+        <field name="name">l10n_ga.check.issue.form</field>
+        <field name="model">l10n_ga.check.issue</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <header>
+                    <button name="action_open_record" type="object" string="Corriger" class="btn-primary"
+                            invisible="not res_model"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="scope"/>
+                            <field name="payslip_run_id"/>
+                            <field name="payslip_id"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="severity"/>
+                            <field name="code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="res_model" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="message"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="l10n_ga_check_issue_view_search" model="ir.ui.view">
+        <field name="name">l10n_ga.check.issue.search</field>
+        <field name="model">l10n_ga.check.issue</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="payslip_run_id"/>
+                <field name="code"/>
+                <filter name="blocking" string="Bloquantes" domain="[('severity', '=', 'blocking')]"/>
+                <filter name="warning" string="Avertissements" domain="[('severity', '=', 'warning')]"/>
+                <group>
+                    <filter name="group_run" string="Lot" context="{'group_by': 'payslip_run_id'}"/>
+                    <filter name="group_code" string="Code" context="{'group_by': 'code'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="l10n_ga_check_issue_action" model="ir.actions.act_window">
+        <field name="name">Anomalies de paie</field>
+        <field name="res_model">l10n_ga.check.issue</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_blocking': 1}</field>
+    </record>
+
+    <menuitem
+        id="menu_l10n_ga_check_issue"
+        name="Anomalies de paie"
+        action="l10n_ga_check_issue_action"
+        parent="hr_payroll.menu_hr_payroll_payslips"
+        groups="hr_payroll.group_hr_payroll_user"
+        sequence="90"/>
+</odoo>

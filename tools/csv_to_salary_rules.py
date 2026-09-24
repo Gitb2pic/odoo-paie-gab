@@ -33,6 +33,7 @@ sys.path.insert(0, str(REPO / 'l10n_ga_hr_payroll' / 'lib'))
 from ga_fiscal_core.engine import PayResult  # noqa: E402
 from ga_fiscal_core.labour import GAIN_VALUES  # noqa: E402
 from ga_fiscal_core.params import BENEFIT_KINDS  # noqa: E402
+from ga_fiscal_core.rounding import CASH_VALUES  # noqa: E402
 from ga_fiscal_core.treatment import DAS_COLUMNS, check_treatment  # noqa: E402
 
 MODULE = REPO / 'l10n_ga_hr_payroll'
@@ -70,14 +71,19 @@ CATEGORIES = {
     'GA_SOC': 'category_ga_soc',
     'GA_TAX': 'category_ga_tax',
     'GA_EMPLOYER': 'category_ga_employer',
+    'GA_CASH': 'category_ga_cash',
 }
 # Catégories filles de DED : montant négatif (retenue).
 DEDUCTION_CATEGORIES = ('DED', 'GA_SOC', 'GA_TAX')
 # Rubriques calculées par le noyau (genre « core ») : attribut de PayResult, ou avantage en
 # nature « benefit:<nature> » valorisé par le noyau (art. 93, décision D-18), ou gain calculé
-# avant le PayResult (ancienneté, heures sup., allocation de congé : GAIN_VALUES, étape 2.4).
+# avant le PayResult (ancienneté, heures sup., allocation de congé : GAIN_VALUES, étape 2.4), ou
+# arrondi espèces après le NET (CASH_VALUES, F2, étape 2.6).
 CORE_VALUES = frozenset(
-    {f.name for f in dataclasses.fields(PayResult)} | {f'benefit:{kind}' for kind in BENEFIT_KINDS} | GAIN_VALUES
+    {f.name for f in dataclasses.fields(PayResult)}
+    | {f'benefit:{kind}' for kind in BENEFIT_KINDS}
+    | GAIN_VALUES
+    | CASH_VALUES
 )
 KINDS = ('standard', 'input', 'core')
 # Règles standard conformes à hr_payroll (E/hr_payroll/data/hr_salary_rule_data.xml:10-123) ;

@@ -24,7 +24,7 @@ Relevé le 24/09/2026 (sprint 0), en lecture seule. **Aucun mot de passe ici** :
 - Présent dans l'`addons_path` ✔ — mais **ignoré tant qu'il ne contient aucun module** : Odoo journalise `option addons_path, invalid addons directory '/home/ubuntu/odoo/extra-addon', skipped` (constaté au sprint 0). Il devient valide dès le premier module (étape 2.2). Le service de production, démarré avant, devra être **redémarré** (`make restart`) pour voir les nouveaux modules ; les tests (`make test`) relisent l'`addons_path` à chaque lancement et n'en ont pas besoin.
 - Contenu au sprint 0 : `CLAUDE.md`, `docs/`, `prompts/`, `.claude/` — aucun module tiers à exclure.
 - L'arborescence du fichier `06` §1 nomme le dépôt `odoo-ga-payroll/` : ici c'est `extra-addon/`, modules à la racine (sans impact).
-- Outils de dev : virtualenv séparé `.venv/` (Python 3.14, non versionné) : `ruff`, `pytest`, `pytest-cov`, `pre-commit`, `pylint-odoo`, `pyyaml`.
+- Outils de dev : virtualenv séparé `.venv/` (Python 3.14, non versionné) : `ruff`, `pytest`, `pytest-cov`, `pre-commit`, `pylint-odoo`, `pyyaml`, et pour l'analyse statique des imports du module : `openpyxl==3.1.2`, `XlsxWriter==3.1.9`, `python-dateutil==2.8.2` (versions du venv Odoo, étape 2.6).
 
 ## Commandes utiles
 

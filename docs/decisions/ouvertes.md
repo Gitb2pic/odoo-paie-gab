@@ -40,3 +40,12 @@
 | D-35 | Prorata de validité d'une indemnité | a) jours calendaires ; b) base 30 jours | a) | **Décidé** (24/09/2026, P7) |
 | D-36 | Indemnité forcée imposable sur une partie du mois | a) ligne de gain scindée (part forcée / part normale) ; b) toute la rubrique forcée | a) | **Décidé** (24/09/2026, P8) |
 | D-37 | Seuils d'octroi des prêts (2 ans, 40 %) | a) paramètres datés ; b) options société | a) (règle d'or 1) ; plafond d'encours = champ société existant | **Décidé** (24/09/2026, P9) |
+| D-38 | RG26 : le standard calcule les bulletins dans `generate_payslips()` | a) contrôles à la génération, bulletins créés mais non calculés tant qu'il reste un bloquant, « Calculer » refusé, validation bloquée par le pont natif ; b) génération refusée | a) | **Décidé** (« go avec tes recommandations », 24/09/2026, plan 2.6 P1) |
+| D-39 | Gravité des contrôles avant paie | a) données indispensables au calcul = bloquant ; CNSS, NIF, compte bancaire, ratio prêt = avertissement ; b) tout bloquant | a) | **Décidé** (24/09/2026, P2) |
+| D-40 | Net de référence du contrôle « échéance > 40 % du net » | a) comme D-31 (NET du dernier bulletin validé), paramètre daté existant ; b) net du bulletin en cours | a) | **Décidé** (24/09/2026, P3) |
+| D-41 | Identification du salarié dans l'import | a) `registration_number`, repli sur le nom exact unique dans le lot ; b) identifiant technique | a) | **Décidé** (24/09/2026, P4) |
+| D-42 | Sémantique de l'import | a) valeur importée remplace, vide = inchangé, 0 = supprime, négatif refusé ; b) cumul | a) | **Décidé** (24/09/2026, P5) |
+| D-43 | Heures importées | a) prestations décimales réparties sur les jours de la période (≤ 24 h/jour), marquées et remplacées au réimport ; b) une prestation unique | a) | **Décidé** (24/09/2026, P6) |
+| D-44 | Montant de `GA_ROUND` | a) ajustement négatif (−reliquat), `GA_NET_PAY = NET + GA_ROUND_PREV + GA_ROUND`, reliquat antérieur versé hors espèces ; b) montant arrondi | a) | **Décidé** (24/09/2026, P7) |
+| D-45 | Champs du cumul d'ouverture | a) F12 + `irpp_base`, verrouillé après le premier bulletin validé de l'année ; b) F12 seul | a) | **Décidé** (24/09/2026, P8) |
+| D-46 | Date de paiement du lot | a) `l10n_ga_payment_date` sur le lot, reprise par ses bulletins ; b) bulletin seul | a) | **Décidé** (24/09/2026, P9) |

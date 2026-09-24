@@ -14,6 +14,10 @@
                         groups="hr_payroll.group_hr_payroll_user" invisible="company_country_code != 'GA'">
                     <field name="l10n_ga_loan_count" string="Prêts" widget="statinfo"/>
                 </button>
+                <button class="oe_stat_button" name="action_l10n_ga_ytd_openings" type="object" icon="fa-history"
+                        groups="hr_payroll.group_hr_payroll_user" invisible="company_country_code != 'GA'">
+                    <field name="l10n_ga_ytd_opening_count" string="Cumuls d’ouverture" widget="statinfo"/>
+                </button>
             </div>
             <field name="children" position="after">
                 <field name="company_country_code" invisible="1"/>
