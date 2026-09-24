@@ -20,8 +20,9 @@ class L10nGaAgreementGrade(models.Model):
     minimum_wage = fields.Monetary(string='Salaire minimum mensuel', required=True)
     hourly_rate = fields.Monetary(string='Taux horaire')
 
-    _grade_unique = models.Constraint(
-        'UNIQUE(agreement_id, category, echelon, date_from)',
+    # Index plutôt que contrainte UNIQUE : l'échelon est souvent vide et NULL ≠ NULL en PostgreSQL.
+    _grade_unique = models.UniqueIndex(
+        "(agreement_id, category, COALESCE(echelon, ''), date_from)",
         'Un grade (catégorie, échelon) n’a qu’une valeur par date d’effet.',
     )
 
