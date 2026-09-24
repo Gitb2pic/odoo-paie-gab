@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_company_view_form_l10n_ga_payroll" model="ir.ui.view">
+        <field name="name">res.company.form.l10n_ga_payroll</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <page name="branches" position="after">
+                <page string="Gabon — Paie et fiscalité" name="l10n_ga_payroll" invisible="country_code != 'GA'"
+                      groups="hr_payroll.group_hr_payroll_user">
+                    <group>
+                        <group string="Identifiants">
+                            <field name="l10n_ga_nif"/>
+                            <field name="l10n_ga_cnss_number"/>
+                            <field name="l10n_ga_cnamgs_number"/>
+                            <field name="l10n_ga_tax_center"/>
+                            <field name="l10n_ga_segment"/>
+                        </group>
+                        <group string="Options de paie">
+                            <field name="l10n_ga_cfp_base"/>
+                            <field name="l10n_ga_cfp_declaration"/>
+                            <field name="l10n_ga_cash_rounding"/>
+                            <field name="l10n_ga_loan_outstanding_cap"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Taux, plafonds, barème et part salariale du FNH (point 09-2) : paramètres datés
+                        « Gabon : … » de la paie (Paie → Configuration → Paramètres des règles).
+                    </div>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

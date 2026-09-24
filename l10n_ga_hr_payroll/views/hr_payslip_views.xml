@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payslip_view_form_l10n_ga" model="ir.ui.view">
+        <field name="name">hr.payslip.form.l10n_ga</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='salary_computation']//list/field[@name='total']" position="after">
+                <field name="l10n_ga_social_excluded" optional="hide" column_invisible="not parent.l10n_ga_is_ga"/>
+                <field name="l10n_ga_tax_exempt" optional="hide" column_invisible="not parent.l10n_ga_is_ga"/>
+            </xpath>
+            <page name="account_info" position="before">
+                <page string="Gabon" name="l10n_ga" invisible="not l10n_ga_is_ga">
+                    <group>
+                        <group string="Paiement et situation">
+                            <field name="l10n_ga_payment_date"/>
+                            <field name="l10n_ga_frozen_date"/>
+                            <field name="l10n_ga_tax_parts_used"/>
+                            <field name="l10n_ga_marital_used"/>
+                            <field name="l10n_ga_children_used"/>
+                            <field name="l10n_ga_cnss_ceiling_used"/>
+                            <field name="l10n_ga_cnamgs_ceiling_used"/>
+                        </group>
+                        <group string="Bases du mois">
+                            <field name="l10n_ga_gross"/>
+                            <field name="l10n_ga_benefits_in_kind"/>
+                            <field name="l10n_ga_social_excluded"/>
+                            <field name="l10n_ga_social_base"/>
+                            <field name="l10n_ga_tax_exempt"/>
+                            <field name="l10n_ga_bonus_exempted"/>
+                            <field name="l10n_ga_taxable_gross"/>
+                            <field name="l10n_ga_tcs_base"/>
+                            <field name="l10n_ga_irpp_base"/>
+                        </group>
+                        <group string="Retenues du mois">
+                            <field name="l10n_ga_cnss_employee"/>
+                            <field name="l10n_ga_cnamgs_employee"/>
+                            <field name="l10n_ga_tcs"/>
+                            <field name="l10n_ga_irpp_withheld"/>
+                        </group>
+                        <group string="Cumuls de l’année">
+                            <field name="l10n_ga_ytd_gross"/>
+                            <field name="l10n_ga_ytd_taxable"/>
+                            <field name="l10n_ga_ytd_irpp_base"/>
+                            <field name="l10n_ga_ytd_irpp"/>
+                            <field name="l10n_ga_ytd_tcs"/>
+                            <field name="l10n_ga_ytd_cnss"/>
+                            <field name="l10n_ga_ytd_bonus_exempt"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

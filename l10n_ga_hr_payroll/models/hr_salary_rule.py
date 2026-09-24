@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_round
 
 from ..lib.ga_fiscal_core.treatment import check_treatment
 
@@ -49,6 +50,30 @@ class HrSalaryRule(models.Model):
     l10n_ga_severance_base = fields.Boolean(string='Base des indemnités de rupture')
     l10n_ga_das_column = fields.Selection(DAS_COLUMN_SELECTION, string='Colonne DAS (part imposable)')
     l10n_ga_das_exempt_column = fields.Selection(DAS_COLUMN_SELECTION, string='Colonne DAS (part exonérée)')
+    l10n_ga_core_value = fields.Char(
+        string='Valeur du noyau',
+        help='Montant de PayResult lu par la règle (ex. irpp, benefit:housing) : contrôlé à la validation du bulletin.',
+    )
+
+    def _l10n_ga_sign(self):
+        """-1 pour une retenue (catégorie DED ou descendante), 1 sinon : signe de la ligne."""
+        self.ensure_one()
+        deduction = self.env.ref('hr_payroll.DED')
+        # hr.salary.rule est défini dans Enterprise, hors du chemin d'analyse de pylint
+        category = self.category_id  # pylint: disable=no-member
+        while category:
+            if category == deduction:
+                return -1
+            category = category.parent_id
+        return 1
+
+    def _compute_rule(self, localdict):
+        """Proratisation par la présence payée (sprint 0 point 12, décision D-21), arrondie au franc."""
+        amount, qty, rate = super()._compute_rule(localdict)  # pylint: disable=no-member  # Enterprise
+        if self.l10n_ga_prorate and amount:
+            ratio = localdict['payslip']._l10n_ga_paid_ratio()
+            amount = float_round(amount * ratio, precision_digits=0)
+        return amount, qty, rate
 
     @api.constrains('l10n_ga_social_base', 'l10n_ga_social_cap_group', 'l10n_ga_tax_base', 'l10n_ga_tax_cap_group')
     def _check_l10n_ga_treatment(self):

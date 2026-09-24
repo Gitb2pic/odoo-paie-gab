@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_salary_rule_view_form_l10n_ga" model="ir.ui.view">
+        <field name="name">hr.salary.rule.form.l10n_ga</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+        <field name="arch" type="xml">
+            <page name="general" position="after">
+                <page string="Fiscalité Gabon" name="l10n_ga_fiscal">
+                    <group>
+                        <group string="Assiettes (ADR-17)">
+                            <field name="l10n_ga_social_base"/>
+                            <field name="l10n_ga_social_cap_group" invisible="l10n_ga_social_base != 'capped'"
+                                   required="l10n_ga_social_base == 'capped'"/>
+                            <field name="l10n_ga_tax_base"/>
+                            <field name="l10n_ga_tax_cap_group" invisible="l10n_ga_tax_base != 'capped'"
+                                   required="l10n_ga_tax_base == 'capped'"/>
+                            <field name="l10n_ga_core_value" readonly="1" invisible="not l10n_ga_core_value"/>
+                        </group>
+                        <group string="Bases et DAS">
+                            <field name="l10n_ga_prorate"/>
+                            <field name="l10n_ga_leave_base"/>
+                            <field name="l10n_ga_severance_base"/>
+                            <field name="l10n_ga_das_column"/>
+                            <field name="l10n_ga_das_exempt_column"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

@@ -84,3 +84,12 @@ class TestRuleCodesUnique(TransactionCase):
         self.assertEqual(rule.l10n_ga_tax_cap_group, 'TRANSPORT_DAILY')
         foreign = self._new_rule(code='OTHER')  # règle sans traitement Gabon : non contrôlée
         self.assertFalse(foreign.l10n_ga_social_base)
+
+    def test_core_rules_in_one_line(self):
+        core_rules = self.structure.rule_ids.filtered('l10n_ga_core_value')
+        self.assertGreaterEqual(len(core_rules), 16)
+        for rule in core_rules:
+            self.assertEqual(len(rule.amount_python_compute.strip().splitlines()), 1, rule.code)
+            self.assertIn(f"payslip._l10n_ga_compute('{rule.l10n_ga_core_value}'", rule.amount_python_compute)
+        deductions = core_rules.filtered(lambda r: r.category_id.parent_id == self.env.ref('hr_payroll.DED'))
+        self.assertTrue(all(r.amount_python_compute.startswith('result = -') for r in deductions))

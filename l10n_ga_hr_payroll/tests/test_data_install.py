@@ -74,8 +74,11 @@ class TestDataInstall(TransactionCase):
         self.assertTrue(InputType.search([('code', '=', 'GA_SURSAL')]).available_in_attachments)  # ADR-16
         ga_types = InputType.search([('code', '=like', 'GA_%')])
         self.assertTrue(all(self.structure in t.struct_ids for t in ga_types))
-        rule_codes = set(self.structure.rule_ids.filtered(lambda r: r.condition_select == 'python').mapped('code'))
-        self.assertEqual(set(ga_types.mapped('code')), rule_codes)
+        input_rules = self.structure.rule_ids.filtered(
+            lambda r: r.condition_select == 'python' and not r.l10n_ga_core_value
+        )
+        self.assertEqual(set(ga_types.mapped('code')), set(input_rules.mapped('code')))
+        self.assertFalse(ga_types.filtered(lambda t: t.code.startswith('GA_AN_')))  # D-18 : valorisés par le noyau
 
     def test_twelve_absences_with_pay_indicator(self):
         for code, mode in ABSENCES.items():

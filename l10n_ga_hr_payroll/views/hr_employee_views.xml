@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_view_form_l10n_ga" model="ir.ui.view">
+        <field name="name">hr.employee.form.l10n_ga</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="children" position="after">
+                <field name="company_country_code" invisible="1"/>
+                <field name="l10n_ga_disabled_children" invisible="company_country_code != 'GA'"/>
+                <field name="l10n_ga_extra_half_part" invisible="company_country_code != 'GA' or children"/>
+                <field name="l10n_ga_tax_parts" invisible="company_country_code != 'GA'"/>
+                <field name="l10n_ga_tax_parts_forced" invisible="company_country_code != 'GA'"/>
+                <field name="l10n_ga_tax_parts_forced_reason"
+                       invisible="company_country_code != 'GA' or not l10n_ga_tax_parts_forced"
+                       required="l10n_ga_tax_parts_forced"/>
+            </field>
+            <group name="payroll_group" position="inside">
+                <group name="l10n_ga_payroll" string="Gabon" groups="hr.group_hr_user" invisible="company_country_code != 'GA'">
+                    <field name="l10n_ga_cnamgs_number"/>
+                    <field name="l10n_ga_nif"/>
+                    <field name="l10n_ga_nationality_code"/>
+                    <field name="l10n_ga_job_code"/>
+                    <field name="l10n_ga_level_code"/>
+                    <field name="l10n_ga_transport_trips"/>
+                    <field name="l10n_ga_company_car"/>
+                    <field name="l10n_ga_payment_mode"/>
+                    <separator string="Avantages en nature fournis"/>
+                    <field name="l10n_ga_benefit_housing"/>
+                    <field name="l10n_ga_benefit_domestic"/>
+                    <field name="l10n_ga_benefit_utilities"/>
+                    <field name="l10n_ga_benefit_food"/>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

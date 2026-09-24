@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Code nationalité de la DAS (base 06 : 1 Gabonais, 2 CEMAC, 3 autres africains, 4 non africains),
+         décision D-20 : les listes de pays sont des données, pas du code. -->
+    <record id="country_group_cemac" model="res.country.group">
+        <field name="name">CEMAC</field>
+        <field name="country_ids" eval="[Command.set([ref('base.cm'), ref('base.cf'), ref('base.cg'), ref('base.ga'), ref('base.gq'), ref('base.td')])]"/>
+    </record>
+    <record id="country_group_africa" model="res.country.group">
+        <field name="name">Afrique (Union africaine)</field>
+        <field name="country_ids" eval="[Command.set([
+            ref('base.dz'), ref('base.ao'), ref('base.bj'), ref('base.bw'), ref('base.bf'), ref('base.bi'), ref('base.cv'), ref('base.cm'), ref('base.cf'), ref('base.td'), ref('base.km'), ref('base.cg'), ref('base.cd'), ref('base.ci'), ref('base.dj'), ref('base.eg'), ref('base.gq'), ref('base.er'), ref('base.sz'), ref('base.et'), ref('base.ga'), ref('base.gm'), ref('base.gh'), ref('base.gn'), ref('base.gw'), ref('base.ke'), ref('base.ls'), ref('base.lr'), ref('base.ly'), ref('base.mg'), ref('base.mw'), ref('base.ml'), ref('base.mr'), ref('base.mu'), ref('base.ma'), ref('base.mz'), ref('base.na'), ref('base.ne'), ref('base.ng'), ref('base.rw'), ref('base.st'), ref('base.sn'), ref('base.sc'), ref('base.sl'), ref('base.so'), ref('base.za'), ref('base.ss'), ref('base.sd'), ref('base.tz'), ref('base.tg'), ref('base.tn'), ref('base.ug'), ref('base.zm'), ref('base.zw')])]"/>
+    </record>
+</odoo>
