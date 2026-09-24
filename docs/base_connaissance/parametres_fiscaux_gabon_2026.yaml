@@ -142,6 +142,14 @@ autres:
   cfu_personnes_morales: {taux: 0.15, abattement: 0.05, valeur_locative_pct_valeur_bilancielle: 0.10}
   ircm: 0.20
 
+conges:                           # base 05 §5 ; CT art. 186, circulaire n°565 (D-23)
+  allocation_ratio_adulte: 0.08333333333333333     # 1/12 de la rémunération de la période de référence
+  allocation_ratio_mineur: 0.10416666666666667     # 5/48 pour les moins de 18 ans
+  jours_ouvrables_par_mois_adulte: 2               # 24 jours ouvrables par an
+  jours_ouvrables_par_mois_mineur: 2.5             # 30 jours ouvrables par an
+  jours_ouvrables_par_semaine: 6
+  age_majorite: 18
+
 paie:                             # paramètres propres à l'addon (D-12) ; l'arrondi espèces est une option société (500)
   coupures_billetage: [10000, 5000, 2000, 1000, 500]   # architecture 08 F2
   arrondi_especes_defaut: 500      # F2 : défaut de l'option société l10n_ga_cash_rounding (0 = pas d'arrondi)

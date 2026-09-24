@@ -49,6 +49,38 @@ PARAMETERS = (
     _p(None, 'l10n_ga_rmm_amount', 'rmm', 'Gabon : rémunération minimale mensuelle'),
     _p(None, 'l10n_ga_hours_month_ref', 'heures_mensuelles_reference', 'Gabon : heures mensuelles de référence'),
     _p(None, 'l10n_ga_days_month_ref', 'jours_mensuels_reference', 'Gabon : jours mensuels de référence'),
+    # Congés payés (base 05 §5, D-23) : lus par l'adaptateur, hors FiscalParams
+    _p(
+        None,
+        'l10n_ga_leave_ratio_adult',
+        'conges.allocation_ratio_adulte',
+        'Gabon : allocation de congé, part de la rémunération de référence (adulte)',
+    ),
+    _p(
+        None,
+        'l10n_ga_leave_ratio_minor',
+        'conges.allocation_ratio_mineur',
+        'Gabon : allocation de congé, part de la rémunération de référence (moins de 18 ans)',
+    ),
+    _p(
+        None,
+        'l10n_ga_leave_days_month_adult',
+        'conges.jours_ouvrables_par_mois_adulte',
+        'Gabon : jours ouvrables de congé acquis par mois (adulte)',
+    ),
+    _p(
+        None,
+        'l10n_ga_leave_days_month_minor',
+        'conges.jours_ouvrables_par_mois_mineur',
+        'Gabon : jours ouvrables de congé acquis par mois (moins de 18 ans)',
+    ),
+    _p(
+        None,
+        'l10n_ga_leave_working_days_week',
+        'conges.jours_ouvrables_par_semaine',
+        'Gabon : jours ouvrables par semaine',
+    ),
+    _p(None, 'l10n_ga_majority_age', 'conges.age_majorite', 'Gabon : âge de la majorité (congés des mineurs)'),
     # CNSS
     _p('cnss_ceiling', 'l10n_ga_cnss_ceiling', 'cnss.plafond_mensuel', 'Gabon : plafond mensuel CNSS'),
     _p('cnss_employee_rate', 'l10n_ga_cnss_employee_rate', 'cnss.taux_salarial', 'Gabon : taux salarial CNSS'),

@@ -47,6 +47,66 @@
             <field name="date_from">2000-01-01</field>
             <field name="parameter_value">20</field>
         </record>
+        <record id="rule_parameter_leave_ratio_adult" model="hr.rule.parameter">
+            <field name="name">Gabon : allocation de congé, part de la rémunération de référence (adulte)</field>
+            <field name="code">l10n_ga_leave_ratio_adult</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_leave_ratio_adult_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_leave_ratio_adult"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.08333333333333333</field>
+        </record>
+        <record id="rule_parameter_leave_ratio_minor" model="hr.rule.parameter">
+            <field name="name">Gabon : allocation de congé, part de la rémunération de référence (moins de 18 ans)</field>
+            <field name="code">l10n_ga_leave_ratio_minor</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_leave_ratio_minor_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_leave_ratio_minor"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.10416666666666667</field>
+        </record>
+        <record id="rule_parameter_leave_days_month_adult" model="hr.rule.parameter">
+            <field name="name">Gabon : jours ouvrables de congé acquis par mois (adulte)</field>
+            <field name="code">l10n_ga_leave_days_month_adult</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_leave_days_month_adult_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_leave_days_month_adult"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">2</field>
+        </record>
+        <record id="rule_parameter_leave_days_month_minor" model="hr.rule.parameter">
+            <field name="name">Gabon : jours ouvrables de congé acquis par mois (moins de 18 ans)</field>
+            <field name="code">l10n_ga_leave_days_month_minor</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_leave_days_month_minor_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_leave_days_month_minor"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">2.5</field>
+        </record>
+        <record id="rule_parameter_leave_working_days_week" model="hr.rule.parameter">
+            <field name="name">Gabon : jours ouvrables par semaine</field>
+            <field name="code">l10n_ga_leave_working_days_week</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_leave_working_days_week_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_leave_working_days_week"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">6</field>
+        </record>
+        <record id="rule_parameter_majority_age" model="hr.rule.parameter">
+            <field name="name">Gabon : âge de la majorité (congés des mineurs)</field>
+            <field name="code">l10n_ga_majority_age</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_majority_age_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_majority_age"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">18</field>
+        </record>
         <record id="rule_parameter_cnss_ceiling" model="hr.rule.parameter">
             <field name="name">Gabon : plafond mensuel CNSS</field>
             <field name="code">l10n_ga_cnss_ceiling</field>
