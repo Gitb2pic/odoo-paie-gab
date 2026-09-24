@@ -362,34 +362,6 @@
             <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
             <field name="available_in_attachments" eval="False"/>
         </record>
-        <record id="input_type_ga_an_logt" model="hr.payslip.input.type">
-            <field name="name">Avantage en nature : logement</field>
-            <field name="code">GA_AN_LOGT</field>
-            <field name="country_id" ref="base.ga"/>
-            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
-            <field name="available_in_attachments" eval="False"/>
-        </record>
-        <record id="input_type_ga_an_dom" model="hr.payslip.input.type">
-            <field name="name">Avantage en nature : domesticité</field>
-            <field name="code">GA_AN_DOM</field>
-            <field name="country_id" ref="base.ga"/>
-            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
-            <field name="available_in_attachments" eval="False"/>
-        </record>
-        <record id="input_type_ga_an_eau" model="hr.payslip.input.type">
-            <field name="name">Avantage en nature : eau et électricité</field>
-            <field name="code">GA_AN_EAU</field>
-            <field name="country_id" ref="base.ga"/>
-            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
-            <field name="available_in_attachments" eval="False"/>
-        </record>
-        <record id="input_type_ga_an_nour" model="hr.payslip.input.type">
-            <field name="name">Avantage en nature : nourriture</field>
-            <field name="code">GA_AN_NOUR</field>
-            <field name="country_id" ref="base.ga"/>
-            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
-            <field name="available_in_attachments" eval="False"/>
-        </record>
         <record id="input_type_ga_advance" model="hr.payslip.input.type">
             <field name="name">Avance ou acompte sur salaire</field>
             <field name="code">GA_ADVANCE</field>

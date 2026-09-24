@@ -1,6 +1,7 @@
 """Catalogue des rubriques (F6) et générateur des règles salariales (RG22, ADR-16, ADR-17)."""
 
 import csv
+import dataclasses
 import os
 import re
 import sys
@@ -13,7 +14,9 @@ TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS))
 
 import csv_to_salary_rules as gen  # noqa: E402
+from ga_fiscal_core.engine import PayResult  # noqa: E402
 from ga_fiscal_core.exemptions import SOCIAL_CAPS, TAX_CAPS  # noqa: E402
+from ga_fiscal_core.params import BENEFIT_KINDS  # noqa: E402
 
 ODOO_PATH = Path(os.environ.get('ODOO_PATH', '/home/ubuntu/odoo/odoo'))
 SYSCOHADA_ACCOUNTS = ODOO_PATH / 'addons' / 'l10n_syscohada' / 'data' / 'template' / 'account.account-syscohada.csv'
@@ -47,7 +50,7 @@ def _write_catalogue(tmp_path, mutate):
 
 
 def test_catalogue_size(rows):
-    assert 55 <= len(rows) <= 70
+    assert 70 <= len(rows) <= 85
 
 
 def test_codes_unique(rows):
@@ -88,6 +91,7 @@ def test_housing_cash_allowance_fully_taxable(rows):
 def test_benefits_in_kind_outside_net(rows):
     aik = [row for row in rows if row['category'] == 'GA_AIK']
     assert len(aik) == 4
+    assert {row['core_value'] for row in aik} == {f'benefit:{kind}' for kind in BENEFIT_KINDS}  # D-18
     assert "categories['GA_AIK']" not in gen.STANDARD_FORMULAS['NET']
     assert "categories['GA_AIK']" in gen.STANDARD_FORMULAS['GROSS']
 
@@ -121,6 +125,11 @@ def test_target_accounts_exist_in_syscohada(rows):
         (lambda d: [r.update(input_kind='attachment') for r in d if r['code'] == 'GA_LOAN'], 'GA_LOAN'),
         (lambda d: d.append({**d[1], 'code': 'NET'}), 'double'),
         (lambda d: [r.pop('source') for r in d], 'colonne'),
+        (lambda d: d[1].update(core_value='net'), 'core_value'),
+        (lambda d: [r.update(core_value='nope') for r in d if r['code'] == 'GA_IRPP'], 'core_value'),
+        (lambda d: [r.update(core_value='benefit:car') for r in d if r['code'] == 'GA_AN_LOGT'], 'core_value'),
+        (lambda d: [r.update(input_kind='monthly') for r in d if r['code'] == 'GA_IRPP'], 'input_kind'),
+        (lambda d: [r.update(sequence='95') for r in d if r['code'] == 'GA_SURSAL'], 'avantages en nature'),
     ],
 )
 def test_invalid_catalogue_rejected(tmp_path, mutate, message):
@@ -169,7 +178,7 @@ def test_no_numeric_literal_in_formulas():
         for name in ('amount_python_compute', 'condition_python'):
             if name in fields:
                 code = re.sub(r"'[^']*'", "''", fields[name].text)
-                assert not re.search(r'\d', code), code
+                assert not re.search(r'(?<!\w)\d', code), code  # nombre littéral (pas l10n)
 
 
 def test_input_rules_read_their_input(rows):
@@ -177,6 +186,36 @@ def test_input_rules_read_their_input(rows):
     assert by_code['GA_SURSAL']['amount_python_compute'].text.strip().startswith("result = inputs['GA_SURSAL'].amount")
     assert by_code['GA_LOAN']['amount_python_compute'].text.strip().startswith("result = -inputs['GA_LOAN'].amount")
     assert by_code['GA_SURSAL']['condition_python'].text.strip() == "result = 'GA_SURSAL' in inputs"
+
+
+def test_core_rules_read_the_core_in_one_line(rows):
+    by_code = {fields['code'].text: fields for _, fields in _records(gen.RULES_XML, 'hr.salary.rule')}
+    core = [row for row in rows if row['kind'] == 'core']
+    assert {row['code'] for row in core} >= {
+        'GA_CNSS_SAL', 'GA_CNAMGS_SAL', 'GA_TCS', 'GA_IRPP', 'GA_IRPP_REGUL', 'GA_FNH_SAL',
+        'GA_CNSS_PF', 'GA_CNSS_AT', 'GA_CNSS_AVID', 'GA_CNAMGS_PAT', 'GA_FNH', 'GA_CFP',
+    }  # fmt: skip
+    for row in core:
+        call = f"payslip._l10n_ga_compute('{row['core_value']}', categories, result_rules)"
+        sign = '-' if row['category'] in ('GA_SOC', 'GA_TAX') else ''
+        assert by_code[row['code']]['amount_python_compute'].text == f'result = {sign}{call}', row['code']
+        assert by_code[row['code']]['condition_python'].text == f'result = bool({call})', row['code']
+        assert by_code[row['code']]['l10n_ga_core_value'].text == row['core_value'], row['code']
+    assert 'GA_IRPP' not in {row['code'] for row in rows if row['kind'] == 'input'}
+
+
+def test_core_values_are_payresult_fields(rows):
+    fields = {f.name for f in dataclasses.fields(PayResult)}
+    for row in rows:
+        if row['kind'] == 'core' and not row['core_value'].startswith('benefit:'):
+            assert row['core_value'] in fields, row['code']
+
+
+def test_cash_gains_computed_before_benefits_in_kind(rows):
+    first_aik = min(int(row['sequence']) for row in rows if row['category'] == 'GA_AIK')
+    for row in rows:
+        if row['social_base'] != 'none' and row['category'] != 'GA_AIK':
+            assert int(row['sequence']) < first_aik, row['code']
 
 
 def test_input_types(rows):

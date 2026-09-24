@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Génère les règles salariales et les types d'entrée depuis ``data/catalogue_rubriques_ga.csv`` (F6).
 
+Genres : `standard` (BASIC, GROSS, NET), `input` (lue sur une entrée de bulletin), `core`
+(calculée par le noyau en une ligne : `payslip._l10n_ga_compute(<core_value>, ...)`).
+
 Sorties (ne pas modifier à la main) :
 - ``l10n_ga_hr_payroll/data/hr_salary_rule_data.xml`` : une règle par rubrique, structure
   « Gabon — Employé », traitement social / fiscal porté par les champs ``l10n_ga_*`` (ADR-17) ;
@@ -18,6 +21,7 @@ Usage :
 
 import argparse
 import csv
+import dataclasses
 import re
 import sys
 from pathlib import Path
@@ -26,6 +30,8 @@ from xml.sax.saxutils import escape
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / 'l10n_ga_hr_payroll' / 'lib'))
 
+from ga_fiscal_core.engine import PayResult  # noqa: E402
+from ga_fiscal_core.params import BENEFIT_KINDS  # noqa: E402
 from ga_fiscal_core.treatment import DAS_COLUMNS, check_treatment  # noqa: E402
 
 MODULE = REPO / 'l10n_ga_hr_payroll'
@@ -40,6 +46,7 @@ COLUMNS = (
     'category',
     'sequence',
     'input_kind',
+    'core_value',
     'social_base',
     'social_cap_group',
     'tax_base',
@@ -59,7 +66,16 @@ CATEGORIES = {
     'DED': 'hr_payroll.DED',
     'NET': 'hr_payroll.NET',
     'GA_AIK': 'category_ga_aik',
+    'GA_SOC': 'category_ga_soc',
+    'GA_TAX': 'category_ga_tax',
+    'GA_EMPLOYER': 'category_ga_employer',
 }
+# Catégories filles de DED : montant négatif (retenue).
+DEDUCTION_CATEGORIES = ('DED', 'GA_SOC', 'GA_TAX')
+# Rubriques calculées par le noyau (genre « core ») : attribut de PayResult, ou avantage en
+# nature « benefit:<nature> » valorisé par le noyau (art. 93, décision D-18).
+CORE_VALUES = frozenset({f.name for f in dataclasses.fields(PayResult)} | {f'benefit:{kind}' for kind in BENEFIT_KINDS})
+KINDS = ('standard', 'input', 'core')
 # Règles standard conformes à hr_payroll (E/hr_payroll/data/hr_salary_rule_data.xml:10-123) ;
 # le brut Gabon ajoute les avantages en nature, le net unique ne les contient pas (non versés).
 STANDARD_FORMULAS = {
@@ -88,11 +104,11 @@ def _fail(row, message):
 
 def _check_kind(row):
     code = row['code']
-    if row['kind'] not in ('standard', 'input'):
+    if row['kind'] not in KINDS:
         _fail(row, f'kind invalide {row["kind"]!r}')
     if (row['kind'] == 'standard') != (code in STANDARD_FORMULAS):
         _fail(row, 'seules BASIC, GROSS et NET sont des règles standard, et elles doivent l’être')
-    if row['kind'] == 'input' and not code.startswith('GA_'):
+    if row['kind'] != 'standard' and not code.startswith('GA_'):
         _fail(row, 'le code d’une rubrique Gabon commence par GA_')
     if row['category'] not in CATEGORIES:
         _fail(row, f'catégorie inconnue {row["category"]!r}')
@@ -103,6 +119,12 @@ def _check_kind(row):
         _fail(row, f'input_kind invalide {row["input_kind"]!r}')
     if code == 'GA_LOAN' and row['input_kind'] != 'monthly':
         _fail(row, 'GA_LOAN ne doit jamais être disponible dans les ajustements (sprint 0 point 6)')
+    if row['kind'] == 'core' and row['core_value'] not in CORE_VALUES:
+        _fail(row, f'core_value inconnue du noyau {row["core_value"]!r}')
+    if row['kind'] != 'core' and row['core_value']:
+        _fail(row, 'core_value réservée aux rubriques calculées par le noyau')
+    if row['core_value'].startswith('benefit:') != (row['category'] == 'GA_AIK'):
+        _fail(row, 'core_value benefit:<nature> réservée aux avantages en nature (GA_AIK)')
 
 
 def _check_row(row):
@@ -135,7 +157,18 @@ def load_catalogue(path=CSV_PATH):
             _fail(row, 'code en double dans la structure (RG22)')
         seen.add(row['code'])
         _check_row(row)
+    _check_gains_before_benefits(rows)
     return rows
+
+
+def _check_gains_before_benefits(rows):
+    """Les avantages en nature sont valorisés sur les gains en espèces : ceux-ci les précèdent."""
+    aik = [int(row['sequence']) for row in rows if row['category'] == 'GA_AIK']
+    if not aik:
+        return
+    for row in rows:
+        if row['social_base'] != 'none' and row['category'] != 'GA_AIK' and int(row['sequence']) >= min(aik):
+            _fail(row, 'un gain en espèces doit être calculé avant les avantages en nature (séquence)')
 
 
 def _xml_id(prefix, code):
@@ -150,7 +183,10 @@ def _formulas(row):
     code = row['code']
     if row['kind'] == 'standard':
         return None, STANDARD_FORMULAS[code]
-    sign = '-' if row['category'] == 'DED' else ''
+    sign = '-' if row['category'] in DEDUCTION_CATEGORIES else ''
+    if row['kind'] == 'core':
+        call = f"payslip._l10n_ga_compute('{row['core_value']}', categories, result_rules)"
+        return f'result = bool({call})', f'result = {sign}{call}'
     return (
         f"result = '{code}' in inputs",
         f"result = {sign}inputs['{code}'].amount\nresult_name = inputs['{code}'].name",
@@ -187,7 +223,7 @@ def _rule(row):
         f'            <field name="l10n_ga_social_base">{row["social_base"]}</field>',
         f'            <field name="l10n_ga_tax_base">{row["tax_base"]}</field>',
     ]
-    for column in ('social_cap_group', 'tax_cap_group'):
+    for column in ('social_cap_group', 'tax_cap_group', 'core_value'):
         if row[column]:
             lines.append(f'            <field name="l10n_ga_{column}">{row[column]}</field>')
     lines += [

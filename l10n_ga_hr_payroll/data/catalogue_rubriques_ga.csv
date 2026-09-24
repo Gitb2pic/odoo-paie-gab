@@ -1,63 +1,75 @@
-code,name,kind,category,sequence,input_kind,social_base,social_cap_group,tax_base,tax_cap_group,prorate,leave_base,severance_base,das_column,das_exempt_column,account,source
-BASIC,Salaire de base,standard,BASIC,1,,subject,,taxable,,0,1,1,presence,none,pcg_6611,Base 05 §1 BASE ; CT art. 169 ; règle standard hr_payroll (paid_amount)
-GA_SURSAL,Sursalaire,input,ALW,10,attachment,subject,,taxable,,1,1,1,presence,none,pcg_6611,Base 05 §1 SURSAL
-GA_ANC,Prime d'ancienneté,input,ALW,11,monthly,subject,,taxable,,1,1,1,presence,none,pcg_6612,Base 05 §1 ANC et §4 (tronc commun) ; montant saisi jusqu'au calcul par convention (étape 2.4)
-GA_HS,Heures supplémentaires,input,ALW,12,monthly,subject,,taxable,,0,1,1,presence,none,pcg_6611,Base 05 §1 HS et §3 ; montant saisi jusqu'au calcul par convention (étape 2.4)
-GA_RECALL,Rappel de salaire,input,ALW,13,monthly,subject,,taxable,,0,1,1,presence,none,pcg_6611,Base 06 §3.2 ID19 (rappels) ; soumis comme le salaire qu'il complète
-GA_FONCT,Indemnité de fonction,input,ALW,14,attachment,subject,,taxable,,1,1,1,taxable_allowance,none,pcg_6618,Base 05 §1 FONCT
-GA_INTERIM,Prime d'intérim,input,ALW,15,monthly,subject,,taxable,,0,1,1,presence,none,pcg_6612,Base 05 §1 INTERIM
-GA_ASSID,Prime d'assiduité,input,ALW,20,monthly,subject,,taxable,,0,0,1,presence,none,pcg_6612,Base 05 §1 ASSID ; CT art. 225 (exclusion possible de l'allocation de congé)
-GA_NUIT,Prime de nuit,input,ALW,21,monthly,subject,,taxable,,0,0,1,presence,none,pcg_6612,Base 05 §1 NUIT (21 h - 6 h) ; congés C : exclue par défaut (CT art. 225)
-GA_QUART,Prime de quart,input,ALW,22,attachment,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 QUART (conventions) ; congés C : exclue par défaut
-GA_RISQUE,Prime de risque,input,ALW,23,attachment,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE ; arrêté 016 art. 2 ; CT art. 225 (indemnités de risques)
-GA_PENIB,Prime de pénibilité,input,ALW,24,attachment,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (pénibilité) ; arrêté 016 art. 2
-GA_TECHN,Prime de technicité,input,ALW,25,attachment,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (technicité) ; arrêté 016 art. 2
-GA_SUJET,Prime de sujétion,input,ALW,26,attachment,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (sujétion) ; arrêté 016 art. 2
-GA_DIPLOME,Prime de diplôme,input,ALW,27,attachment,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (diplôme) ; arrêté 016 art. 2
-GA_VIECHERE,Indemnité de vie chère,input,ALW,28,attachment,subject,,taxable,,1,0,1,taxable_allowance,none,pcg_6638,Base 05 §1 RISQUE (vie chère) ; arrêté 016 art. 2
-GA_EXPAT,Indemnité d'expatriation,input,ALW,29,attachment,subject,,taxable,,1,0,1,taxable_allowance,none,pcg_6633,Base 05 §1 EXPAT
-GA_ELOIGN,Indemnité d'éloignement ou de brousse,input,ALW,30,attachment,subject,,taxable,,1,0,1,taxable_allowance,none,pcg_6638,Base 05 §1 EXPAT (éloignement / brousse)
-GA_LOGT_ESP,Indemnité de logement,input,ALW,31,attachment,subject,,taxable,,1,1,1,taxable_allowance,none,pcg_6631,Base 05 §1 LOGT_ESP ; point 09-5 ouvert : imposable en totalité (décision D-14)
-GA_RESP,Indemnité de responsabilité,input,ALW,32,attachment,subject,,exempt,,1,1,1,none,nt_other,pcg_6638,Base 05 §1 RESP ; CGI art. 91 bis (si justifiée) ; arrêté 016 art. 2 (cotisable)
-GA_REPR,Indemnité de représentation,input,ALW,33,attachment,subject,,exempt,,0,0,0,none,nt_other,pcg_6632,Base 05 §1 REPR ; CGI art. 91 bis (si justifiée) ; cotisable selon arrêté 016
-GA_CAISSE,Prime de caisse,input,ALW,34,attachment,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 CAISSE ; CGI art. 91 bis ; arrêté 016 art. 3
-GA_REND,Prime de rendement,input,ALW,40,monthly,subject,,capped,BONUS_4M,0,0,1,presence,nt_other,pcg_6612,Base 05 §1 REND ; instruction 144/2004 (gratifications > 4 000 000 par an) ; point 09-4
-GA_13M,Treizième mois,input,ALW,41,monthly,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M ; instruction 144/2004 ; point 09-4
-GA_PFA,Prime de fin d'année,input,ALW,42,monthly,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (prime de fin d'année) ; instruction 144/2004
-GA_BONUS,Bonus,input,ALW,43,monthly,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (bonus) ; instruction 144/2004
-GA_BILAN,Prime de bilan,input,ALW,44,monthly,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (bilan) ; instruction 144/2004
-GA_RESULT,Prime de résultat ou d'intéressement,input,ALW,45,monthly,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (résultat / intéressement) ; instruction 144/2004
-GA_GRATIF,Gratification,input,ALW,46,monthly,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (gratifications) ; instruction 144/2004
-GA_TRANSP,Indemnité de transport,input,ALW,50,attachment,capped,TRANSPORT_35K,capped,TRANSPORT_DAILY,0,0,0,taxable_allowance,nt_transport,pcg_6634,Base 05 §1 TRANSP ; décret 0126/2010 ; arrêté 037/MTEPS (35 000) ; CGI art. 91 bis (2 500 / 5 000 par jour)
-GA_VEHIC,Indemnité de véhicule,input,ALW,51,attachment,capped,TRANSPORT_35K,capped,VEHICLE_100K,0,0,0,taxable_allowance,nt_transport,pcg_6634,Base 05 §1 VEHIC ; arrêté 037/MTEPS ; CGI art. 91 bis al. 5 (LFR 2026)
-GA_CARBU,Indemnité de carburant,input,ALW,52,attachment,capped,TRANSPORT_35K,taxable,,0,0,0,taxable_allowance,none,pcg_6634,Base 05 §1 CARBU ; fiscal non listé art. 91 bis : imposable par défaut (prudent)
-GA_KILOM,Indemnité kilométrique,input,ALW,53,monthly,capped,TRANSPORT_35K,taxable,,0,0,0,taxable_allowance,none,pcg_6634,Base 05 §1 CARBU (kilométrique) ; fiscal non listé art. 91 bis : imposable par défaut (prudent)
-GA_DEPL,Indemnité de déplacement ou de mission,input,ALW,54,monthly,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 DEPL ; CT art. 172 ; tronc commun art. 48 (frais exacts)
-GA_PANIER,Prime de panier,input,ALW,55,monthly,excluded,,taxable,,0,0,0,taxable_allowance,none,pcg_6638,Base 05 §1 PANIER ; arrêté 016 art. 3 ; fiscal non listé art. 91 bis : imposable par défaut (prudent)
-GA_SALISS,Prime de salissure,input,ALW,56,attachment,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS ; arrêté 016 art. 3
-GA_VESTIM,Indemnité vestimentaire,input,ALW,57,attachment,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS (tenues professionnelles)
-GA_BLANCH,Indemnité de blanchissage,input,ALW,58,attachment,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS (blanchissage)
-GA_COIFF,Prime de coiffure ou de beauté,input,ALW,59,attachment,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS (coiffure / beauté)
-GA_TROUSS,Prime de trousseau,input,ALW,60,monthly,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL ; CGI art. 91 (20 000 par enfant et par mois)
-GA_SCOLAR,Prime de scolarité,input,ALW,61,monthly,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL (frais de scolarité) ; CGI art. 91
-GA_JARDIN,Prime de jardin d'enfants,input,ALW,62,monthly,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL (jardin d'enfants) ; CGI art. 91
-GA_TRANSP_ENF,Prime de transport des enfants,input,ALW,63,monthly,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL (transport d'enfants) ; CGI art. 91
-GA_SOLID,Prime de solidarité,input,ALW,64,monthly,excluded,,taxable,,0,0,0,taxable_allowance,none,pcg_6638,Base 05 §1 SOLID ; décret 128/2010 ; fiscal non tranché : imposable par défaut (prudent)
-GA_COMPL_IJ,Complément employeur aux indemnités journalières,input,ALW,65,monthly,subject,,taxable,,0,0,0,presence,none,pcg_6615,Base 05 §1 COMPL_IJ ; arrêté 016 art. 2
-GA_CONGE,Allocation de congés payés,input,ALW,70,monthly,subject,,taxable,,0,0,1,leave,none,pcg_6613,Base 05 §1 CONGE et §5 (circulaire 565) ; montant saisi jusqu'au calcul (étape 2.4)
-GA_ICCP,Indemnité compensatrice de congés payés,input,ALW,71,monthly,subject,,taxable,,0,0,0,leave,none,pcg_6613,Base 05 §1 ICCP (rupture)
-GA_PREAV,Indemnité compensatrice de préavis,input,ALW,72,monthly,subject,,taxable,,0,0,0,taxable_allowance,none,pcg_6614,Base 05 §1 PREAV ; CT art. 86
-GA_LICENC,Indemnité de licenciement,input,ALW,73,monthly,subject,,exempt,,0,0,0,none,nt_other,pcg_6614,Base 05 §1 LICENC ; CGI art. 91 ter (à confirmer)
-GA_ISR_RET,Indemnité de services rendus (retraite ou décès),input,ALW,74,monthly,capped,ISR_RETIREMENT,capped,ISR_RETIREMENT,0,0,0,taxable_allowance,nt_other,pcg_6614,Base 05 §1 ISR_RET ; NC 000134/2004 (50 %)
-GA_ISR_DEM,Indemnité de services rendus (démission),input,ALW,75,monthly,subject,,taxable,,0,0,0,taxable_allowance,none,pcg_6614,Base 05 §1 ISR_DEM (100 %)
-GA_ISR_PS,Indemnité de départ volontaire (plan social),input,ALW,76,monthly,excluded,,exempt,,0,0,0,none,nt_other,pcg_6614,Base 05 §1 ISR_PS ; arrêté 016 art. 3
-GA_AN_LOGT,Avantage en nature : logement,input,GA_AIK,90,monthly,subject,,taxable,,0,0,1,benefit,none,pcg_6617,Base 05 §1 AN_LOGT ; CGI art. 93 (6 %) ; montant saisi jusqu'à la valorisation par le noyau (étape 2.3)
-GA_AN_DOM,Avantage en nature : domesticité,input,GA_AIK,91,monthly,subject,,taxable,,0,0,1,benefit,none,pcg_6617,Base 05 §1 AN_DOM ; CGI art. 93 (5 %) ; montant saisi jusqu'à l'étape 2.3
-GA_AN_EAU,Avantage en nature : eau et électricité,input,GA_AIK,92,monthly,subject,,taxable,,0,0,1,benefit,none,pcg_6617,Base 05 §1 AN_EAU ; CGI art. 93 (5 %) ; montant saisi jusqu'à l'étape 2.3
-GA_AN_NOUR,Avantage en nature : nourriture,input,GA_AIK,93,monthly,subject,,taxable,,0,0,1,food,none,pcg_6617,Base 05 §1 AN_NOUR ; CGI art. 93 (25 % plafonné) ; montant saisi jusqu'à l'étape 2.3
-GROSS,Salaire brut,standard,GROSS,100,,none,,none,,0,0,0,none,none,,Règle standard hr_payroll (BASIC + ALW) complétée des avantages en nature GA_AIK
-GA_ADVANCE,Avance ou acompte sur salaire,input,DED,170,monthly,none,,none,,0,0,0,none,none,pcg_4212,Base 05 §7 (avances et acomptes autorisés)
-GA_LOAN,Remboursement de prêt,input,DED,171,monthly,none,,none,,0,0,0,none,none,pcg_4211,Architecture 05 §2.4 ; F1 ; entrée créée par l'échéance (sprint 0 point 6 : jamais disponible dans les ajustements)
-GA_ASSIGN,Cession volontaire de salaire,input,DED,172,attachment,none,,none,,0,0,0,none,none,pcg_4231,Base 05 §7 (cessions volontaires ; quotité cessible CPC art. 729)
-GA_GARNISH,Saisie sur salaire,input,DED,173,attachment,none,,none,,0,0,0,none,none,pcg_4232,Base 05 §7 (saisies judiciaires ; quotité saisissable CPC art. 729)
-NET,Salaire net,standard,NET,200,,none,,none,,0,0,0,none,none,pcg_422,Règle standard hr_payroll (BASIC + ALW + DED) ; unique (règle d'or 3)
+code,name,kind,category,sequence,input_kind,core_value,social_base,social_cap_group,tax_base,tax_cap_group,prorate,leave_base,severance_base,das_column,das_exempt_column,account,source
+BASIC,Salaire de base,standard,BASIC,1,,,subject,,taxable,,0,1,1,presence,none,pcg_6611,Base 05 §1 BASE ; CT art. 169 ; règle standard hr_payroll (paid_amount)
+GA_SURSAL,Sursalaire,input,ALW,10,attachment,,subject,,taxable,,1,1,1,presence,none,pcg_6611,Base 05 §1 SURSAL
+GA_ANC,Prime d'ancienneté,input,ALW,11,monthly,,subject,,taxable,,1,1,1,presence,none,pcg_6612,Base 05 §1 ANC et §4 (tronc commun) ; montant saisi jusqu'au calcul par convention (étape 2.4)
+GA_HS,Heures supplémentaires,input,ALW,12,monthly,,subject,,taxable,,0,1,1,presence,none,pcg_6611,Base 05 §1 HS et §3 ; montant saisi jusqu'au calcul par convention (étape 2.4)
+GA_RECALL,Rappel de salaire,input,ALW,13,monthly,,subject,,taxable,,0,1,1,presence,none,pcg_6611,Base 06 §3.2 ID19 (rappels) ; soumis comme le salaire qu'il complète
+GA_FONCT,Indemnité de fonction,input,ALW,14,attachment,,subject,,taxable,,1,1,1,taxable_allowance,none,pcg_6618,Base 05 §1 FONCT
+GA_INTERIM,Prime d'intérim,input,ALW,15,monthly,,subject,,taxable,,0,1,1,presence,none,pcg_6612,Base 05 §1 INTERIM
+GA_ASSID,Prime d'assiduité,input,ALW,20,monthly,,subject,,taxable,,0,0,1,presence,none,pcg_6612,Base 05 §1 ASSID ; CT art. 225 (exclusion possible de l'allocation de congé)
+GA_NUIT,Prime de nuit,input,ALW,21,monthly,,subject,,taxable,,0,0,1,presence,none,pcg_6612,Base 05 §1 NUIT (21 h - 6 h) ; congés C : exclue par défaut (CT art. 225)
+GA_QUART,Prime de quart,input,ALW,22,attachment,,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 QUART (conventions) ; congés C : exclue par défaut
+GA_RISQUE,Prime de risque,input,ALW,23,attachment,,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE ; arrêté 016 art. 2 ; CT art. 225 (indemnités de risques)
+GA_PENIB,Prime de pénibilité,input,ALW,24,attachment,,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (pénibilité) ; arrêté 016 art. 2
+GA_TECHN,Prime de technicité,input,ALW,25,attachment,,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (technicité) ; arrêté 016 art. 2
+GA_SUJET,Prime de sujétion,input,ALW,26,attachment,,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (sujétion) ; arrêté 016 art. 2
+GA_DIPLOME,Prime de diplôme,input,ALW,27,attachment,,subject,,taxable,,1,0,1,presence,none,pcg_6612,Base 05 §1 RISQUE (diplôme) ; arrêté 016 art. 2
+GA_VIECHERE,Indemnité de vie chère,input,ALW,28,attachment,,subject,,taxable,,1,0,1,taxable_allowance,none,pcg_6638,Base 05 §1 RISQUE (vie chère) ; arrêté 016 art. 2
+GA_EXPAT,Indemnité d'expatriation,input,ALW,29,attachment,,subject,,taxable,,1,0,1,taxable_allowance,none,pcg_6633,Base 05 §1 EXPAT
+GA_ELOIGN,Indemnité d'éloignement ou de brousse,input,ALW,30,attachment,,subject,,taxable,,1,0,1,taxable_allowance,none,pcg_6638,Base 05 §1 EXPAT (éloignement / brousse)
+GA_LOGT_ESP,Indemnité de logement,input,ALW,31,attachment,,subject,,taxable,,1,1,1,taxable_allowance,none,pcg_6631,Base 05 §1 LOGT_ESP ; point 09-5 ouvert : imposable en totalité (décision D-14)
+GA_RESP,Indemnité de responsabilité,input,ALW,32,attachment,,subject,,exempt,,1,1,1,none,nt_other,pcg_6638,Base 05 §1 RESP ; CGI art. 91 bis (si justifiée) ; arrêté 016 art. 2 (cotisable)
+GA_REPR,Indemnité de représentation,input,ALW,33,attachment,,subject,,exempt,,0,0,0,none,nt_other,pcg_6632,Base 05 §1 REPR ; CGI art. 91 bis (si justifiée) ; cotisable selon arrêté 016
+GA_CAISSE,Prime de caisse,input,ALW,34,attachment,,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 CAISSE ; CGI art. 91 bis ; arrêté 016 art. 3
+GA_REND,Prime de rendement,input,ALW,40,monthly,,subject,,capped,BONUS_4M,0,0,1,presence,nt_other,pcg_6612,Base 05 §1 REND ; instruction 144/2004 (gratifications > 4 000 000 par an) ; point 09-4
+GA_13M,Treizième mois,input,ALW,41,monthly,,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M ; instruction 144/2004 ; point 09-4
+GA_PFA,Prime de fin d'année,input,ALW,42,monthly,,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (prime de fin d'année) ; instruction 144/2004
+GA_BONUS,Bonus,input,ALW,43,monthly,,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (bonus) ; instruction 144/2004
+GA_BILAN,Prime de bilan,input,ALW,44,monthly,,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (bilan) ; instruction 144/2004
+GA_RESULT,Prime de résultat ou d'intéressement,input,ALW,45,monthly,,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (résultat / intéressement) ; instruction 144/2004
+GA_GRATIF,Gratification,input,ALW,46,monthly,,subject,,capped,BONUS_4M,0,0,0,presence,nt_other,pcg_6612,Base 05 §1 13M (gratifications) ; instruction 144/2004
+GA_TRANSP,Indemnité de transport,input,ALW,50,attachment,,capped,TRANSPORT_35K,capped,TRANSPORT_DAILY,0,0,0,taxable_allowance,nt_transport,pcg_6634,Base 05 §1 TRANSP ; décret 0126/2010 ; arrêté 037/MTEPS (35 000) ; CGI art. 91 bis (2 500 / 5 000 par jour)
+GA_VEHIC,Indemnité de véhicule,input,ALW,51,attachment,,capped,TRANSPORT_35K,capped,VEHICLE_100K,0,0,0,taxable_allowance,nt_transport,pcg_6634,Base 05 §1 VEHIC ; arrêté 037/MTEPS ; CGI art. 91 bis al. 5 (LFR 2026)
+GA_CARBU,Indemnité de carburant,input,ALW,52,attachment,,capped,TRANSPORT_35K,taxable,,0,0,0,taxable_allowance,none,pcg_6634,Base 05 §1 CARBU ; fiscal non listé art. 91 bis : imposable par défaut (prudent)
+GA_KILOM,Indemnité kilométrique,input,ALW,53,monthly,,capped,TRANSPORT_35K,taxable,,0,0,0,taxable_allowance,none,pcg_6634,Base 05 §1 CARBU (kilométrique) ; fiscal non listé art. 91 bis : imposable par défaut (prudent)
+GA_DEPL,Indemnité de déplacement ou de mission,input,ALW,54,monthly,,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 DEPL ; CT art. 172 ; tronc commun art. 48 (frais exacts)
+GA_PANIER,Prime de panier,input,ALW,55,monthly,,excluded,,taxable,,0,0,0,taxable_allowance,none,pcg_6638,Base 05 §1 PANIER ; arrêté 016 art. 3 ; fiscal non listé art. 91 bis : imposable par défaut (prudent)
+GA_SALISS,Prime de salissure,input,ALW,56,attachment,,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS ; arrêté 016 art. 3
+GA_VESTIM,Indemnité vestimentaire,input,ALW,57,attachment,,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS (tenues professionnelles)
+GA_BLANCH,Indemnité de blanchissage,input,ALW,58,attachment,,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS (blanchissage)
+GA_COIFF,Prime de coiffure ou de beauté,input,ALW,59,attachment,,excluded,,exempt,,0,0,0,none,nt_other,pcg_6638,Base 05 §1 SALISS (coiffure / beauté)
+GA_TROUSS,Prime de trousseau,input,ALW,60,monthly,,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL ; CGI art. 91 (20 000 par enfant et par mois)
+GA_SCOLAR,Prime de scolarité,input,ALW,61,monthly,,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL (frais de scolarité) ; CGI art. 91
+GA_JARDIN,Prime de jardin d'enfants,input,ALW,62,monthly,,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL (jardin d'enfants) ; CGI art. 91
+GA_TRANSP_ENF,Prime de transport des enfants,input,ALW,63,monthly,,excluded,,capped,FAMILY_20K,0,0,0,taxable_allowance,nt_other,pcg_6616,Base 05 §1 FAMIL (transport d'enfants) ; CGI art. 91
+GA_SOLID,Prime de solidarité,input,ALW,64,monthly,,excluded,,taxable,,0,0,0,taxable_allowance,none,pcg_6638,Base 05 §1 SOLID ; décret 128/2010 ; fiscal non tranché : imposable par défaut (prudent)
+GA_COMPL_IJ,Complément employeur aux indemnités journalières,input,ALW,65,monthly,,subject,,taxable,,0,0,0,presence,none,pcg_6615,Base 05 §1 COMPL_IJ ; arrêté 016 art. 2
+GA_CONGE,Allocation de congés payés,input,ALW,70,monthly,,subject,,taxable,,0,0,1,leave,none,pcg_6613,Base 05 §1 CONGE et §5 (circulaire 565) ; montant saisi jusqu'au calcul (étape 2.4)
+GA_ICCP,Indemnité compensatrice de congés payés,input,ALW,71,monthly,,subject,,taxable,,0,0,0,leave,none,pcg_6613,Base 05 §1 ICCP (rupture)
+GA_PREAV,Indemnité compensatrice de préavis,input,ALW,72,monthly,,subject,,taxable,,0,0,0,taxable_allowance,none,pcg_6614,Base 05 §1 PREAV ; CT art. 86
+GA_LICENC,Indemnité de licenciement,input,ALW,73,monthly,,subject,,exempt,,0,0,0,none,nt_other,pcg_6614,Base 05 §1 LICENC ; CGI art. 91 ter (à confirmer)
+GA_ISR_RET,Indemnité de services rendus (retraite ou décès),input,ALW,74,monthly,,capped,ISR_RETIREMENT,capped,ISR_RETIREMENT,0,0,0,taxable_allowance,nt_other,pcg_6614,Base 05 §1 ISR_RET ; NC 000134/2004 (50 %)
+GA_ISR_DEM,Indemnité de services rendus (démission),input,ALW,75,monthly,,subject,,taxable,,0,0,0,taxable_allowance,none,pcg_6614,Base 05 §1 ISR_DEM (100 %)
+GA_ISR_PS,Indemnité de départ volontaire (plan social),input,ALW,76,monthly,,excluded,,exempt,,0,0,0,none,nt_other,pcg_6614,Base 05 §1 ISR_PS ; arrêté 016 art. 3
+GA_AN_LOGT,Avantage en nature : logement,core,GA_AIK,90,,benefit:housing,subject,,taxable,,0,0,1,benefit,none,pcg_6617,"Base 05 §1 AN_LOGT ; CGI art. 93 (6 %) ; valorisé par le noyau si la nature est fournie (version, décision D-18)"
+GA_AN_DOM,Avantage en nature : domesticité,core,GA_AIK,91,,benefit:domestic,subject,,taxable,,0,0,1,benefit,none,pcg_6617,"Base 05 §1 AN_DOM ; CGI art. 93 (5 %) ; valorisé par le noyau si la nature est fournie (version, décision D-18)"
+GA_AN_EAU,Avantage en nature : eau et électricité,core,GA_AIK,92,,benefit:utilities,subject,,taxable,,0,0,1,benefit,none,pcg_6617,"Base 05 §1 AN_EAU ; CGI art. 93 (5 %) ; valorisé par le noyau si la nature est fournie (version, décision D-18)"
+GA_AN_NOUR,Avantage en nature : nourriture,core,GA_AIK,93,,benefit:food,subject,,taxable,,0,0,1,food,none,pcg_6617,"Base 05 §1 AN_NOUR ; CGI art. 93 (25 % plafonné) ; valorisé par le noyau si la nature est fournie (version, décision D-18)"
+GROSS,Salaire brut,standard,GROSS,100,,,none,,none,,0,0,0,none,none,,Règle standard hr_payroll (BASIC + ALW) complétée des avantages en nature GA_AIK
+GA_CNSS_SAL,CNSS salariale,core,GA_SOC,110,,cnss_employee,none,,none,,0,0,0,none,none,pcg_4313,"Base 03 §2 (taux salarial, plafond mensuel) ; noyau social.py"
+GA_CNAMGS_SAL,CNAMGS salariale,core,GA_SOC,111,,cnamgs_employee,none,,none,,0,0,0,none,none,pcg_4318,"Base 03 §3 (taux salarial, plafond mensuel) ; noyau social.py"
+GA_TCS,Taxe complémentaire sur salaires,core,GA_TAX,120,,tcs,none,,none,,0,0,0,none,none,pcg_4472,Base 04 §2 et §7 ; point 09-3 (paramètre l10n_ga_tcs_deduct_cnamgs) ; noyau tax.py
+GA_IRPP,IRPP,core,GA_TAX,121,,irpp,none,,none,,0,0,0,none,none,pcg_4471,"Base 04 §1 et §7 (abattement, quotient familial, barème) ; F14 ; noyau tax.py"
+GA_IRPP_REGUL,Régularisation IRPP,core,GA_TAX,122,,irpp_regularisation,none,,none,,0,0,0,none,none,pcg_4471,Base 04 §7 (régularisation annuelle : décembre ou départ) ; noyau tax.py
+GA_FNH_SAL,FNH part salariale,core,GA_TAX,123,,fnh_employee,none,,none,,0,0,0,none,none,pcg_4472,"Base 04 §3 ; loi 002/2026 ; point 09-2 (part salariale, paramètre daté, 0 par défaut)"
+GA_ADVANCE,Avance ou acompte sur salaire,input,DED,170,monthly,,none,,none,,0,0,0,none,none,pcg_4212,Base 05 §7 (avances et acomptes autorisés)
+GA_LOAN,Remboursement de prêt,input,DED,171,monthly,,none,,none,,0,0,0,none,none,pcg_4211,Architecture 05 §2.4 ; F1 ; entrée créée par l'échéance (sprint 0 point 6 : jamais disponible dans les ajustements)
+GA_ASSIGN,Cession volontaire de salaire,input,DED,172,attachment,,none,,none,,0,0,0,none,none,pcg_4231,Base 05 §7 (cessions volontaires ; quotité cessible CPC art. 729)
+GA_GARNISH,Saisie sur salaire,input,DED,173,attachment,,none,,none,,0,0,0,none,none,pcg_4232,Base 05 §7 (saisies judiciaires ; quotité saisissable CPC art. 729)
+NET,Salaire net,standard,NET,200,,,none,,none,,0,0,0,none,none,pcg_422,Règle standard hr_payroll (BASIC + ALW + DED) ; unique (règle d'or 3)
+GA_CNSS_PF,CNSS patronale : prestations familiales,core,GA_EMPLOYER,210,,cnss_employer_pf,none,,none,,0,0,0,none,none,pcg_6641,Base 03 §2 (taux patronal prestations familiales)
+GA_CNSS_AT,CNSS patronale : accidents du travail,core,GA_EMPLOYER,211,,cnss_employer_at,none,,none,,0,0,0,none,none,pcg_6641,Base 03 §2 (taux patronal accidents du travail)
+GA_CNSS_AVID,CNSS patronale : pensions (AVID),core,GA_EMPLOYER,212,,cnss_employer_avid,none,,none,,0,0,0,none,none,pcg_6641,Base 03 §2 (taux patronal pensions)
+GA_CNAMGS_PAT,CNAMGS patronale,core,GA_EMPLOYER,213,,cnamgs_employer,none,,none,,0,0,0,none,none,pcg_6641,Base 03 §3 (taux patronal)
+GA_FNH,Fonds national de l'habitat,core,GA_EMPLOYER,214,,fnh,none,,none,,0,0,0,none,none,pcg_6413,Base 04 §3 ; loi 002/2026 (3 % au 17/07/2026) ; point 09-2
+GA_CFP,Contribution à la formation professionnelle,core,GA_EMPLOYER,215,,cfp,none,,none,,0,0,0,none,none,pcg_6415,"Base 04 §4 ; décision D-10 (assiette sociale par défaut, option société)"

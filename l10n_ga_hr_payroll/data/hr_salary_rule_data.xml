@@ -1018,12 +1018,12 @@ result_name = inputs['GA_ISR_PS'].name</field>
             <field name="category_id" ref="category_ga_aik"/>
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = 'GA_AN_LOGT' in inputs</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('benefit:housing', categories, result_rules))</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs['GA_AN_LOGT'].amount
-result_name = inputs['GA_AN_LOGT'].name</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('benefit:housing', categories, result_rules)</field>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">benefit:housing</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="False"/>
             <field name="l10n_ga_severance_base" eval="True"/>
@@ -1037,12 +1037,12 @@ result_name = inputs['GA_AN_LOGT'].name</field>
             <field name="category_id" ref="category_ga_aik"/>
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = 'GA_AN_DOM' in inputs</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('benefit:domestic', categories, result_rules))</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs['GA_AN_DOM'].amount
-result_name = inputs['GA_AN_DOM'].name</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('benefit:domestic', categories, result_rules)</field>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">benefit:domestic</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="False"/>
             <field name="l10n_ga_severance_base" eval="True"/>
@@ -1056,12 +1056,12 @@ result_name = inputs['GA_AN_DOM'].name</field>
             <field name="category_id" ref="category_ga_aik"/>
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = 'GA_AN_EAU' in inputs</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('benefit:utilities', categories, result_rules))</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs['GA_AN_EAU'].amount
-result_name = inputs['GA_AN_EAU'].name</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('benefit:utilities', categories, result_rules)</field>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">benefit:utilities</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="False"/>
             <field name="l10n_ga_severance_base" eval="True"/>
@@ -1075,12 +1075,12 @@ result_name = inputs['GA_AN_EAU'].name</field>
             <field name="category_id" ref="category_ga_aik"/>
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = 'GA_AN_NOUR' in inputs</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('benefit:food', categories, result_rules))</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs['GA_AN_NOUR'].amount
-result_name = inputs['GA_AN_NOUR'].name</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('benefit:food', categories, result_rules)</field>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">benefit:food</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="False"/>
             <field name="l10n_ga_severance_base" eval="True"/>
@@ -1099,6 +1099,120 @@ result_name = inputs['GA_AN_NOUR'].name</field>
             <field name="bold" eval="True"/>
             <field name="l10n_ga_social_base">none</field>
             <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_cnss_sal" model="hr.salary.rule">
+            <field name="name">CNSS salariale</field>
+            <field name="code">GA_CNSS_SAL</field>
+            <field name="sequence">110</field>
+            <field name="category_id" ref="category_ga_soc"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cnss_employee', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -payslip._l10n_ga_compute('cnss_employee', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cnss_employee</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_cnamgs_sal" model="hr.salary.rule">
+            <field name="name">CNAMGS salariale</field>
+            <field name="code">GA_CNAMGS_SAL</field>
+            <field name="sequence">111</field>
+            <field name="category_id" ref="category_ga_soc"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cnamgs_employee', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -payslip._l10n_ga_compute('cnamgs_employee', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cnamgs_employee</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_tcs" model="hr.salary.rule">
+            <field name="name">Taxe complémentaire sur salaires</field>
+            <field name="code">GA_TCS</field>
+            <field name="sequence">120</field>
+            <field name="category_id" ref="category_ga_tax"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('tcs', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -payslip._l10n_ga_compute('tcs', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">tcs</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_irpp" model="hr.salary.rule">
+            <field name="name">IRPP</field>
+            <field name="code">GA_IRPP</field>
+            <field name="sequence">121</field>
+            <field name="category_id" ref="category_ga_tax"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('irpp', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -payslip._l10n_ga_compute('irpp', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">irpp</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_irpp_regul" model="hr.salary.rule">
+            <field name="name">Régularisation IRPP</field>
+            <field name="code">GA_IRPP_REGUL</field>
+            <field name="sequence">122</field>
+            <field name="category_id" ref="category_ga_tax"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('irpp_regularisation', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -payslip._l10n_ga_compute('irpp_regularisation', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">irpp_regularisation</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_fnh_sal" model="hr.salary.rule">
+            <field name="name">FNH part salariale</field>
+            <field name="code">GA_FNH_SAL</field>
+            <field name="sequence">123</field>
+            <field name="category_id" ref="category_ga_tax"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('fnh_employee', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -payslip._l10n_ga_compute('fnh_employee', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">fnh_employee</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="False"/>
             <field name="l10n_ga_severance_base" eval="False"/>
@@ -1194,6 +1308,120 @@ result_name = inputs['GA_GARNISH'].name</field>
             <field name="appears_on_employee_cost_dashboard" eval="True"/>
             <field name="l10n_ga_social_base">none</field>
             <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_cnss_pf" model="hr.salary.rule">
+            <field name="name">CNSS patronale : prestations familiales</field>
+            <field name="code">GA_CNSS_PF</field>
+            <field name="sequence">210</field>
+            <field name="category_id" ref="category_ga_employer"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cnss_employer_pf', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cnss_employer_pf', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cnss_employer_pf</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_cnss_at" model="hr.salary.rule">
+            <field name="name">CNSS patronale : accidents du travail</field>
+            <field name="code">GA_CNSS_AT</field>
+            <field name="sequence">211</field>
+            <field name="category_id" ref="category_ga_employer"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cnss_employer_at', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cnss_employer_at', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cnss_employer_at</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_cnss_avid" model="hr.salary.rule">
+            <field name="name">CNSS patronale : pensions (AVID)</field>
+            <field name="code">GA_CNSS_AVID</field>
+            <field name="sequence">212</field>
+            <field name="category_id" ref="category_ga_employer"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cnss_employer_avid', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cnss_employer_avid', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cnss_employer_avid</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_cnamgs_pat" model="hr.salary.rule">
+            <field name="name">CNAMGS patronale</field>
+            <field name="code">GA_CNAMGS_PAT</field>
+            <field name="sequence">213</field>
+            <field name="category_id" ref="category_ga_employer"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cnamgs_employer', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cnamgs_employer', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cnamgs_employer</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_fnh" model="hr.salary.rule">
+            <field name="name">Fonds national de l'habitat</field>
+            <field name="code">GA_FNH</field>
+            <field name="sequence">214</field>
+            <field name="category_id" ref="category_ga_employer"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('fnh', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('fnh', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">fnh</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_cfp" model="hr.salary.rule">
+            <field name="name">Contribution à la formation professionnelle</field>
+            <field name="code">GA_CFP</field>
+            <field name="sequence">215</field>
+            <field name="category_id" ref="category_ga_employer"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('cfp', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('cfp', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_core_value">cfp</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="False"/>
             <field name="l10n_ga_severance_base" eval="False"/>
