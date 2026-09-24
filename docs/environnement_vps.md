@@ -17,7 +17,7 @@ Relevé le 24/09/2026 (sprint 0), en lecture seule. **Aucun mot de passe ici** :
 | Enterprise (`$ENTERPRISE_PATH`) | `/home/ubuntu/odoo/enterprise` — commit `35b391595918` (24/09/2026) |
 | Python / virtualenv Odoo | Python 3.14.4, `/home/ubuntu/odoo/venv-odoo-19.0` (ne pas y installer d'outils de dev) |
 | `addons_path` | `/home/ubuntu/odoo/enterprise,/home/ubuntu/odoo/odoo/addons,/home/ubuntu/odoo/extra-addon` |
-| PostgreSQL | local (socket), rôle `ubuntu` avec droit `CREATEDB` ; bases existantes `odoo19` (production), `postgres` — **jamais touchées** |
+| PostgreSQL | local (socket), rôle `ubuntu` avec droit `CREATEDB` ; bases existantes `odoo19` (créée par Alex : `hr`, `hr_payroll`, `hr_payroll_holidays`, `hr_payroll_planning` installés, 1 société, 1 salarié, 0 bulletin, sans comptabilité ni `l10n_ga` — relevé le 24/09/2026) et `postgres` — **jamais modifiées** |
 
 ## Dépôt `extra-addon`
 
