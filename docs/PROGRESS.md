@@ -39,7 +39,7 @@ Mis à jour le 24/09/2026 (étape 2.3).
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. **À appliquer par Alex : D-04** (`db_name`, `dbfilter`, `list_db` dans `odoo.conf` + redémarrage ; refusé à Claude par les permissions, commande dans le rapport 2.3). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés à l'étape 2.3 : D-18 à D-22. Dette notable : régularisation IRPP sans cumuls d'ouverture jusqu'à l'étape 2.6 (F12).
+Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés à l'étape 2.3 : D-18 à D-22. Dette notable : régularisation IRPP sans cumuls d'ouverture jusqu'à l'étape 2.6 (F12).
 
 ## Prochaine étape
 
