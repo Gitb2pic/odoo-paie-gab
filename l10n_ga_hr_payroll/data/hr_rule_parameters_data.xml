@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    FICHIER GÉNÉRÉ par tools/yaml_to_rule_parameters.py depuis
+    docs/base_connaissance/parametres_fiscaux_gabon_2026.yaml : ne pas modifier à la main.
+    Une valeur par date d'effet (RG06) ; une valeur non datée dans le YAML porte la date
+    sentinelle 2000-01-01. Valeurs = littéraux Python (safe_eval, sprint 0 point 11).
+-->
+<odoo>
+    <data noupdate="0">
+        <record id="rule_parameter_smig_amount" model="hr.rule.parameter">
+            <field name="name">Gabon : SMIG mensuel</field>
+            <field name="code">l10n_ga_smig_amount</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_smig_amount_20100423" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_smig_amount"/>
+            <field name="date_from">2010-04-23</field>
+            <field name="parameter_value">80000</field>
+        </record>
+        <record id="rule_parameter_rmm_amount" model="hr.rule.parameter">
+            <field name="name">Gabon : rémunération minimale mensuelle</field>
+            <field name="code">l10n_ga_rmm_amount</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_rmm_amount_20100423" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_rmm_amount"/>
+            <field name="date_from">2010-04-23</field>
+            <field name="parameter_value">150000</field>
+        </record>
+        <record id="rule_parameter_hours_month_ref" model="hr.rule.parameter">
+            <field name="name">Gabon : heures mensuelles de référence</field>
+            <field name="code">l10n_ga_hours_month_ref</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_hours_month_ref_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_hours_month_ref"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">173.33</field>
+        </record>
+        <record id="rule_parameter_days_month_ref" model="hr.rule.parameter">
+            <field name="name">Gabon : jours mensuels de référence</field>
+            <field name="code">l10n_ga_days_month_ref</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_days_month_ref_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_days_month_ref"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">20</field>
+        </record>
+        <record id="rule_parameter_cnss_ceiling" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond mensuel CNSS</field>
+            <field name="code">l10n_ga_cnss_ceiling</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnss_ceiling_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_ceiling"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1500000</field>
+        </record>
+        <record id="rule_parameter_cnss_employee_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux salarial CNSS</field>
+            <field name="code">l10n_ga_cnss_employee_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnss_employee_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_employee_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.025</field>
+        </record>
+        <record id="rule_parameter_cnss_employee_rate_20260101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_employee_rate"/>
+            <field name="date_from">2026-01-01</field>
+            <field name="parameter_value">0.05</field>
+        </record>
+        <record id="rule_parameter_cnss_pf_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux patronal CNSS prestations familiales</field>
+            <field name="code">l10n_ga_cnss_pf_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnss_pf_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_pf_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.08</field>
+        </record>
+        <record id="rule_parameter_cnss_pf_rate_20260101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_pf_rate"/>
+            <field name="date_from">2026-01-01</field>
+            <field name="parameter_value">0.05</field>
+        </record>
+        <record id="rule_parameter_cnss_at_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux patronal CNSS accidents du travail</field>
+            <field name="code">l10n_ga_cnss_at_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnss_at_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_at_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.03</field>
+        </record>
+        <record id="rule_parameter_cnss_at_rate_20260101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_at_rate"/>
+            <field name="date_from">2026-01-01</field>
+            <field name="parameter_value">0.02</field>
+        </record>
+        <record id="rule_parameter_cnss_avid_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux patronal CNSS pensions (AVID)</field>
+            <field name="code">l10n_ga_cnss_avid_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnss_avid_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_avid_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.05</field>
+        </record>
+        <record id="rule_parameter_cnss_avid_rate_20260101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_avid_rate"/>
+            <field name="date_from">2026-01-01</field>
+            <field name="parameter_value">0.11</field>
+        </record>
+        <record id="rule_parameter_cnss_transport_cap" model="hr.rule.parameter">
+            <field name="name">Gabon : exclusion sociale transport, véhicule, carburant (mensuelle)</field>
+            <field name="code">l10n_ga_cnss_transport_cap</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnss_transport_cap_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnss_transport_cap"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">35000</field>
+        </record>
+        <record id="rule_parameter_cnamgs_ceiling" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond mensuel CNAMGS</field>
+            <field name="code">l10n_ga_cnamgs_ceiling</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnamgs_ceiling_20130101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnamgs_ceiling"/>
+            <field name="date_from">2013-01-01</field>
+            <field name="parameter_value">2500000</field>
+        </record>
+        <record id="rule_parameter_cnamgs_employee_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux salarial CNAMGS</field>
+            <field name="code">l10n_ga_cnamgs_employee_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnamgs_employee_rate_20130101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnamgs_employee_rate"/>
+            <field name="date_from">2013-01-01</field>
+            <field name="parameter_value">0.02</field>
+        </record>
+        <record id="rule_parameter_cnamgs_employer_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux patronal CNAMGS</field>
+            <field name="code">l10n_ga_cnamgs_employer_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cnamgs_employer_rate_20130101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cnamgs_employer_rate"/>
+            <field name="date_from">2013-01-01</field>
+            <field name="parameter_value">0.041</field>
+        </record>
+        <record id="rule_parameter_tcs_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux de la TCS</field>
+            <field name="code">l10n_ga_tcs_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_tcs_rate_20100101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_tcs_rate"/>
+            <field name="date_from">2010-01-01</field>
+            <field name="parameter_value">0.05</field>
+        </record>
+        <record id="rule_parameter_tcs_exemption" model="hr.rule.parameter">
+            <field name="name">Gabon : fraction mensuelle exonérée de TCS</field>
+            <field name="code">l10n_ga_tcs_exemption</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_tcs_exemption_20100101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_tcs_exemption"/>
+            <field name="date_from">2010-01-01</field>
+            <field name="parameter_value">100000</field>
+        </record>
+        <record id="rule_parameter_tcs_exemption_20140101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_tcs_exemption"/>
+            <field name="date_from">2014-01-01</field>
+            <field name="parameter_value">150000</field>
+        </record>
+        <record id="rule_parameter_tcs_deduct_cnss" model="hr.rule.parameter">
+            <field name="name">Gabon : TCS après CNSS salariale</field>
+            <field name="code">l10n_ga_tcs_deduct_cnss</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_tcs_deduct_cnss_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_tcs_deduct_cnss"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">True</field>
+        </record>
+        <record id="rule_parameter_tcs_deduct_cnamgs" model="hr.rule.parameter">
+            <field name="name">Gabon : TCS après CNAMGS salariale (point 09-3)</field>
+            <field name="code">l10n_ga_tcs_deduct_cnamgs</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_tcs_deduct_cnamgs_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_tcs_deduct_cnamgs"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">True</field>
+        </record>
+        <record id="rule_parameter_irpp_fp_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux de l’abattement pour frais professionnels</field>
+            <field name="code">l10n_ga_irpp_fp_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_irpp_fp_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_irpp_fp_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.2</field>
+        </record>
+        <record id="rule_parameter_irpp_fp_cap" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond annuel de l’abattement pour frais professionnels</field>
+            <field name="code">l10n_ga_irpp_fp_cap</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_irpp_fp_cap_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_irpp_fp_cap"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">10000000</field>
+        </record>
+        <record id="rule_parameter_irpp_max_children" model="hr.rule.parameter">
+            <field name="name">Gabon : nombre maximal d’enfants</field>
+            <field name="code">l10n_ga_irpp_max_children</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_irpp_max_children_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_irpp_max_children"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">6</field>
+        </record>
+        <record id="rule_parameter_irpp_brackets" model="hr.rule.parameter">
+            <field name="name">Gabon : barème annuel IRPP pour une part</field>
+            <field name="code">l10n_ga_irpp_brackets</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_irpp_brackets_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_irpp_brackets"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">[(0, 1500000, 0.0, 0), (1500001, 1920000, 0.05, 75000), (1920001, 2700000, 0.1, 171000), (2700001, 3600000, 0.15, 306000), (3600001, 5160000, 0.2, 486000), (5160001, 7500000, 0.25, 744000), (7500001, 11000000, 0.3, 1119000), (11000001, None, 0.35, 1669000)]</field>
+        </record>
+        <record id="rule_parameter_irpp_min_withholding" model="hr.rule.parameter">
+            <field name="name">Gabon : retenue IRPP minimale (F14, 0 = désactivé)</field>
+            <field name="code">l10n_ga_irpp_min_withholding</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_irpp_min_withholding_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_irpp_min_withholding"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0</field>
+        </record>
+        <record id="rule_parameter_parts_single" model="hr.rule.parameter">
+            <field name="name">Gabon : parts, personne seule sans enfant</field>
+            <field name="code">l10n_ga_parts_single</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_single_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_single"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1</field>
+        </record>
+        <record id="rule_parameter_parts_single_extra" model="hr.rule.parameter">
+            <field name="name">Gabon : parts, personne seule ayant élevé des enfants ou invalide</field>
+            <field name="code">l10n_ga_parts_single_extra</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_single_extra_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_single_extra"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1.5</field>
+        </record>
+        <record id="rule_parameter_parts_married" model="hr.rule.parameter">
+            <field name="name">Gabon : parts, marié sans enfant</field>
+            <field name="code">l10n_ga_parts_married</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_married_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_married"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">2</field>
+        </record>
+        <record id="rule_parameter_parts_single_first_child" model="hr.rule.parameter">
+            <field name="name">Gabon : parts, personne seule, premier enfant</field>
+            <field name="code">l10n_ga_parts_single_first_child</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_single_first_child_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_single_first_child"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1</field>
+        </record>
+        <record id="rule_parameter_parts_single_per_child" model="hr.rule.parameter">
+            <field name="name">Gabon : parts, personne seule, par enfant supplémentaire</field>
+            <field name="code">l10n_ga_parts_single_per_child</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_single_per_child_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_single_per_child"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.5</field>
+        </record>
+        <record id="rule_parameter_parts_married_per_child" model="hr.rule.parameter">
+            <field name="name">Gabon : parts, marié ou veuf, par enfant</field>
+            <field name="code">l10n_ga_parts_married_per_child</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_married_per_child_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_married_per_child"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.5</field>
+        </record>
+        <record id="rule_parameter_parts_disabled_child" model="hr.rule.parameter">
+            <field name="name">Gabon : parts, supplément par enfant infirme</field>
+            <field name="code">l10n_ga_parts_disabled_child</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_disabled_child_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_disabled_child"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.5</field>
+        </record>
+        <record id="rule_parameter_parts_forced_min" model="hr.rule.parameter">
+            <field name="name">Gabon : parts forcées minimum</field>
+            <field name="code">l10n_ga_parts_forced_min</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_forced_min_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_forced_min"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1</field>
+        </record>
+        <record id="rule_parameter_parts_forced_max" model="hr.rule.parameter">
+            <field name="name">Gabon : parts forcées maximum</field>
+            <field name="code">l10n_ga_parts_forced_max</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_parts_forced_max_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_parts_forced_max"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">6.5</field>
+        </record>
+        <record id="rule_parameter_exempt_bonus_cap" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond annuel d’exonération des gratifications</field>
+            <field name="code">l10n_ga_exempt_bonus_cap</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_exempt_bonus_cap_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_exempt_bonus_cap"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">4000000</field>
+        </record>
+        <record id="rule_parameter_exempt_vehicle_cap" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond mensuel d’exonération de l’indemnité de véhicule</field>
+            <field name="code">l10n_ga_exempt_vehicle_cap</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_exempt_vehicle_cap_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_exempt_vehicle_cap"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">100000</field>
+        </record>
+        <record id="rule_parameter_exempt_transport_2_trips" model="hr.rule.parameter">
+            <field name="name">Gabon : exonération journalière du transport (2 trajets)</field>
+            <field name="code">l10n_ga_exempt_transport_2_trips</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_exempt_transport_2_trips_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_exempt_transport_2_trips"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">2500</field>
+        </record>
+        <record id="rule_parameter_exempt_transport_4_trips" model="hr.rule.parameter">
+            <field name="name">Gabon : exonération journalière du transport (4 trajets)</field>
+            <field name="code">l10n_ga_exempt_transport_4_trips</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_exempt_transport_4_trips_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_exempt_transport_4_trips"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">5000</field>
+        </record>
+        <record id="rule_parameter_exempt_family_per_child" model="hr.rule.parameter">
+            <field name="name">Gabon : exonération mensuelle des primes familiales par enfant</field>
+            <field name="code">l10n_ga_exempt_family_per_child</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_exempt_family_per_child_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_exempt_family_per_child"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">20000</field>
+        </record>
+        <record id="rule_parameter_isr_retirement_ratio" model="hr.rule.parameter">
+            <field name="name">Gabon : part imposable de l’ISR retraite ou décès</field>
+            <field name="code">l10n_ga_isr_retirement_ratio</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_isr_retirement_ratio_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_isr_retirement_ratio"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.5</field>
+        </record>
+        <record id="rule_parameter_isr_resignation_ratio" model="hr.rule.parameter">
+            <field name="name">Gabon : part imposable de l’ISR démission</field>
+            <field name="code">l10n_ga_isr_resignation_ratio</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_isr_resignation_ratio_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_isr_resignation_ratio"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1.0</field>
+        </record>
+        <record id="rule_parameter_aik_housing_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : AN logement</field>
+            <field name="code">l10n_ga_aik_housing_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_aik_housing_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_aik_housing_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.06</field>
+        </record>
+        <record id="rule_parameter_aik_domestic_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : AN domesticité</field>
+            <field name="code">l10n_ga_aik_domestic_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_aik_domestic_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_aik_domestic_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.05</field>
+        </record>
+        <record id="rule_parameter_aik_utilities_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : AN eau et électricité</field>
+            <field name="code">l10n_ga_aik_utilities_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_aik_utilities_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_aik_utilities_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.05</field>
+        </record>
+        <record id="rule_parameter_aik_food_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : AN nourriture</field>
+            <field name="code">l10n_ga_aik_food_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_aik_food_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_aik_food_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.25</field>
+        </record>
+        <record id="rule_parameter_aik_food_cap" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond mensuel de l’AN nourriture</field>
+            <field name="code">l10n_ga_aik_food_cap</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_aik_food_cap_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_aik_food_cap"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">120000</field>
+        </record>
+        <record id="rule_parameter_fnh_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux du FNH</field>
+            <field name="code">l10n_ga_fnh_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_fnh_rate_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_fnh_rate"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.02</field>
+        </record>
+        <record id="rule_parameter_fnh_rate_20260717" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_fnh_rate"/>
+            <field name="date_from">2026-07-17</field>
+            <field name="parameter_value">0.03</field>
+        </record>
+        <record id="rule_parameter_fnh_ceiling" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond mensuel du FNH</field>
+            <field name="code">l10n_ga_fnh_ceiling</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_fnh_ceiling_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_fnh_ceiling"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1500000</field>
+        </record>
+        <record id="rule_parameter_fnh_employee_share" model="hr.rule.parameter">
+            <field name="name">Gabon : part salariale du FNH (point 09-2)</field>
+            <field name="code">l10n_ga_fnh_employee_share</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_fnh_employee_share_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_fnh_employee_share"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.0</field>
+        </record>
+        <record id="rule_parameter_cfp_rate" model="hr.rule.parameter">
+            <field name="name">Gabon : taux de la CFP</field>
+            <field name="code">l10n_ga_cfp_rate</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cfp_rate_20170101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cfp_rate"/>
+            <field name="date_from">2017-01-01</field>
+            <field name="parameter_value">0.005</field>
+        </record>
+        <record id="rule_parameter_cfp_ceiling" model="hr.rule.parameter">
+            <field name="name">Gabon : plafond mensuel de la CFP</field>
+            <field name="code">l10n_ga_cfp_ceiling</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cfp_ceiling_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cfp_ceiling"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1500000</field>
+        </record>
+        <record id="rule_parameter_cash_denominations" model="hr.rule.parameter">
+            <field name="name">Gabon : coupures du billetage</field>
+            <field name="code">l10n_ga_cash_denominations</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cash_denominations_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cash_denominations"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">[10000, 5000, 2000, 1000, 500]</field>
+        </record>
+        <record id="rule_parameter_cash_rounding_default" model="hr.rule.parameter">
+            <field name="name">Gabon : arrondi espèces par défaut des sociétés</field>
+            <field name="code">l10n_ga_cash_rounding_default</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_cash_rounding_default_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_cash_rounding_default"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">500</field>
+        </record>
+    </data>
+</odoo>
