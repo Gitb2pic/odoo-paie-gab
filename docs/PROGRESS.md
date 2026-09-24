@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 24/09/2026 (étape 2.5).
+Mis à jour le 24/09/2026 (étape 2.6).
 
 ## Étapes
 
@@ -11,8 +11,8 @@ Mis à jour le 24/09/2026 (étape 2.5).
 | 2.2 | `l10n_ga_hr_payroll` | squelette du module et données | **terminé** | 100 % (19/19 ; 62 rubriques, 50 paramètres datés ; 18 tests Odoo, 55 tests d'outillage, noyau 368 tests couverture 100 % ; F16 rejoué sur les données générées) | `docs/completude/l10n_ga_hr_payroll_2.2.md` |
 | 2.3 | `l10n_ga_hr_payroll` | modèles, adaptateur et règles liées au noyau | **terminé** | 100 % (22/22 ; 50 tests Odoo, 63 d'outillage, noyau 369 tests couverture 100 % ; F16 net 514 897 dans Odoo ; install. sur base existante et désinstallation propres) | `docs/completude/l10n_ga_hr_payroll_2.3.md` |
 | 2.4 | `l10n_ga_hr_payroll` | conventions, grilles, heures supplémentaires, absences | **terminé** | 100 % (18/18 ; 69 tests Odoo, 64 d'outillage, noyau 398 tests couverture 100 % ; 12 absences, ancienneté, grille bloquante, heures sup. sans taux par défaut) | `docs/completude/l10n_ga_hr_payroll_2.4.md` |
-| 2.5 | `l10n_ga_hr_payroll` | prêts salariés (F1), indemnités récurrentes (F15) | **terminé** — en attente du « go » pour 2.6 | 100 % (20/20 ; 108 tests Odoo, 64 d'outillage, noyau 439 tests couverture 100 % ; prêts par spécifications, quotité saisissable, indemnités = ajustements datés) | `docs/completude/l10n_ga_hr_payroll_2.5.md` |
-| 2.6 | `l10n_ga_hr_payroll` | import Excel (F3), contrôles avant paie (F8), arrondi espèces (F2), cumuls d'ouverture (F12) | à faire | — | — |
+| 2.5 | `l10n_ga_hr_payroll` | prêts salariés (F1), indemnités récurrentes (F15) | **terminé** | 100 % (20/20 ; 108 tests Odoo, 64 d'outillage, noyau 439 tests couverture 100 % ; prêts par spécifications, quotité saisissable, indemnités = ajustements datés) | `docs/completude/l10n_ga_hr_payroll_2.5.md` |
+| 2.6 | `l10n_ga_hr_payroll` | import Excel (F3), contrôles avant paie (F8), arrondi espèces (F2), cumuls d'ouverture (F12) | **terminé** — en attente du « go » pour 2.7 | 100 % (22/22 ; 156 tests Odoo, 65 d'outillage, noyau 466 tests couverture 100 % ; lot bloqué RG26, F16 espèces 514 500 + reliquat 397, bascule en juillet = année complète) | `docs/completude/l10n_ga_hr_payroll_2.6.md` |
 | 2.7 | `l10n_ga_hr_payroll` | rapports : bulletin figé, livre de paie, virements, billetage | à faire | — | — |
 | C-1 | `l10n_ga_hr_payroll` | complétude du module (`prompts/99_completude.md`) | à faire | — | — |
 | 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | à faire | — | — |
@@ -39,8 +39,8 @@ Mis à jour le 24/09/2026 (étape 2.5).
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5). Dette notable : régularisation IRPP sans cumuls d'ouverture jusqu'à l'étape 2.6 (F12).
+Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
 
 ## Prochaine étape
 
-2.6 — import Excel (F3), contrôles avant paie (F8), arrondi espèces (F2), cumuls d'ouverture (F12) (`prompts/02_l10n_ga_hr_payroll.md`), après le « go » d'Alex. Démo possible : `make demo MODULE=l10n_ga_hr_payroll` (redémarre le service `odoo19`, sur accord d'Alex).
+2.7 — rapports : bulletin figé, livre de paie, virements, billetage (`prompts/02_l10n_ga_hr_payroll.md`), après le « go » d'Alex. Démo possible : `make demo MODULE=l10n_ga_hr_payroll` (redémarre le service `odoo19`, sur accord d'Alex).
