@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from psycopg2 import IntegrityError
+from psycopg2 import IntegrityError  # pylint: disable=import-error
 
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged

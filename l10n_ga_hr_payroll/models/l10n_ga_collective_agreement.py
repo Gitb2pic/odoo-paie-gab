@@ -13,7 +13,7 @@ class L10nGaCollectiveAgreement(models.Model):
     _check_company_auto = True
 
     name = fields.Char(string='Convention', required=True)
-    code = fields.Char(string='Code')
+    code = fields.Char()
     company_id = fields.Many2one('res.company', string='Société', required=True, default=lambda self: self.env.company)
     active = fields.Boolean(default=True)
     is_example = fields.Boolean(

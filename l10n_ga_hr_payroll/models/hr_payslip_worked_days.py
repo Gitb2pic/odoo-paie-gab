@@ -9,7 +9,7 @@ class HrPayslipWorkedDays(models.Model):
     @api.depends('payslip_id.company_id.l10n_ga_cnss_subrogation', 'work_entry_type_id.l10n_ga_pay_mode')
     def _compute_is_paid(self):
         """Maternité / accident du travail hors salaire de base sans subrogation (F4, D-26)."""
-        super()._compute_is_paid()
+        result = super()._compute_is_paid()
         for worked_days in self:
             if (
                 worked_days.is_paid
@@ -17,3 +17,4 @@ class HrPayslipWorkedDays(models.Model):
                 and not worked_days.payslip_id.company_id.l10n_ga_cnss_subrogation
             ):
                 worked_days.is_paid = False
+        return result
