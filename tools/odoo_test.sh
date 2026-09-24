@@ -35,8 +35,8 @@ mkdir -p "$LOG_DIR"
 LOG="$LOG_DIR/${DB}.log"
 
 cleanup() {
-    # --force : le service de production (sans db_name) ouvre des connexions cron
-    # sur toutes les bases du rôle, y compris test_ga_* (voir docs/decisions/ouvertes.md D-04).
+    # --force : filet de sécurité si une connexion traîne encore sur la base de test
+    # (avant D-04, les crons du service parcouraient toutes les bases du rôle).
     if ! dropdb --if-exists --force "$DB"; then
         echo "!! suppression de $DB impossible : à supprimer à la main" >&2
     fi
@@ -44,7 +44,9 @@ cleanup() {
 }
 trap cleanup EXIT
 
-COMMON=(-c "$ODOO_CONF" -d "$DB" --http-port="$PORT" --without-demo=True
+# --db-filter : odoo.conf limite le service à odoo19 (dbfilter, D-04) ; le serveur
+# de test doit accepter sa propre base pour les tests HttpCase.
+COMMON=(-c "$ODOO_CONF" -d "$DB" --db-filter="^${DB}\$" --http-port="$PORT" --without-demo=True
         --stop-after-init --log-level=test --no-database-list)
 
 echo ">> base $DB, port $PORT, journal $LOG"

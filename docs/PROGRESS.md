@@ -39,7 +39,7 @@ Mis à jour le 24/09/2026.
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. Reste ouvert : D-04 (`db_name = odoo19` dans la configuration du service). Actions attendues d'Alex : D-05 (schéma `hr_payroll_gb` + lignes fictives, avant l'étape 6), D-07 (copie de la V1, avant l'étape 4.4). Décidés : D-06 (`date_to`), D-08 (ADR acceptés), D-09 (`make demo` sur `odoo19`).
+Voir `docs/decisions/ouvertes.md`. À appliquer par Alex : D-04 (`db_name`, `dbfilter`, `list_db` dans `odoo.conf` + redémarrage), puis relancer `make test MODULE=base_setup`. Actions attendues d'Alex : D-05 (schéma `hr_payroll_gb` + lignes fictives, avant l'étape 6), D-07 (copie de la V1, avant l'étape 4.4). Décidés : D-06 (`date_to`), D-08 (ADR acceptés), D-09 (`make demo` sur `odoo19`).
 
 ## Prochaine étape
 
