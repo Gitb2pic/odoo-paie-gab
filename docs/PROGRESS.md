@@ -1,13 +1,13 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 24/09/2026.
+Mis à jour le 24/09/2026 (étape 2.1).
 
 ## Étapes
 
 | Étape | Module | Contenu | État | Complétude | Rapport |
 |---|---|---|---|---|---|
-| Sprint 0 | socle | dépôt, outillage, vérifications Enterprise (14 points) | **terminé** — en attente du « go » pour 2.1 | 100 % (voir rapport) | `docs/completude/sprint0.md` |
-| 2.1 | `l10n_ga_hr_payroll` | noyau fiscal pur `lib/ga_fiscal_core` | à faire | — | — |
+| Sprint 0 | socle | dépôt, outillage, vérifications Enterprise (14 points) | **terminé** | 100 % | `docs/completude/sprint0.md` |
+| 2.1 | `l10n_ga_hr_payroll` | noyau fiscal pur `lib/ga_fiscal_core` | **terminé** — en attente du « go » pour 2.2 | 100 % (334 tests, couverture 100 %, parité oracle ≤ 1 FCFA) | `docs/completude/l10n_ga_hr_payroll_2.1.md` |
 | 2.2 | `l10n_ga_hr_payroll` | squelette du module et données | à faire | — | — |
 | 2.3 | `l10n_ga_hr_payroll` | modèles, adaptateur et règles liées au noyau | à faire | — | — |
 | 2.4 | `l10n_ga_hr_payroll` | conventions, grilles, heures supplémentaires, absences | à faire | — | — |
@@ -43,4 +43,4 @@ Voir `docs/decisions/ouvertes.md`. À appliquer par Alex : D-04 (`db_name`, `dbf
 
 ## Prochaine étape
 
-2.1 — noyau fiscal pur (`prompts/02_l10n_ga_hr_payroll.md`), après le « go » d'Alex.
+2.2 — squelette du module et données (`prompts/02_l10n_ga_hr_payroll.md`), après le « go » d'Alex. Prérequis conseillé : D-04 appliqué (`odoo.conf`), pour les premiers tests Odoo.
