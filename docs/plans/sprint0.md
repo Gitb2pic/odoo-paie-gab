@@ -1,6 +1,6 @@
 # Plan — Sprint 0 : socle du dépôt et vérifications Enterprise
 
-Date : 24/09/2026 — statut : **en attente du « go » d'Alex**
+Date : 24/09/2026 — statut : **validé** par Alex (« go et tes recommandations », 24/09/2026) — réalisé, voir `docs/completude/sprint0.md`
 
 ## 0. Reconnaissance déjà faite (lecture seule, rien modifié)
 
@@ -11,7 +11,7 @@ Date : 24/09/2026 — statut : **en attente du « go » d'Alex**
 | Version | Odoo 19.0 FINAL — Community `2e2acfd6` (24/09/2026), Enterprise `35b39159` (24/09/2026) |
 | Python | 3.14.4 (venv Odoo et système) |
 | `$ODOO_PATH` | `/home/ubuntu/odoo/odoo` (addons : `/home/ubuntu/odoo/odoo/addons`) |
-| `$ENTERPRISE_PATH` | `/home/ubuntu/odoo/enterprise` (contient `hr_payroll`, `hr_payroll_account`, `hr_payroll_holidays`, `l10n_account_withholding_tax`) |
+| `$ENTERPRISE_PATH` | `/home/ubuntu/odoo/enterprise` (contient `hr_payroll`, `hr_payroll_account`, `hr_payroll_holidays`) ; `l10n_account_withholding_tax` est en réalité **dans Community** (corrigé après lecture, point 14) |
 | `addons_path` | enterprise, community, **`/home/ubuntu/odoo/extra-addon`** ✔ |
 | Contenu de `extra-addon` | uniquement `CLAUDE.md`, `docs/`, `prompts/`, `.claude/` — **aucun module tiers** à exclure |
 | PostgreSQL | rôle `ubuntu` avec `CREATEDB` ✔ ; bases existantes : `odoo19`, `postgres` (jamais touchées) |
@@ -70,7 +70,12 @@ Date : 24/09/2026 — statut : **en attente du « go » d'Alex**
 | Écriture accidentelle sur `odoo19` | garde-fou `test_ga_*` dans le Makefile, `dropdb` limité à ce préfixe |
 | `sudo` requis pour `restart` | cible documentée, jamais invoquée automatiquement |
 
-## 7. Commits prévus
+## 7. Écarts entre le plan et la réalisation
+
+- `--without-demo=all` (prompt) remplacé par `--without-demo=True` : en 19.0 l'option est booléenne, `all` provoque un avertissement (`C/odoo/tools/config.py:855-860`).
+- Ajouts : hook local `odoo19-rules` + tests (`tools/tests`), `dropdb --force` (crons de production sur les bases de test, D-04), échec de `make test` si module introuvable ou aucun test, ADR-19 (ajustements Enterprise).
+
+## 8. Commits prévus
 
 1. `chore: initialise le dépôt (gitignore, docs de suivi)`
 2. `build: outillage lint/tests (pyproject, pre-commit, Makefile)`
