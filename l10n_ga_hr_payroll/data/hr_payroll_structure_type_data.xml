@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="structure_type_ga_employee" model="hr.payroll.structure.type">
+        <field name="name">Gabon : Employé</field>
+        <field name="country_id" ref="base.ga"/>
+        <field name="wage_type">monthly</field>
+        <field name="default_schedule_pay">monthly</field>
+    </record>
+</odoo>

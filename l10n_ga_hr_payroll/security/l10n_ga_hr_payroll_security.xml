@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Groupes : ceux de hr_payroll sont réutilisés (group_hr_payroll_user / _manager, sprint 0 point 10).
+    Les règles multi-société des nouveaux modèles (company_id in company_ids) sont ajoutées
+    ici par les étapes qui créent ces modèles (2.4 à 2.6).
+-->
+<odoo/>

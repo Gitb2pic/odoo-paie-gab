@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Prêts salariés (F1, modèle l10n_ga.employee.loan créé à l'étape 2.5) -->
+        <record id="sequence_employee_loan" model="ir.sequence">
+            <field name="name">Gabon : prêts salariés</field>
+            <field name="code">l10n_ga.employee.loan</field>
+            <field name="prefix">PRET/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

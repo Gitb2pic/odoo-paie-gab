@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- rule_ids vide : sinon la structure copie les règles de hr_payroll.default_structure
+         (E/hr_payroll/models/hr_payroll_structure.py:15-20) et NET serait en double (défaut B1). -->
+    <record id="structure_ga_employee" model="hr.payroll.structure">
+        <field name="name">Gabon — Employé</field>
+        <field name="code">GA_EMP</field>
+        <field name="country_id" ref="base.ga"/>
+        <field name="type_id" ref="structure_type_ga_employee"/>
+        <field name="rule_ids" eval="[]"/>
+    </record>
+    <record id="structure_type_ga_employee" model="hr.payroll.structure.type">
+        <field name="default_struct_id" ref="structure_ga_employee"/>
+    </record>
+</odoo>
