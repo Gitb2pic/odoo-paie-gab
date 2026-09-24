@@ -6,14 +6,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 15:27+0000\n"
-"PO-Revision-Date: 2026-09-24 15:27+0000\n"
+"POT-Creation-Date: 2026-09-24 16:24+0000\n"
+"PO-Revision-Date: 2026-09-24 16:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "%(employee)s : heures supplémentaires (%(period)s) — %(detail)s."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid ""
+"%(employee)s : salaire %(wage)s inférieur au minimum %(minimum)s de la "
+"grille au %(date)s."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_collective_agreement.py:0
+msgid "%(name)s : %(detail)s"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_overtime_rate.py:0
+msgid "%(name)s : tranches d’heures supplémentaires qui se chevauchent."
+msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_salary_rule__l10n_ga_das_column__presence
@@ -49,6 +75,16 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_tax_parts_forced
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_version__l10n_ga_tax_parts_forced
 msgid "0 = parts calculées. Sinon, de 1 à 6,5 par demi-part, avec un motif."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__seniority_max_rate
+msgid "0 = pas de plafond."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__hours_to
+msgid "0 = sans limite."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -121,14 +157,53 @@ msgid "Accident du travail"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__active
+msgid "Active"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:res.country.group,name:l10n_ga_hr_payroll.country_group_africa
 msgid "Afrique (Union africaine)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_conge
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_conge
 msgid "Allocation de congés payés"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
+msgid "Ancienneté"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__seniority_start_years
+msgid "Ancienneté : début (années)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__seniority_step_rate
+msgid "Ancienneté : pas annuel"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__seniority_max_rate
+msgid "Ancienneté : plafond"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__seniority_start_rate
+msgid "Ancienneté : taux de début"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
+msgid "Archivée"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_search
+msgid "Archivées"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -217,6 +292,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_tcs_base
 msgid "Base TCS"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__seniority_base
+msgid "Base de la prime d’ancienneté"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -320,6 +400,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__category
+msgid "Catégorie"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__l10n_ga_tax_center
 msgid "Centre des impôts"
 msgstr ""
@@ -338,6 +423,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_version__l10n_ga_payment_mode__check
 msgid "Chèque"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__code
+msgid "Code"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -420,6 +510,14 @@ msgid "Congé payé"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_work_entry_type__l10n_ga_pay_mode
+msgid ""
+"Congé payé : hors salaire de base, payé par l’allocation de congé. Maternité"
+" et accident du travail : indemnités journalières CNSS ; salaire maintenu si"
+" la société pratique la subrogation."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.leave.type,name:l10n_ga_hr_payroll.leave_type_ga_deces
 #: model:hr.work.entry.type,name:l10n_ga_hr_payroll.work_entry_type_ga_deces
 msgid "Congé pour décès"
@@ -428,6 +526,55 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_cfp
 msgid "Contribution à la formation professionnelle"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__agreement_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__agreement_id
+msgid "Convention"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_agreement_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_agreement_id
+msgid "Convention collective"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_l10n_ga_collective_agreement
+msgid "Convention collective (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
+msgid ""
+"Convention d’exemple : à remplacer par la convention collective de "
+"l’entreprise."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.actions.act_window,name:l10n_ga_hr_payroll.l10n_ga_collective_agreement_action
+msgid "Conventions collectives"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.ui.menu,name:l10n_ga_hr_payroll.menu_l10n_ga_collective_agreement
+msgid "Conventions collectives (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__create_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__create_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__create_date
+msgid "Created on"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -471,6 +618,11 @@ msgid "Cumuls de l’année"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.work.entry.type,display_code:l10n_ga_hr_payroll.work_entry_type_ga_deces
 msgid "DEC"
 msgstr ""
@@ -498,12 +650,38 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_seniority_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_seniority_date
+msgid "Date d’ancienneté"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__date_from
+msgid "Date d’effet"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__hours_from
+msgid "De (heures du mois)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_work_entry_type__l10n_ga_overtime_period__sunday
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_overtime_rate__period__sunday
+msgid "Dimanche"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_line__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_worked_days__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry_type__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__display_name
 msgid "Display Name"
 msgstr ""
@@ -512,6 +690,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_benefit_domestic
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_benefit_domestic
 msgid "Domesticité fournie"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__is_example
+msgid ""
+"Données d’exemple livrées avec le module : à remplacer par la convention du "
+"client."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -580,6 +765,16 @@ msgid "Exclue dans la limite d’un plafond"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__is_example
+msgid "Exemple"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_search
+msgid "Exemples"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_tax_exempt
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_line__l10n_ga_tax_exempt
 msgid "Exonéré d’impôt"
@@ -632,6 +827,17 @@ msgid "Gabon — Paie et fiscalité"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_grade_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_grade_id
+msgid "Grade"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_l10n_ga_agreement_grade
+msgid "Grade de convention (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_gratif
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_gratif
 msgid "Gratification"
@@ -640,6 +846,12 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_bonus_exempted
 msgid "Gratifications exonérées"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__grade_ids
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
+msgid "Grille"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -678,12 +890,18 @@ msgid "HSN"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_hs
-#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_hs
+#: model:ir.model.constraint,message:l10n_ga_hr_payroll.constraint_l10n_ga_overtime_rate_hours_positive
+msgid "Heures et majoration positives."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__overtime_rate_ids
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
 msgid "Heures supplémentaires"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_hs_j
 #: model:hr.work.entry.type,name:l10n_ga_hr_payroll.work_entry_type_ga_hs_j
 msgid "Heures supplémentaires de jour"
 msgstr ""
@@ -694,11 +912,18 @@ msgid "Heures supplémentaires de jour férié"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_hs_n
 #: model:hr.work.entry.type,name:l10n_ga_hr_payroll.work_entry_type_ga_hs_n
 msgid "Heures supplémentaires de nuit"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_hs_fer
+msgid "Heures supplémentaires des jours fériés"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_hs_dim
 #: model:hr.work.entry.type,name:l10n_ga_hr_payroll.work_entry_type_ga_hs_dim
 msgid "Heures supplémentaires du dimanche"
 msgstr ""
@@ -719,9 +944,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_line__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_worked_days__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry_type__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__id
 msgid "ID"
 msgstr ""
@@ -867,6 +1096,18 @@ msgid "Indemnité vestimentaire"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_work_entry_type__l10n_ga_overtime_period__day
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_overtime_rate__period__day
+msgid "Jour"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_work_entry_type__l10n_ga_overtime_period__holiday
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_overtime_rate__period__holiday
+msgid "Jour férié"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_is_ga
 msgid "L10N Ga Is Ga"
 msgstr ""
@@ -879,9 +1120,34 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__write_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__write_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.constraint,message:l10n_ga_hr_payroll.constraint_l10n_ga_collective_agreement_code_company_unique
+msgid "Le code de la convention est unique par société."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/models/hr_version.py:0
 msgid "Le forçage du nombre de parts fiscales exige un motif."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_version.py:0
+msgid "Le grade doit appartenir à la convention collective de la version."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -924,6 +1190,11 @@ msgid "MNP"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__rate
+msgid "Majoration"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.leave.type,name:l10n_ga_hr_payroll.leave_type_ga_mal
 #: model:hr.work.entry.type,name:l10n_ga_hr_payroll.work_entry_type_ga_mal
 msgid "Maladie avec certificat médical"
@@ -936,10 +1207,15 @@ msgid "Maladie non payée"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_work_entry_type__l10n_ga_pay_mode
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_collective_agreement__seniority_base__grade_minimum
+msgid "Minimum du grade"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__seniority_base
 msgid ""
-"Maternité et accident du travail : indemnités journalières CNSS (subrogation"
-" possible)."
+"Minimum du grade : « salaire de base conventionnel » (tronc commun). Sans "
+"grade, le salaire est retenu."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1032,6 +1308,12 @@ msgid "Nourriture fournie"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_work_entry_type__l10n_ga_overtime_period__night
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_overtime_rate__period__night
+msgid "Nuit"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_cnamgs_number
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_cnamgs_number
 msgid "N° CNAMGS"
@@ -1097,6 +1379,16 @@ msgid "Payslip Line"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_hr_payslip_worked_days
+msgid "Payslip Worked Days"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_work_entry_type__l10n_ga_pay_mode__allowance
+msgid "Payé par l’allocation de congé"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_extra_half_part
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_version__l10n_ga_extra_half_part
 msgid ""
@@ -1120,7 +1412,6 @@ msgid "Plafond d’encours des prêts"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_anc
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_anc
 msgid "Prime d'ancienneté"
 msgstr ""
@@ -1268,6 +1559,16 @@ msgid "Proratisée par la présence"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__period
+msgid "Période"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry_type__l10n_ga_overtime_period
+msgid "Période d’heures supplémentaires"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_recall
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_recall
 msgid "Rappel de salaire"
@@ -1321,6 +1622,17 @@ msgid "Saisie sur salaire"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_collective_agreement__seniority_base__wage
+msgid "Salaire"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_version.py:0
+msgid "Salaire %(wage)s inférieur au minimum %(minimum)s du grade %(grade)s."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_gross
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__res_company__l10n_ga_cfp_base__gross
 msgid "Salaire brut"
@@ -1332,8 +1644,19 @@ msgid "Salaire de base"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__minimum_wage
+msgid "Salaire minimum mensuel"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_net
 msgid "Salaire net"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "Salarié"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1352,8 +1675,20 @@ msgid "Situation familiale retenue"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__company_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__company_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__company_id
+msgid "Société"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_salary_rule__l10n_ga_social_base__subject
 msgid "Soumise"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__l10n_ga_cnss_subrogation
+msgid "Subrogation CNSS (maternité, accident du travail)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1384,6 +1719,16 @@ msgid "TCS"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_l10n_ga_overtime_rate
+msgid "Taux d’heures supplémentaires (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__hourly_rate
+msgid "Taux horaire"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.res_company_view_form_l10n_ga_payroll
 msgid ""
 "Taux, plafonds, barème et part salariale du FNH (point 09-2) : paramètres datés\n"
@@ -1408,9 +1753,27 @@ msgid "Trajets de transport"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
+msgid ""
+"Tranches en heures du mois, par période ; aucune valeur par défaut (majorations de la\n"
+"                                convention de l’entreprise). Des heures supplémentaires sans taux bloquent le bulletin."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_13m
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_13m
 msgid "Treizième mois"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.constraint,message:l10n_ga_hr_payroll.constraint_l10n_ga_agreement_grade_grade_unique
+msgid "Un grade (catégorie, échelon) n’a qu’une valeur par date d’effet."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_overtime_rate.py:0
+msgid "Une tranche doit finir après son début."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1427,12 +1790,43 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_seniority_date
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_version__l10n_ga_seniority_date
+msgid ""
+"Vide : première date de contrat. À ajuster pour une reprise ou une "
+"suspension de l’ancienneté."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_version__l10n_ga_payment_mode__transfer
 msgid "Virement"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_res_company__l10n_ga_cnss_subrogation
+msgid ""
+"Vrai : salaire maintenu pendant la maternité et l’accident du travail, "
+"indemnités journalières remboursées par la CNSS à l’employeur. Faux : ces "
+"jours sortent du salaire de base (décision D-26)."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_company_car
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_company_car
 msgid "Véhicule de fonction"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
+msgid "ex. Convention collective du commerce"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__hours_to
+msgid "À (heures du mois)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__echelon
+msgid "Échelon"
 msgstr ""
