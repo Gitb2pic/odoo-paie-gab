@@ -122,7 +122,7 @@ account_debit = fields.Many2one('account.account', 'Debit Account', company_depe
 **Impact.** **Ajustement** (pas d'ADR) : F1 garde son modèle `l10n_ga.employee.loan` + échéances (le standard ne couvre ni échéancier, ni plafond 40 %, ni anticipation). Contraintes pour l'étape 2.5 :
 1. le type d'entrée `GA_LOAN` **ne doit pas** être `available_in_attachments` (sinon effacé et recalculé par le standard) ;
 2. les entrées `GA_LOAN` sont créées **sur le bulletin brouillon** (à la génération du lot / au calcul), jamais à l'avance ;
-3. l'échéance est soldée au passage `paid` du bulletin (même moment que le standard pour les saisies).
+3. l'échéance est soldée au passage `paid` du bulletin (même moment que le standard pour les saisies) — **corrigé par D-30 (24/09/2026)** : l'échéance passe « retenue » à la validation du bulletin (`action_payslip_done`, RG21), le bulletin validé étant figé ; retour « à payer » à l'annulation ou au retour en brouillon.
 
 ## 7. `l10n_account_withholding_tax` : multi-paiements et avoirs (base de l'ID18)
 

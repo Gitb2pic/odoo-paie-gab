@@ -31,3 +31,12 @@
 | D-26 | Maternité / accident du travail | a) option société « subrogation », vraie par défaut ; b) toujours hors salaire | a) | **Décidé** (24/09/2026) |
 | D-27 | Convention d'exemple | a) noupdate, « EXEMPLE », sans taux d'heures sup. ; b) aucune donnée | a) | **Décidé** (24/09/2026) |
 | D-28 | `GA_ANC` / `GA_CONGE` saisis jusqu'en 2.3 | a) calculés uniquement (correction = rappel) ; b) saisie prioritaire | a) | **Décidé** (24/09/2026) |
+| D-29 | Indemnités récurrentes (F15) : nouveau modèle `l10n_ga.employee.allowance` ou extension de `hr.salary.attachment` | a) extension (ADR-16) ; b) nouveau modèle | a) | **Décidé** (« go avec tes recommandations », 24/09/2026, plan 2.5 P1) : entrées marquées `l10n_ga_allowance_id` |
+| D-30 | Échéance de prêt « retenue » : à la validation (RG21, F1, prompt) ou au paiement (sprint 0 point 6, contrainte 3) | a) validation ; b) paiement | a) | **Décidé** (24/09/2026, P2) : `action_payslip_done` ; retour « à payer » à l'annulation / au brouillon ; note du sprint 0 corrigée |
+| D-31 | « 40 % du net » (RG20) : net de référence | a) NET du dernier bulletin validé avant l'octroi ; b) salaire de la version | a) ; sans bulletin → règle non satisfaite (dérogation possible) | **Décidé** (24/09/2026, P3) |
+| D-32 | Quotité saisissable au solde de tout compte | a) barème art. 729 CPC en paramètre daté, base = net avant retenue du prêt ; b) pas de plafond | a) (barème 2012 🟡) | **Décidé** (24/09/2026, P4) |
+| D-33 | Remboursement anticipé | a) assistant hors paie / prochain bulletin, état « remboursée hors paie », réduction des dernières échéances ; b) solde sur le prochain bulletin seulement | a) | **Décidé** (24/09/2026, P5) |
+| D-34 | Report d'échéance | a) échéance « reportée » + nouvelle échéance en fin d'échéancier ; b) décalage de toutes les échéances | a) | **Décidé** (24/09/2026, P6) |
+| D-35 | Prorata de validité d'une indemnité | a) jours calendaires ; b) base 30 jours | a) | **Décidé** (24/09/2026, P7) |
+| D-36 | Indemnité forcée imposable sur une partie du mois | a) ligne de gain scindée (part forcée / part normale) ; b) toute la rubrique forcée | a) | **Décidé** (24/09/2026, P8) |
+| D-37 | Seuils d'octroi des prêts (2 ans, 40 %) | a) paramètres datés ; b) options société | a) (règle d'or 1) ; plafond d'encours = champ société existant | **Décidé** (24/09/2026, P9) |
