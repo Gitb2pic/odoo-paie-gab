@@ -86,7 +86,7 @@ def _fail(row, message):
     raise ValueError(f'{row.get("code") or "?"} : {message}')
 
 
-def _check_row(row):
+def _check_kind(row):
     code = row['code']
     if row['kind'] not in ('standard', 'input'):
         _fail(row, f'kind invalide {row["kind"]!r}')
@@ -103,6 +103,11 @@ def _check_row(row):
         _fail(row, f'input_kind invalide {row["input_kind"]!r}')
     if code == 'GA_LOAN' and row['input_kind'] != 'monthly':
         _fail(row, 'GA_LOAN ne doit jamais être disponible dans les ajustements (sprint 0 point 6)')
+
+
+def _check_row(row):
+    _check_kind(row)
+    code = row['code']
     check_treatment(code, row['social_base'], row['social_cap_group'], row['tax_base'], row['tax_cap_group'])
     for flag in ('prorate', 'leave_base', 'severance_base'):
         if row[flag] not in BOOLEANS:

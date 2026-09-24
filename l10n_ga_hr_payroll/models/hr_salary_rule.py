@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..lib.ga_fiscal_core.treatment import check_treatment
@@ -64,4 +64,6 @@ class HrSalaryRule(models.Model):
             try:
                 check_treatment(rule.code, *values)
             except ValueError as error:
-                raise ValidationError(_('Traitement social ou fiscal incohérent : %(detail)s', detail=error)) from error
+                raise ValidationError(
+                    self.env._('Traitement social ou fiscal incohérent : %(detail)s', detail=error)
+                ) from error

@@ -56,7 +56,7 @@ def tax_group(base, group):
     return _group('tax', base, group)
 
 
-def _check_side(code, label, base, group, bases, registry, total_group):
+def _check_side(code, label, base, group, *, bases, registry, total_group):
     if base not in bases:
         raise ValueError(f'{code} : assiette {label} invalide {base!r} (attendu : {", ".join(bases)})')
     if base == CAPPED:
@@ -72,7 +72,9 @@ def _check_side(code, label, base, group, bases, registry, total_group):
 
 def check_treatment(code, social_base, social_cap_group, tax_base, tax_cap_group):
     """Lève ``ValueError`` si le traitement est incohérent (message en français, code en tête)."""
-    _check_side(code, 'sociale', social_base, social_cap_group, SOCIAL_BASES, SOCIAL_CAPS, 'EXCLUDED')
-    _check_side(code, 'fiscale', tax_base, tax_cap_group, TAX_BASES, TAX_CAPS, 'EXEMPT')
+    _check_side(
+        code, 'sociale', social_base, social_cap_group, bases=SOCIAL_BASES, registry=SOCIAL_CAPS, total_group='EXCLUDED'
+    )
+    _check_side(code, 'fiscale', tax_base, tax_cap_group, bases=TAX_BASES, registry=TAX_CAPS, total_group='EXEMPT')
     if (social_base == NONE) != (tax_base == NONE):
         raise ValueError(f'{code} : assiettes sociale et fiscale doivent être toutes deux « none » ou aucune')

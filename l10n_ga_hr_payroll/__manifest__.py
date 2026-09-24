@@ -20,6 +20,5 @@
         'data/ir_sequence_data.xml',
     ],
     'external_dependencies': {'python': ['openpyxl', 'xlsxwriter']},
-    'installable': True,
     'license': 'OPL-1',
 }

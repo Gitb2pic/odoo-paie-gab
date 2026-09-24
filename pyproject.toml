@@ -17,6 +17,10 @@ ignore = [
     "PLR0913", "PLR2004",          # signatures Odoo et index ; les nombres métier sont contrôlés par C3
 ]
 
+[tool.ruff.lint.per-file-ignores]
+"l10n_ga_*/**/__init__.py" = ["F401"]   # imports Odoo pour enregistrer modèles et tests
+"l10n_ga_*/__manifest__.py" = ["B018"]   # manifeste = dictionnaire nu
+
 [tool.ruff.lint.isort]
 known-first-party = ["odoo"]
 section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
