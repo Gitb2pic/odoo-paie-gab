@@ -3,7 +3,6 @@
 import ast
 import sys
 import xml.etree.ElementTree as ET
-from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
@@ -25,22 +24,7 @@ def data():
 @pytest.fixture(scope='module')
 def parsed():
     """{code: [(date_from, valeur), ...]} lu dans le fichier versionné."""
-    root = ET.parse(gen.XML_PATH).getroot()
-    codes = {}
-    values = defaultdict(list)
-    for record in root.iter('record'):
-        fields = {f.get('name'): f for f in record.findall('field')}
-        if record.get('model') == 'hr.rule.parameter':
-            codes[record.get('id')] = fields['code'].text
-        else:
-            code = codes[fields['rule_parameter_id'].get('ref')]
-            day = date.fromisoformat(fields['date_from'].text)
-            values[code].append((day, ast.literal_eval(fields['parameter_value'].text)))
-    return values
-
-
-def _at(parsed, on_date):
-    return {code: max(v for v in rows if v[0] <= on_date)[1] for code, rows in parsed.items()}
+    return gen.read_generated()
 
 
 def test_versioned_file_is_up_to_date(data):
@@ -99,4 +83,6 @@ def test_values_are_python_literals_without_inf():
 @pytest.mark.parametrize('on_date', [date(2025, 12, 31), date(2026, 1, 1), date(2026, 7, 16), date(2026, 7, 17)])
 def test_parity_generated_values_vs_yaml_loader(parsed, on_date):
     """Les valeurs installées reconstruisent exactement les FiscalParams du chargeur de test."""
-    assert params_from_values(_at(parsed, on_date), cash_rounding=500) == load_from_yaml(gen.YAML_PATH, on_date)
+    assert params_from_values(gen.values_at(parsed, on_date), cash_rounding=500) == load_from_yaml(
+        gen.YAML_PATH, on_date
+    )

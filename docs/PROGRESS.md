@@ -1,14 +1,14 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 24/09/2026 (étape 2.1).
+Mis à jour le 24/09/2026 (étape 2.2).
 
 ## Étapes
 
 | Étape | Module | Contenu | État | Complétude | Rapport |
 |---|---|---|---|---|---|
 | Sprint 0 | socle | dépôt, outillage, vérifications Enterprise (14 points) | **terminé** | 100 % | `docs/completude/sprint0.md` |
-| 2.1 | `l10n_ga_hr_payroll` | noyau fiscal pur `lib/ga_fiscal_core` | **terminé** — en attente du « go » pour 2.2 | 100 % (334 tests, couverture 100 %, parité oracle ≤ 1 FCFA) | `docs/completude/l10n_ga_hr_payroll_2.1.md` |
-| 2.2 | `l10n_ga_hr_payroll` | squelette du module et données | à faire | — | — |
+| 2.1 | `l10n_ga_hr_payroll` | noyau fiscal pur `lib/ga_fiscal_core` | **terminé** | 100 % (334 tests, couverture 100 %, parité oracle ≤ 1 FCFA) | `docs/completude/l10n_ga_hr_payroll_2.1.md` |
+| 2.2 | `l10n_ga_hr_payroll` | squelette du module et données | **terminé** — en attente du « go » pour 2.3 | 100 % (19/19 ; 62 rubriques, 50 paramètres datés ; 18 tests Odoo, 55 tests d'outillage, noyau 368 tests couverture 100 % ; F16 rejoué sur les données générées) | `docs/completude/l10n_ga_hr_payroll_2.2.md` |
 | 2.3 | `l10n_ga_hr_payroll` | modèles, adaptateur et règles liées au noyau | à faire | — | — |
 | 2.4 | `l10n_ga_hr_payroll` | conventions, grilles, heures supplémentaires, absences | à faire | — | — |
 | 2.5 | `l10n_ga_hr_payroll` | prêts salariés (F1), indemnités récurrentes (F15) | à faire | — | — |
@@ -39,8 +39,8 @@ Mis à jour le 24/09/2026 (étape 2.1).
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. À appliquer par Alex : D-04 (`db_name`, `dbfilter`, `list_db` dans `odoo.conf` + redémarrage), puis relancer `make test MODULE=base_setup`. Actions attendues d'Alex : D-05 (schéma `hr_payroll_gb` + lignes fictives, avant l'étape 6), D-07 (copie de la V1, avant l'étape 4.4). Décidés : D-06 (`date_to`), D-08 (ADR acceptés), D-09 (`make demo` sur `odoo19`).
+Voir `docs/decisions/ouvertes.md`. À appliquer par Alex : D-04 (`db_name`, `dbfilter`, `list_db` dans `odoo.conf` + redémarrage), puis relancer `make test MODULE=base_setup`. Actions attendues d'Alex : D-05 (schéma `hr_payroll_gb` + lignes fictives, avant l'étape 6), D-07 (copie de la V1, avant l'étape 4.4). Décidés : D-06 (`date_to`), D-08 (ADR acceptés), D-09 (`make demo` sur `odoo19`), D-15 à D-17 (étape 2.2). Questions non bloquantes de 2.2 : auteur du manifeste ; D-04 à appliquer avant 2.3 (interférence des crons du service observée sur une base de test).
 
 ## Prochaine étape
 
-2.2 — squelette du module et données (`prompts/02_l10n_ga_hr_payroll.md`), après le « go » d'Alex. Prérequis conseillé : D-04 appliqué (`odoo.conf`), pour les premiers tests Odoo.
+2.3 — modèles, adaptateur et règles liées au noyau (`prompts/02_l10n_ga_hr_payroll.md`), après le « go » d'Alex. Prérequis conseillé : D-04 appliqué (`odoo.conf`). Démo possible : `make demo MODULE=l10n_ga_hr_payroll` (redémarre le service `odoo19`, sur accord d'Alex).

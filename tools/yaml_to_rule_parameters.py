@@ -11,7 +11,11 @@ Usage :
 """
 
 import argparse
+import ast
 import sys
+import xml.etree.ElementTree as ET
+from collections import defaultdict
+from datetime import date
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -70,6 +74,27 @@ def render(data):
             )
     parts.append(FOOTER)
     return ''.join(parts)
+
+
+def read_generated(path=None):
+    """Relit le XML généré : ``{code: [(date d'effet, valeur), ...]}`` (contrôles et recette)."""
+    root = ET.parse(path or XML_PATH).getroot()
+    codes = {}
+    values = defaultdict(list)
+    for record in root.iter('record'):
+        fields = {field.get('name'): field for field in record.findall('field')}
+        if record.get('model') == 'hr.rule.parameter':
+            codes[record.get('id')] = fields['code'].text
+        else:
+            code = codes[fields['rule_parameter_id'].get('ref')]
+            day = date.fromisoformat(fields['date_from'].text)
+            values[code].append((day, ast.literal_eval(fields['parameter_value'].text)))
+    return dict(values)
+
+
+def values_at(generated, on_date):
+    """Valeur de chaque code applicable à ``on_date`` (dernière date d'effet <= date, RG06)."""
+    return {code: max(row for row in rows if row[0] <= on_date)[1] for code, rows in generated.items()}
 
 
 def main(argv=None):
