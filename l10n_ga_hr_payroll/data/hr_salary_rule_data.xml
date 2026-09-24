@@ -1,0 +1,1204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    FICHIER GÉNÉRÉ par tools/csv_to_salary_rules.py depuis data/catalogue_rubriques_ga.csv :
+    ne pas modifier à la main (modifier le catalogue puis relancer le générateur).
+-->
+<odoo>
+    <data noupdate="0">
+        <record id="rule_ga_basic" model="hr.salary.rule">
+            <field name="name">Salaire de base</field>
+            <field name="code">BASIC</field>
+            <field name="sequence">1</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.paid_amount</field>
+            <field name="bold" eval="True"/>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_sursal" model="hr.salary.rule">
+            <field name="name">Sursalaire</field>
+            <field name="code">GA_SURSAL</field>
+            <field name="sequence">10</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_SURSAL' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_SURSAL'].amount
+result_name = inputs['GA_SURSAL'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_anc" model="hr.salary.rule">
+            <field name="name">Prime d'ancienneté</field>
+            <field name="code">GA_ANC</field>
+            <field name="sequence">11</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ANC' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_ANC'].amount
+result_name = inputs['GA_ANC'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_hs" model="hr.salary.rule">
+            <field name="name">Heures supplémentaires</field>
+            <field name="code">GA_HS</field>
+            <field name="sequence">12</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_HS' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_HS'].amount
+result_name = inputs['GA_HS'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_recall" model="hr.salary.rule">
+            <field name="name">Rappel de salaire</field>
+            <field name="code">GA_RECALL</field>
+            <field name="sequence">13</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_RECALL' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_RECALL'].amount
+result_name = inputs['GA_RECALL'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_fonct" model="hr.salary.rule">
+            <field name="name">Indemnité de fonction</field>
+            <field name="code">GA_FONCT</field>
+            <field name="sequence">14</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_FONCT' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_FONCT'].amount
+result_name = inputs['GA_FONCT'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_interim" model="hr.salary.rule">
+            <field name="name">Prime d'intérim</field>
+            <field name="code">GA_INTERIM</field>
+            <field name="sequence">15</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_INTERIM' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_INTERIM'].amount
+result_name = inputs['GA_INTERIM'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_assid" model="hr.salary.rule">
+            <field name="name">Prime d'assiduité</field>
+            <field name="code">GA_ASSID</field>
+            <field name="sequence">20</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ASSID' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_ASSID'].amount
+result_name = inputs['GA_ASSID'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_nuit" model="hr.salary.rule">
+            <field name="name">Prime de nuit</field>
+            <field name="code">GA_NUIT</field>
+            <field name="sequence">21</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_NUIT' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_NUIT'].amount
+result_name = inputs['GA_NUIT'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_quart" model="hr.salary.rule">
+            <field name="name">Prime de quart</field>
+            <field name="code">GA_QUART</field>
+            <field name="sequence">22</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_QUART' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_QUART'].amount
+result_name = inputs['GA_QUART'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_risque" model="hr.salary.rule">
+            <field name="name">Prime de risque</field>
+            <field name="code">GA_RISQUE</field>
+            <field name="sequence">23</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_RISQUE' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_RISQUE'].amount
+result_name = inputs['GA_RISQUE'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_penib" model="hr.salary.rule">
+            <field name="name">Prime de pénibilité</field>
+            <field name="code">GA_PENIB</field>
+            <field name="sequence">24</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_PENIB' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_PENIB'].amount
+result_name = inputs['GA_PENIB'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_techn" model="hr.salary.rule">
+            <field name="name">Prime de technicité</field>
+            <field name="code">GA_TECHN</field>
+            <field name="sequence">25</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_TECHN' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_TECHN'].amount
+result_name = inputs['GA_TECHN'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_sujet" model="hr.salary.rule">
+            <field name="name">Prime de sujétion</field>
+            <field name="code">GA_SUJET</field>
+            <field name="sequence">26</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_SUJET' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_SUJET'].amount
+result_name = inputs['GA_SUJET'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_diplome" model="hr.salary.rule">
+            <field name="name">Prime de diplôme</field>
+            <field name="code">GA_DIPLOME</field>
+            <field name="sequence">27</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_DIPLOME' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_DIPLOME'].amount
+result_name = inputs['GA_DIPLOME'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_viechere" model="hr.salary.rule">
+            <field name="name">Indemnité de vie chère</field>
+            <field name="code">GA_VIECHERE</field>
+            <field name="sequence">28</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_VIECHERE' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_VIECHERE'].amount
+result_name = inputs['GA_VIECHERE'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_expat" model="hr.salary.rule">
+            <field name="name">Indemnité d'expatriation</field>
+            <field name="code">GA_EXPAT</field>
+            <field name="sequence">29</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_EXPAT' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_EXPAT'].amount
+result_name = inputs['GA_EXPAT'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_eloign" model="hr.salary.rule">
+            <field name="name">Indemnité d'éloignement ou de brousse</field>
+            <field name="code">GA_ELOIGN</field>
+            <field name="sequence">30</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ELOIGN' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_ELOIGN'].amount
+result_name = inputs['GA_ELOIGN'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_logt_esp" model="hr.salary.rule">
+            <field name="name">Indemnité de logement</field>
+            <field name="code">GA_LOGT_ESP</field>
+            <field name="sequence">31</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_LOGT_ESP' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_LOGT_ESP'].amount
+result_name = inputs['GA_LOGT_ESP'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_resp" model="hr.salary.rule">
+            <field name="name">Indemnité de responsabilité</field>
+            <field name="code">GA_RESP</field>
+            <field name="sequence">32</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_RESP' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_RESP'].amount
+result_name = inputs['GA_RESP'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="True"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_repr" model="hr.salary.rule">
+            <field name="name">Indemnité de représentation</field>
+            <field name="code">GA_REPR</field>
+            <field name="sequence">33</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_REPR' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_REPR'].amount
+result_name = inputs['GA_REPR'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_caisse" model="hr.salary.rule">
+            <field name="name">Prime de caisse</field>
+            <field name="code">GA_CAISSE</field>
+            <field name="sequence">34</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_CAISSE' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_CAISSE'].amount
+result_name = inputs['GA_CAISSE'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_rend" model="hr.salary.rule">
+            <field name="name">Prime de rendement</field>
+            <field name="code">GA_REND</field>
+            <field name="sequence">40</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_REND' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_REND'].amount
+result_name = inputs['GA_REND'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">BONUS_4M</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_13m" model="hr.salary.rule">
+            <field name="name">Treizième mois</field>
+            <field name="code">GA_13M</field>
+            <field name="sequence">41</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_13M' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_13M'].amount
+result_name = inputs['GA_13M'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">BONUS_4M</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_pfa" model="hr.salary.rule">
+            <field name="name">Prime de fin d'année</field>
+            <field name="code">GA_PFA</field>
+            <field name="sequence">42</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_PFA' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_PFA'].amount
+result_name = inputs['GA_PFA'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">BONUS_4M</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_bonus" model="hr.salary.rule">
+            <field name="name">Bonus</field>
+            <field name="code">GA_BONUS</field>
+            <field name="sequence">43</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_BONUS' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_BONUS'].amount
+result_name = inputs['GA_BONUS'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">BONUS_4M</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_bilan" model="hr.salary.rule">
+            <field name="name">Prime de bilan</field>
+            <field name="code">GA_BILAN</field>
+            <field name="sequence">44</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_BILAN' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_BILAN'].amount
+result_name = inputs['GA_BILAN'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">BONUS_4M</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_result" model="hr.salary.rule">
+            <field name="name">Prime de résultat ou d'intéressement</field>
+            <field name="code">GA_RESULT</field>
+            <field name="sequence">45</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_RESULT' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_RESULT'].amount
+result_name = inputs['GA_RESULT'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">BONUS_4M</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_gratif" model="hr.salary.rule">
+            <field name="name">Gratification</field>
+            <field name="code">GA_GRATIF</field>
+            <field name="sequence">46</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_GRATIF' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_GRATIF'].amount
+result_name = inputs['GA_GRATIF'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">BONUS_4M</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_transp" model="hr.salary.rule">
+            <field name="name">Indemnité de transport</field>
+            <field name="code">GA_TRANSP</field>
+            <field name="sequence">50</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_TRANSP' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_TRANSP'].amount
+result_name = inputs['GA_TRANSP'].name</field>
+            <field name="l10n_ga_social_base">capped</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_social_cap_group">TRANSPORT_35K</field>
+            <field name="l10n_ga_tax_cap_group">TRANSPORT_DAILY</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">nt_transport</field>
+        </record>
+        <record id="rule_ga_vehic" model="hr.salary.rule">
+            <field name="name">Indemnité de véhicule</field>
+            <field name="code">GA_VEHIC</field>
+            <field name="sequence">51</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_VEHIC' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_VEHIC'].amount
+result_name = inputs['GA_VEHIC'].name</field>
+            <field name="l10n_ga_social_base">capped</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_social_cap_group">TRANSPORT_35K</field>
+            <field name="l10n_ga_tax_cap_group">VEHICLE_100K</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">nt_transport</field>
+        </record>
+        <record id="rule_ga_carbu" model="hr.salary.rule">
+            <field name="name">Indemnité de carburant</field>
+            <field name="code">GA_CARBU</field>
+            <field name="sequence">52</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_CARBU' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_CARBU'].amount
+result_name = inputs['GA_CARBU'].name</field>
+            <field name="l10n_ga_social_base">capped</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_social_cap_group">TRANSPORT_35K</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_kilom" model="hr.salary.rule">
+            <field name="name">Indemnité kilométrique</field>
+            <field name="code">GA_KILOM</field>
+            <field name="sequence">53</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_KILOM' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_KILOM'].amount
+result_name = inputs['GA_KILOM'].name</field>
+            <field name="l10n_ga_social_base">capped</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_social_cap_group">TRANSPORT_35K</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_depl" model="hr.salary.rule">
+            <field name="name">Indemnité de déplacement ou de mission</field>
+            <field name="code">GA_DEPL</field>
+            <field name="sequence">54</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_DEPL' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_DEPL'].amount
+result_name = inputs['GA_DEPL'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_panier" model="hr.salary.rule">
+            <field name="name">Prime de panier</field>
+            <field name="code">GA_PANIER</field>
+            <field name="sequence">55</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_PANIER' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_PANIER'].amount
+result_name = inputs['GA_PANIER'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_saliss" model="hr.salary.rule">
+            <field name="name">Prime de salissure</field>
+            <field name="code">GA_SALISS</field>
+            <field name="sequence">56</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_SALISS' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_SALISS'].amount
+result_name = inputs['GA_SALISS'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_vestim" model="hr.salary.rule">
+            <field name="name">Indemnité vestimentaire</field>
+            <field name="code">GA_VESTIM</field>
+            <field name="sequence">57</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_VESTIM' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_VESTIM'].amount
+result_name = inputs['GA_VESTIM'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_blanch" model="hr.salary.rule">
+            <field name="name">Indemnité de blanchissage</field>
+            <field name="code">GA_BLANCH</field>
+            <field name="sequence">58</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_BLANCH' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_BLANCH'].amount
+result_name = inputs['GA_BLANCH'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_coiff" model="hr.salary.rule">
+            <field name="name">Prime de coiffure ou de beauté</field>
+            <field name="code">GA_COIFF</field>
+            <field name="sequence">59</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_COIFF' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_COIFF'].amount
+result_name = inputs['GA_COIFF'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_trouss" model="hr.salary.rule">
+            <field name="name">Prime de trousseau</field>
+            <field name="code">GA_TROUSS</field>
+            <field name="sequence">60</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_TROUSS' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_TROUSS'].amount
+result_name = inputs['GA_TROUSS'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">FAMILY_20K</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_scolar" model="hr.salary.rule">
+            <field name="name">Prime de scolarité</field>
+            <field name="code">GA_SCOLAR</field>
+            <field name="sequence">61</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_SCOLAR' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_SCOLAR'].amount
+result_name = inputs['GA_SCOLAR'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">FAMILY_20K</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_jardin" model="hr.salary.rule">
+            <field name="name">Prime de jardin d'enfants</field>
+            <field name="code">GA_JARDIN</field>
+            <field name="sequence">62</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_JARDIN' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_JARDIN'].amount
+result_name = inputs['GA_JARDIN'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">FAMILY_20K</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_transp_enf" model="hr.salary.rule">
+            <field name="name">Prime de transport des enfants</field>
+            <field name="code">GA_TRANSP_ENF</field>
+            <field name="sequence">63</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_TRANSP_ENF' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_TRANSP_ENF'].amount
+result_name = inputs['GA_TRANSP_ENF'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_tax_cap_group">FAMILY_20K</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_solid" model="hr.salary.rule">
+            <field name="name">Prime de solidarité</field>
+            <field name="code">GA_SOLID</field>
+            <field name="sequence">64</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_SOLID' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_SOLID'].amount
+result_name = inputs['GA_SOLID'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_compl_ij" model="hr.salary.rule">
+            <field name="name">Complément employeur aux indemnités journalières</field>
+            <field name="code">GA_COMPL_IJ</field>
+            <field name="sequence">65</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_COMPL_IJ' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_COMPL_IJ'].amount
+result_name = inputs['GA_COMPL_IJ'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_conge" model="hr.salary.rule">
+            <field name="name">Allocation de congés payés</field>
+            <field name="code">GA_CONGE</field>
+            <field name="sequence">70</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_CONGE' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_CONGE'].amount
+result_name = inputs['GA_CONGE'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">leave</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_iccp" model="hr.salary.rule">
+            <field name="name">Indemnité compensatrice de congés payés</field>
+            <field name="code">GA_ICCP</field>
+            <field name="sequence">71</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ICCP' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_ICCP'].amount
+result_name = inputs['GA_ICCP'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">leave</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_preav" model="hr.salary.rule">
+            <field name="name">Indemnité compensatrice de préavis</field>
+            <field name="code">GA_PREAV</field>
+            <field name="sequence">72</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_PREAV' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_PREAV'].amount
+result_name = inputs['GA_PREAV'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_licenc" model="hr.salary.rule">
+            <field name="name">Indemnité de licenciement</field>
+            <field name="code">GA_LICENC</field>
+            <field name="sequence">73</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_LICENC' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_LICENC'].amount
+result_name = inputs['GA_LICENC'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_isr_ret" model="hr.salary.rule">
+            <field name="name">Indemnité de services rendus (retraite ou décès)</field>
+            <field name="code">GA_ISR_RET</field>
+            <field name="sequence">74</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ISR_RET' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_ISR_RET'].amount
+result_name = inputs['GA_ISR_RET'].name</field>
+            <field name="l10n_ga_social_base">capped</field>
+            <field name="l10n_ga_tax_base">capped</field>
+            <field name="l10n_ga_social_cap_group">ISR_RETIREMENT</field>
+            <field name="l10n_ga_tax_cap_group">ISR_RETIREMENT</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_isr_dem" model="hr.salary.rule">
+            <field name="name">Indemnité de services rendus (démission)</field>
+            <field name="code">GA_ISR_DEM</field>
+            <field name="sequence">75</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ISR_DEM' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_ISR_DEM'].amount
+result_name = inputs['GA_ISR_DEM'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">taxable_allowance</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_isr_ps" model="hr.salary.rule">
+            <field name="name">Indemnité de départ volontaire (plan social)</field>
+            <field name="code">GA_ISR_PS</field>
+            <field name="sequence">76</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ISR_PS' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_ISR_PS'].amount
+result_name = inputs['GA_ISR_PS'].name</field>
+            <field name="l10n_ga_social_base">excluded</field>
+            <field name="l10n_ga_tax_base">exempt</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">nt_other</field>
+        </record>
+        <record id="rule_ga_an_logt" model="hr.salary.rule">
+            <field name="name">Avantage en nature : logement</field>
+            <field name="code">GA_AN_LOGT</field>
+            <field name="sequence">90</field>
+            <field name="category_id" ref="category_ga_aik"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_AN_LOGT' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_AN_LOGT'].amount
+result_name = inputs['GA_AN_LOGT'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">benefit</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_an_dom" model="hr.salary.rule">
+            <field name="name">Avantage en nature : domesticité</field>
+            <field name="code">GA_AN_DOM</field>
+            <field name="sequence">91</field>
+            <field name="category_id" ref="category_ga_aik"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_AN_DOM' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_AN_DOM'].amount
+result_name = inputs['GA_AN_DOM'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">benefit</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_an_eau" model="hr.salary.rule">
+            <field name="name">Avantage en nature : eau et électricité</field>
+            <field name="code">GA_AN_EAU</field>
+            <field name="sequence">92</field>
+            <field name="category_id" ref="category_ga_aik"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_AN_EAU' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_AN_EAU'].amount
+result_name = inputs['GA_AN_EAU'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">benefit</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_an_nour" model="hr.salary.rule">
+            <field name="name">Avantage en nature : nourriture</field>
+            <field name="code">GA_AN_NOUR</field>
+            <field name="sequence">93</field>
+            <field name="category_id" ref="category_ga_aik"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_AN_NOUR' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['GA_AN_NOUR'].amount
+result_name = inputs['GA_AN_NOUR'].name</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">food</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_gross" model="hr.salary.rule">
+            <field name="name">Salaire brut</field>
+            <field name="code">GROSS</field>
+            <field name="sequence">100</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories['BASIC'] + categories['ALW'] + categories['GA_AIK']</field>
+            <field name="bold" eval="True"/>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_advance" model="hr.salary.rule">
+            <field name="name">Avance ou acompte sur salaire</field>
+            <field name="code">GA_ADVANCE</field>
+            <field name="sequence">170</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ADVANCE' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -inputs['GA_ADVANCE'].amount
+result_name = inputs['GA_ADVANCE'].name</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_loan" model="hr.salary.rule">
+            <field name="name">Remboursement de prêt</field>
+            <field name="code">GA_LOAN</field>
+            <field name="sequence">171</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_LOAN' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -inputs['GA_LOAN'].amount
+result_name = inputs['GA_LOAN'].name</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_assign" model="hr.salary.rule">
+            <field name="name">Cession volontaire de salaire</field>
+            <field name="code">GA_ASSIGN</field>
+            <field name="sequence">172</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_ASSIGN' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -inputs['GA_ASSIGN'].amount
+result_name = inputs['GA_ASSIGN'].name</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_garnish" model="hr.salary.rule">
+            <field name="name">Saisie sur salaire</field>
+            <field name="code">GA_GARNISH</field>
+            <field name="sequence">173</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'GA_GARNISH' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -inputs['GA_GARNISH'].amount
+result_name = inputs['GA_GARNISH'].name</field>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_net" model="hr.salary.rule">
+            <field name="name">Salaire net</field>
+            <field name="code">NET</field>
+            <field name="sequence">200</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories['BASIC'] + categories['ALW'] + categories['DED']</field>
+            <field name="bold" eval="True"/>
+            <field name="appears_on_employee_cost_dashboard" eval="True"/>
+            <field name="l10n_ga_social_base">none</field>
+            <field name="l10n_ga_tax_base">none</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="False"/>
+            <field name="l10n_ga_severance_base" eval="False"/>
+            <field name="l10n_ga_das_column">none</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+    </data>
+</odoo>

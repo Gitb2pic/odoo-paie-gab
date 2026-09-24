@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    FICHIER GÉNÉRÉ par tools/csv_to_salary_rules.py depuis data/catalogue_rubriques_ga.csv :
+    ne pas modifier à la main (modifier le catalogue puis relancer le générateur).
+-->
+<odoo>
+    <data noupdate="0">
+        <record id="input_type_ga_sursal" model="hr.payslip.input.type">
+            <field name="name">Sursalaire</field>
+            <field name="code">GA_SURSAL</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_anc" model="hr.payslip.input.type">
+            <field name="name">Prime d'ancienneté</field>
+            <field name="code">GA_ANC</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_hs" model="hr.payslip.input.type">
+            <field name="name">Heures supplémentaires</field>
+            <field name="code">GA_HS</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_recall" model="hr.payslip.input.type">
+            <field name="name">Rappel de salaire</field>
+            <field name="code">GA_RECALL</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_fonct" model="hr.payslip.input.type">
+            <field name="name">Indemnité de fonction</field>
+            <field name="code">GA_FONCT</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_interim" model="hr.payslip.input.type">
+            <field name="name">Prime d'intérim</field>
+            <field name="code">GA_INTERIM</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_assid" model="hr.payslip.input.type">
+            <field name="name">Prime d'assiduité</field>
+            <field name="code">GA_ASSID</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_nuit" model="hr.payslip.input.type">
+            <field name="name">Prime de nuit</field>
+            <field name="code">GA_NUIT</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_quart" model="hr.payslip.input.type">
+            <field name="name">Prime de quart</field>
+            <field name="code">GA_QUART</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_risque" model="hr.payslip.input.type">
+            <field name="name">Prime de risque</field>
+            <field name="code">GA_RISQUE</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_penib" model="hr.payslip.input.type">
+            <field name="name">Prime de pénibilité</field>
+            <field name="code">GA_PENIB</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_techn" model="hr.payslip.input.type">
+            <field name="name">Prime de technicité</field>
+            <field name="code">GA_TECHN</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_sujet" model="hr.payslip.input.type">
+            <field name="name">Prime de sujétion</field>
+            <field name="code">GA_SUJET</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_diplome" model="hr.payslip.input.type">
+            <field name="name">Prime de diplôme</field>
+            <field name="code">GA_DIPLOME</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_viechere" model="hr.payslip.input.type">
+            <field name="name">Indemnité de vie chère</field>
+            <field name="code">GA_VIECHERE</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_expat" model="hr.payslip.input.type">
+            <field name="name">Indemnité d'expatriation</field>
+            <field name="code">GA_EXPAT</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_eloign" model="hr.payslip.input.type">
+            <field name="name">Indemnité d'éloignement ou de brousse</field>
+            <field name="code">GA_ELOIGN</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_logt_esp" model="hr.payslip.input.type">
+            <field name="name">Indemnité de logement</field>
+            <field name="code">GA_LOGT_ESP</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_resp" model="hr.payslip.input.type">
+            <field name="name">Indemnité de responsabilité</field>
+            <field name="code">GA_RESP</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_repr" model="hr.payslip.input.type">
+            <field name="name">Indemnité de représentation</field>
+            <field name="code">GA_REPR</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_caisse" model="hr.payslip.input.type">
+            <field name="name">Prime de caisse</field>
+            <field name="code">GA_CAISSE</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_rend" model="hr.payslip.input.type">
+            <field name="name">Prime de rendement</field>
+            <field name="code">GA_REND</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_13m" model="hr.payslip.input.type">
+            <field name="name">Treizième mois</field>
+            <field name="code">GA_13M</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_pfa" model="hr.payslip.input.type">
+            <field name="name">Prime de fin d'année</field>
+            <field name="code">GA_PFA</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_bonus" model="hr.payslip.input.type">
+            <field name="name">Bonus</field>
+            <field name="code">GA_BONUS</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_bilan" model="hr.payslip.input.type">
+            <field name="name">Prime de bilan</field>
+            <field name="code">GA_BILAN</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_result" model="hr.payslip.input.type">
+            <field name="name">Prime de résultat ou d'intéressement</field>
+            <field name="code">GA_RESULT</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_gratif" model="hr.payslip.input.type">
+            <field name="name">Gratification</field>
+            <field name="code">GA_GRATIF</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_transp" model="hr.payslip.input.type">
+            <field name="name">Indemnité de transport</field>
+            <field name="code">GA_TRANSP</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_vehic" model="hr.payslip.input.type">
+            <field name="name">Indemnité de véhicule</field>
+            <field name="code">GA_VEHIC</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_carbu" model="hr.payslip.input.type">
+            <field name="name">Indemnité de carburant</field>
+            <field name="code">GA_CARBU</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_kilom" model="hr.payslip.input.type">
+            <field name="name">Indemnité kilométrique</field>
+            <field name="code">GA_KILOM</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_depl" model="hr.payslip.input.type">
+            <field name="name">Indemnité de déplacement ou de mission</field>
+            <field name="code">GA_DEPL</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_panier" model="hr.payslip.input.type">
+            <field name="name">Prime de panier</field>
+            <field name="code">GA_PANIER</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_saliss" model="hr.payslip.input.type">
+            <field name="name">Prime de salissure</field>
+            <field name="code">GA_SALISS</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_vestim" model="hr.payslip.input.type">
+            <field name="name">Indemnité vestimentaire</field>
+            <field name="code">GA_VESTIM</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_blanch" model="hr.payslip.input.type">
+            <field name="name">Indemnité de blanchissage</field>
+            <field name="code">GA_BLANCH</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_coiff" model="hr.payslip.input.type">
+            <field name="name">Prime de coiffure ou de beauté</field>
+            <field name="code">GA_COIFF</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_trouss" model="hr.payslip.input.type">
+            <field name="name">Prime de trousseau</field>
+            <field name="code">GA_TROUSS</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_scolar" model="hr.payslip.input.type">
+            <field name="name">Prime de scolarité</field>
+            <field name="code">GA_SCOLAR</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_jardin" model="hr.payslip.input.type">
+            <field name="name">Prime de jardin d'enfants</field>
+            <field name="code">GA_JARDIN</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_transp_enf" model="hr.payslip.input.type">
+            <field name="name">Prime de transport des enfants</field>
+            <field name="code">GA_TRANSP_ENF</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_solid" model="hr.payslip.input.type">
+            <field name="name">Prime de solidarité</field>
+            <field name="code">GA_SOLID</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_compl_ij" model="hr.payslip.input.type">
+            <field name="name">Complément employeur aux indemnités journalières</field>
+            <field name="code">GA_COMPL_IJ</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_conge" model="hr.payslip.input.type">
+            <field name="name">Allocation de congés payés</field>
+            <field name="code">GA_CONGE</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_iccp" model="hr.payslip.input.type">
+            <field name="name">Indemnité compensatrice de congés payés</field>
+            <field name="code">GA_ICCP</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_preav" model="hr.payslip.input.type">
+            <field name="name">Indemnité compensatrice de préavis</field>
+            <field name="code">GA_PREAV</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_licenc" model="hr.payslip.input.type">
+            <field name="name">Indemnité de licenciement</field>
+            <field name="code">GA_LICENC</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_isr_ret" model="hr.payslip.input.type">
+            <field name="name">Indemnité de services rendus (retraite ou décès)</field>
+            <field name="code">GA_ISR_RET</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_isr_dem" model="hr.payslip.input.type">
+            <field name="name">Indemnité de services rendus (démission)</field>
+            <field name="code">GA_ISR_DEM</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_isr_ps" model="hr.payslip.input.type">
+            <field name="name">Indemnité de départ volontaire (plan social)</field>
+            <field name="code">GA_ISR_PS</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_an_logt" model="hr.payslip.input.type">
+            <field name="name">Avantage en nature : logement</field>
+            <field name="code">GA_AN_LOGT</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_an_dom" model="hr.payslip.input.type">
+            <field name="name">Avantage en nature : domesticité</field>
+            <field name="code">GA_AN_DOM</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_an_eau" model="hr.payslip.input.type">
+            <field name="name">Avantage en nature : eau et électricité</field>
+            <field name="code">GA_AN_EAU</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_an_nour" model="hr.payslip.input.type">
+            <field name="name">Avantage en nature : nourriture</field>
+            <field name="code">GA_AN_NOUR</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_advance" model="hr.payslip.input.type">
+            <field name="name">Avance ou acompte sur salaire</field>
+            <field name="code">GA_ADVANCE</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_loan" model="hr.payslip.input.type">
+            <field name="name">Remboursement de prêt</field>
+            <field name="code">GA_LOAN</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="False"/>
+        </record>
+        <record id="input_type_ga_assign" model="hr.payslip.input.type">
+            <field name="name">Cession volontaire de salaire</field>
+            <field name="code">GA_ASSIGN</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+        <record id="input_type_ga_garnish" model="hr.payslip.input.type">
+            <field name="name">Saisie sur salaire</field>
+            <field name="code">GA_GARNISH</field>
+            <field name="country_id" ref="base.ga"/>
+            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
+            <field name="available_in_attachments" eval="True"/>
+        </record>
+    </data>
+</odoo>
