@@ -3,7 +3,7 @@ from datetime import date
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 
-from ..models.l10n_ga_payroll_check import PAYROLL_CHECKS
+from ..models.l10n_ga_payroll_check import PAYROLL_CHECKS, CheckRule, run_checks
 from .common import GaPayrollCase
 
 AUG = (date(2026, 8, 1), date(2026, 8, 31))
@@ -103,6 +103,13 @@ class TestPayrollChecks(GaPayrollCase):
                 'GA_ALLOWANCE_FORCED_NO_REASON',
             },
         )
+
+    def test_abstract_rule_and_custom_chain(self):
+        slip = self._run(self._complete('Abstrait')).slip_ids
+        with self.assertRaises(NotImplementedError):
+            CheckRule().run(slip)
+        self.assertTrue(CheckRule().applies(slip))
+        self.assertEqual(run_checks(slip, checks=()), [])
 
     def test_complete_employee_has_no_issue_and_is_computed(self):
         run = self._run(self._complete('Complet'))

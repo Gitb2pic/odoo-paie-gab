@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 17:33+0000\n"
-"PO-Revision-Date: 2026-09-24 17:33+0000\n"
+"POT-Creation-Date: 2026-09-24 18:35+0000\n"
+"PO-Revision-Date: 2026-09-24 18:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,16 +22,90 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid "%(employee)s : NIF absent."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid ""
+"%(employee)s : aucune version du contrat valide du %(start)s au %(end)s."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid "%(employee)s : date d’embauche absente."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
 #: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
 msgid "%(employee)s : heures supplémentaires (%(period)s) — %(detail)s."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid ""
+"%(employee)s : indemnité « %(allowance)s » forcée imposable sans motif."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid "%(employee)s : n° CNSS absent."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid "%(employee)s : parts fiscales forcées sans motif."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid "%(employee)s : payé par virement sans compte bancaire principal."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
 #: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
 msgid ""
 "%(employee)s : salaire %(wage)s inférieur au minimum %(minimum)s de la "
 "grille au %(date)s."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid ""
+"%(employee)s : situation familiale absente ou non prise en charge par le "
+"quotient familial."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_payroll_check.py:0
+msgid ""
+"%(employee)s : échéances de prêt %(installment)s au-delà de %(limit)s "
+"(plafond sur le net de référence)."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "%(employee)s apparaît sur plusieurs lignes : ligne refusée."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid ""
+"%(employee)s n’a pas de bulletin brouillon dans ce lot : ligne refusée."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -134,6 +208,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_version__l10n_ga_nationality_code__4
 msgid "4 — Non africains"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_form
+msgid "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"au\" title=\"au\"/>"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -269,6 +348,52 @@ msgid "Annulé"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__year
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_search
+msgid "Année"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_l10n_ga_check_issue
+msgid "Anomalie de contrôle (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_run__l10n_ga_issue_ids
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__issues_text
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_run_view_kanban_l10n_ga
+msgid "Anomalies"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_issue_ids
+msgid "Anomalies Gabon"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_run__l10n_ga_blocking_count
+msgid "Anomalies bloquantes"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.actions.act_window,name:l10n_ga_hr_payroll.l10n_ga_check_issue_action
+#: model:ir.ui.menu,name:l10n_ga_hr_payroll.menu_l10n_ga_check_issue
+msgid "Anomalies de paie"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip_run.py:0
+msgid "Anomalies du lot %(run)s"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_payslip_input_import__state__preview
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_payslip_input_import_view_form
+msgid "Aperçu"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_form
 msgid "Approuver"
 msgstr ""
@@ -294,6 +419,7 @@ msgid "Arrondi des paies en espèces"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_round
 #: model:hr.salary.rule.category,name:l10n_ga_hr_payroll.category_ga_cash
 msgid "Arrondi espèces"
 msgstr ""
@@ -382,6 +508,22 @@ msgid "Avec dérogation"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_check_issue__severity__warning
+msgid "Avertissement"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_run__l10n_ga_warning_count
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_check_issue_view_search
+msgid "Avertissements"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__irpp_base
+msgid "Base IRPP cumulée"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_irpp_base
 msgid "Base IRPP mensuelle"
 msgstr ""
@@ -417,6 +559,16 @@ msgid "Bases et DAS"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_check_issue__severity__blocking
+msgid "Bloquante"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_check_issue_view_search
+msgid "Bloquantes"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_bonus
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_bonus
 msgid "Bonus"
@@ -433,16 +585,23 @@ msgid "Brouillons"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__gross
+msgid "Brut"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_gross
 msgid "Brut (Gabon)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_taxable_gross
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__taxable
 msgid "Brut imposable"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__payslip_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__payslip_id
 msgid "Bulletin"
 msgstr ""
@@ -503,6 +662,7 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_cnss_sal
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_cnss_employee
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__cnss
 msgid "CNSS salariale"
 msgstr ""
 
@@ -546,12 +706,20 @@ msgid "Charges patronales"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Choisissez le fichier Excel à importer."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_version__l10n_ga_payment_mode__check
 msgid "Chèque"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__code
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__code
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_check_issue_view_search
 msgid "Code"
 msgstr ""
 
@@ -590,6 +758,31 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Colonne %(column)s : montant négatif %(value)s : ligne refusée."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid ""
+"Colonne %(column)s : « %(value)s » n’est pas un nombre : ligne refusée."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Colonne %(column)s en double : ignorée."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Colonne %(column)s inconnue pour ce lot : ignorée."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__l10n_ga_das_exempt_column
 msgid "Colonne DAS (part exonérée)"
 msgstr ""
@@ -600,9 +793,20 @@ msgid "Colonne DAS (part imposable)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Colonne « Matricule » absente : fichier refusé."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model,name:l10n_ga_hr_payroll.model_res_company
 msgid "Companies"
 msgstr "Sociétés"
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__company_id
+msgid "Company"
+msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ga_hr_payroll.input_type_ga_compl_ij
@@ -664,6 +868,11 @@ msgid "Contribution à la formation professionnelle"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_run_view_kanban_l10n_ga
+msgid "Contrôler"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__agreement_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__agreement_id
@@ -699,23 +908,42 @@ msgid "Conventions collectives (Gabon)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_check_issue_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_check_issue_view_list
+msgid "Corriger"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_loan_early_repayment__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__create_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__create_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__create_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__create_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__create_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_loan_early_repayment__create_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__create_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__create_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_payslip_input__l10n_ga_imported
+msgid "Créée par l’import Excel des variables (F3) : remplacée au réimport."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -759,10 +987,46 @@ msgid "Cumuls de l’année"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_employee.py:0
+#: model:ir.actions.act_window,name:l10n_ga_hr_payroll.l10n_ga_ytd_opening_action
+#: model:ir.ui.menu,name:l10n_ga_hr_payroll.menu_l10n_ga_ytd_opening
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_employee_view_form_l10n_ga
+msgid "Cumuls d’ouverture"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_ytd_opening.py:0
+msgid ""
+"Cumuls d’ouverture %(name)s : déjà repris par un bulletin validé. Annulez "
+"les bulletins concernés avant de les corriger."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/l10n_ga_ytd_opening.py:0
+msgid ""
+"Cumuls d’ouverture %(name)s : la période couverte doit être comprise dans "
+"l’année %(year)s."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_l10n_ga_ytd_opening
+msgid "Cumuls d’ouverture de paie (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_form
+msgid "Cumuls repris"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__currency_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__currency_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__currency_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_loan_early_repayment__currency_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__currency_id
 msgid "Currency"
 msgstr ""
 
@@ -788,7 +1052,15 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_payment_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_run__l10n_ga_payment_date
 msgid "Date de paiement"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_payslip_run__l10n_ga_payment_date
+msgid ""
+"Date de paiement du lot, reprise par ses bulletins (rattachement à l’ID10, "
+"D-46)."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -831,17 +1103,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_input__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_input_type__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_line__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_run__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_worked_days__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_attachment__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry_type__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_loan_early_repayment__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__display_name
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__display_name
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
@@ -946,6 +1223,11 @@ msgid "Enfants retenus"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__res_id
+msgid "Enregistrement concerné"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_version__l10n_ga_payment_mode__cash
 msgid "Espèces"
 msgstr ""
@@ -995,6 +1277,27 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_fnh_sal
 msgid "FNH part salariale"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_payslip_input_import_view_form
+msgid "Fermer"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_payslip_input_import__state__upload
+msgid "Fichier"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Fichier Excel illisible : %(error)s"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__import_file
+msgid "Fichier à importer"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1081,7 +1384,13 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_bonus_exempted
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__bonus_exempt
 msgid "Gratifications exonérées"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__severity
+msgid "Gravité"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1099,6 +1408,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__l10n_ga_social_cap_group
 msgid "Groupe de plafond social"
 msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_hr_work_entry
+msgid "HR Work Entry"
+msgstr "Prestation RH"
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model,name:l10n_ga_hr_payroll.model_hr_work_entry_type
@@ -1128,6 +1442,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__has_message
 msgid "Has Message"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_work_entry__l10n_ga_imported
+msgid "Heures créées par l’import Excel des variables (F3, D-43)."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1192,17 +1511,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_input__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_input_type__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_line__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_run__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_worked_days__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_attachment__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry_type__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_loan_early_repayment__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__id
 msgid "ID"
 msgstr ""
@@ -1210,6 +1534,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_irpp
 msgid "IRPP"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__irpp
+msgid "IRPP retenu"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1241,6 +1570,40 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__message_has_error
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__import_filename
+msgid "Import Filename"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_l10n_ga_payslip_input_import
+msgid "Import des variables du mois (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_payslip_input_import_view_form
+msgid "Importer"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_run_view_kanban_l10n_ga
+msgid "Importer les variables"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip_run.py:0
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_payslip_input_import_view_form
+msgid "Importer les variables du mois"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_input__l10n_ga_imported
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_work_entry__l10n_ga_imported
+msgid "Importée"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1411,12 +1774,18 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_is_ga
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_run__l10n_ga_is_ga
 msgid "L10N Ga Is Ga"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_loan_count
 msgid "L10N Ga Loan Count"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_ytd_opening_count
+msgid "L10N Ga Ytd Opening Count"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1428,27 +1797,39 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_loan_early_repayment__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__write_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__write_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__write_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__write_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__write_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_loan_early_repayment__write_date
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__write_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__write_date
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.constraint,message:l10n_ga_hr_payroll.constraint_l10n_ga_collective_agreement_code_company_unique
 msgid "Le code de la convention est unique par société."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Le fichier est vide."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1461,6 +1842,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/models/hr_version.py:0
 msgid "Le grade doit appartenir à la convention collective de la version."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip_run.py:0
+msgid "Le lot ne peut pas être calculé : anomalies bloquantes à corriger."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1512,9 +1899,45 @@ msgid "Le prêt %s ne peut pas revenir en brouillon."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid ""
+"Ligne %(row)s : %(employee)s, heures supérieures à la capacité de la période"
+" : ligne refusée."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Ligne %(row)s : %(text)s"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__valid_count
+msgid "Lignes acceptées"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__rejected_count
+msgid "Lignes refusées"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_benefit_housing
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_benefit_housing
 msgid "Logement fourni"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_check_issue_view_search
+msgid "Lot"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__payslip_run_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__payslip_run_id
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_check_issue__scope__payslip_run
+msgid "Lot de paie"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1591,6 +2014,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__message
+msgid "Message"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -1632,6 +2060,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_payment_mode
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_payment_mode
 msgid "Mode de paiement"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__template_file
+msgid "Modèle"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__res_model
+msgid "Modèle concerné"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1699,6 +2137,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__l10n_ga_nif
 msgid "NIF (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_net_pay
+msgid "Net à payer"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1826,6 +2269,16 @@ msgid "Options de paie"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__note
+msgid "Origine des cumuls"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_form
+msgid "Origine des cumuls (ancien logiciel, bulletins papier…)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_view_form_l10n_ga
 msgid "Paiement et situation"
 msgstr ""
@@ -1858,6 +2311,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_extra_half_part
 msgid "Parts majorées (personne seule)"
 msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model,name:l10n_ga_hr_payroll.model_hr_payslip_run
+msgid "Pay Run"
+msgstr "Lot de paie"
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model,name:l10n_ga_hr_payroll.model_hr_payslip
@@ -2111,8 +2569,23 @@ msgid "Prêts salariés"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__scope
+msgid "Périmètre"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__period
 msgid "Période"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_form
+msgid "Période couverte"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__date_from
+msgid "Période couverte du"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2139,6 +2612,16 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_payslip_input__l10n_ga_forced_taxable
 msgid "Recopié de l’indemnité : aucune exonération fiscale (F15)."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_round_prev
+msgid "Reliquat d'arrondi précédent"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_rounding_carry
+msgid "Reliquat d’arrondi reporté"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2301,10 +2784,23 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__employee_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__employee_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__employee_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__employee_id
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_search
 msgid "Salarié"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_form
+msgid "Salarié et période"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Salarié introuvable (%(value)s) : ligne refusée."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2354,10 +2850,12 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__company_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__company_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__company_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__company_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__company_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__company_id
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__company_id
 msgid "Société"
 msgstr ""
 
@@ -2367,8 +2865,19 @@ msgid "Soldé"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__irpp_base
+msgid ""
+"Somme des bases IRPP mensuelles de la période (régularisation annuelle)."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_salary_rule__l10n_ga_social_base__subject
 msgid "Soumise"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__state
+msgid "State"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2414,6 +2923,7 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_tcs
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__tcs
 msgid "TCS"
 msgstr ""
 
@@ -2445,8 +2955,19 @@ msgid "Taxe complémentaire sur salaires"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payslip_input_import__template_filename
+msgid "Template Filename"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_payslip_input_import__state__done
+msgid "Terminé"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_list
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_list
 msgid "Total"
 msgstr ""
 
@@ -2481,8 +3002,18 @@ msgid "Type of the exception activity on record."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_payslip_input_import_view_form
+msgid "Télécharger le modèle"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.constraint,message:l10n_ga_hr_payroll.constraint_l10n_ga_agreement_grade_grade_unique
 msgid "Un grade (catégorie, échelon) n’a qu’une valeur par date d’effet."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.constraint,message:l10n_ga_hr_payroll.constraint_l10n_ga_ytd_opening_employee_year_unique
+msgid "Un salarié a au plus un cumul d’ouverture par année (RG25)."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2513,6 +3044,12 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__l10n_ga_core_value
 msgid "Valeur du noyau"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
+msgid "Variables"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2558,6 +3095,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__website_message_ids
 msgid "Website communication history"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__date_to
+msgid "au"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll

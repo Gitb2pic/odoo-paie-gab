@@ -22,7 +22,8 @@ MAX_DAY_HOURS = 24  # contrainte standard d'une prestation (C/addons/hr_work_ent
 KEY_HEADER = 'Matricule'
 NAME_HEADER = 'Salarié'
 HEADER_SEPARATOR = ' — '
-XLSX_MIMETYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+# Largeurs de colonnes du modèle (présentation) : matricule, nom, variables.
+KEY_WIDTH, NAME_WIDTH, VALUE_WIDTH = 14, 30, 18
 
 
 class L10nGaPayslipInputImport(models.TransientModel):
@@ -99,9 +100,9 @@ class L10nGaPayslipInputImport(models.TransientModel):
         headers = self._template_headers()
         sheet.write_row(0, 0, headers, bold)
         sheet.freeze_panes(1, 2)
-        sheet.set_column(0, 0, 14)
-        sheet.set_column(1, 1, 30)
-        sheet.set_column(2, len(headers) - 1, 18)
+        sheet.set_column(0, 0, KEY_WIDTH)
+        sheet.set_column(1, 1, NAME_WIDTH)
+        sheet.set_column(2, len(headers) - 1, VALUE_WIDTH)
         for row, slip in enumerate(self._draft_slips().sorted(lambda s: s.employee_id.name or ''), start=1):
             sheet.write_string(row, 0, slip.employee_id.registration_number or '')
             sheet.write_string(row, 1, slip.employee_id.name)

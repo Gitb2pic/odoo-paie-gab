@@ -48,6 +48,16 @@ class TestPayslipGa(GaPayrollCase):
         self.assertNotIn('GA_FNH_SAL', totals)  # part salariale nulle (point 09-2)
         self.assertCoreParity(slip, self._expected(slip, F16_LINES, transport_trips=2))
 
+    def test_f16_paid_in_cash_rounded_to_500(self):
+        """F2, D-44 : net 514 897 payé en espèces → 514 500 versés, reliquat 397 reporté."""
+        slip = self._f16_slip('F16 espèces')
+        slip.version_id.l10n_ga_payment_mode = 'cash'
+        slip.compute_sheet()
+        totals = self._totals(slip)
+        self.assertEqual((totals['NET'], totals['GA_ROUND'], totals['GA_NET_PAY']), (514_897, -397, 514_500))
+        slip.action_payslip_done()
+        self.assertEqual(slip.l10n_ga_rounding_carry, 397)
+
     def test_f16_frozen_per_line_and_per_slip(self):
         slip = self._f16_slip()
         slip.action_payslip_done()
