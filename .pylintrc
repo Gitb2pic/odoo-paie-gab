@@ -3,7 +3,7 @@ load-plugins=pylint_odoo
 score=n
 jobs=1
 # Analyse statique du code Odoo Community (pas d'exécution)
-init-hook='import sys; sys.path.append("/home/ubuntu/odoo/odoo")'
+init-hook='import sys; sys.path.append("/home/ubuntu/odoo/odoo"); sys.path.append("l10n_ga_hr_payroll/lib")'
 
 [ODOOLINT]
 valid-odoo-versions=19.0

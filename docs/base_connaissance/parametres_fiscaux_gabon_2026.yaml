@@ -56,6 +56,8 @@ irpp:
   abattement_frais_professionnels_taux: 0.20
   abattement_frais_professionnels_plafond_annuel: 10000000
   nombre_max_enfants: 6
+  retenue_minimale:               # F14 (M10) : IRPP mensuel <= seuil non retenu ; 0 = désactivé (D-12)
+    - {date_from: "2000-01-01", valeur: 0, source: "architecture 08 F14", fiabilite: confirme}
   bareme_annuel_une_part:          # impôt = taux * Q - constante ; LF 2010 art. 174, toujours en vigueur (PwC 08/2026)
     - {de: 0,        a: 1500000,  taux: 0.00, constante: 0}
     - {de: 1500001,  a: 1920000,  taux: 0.05, constante: 75000}
@@ -137,3 +139,6 @@ autres:
   patente: {taux: 0.001, minimum: 150000, maximum: 10000000}
   cfu_personnes_morales: {taux: 0.15, abattement: 0.05, valeur_locative_pct_valeur_bilancielle: 0.10}
   ircm: 0.20
+
+paie:                             # paramètres propres à l'addon (D-12) ; l'arrondi espèces est une option société (500)
+  coupures_billetage: [10000, 5000, 2000, 1000, 500]   # architecture 08 F2

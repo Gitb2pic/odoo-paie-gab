@@ -26,6 +26,7 @@ quote-style = "single"
 
 [tool.pytest.ini_options]
 testpaths = ["l10n_ga_hr_payroll/lib"]
+pythonpath = ["l10n_ga_hr_payroll/lib"]   # tests purs : import ga_fiscal_core sans charger le module Odoo
 addopts = [
     "-q",
     "--cov=l10n_ga_hr_payroll/lib/ga_fiscal_core",
