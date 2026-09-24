@@ -597,5 +597,35 @@
             <field name="date_from">2000-01-01</field>
             <field name="parameter_value">500</field>
         </record>
+        <record id="rule_parameter_loan_min_seniority_years" model="hr.rule.parameter">
+            <field name="name">Gabon : prêts, ancienneté minimale (années)</field>
+            <field name="code">l10n_ga_loan_min_seniority_years</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_loan_min_seniority_years_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_loan_min_seniority_years"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">2</field>
+        </record>
+        <record id="rule_parameter_loan_max_installment_ratio" model="hr.rule.parameter">
+            <field name="name">Gabon : prêts, mensualité maximale en part du net</field>
+            <field name="code">l10n_ga_loan_max_installment_ratio</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_loan_max_installment_ratio_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_loan_max_installment_ratio"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">0.4</field>
+        </record>
+        <record id="rule_parameter_seizable_brackets" model="hr.rule.parameter">
+            <field name="name">Gabon : quotité saisissable (art. 729 CPC)</field>
+            <field name="code">l10n_ga_seizable_brackets</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_seizable_brackets_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_seizable_brackets"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">[(0, 25000, 0.05), (25000, 50000, 0.1), (50000, 75000, 0.2), (75000, 100000, 0.25), (100000, 150000, 0.3), (150000, None, 1.0)]</field>
+        </record>
     </data>
 </odoo>

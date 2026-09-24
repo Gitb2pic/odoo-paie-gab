@@ -25,6 +25,7 @@ COMPANY_OPTIONS = ('cash_rounding', 'cfp_base')
 
 VALUE = 'value'
 BRACKETS = 'brackets'
+RATE_BRACKETS = 'rate_brackets'  # tranches (de, a, taux) sans constante : quotité saisissable
 LIST = 'list'
 
 
@@ -290,6 +291,26 @@ PARAMETERS = (
         'paie.arrondi_especes_defaut',
         'Gabon : arrondi espèces par défaut des sociétés',
     ),
+    # Prêts salariés (F1, RG20, D-31, D-32, D-37) : lus par le modèle de prêt, hors FiscalParams
+    _p(
+        None,
+        'l10n_ga_loan_min_seniority_years',
+        'prets.anciennete_minimale_annees',
+        'Gabon : prêts, ancienneté minimale (années)',
+    ),
+    _p(
+        None,
+        'l10n_ga_loan_max_installment_ratio',
+        'prets.mensualite_max_ratio_net',
+        'Gabon : prêts, mensualité maximale en part du net',
+    ),
+    _p(
+        None,
+        'l10n_ga_seizable_brackets',
+        'prets.quotite_saisissable',
+        'Gabon : quotité saisissable (art. 729 CPC)',
+        RATE_BRACKETS,
+    ),
 )
 
 _BY_CODE = MappingProxyType({spec.code: spec for spec in PARAMETERS})
@@ -306,6 +327,8 @@ def _as_date(value):
 def _literal(spec, value):
     if spec.kind == BRACKETS:
         return [(row['de'], row['a'], row['taux'], row['constante']) for row in value]
+    if spec.kind == RATE_BRACKETS:
+        return [(row['de'], row['a'], row['taux']) for row in value]
     if spec.kind == LIST:
         return list(value)
     return value
