@@ -1,0 +1,139 @@
+# Paramètres fiscaux et sociaux — Gabon — à charger dans l'addon comme paramètres datés
+# fiabilite : confirme | probable | a_verifier   (voir 09_points_a_verifier.md)
+# Montants en FCFA ; taux en décimal.
+# Les date_from antérieures à 2026 (2000-01-01, 2013-01-01, 2014-01-01...) sont des dates sentinelles
+# servant à porter la valeur historique : seules les dates 2026 correspondent à des textes identifiés.
+
+version: "1.0"
+date_constitution: "2026-09-23"
+
+smig:
+  - {date_from: "2010-04-23", valeur: 80000, source: "Décret 2010 ; confirmé 2026", fiabilite: confirme}
+rmm:
+  - {date_from: "2010-04-23", valeur: 150000, source: "Décret n°127/PR/TEPS du 23/04/2010", fiabilite: probable}
+heures_mensuelles_reference: 173.33
+jours_mensuels_reference: 20
+
+cnss:
+  plafond_mensuel:
+    - {date_from: "2000-01-01", valeur: 1500000, fiabilite: confirme}
+  taux_salarial:
+    - {date_from: "2000-01-01", valeur: 0.025, fiabilite: confirme}
+    - {date_from: "2026-01-01", valeur: 0.05, source: "Décret n°0487/PR/MASI du 18/12/2025", fiabilite: probable}
+  taux_patronal_prestations_familiales:
+    - {date_from: "2000-01-01", valeur: 0.08, fiabilite: confirme}
+    - {date_from: "2026-01-01", valeur: 0.05, fiabilite: probable}
+  taux_patronal_accidents_travail:
+    - {date_from: "2000-01-01", valeur: 0.03, fiabilite: confirme}
+    - {date_from: "2026-01-01", valeur: 0.02, fiabilite: probable}
+  taux_patronal_pensions_avid:
+    - {date_from: "2000-01-01", valeur: 0.05, fiabilite: confirme}
+    - {date_from: "2026-01-01", valeur: 0.11, fiabilite: probable}
+  exoneration_frais_transport_vehicule_carburant_km_mensuelle: 35000   # arrêté 037/MTEPS du 22/07/2010
+  majoration_retard_par_mois: 0.02          # décret 599 art. 40
+  majoration_defaut_declaration: 0.15       # décret 599 art. 44
+  declaration: {periodicite: trimestrielle, delai_jours_apres_trimestre: 30}
+
+cnamgs:
+  plafond_mensuel:
+    - {date_from: "2013-01-01", valeur: 2500000, fiabilite: confirme}
+  taux_salarial:
+    - {date_from: "2013-01-01", valeur: 0.02, fiabilite: confirme}
+  taux_patronal:
+    - {date_from: "2013-01-01", valeur: 0.041, fiabilite: confirme}
+  declaration: {periodicite: trimestrielle, paiement: "du 1er au 30 du mois suivant le trimestre"}
+
+tcs:
+  taux:
+    - {date_from: "2010-01-01", valeur: 0.05, fiabilite: confirme}
+  fraction_exoneree_mensuelle:
+    - {date_from: "2010-01-01", valeur: 100000, fiabilite: confirme}
+    - {date_from: "2014-01-01", valeur: 150000, note: "date exacte de relèvement à confirmer", fiabilite: confirme}
+  deduire_cnss_salariale: true
+  deduire_cnamgs_salariale: true   # a_verifier (point 3)
+
+irpp:
+  abattement_frais_professionnels_taux: 0.20
+  abattement_frais_professionnels_plafond_annuel: 10000000
+  nombre_max_enfants: 6
+  bareme_annuel_une_part:          # impôt = taux * Q - constante ; LF 2010 art. 174, toujours en vigueur (PwC 08/2026)
+    - {de: 0,        a: 1500000,  taux: 0.00, constante: 0}
+    - {de: 1500001,  a: 1920000,  taux: 0.05, constante: 75000}
+    - {de: 1920001,  a: 2700000,  taux: 0.10, constante: 171000}
+    - {de: 2700001,  a: 3600000,  taux: 0.15, constante: 306000}
+    - {de: 3600001,  a: 5160000,  taux: 0.20, constante: 486000}
+    - {de: 5160001,  a: 7500000,  taux: 0.25, constante: 744000}
+    - {de: 7500001,  a: 11000000, taux: 0.30, constante: 1119000}
+    - {de: 11000001, a: null,     taux: 0.35, constante: 1669000}
+  parts:
+    celibataire_divorce_veuf_sans_enfant: 1
+    celibataire_ayant_eleve_enfants_ou_invalide: 1.5
+    marie_sans_enfant: 2
+    celibataire_divorce_premier_enfant: 1       # 1 + 1 = 2 parts avec 1 enfant
+    par_enfant_supplementaire: 0.5
+    marie_ou_veuf_par_enfant: 0.5
+    enfant_infirme_supplement: 0.5              # 1 part au lieu de 0,5
+  exonerations:
+    gratifications_plafond_annuel: 4000000      # instruction 144/2004 — a_verifier (point 4)
+    indemnite_vehicule_plafond_mensuel: 100000  # art. 91 bis al. 5 (LFR 2026)
+    transport_journalier_2_trajets: 2500
+    transport_journalier_4_trajets: 5000
+    primes_familiales_par_enfant_mensuel: 20000
+    isr_part_imposable_retraite_deces: 0.5
+    isr_part_imposable_demission: 1.0
+  avantages_en_nature:            # art. 93 CGI, base = salaire brut - cotisations sociales
+    logement: 0.06
+    domesticite: 0.05
+    eau_electricite: 0.05
+    nourriture: 0.25
+    nourriture_plafond_mensuel: 120000
+  indemnite_logement_especes:     # a_verifier (point 5)
+    seuil_montant: 250000
+    seuil_pourcentage_brut: 0.40
+
+fnh:
+  redevable: employeur
+  assiette: "assiette CNSS prestations familiales / AT, plafonnée"
+  plafond_mensuel: 1500000
+  taux:
+    - {date_from: "2000-01-01", valeur: 0.02, fiabilite: confirme}
+    - {date_from: "2026-07-17", valeur: 0.03, source: "LFR 2026, loi n°002/2026, art. 403", fiabilite: a_verifier, note: "date de première paie concernée à confirmer"}
+  repartition_salarie: 0.0        # a_verifier (point 2)
+
+cfp:
+  redevables: "IS, BIC, BNC"
+  taux:
+    - {date_from: "2017-01-01", valeur: 0.005, source: "LF 2017 art. 5 à 12", fiabilite: confirme}
+  plafond_mensuel_par_salarie: 1500000
+  base: "rémunération brute y compris avantages en nature, avant déduction des cotisations"
+
+echeances:
+  id10_irpp_tcs_fnh_cfp: "le 15 du mois suivant le paiement"
+  id28_cfp: "le 15 du mois suivant le paiement"
+  ca01_tva_css: "le 20 du mois suivant"
+  das_id19_id26: "30 avril N+1"
+  is_solde_id01: "30 avril N+1"
+  is_acompte_1_id02: "30 novembre N (25 % IS N-1)"
+  is_acompte_2_id03: "30 janvier N+1 (33,33 % IS N-1)"
+  patente: "avant le 1er mars"
+  cfu: "30 mars"
+
+autres:
+  tva_taux_normal: 0.18
+  tva_taux_reduits: [0.10, 0.05, 0.03]
+  css_taux: 0.01
+  css_seuil_ca_annuel_ht: 30000000
+  is_taux_normal: 0.30
+  is_taux_petrole_mines: 0.35
+  imf_taux: 0.01
+  imf_minimum: 1000000            # a_verifier (point 8 : 500 000 selon PwC)
+  precompte_prestataires_non_tva: 0.095
+  ras_non_residents: 0.20         # a_verifier (point 7 : 25 % selon PwC)
+  tsil: 0.15
+  precompte_loyers:
+    - {date_from: "2017-01-01", valeur: 0.05}
+    - {date_from: "2026-01-01", valeur: 0.10, source: "LF 2026"}
+    - {date_from: "2026-07-17", valeur: 0.05, source: "LFR 2026", fiabilite: a_verifier}
+  patente: {taux: 0.001, minimum: 150000, maximum: 10000000}
+  cfu_personnes_morales: {taux: 0.15, abattement: 0.05, valeur_locative_pct_valeur_bilancielle: 0.10}
+  ircm: 0.20

@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Odoo / environnement
+filestore/
+*.log
+.env
+.env.*
+
+# Documents sources lourds (36 Mo, résumés dans docs/base_connaissance/)
+docs/sources_pdf/
+
+# Réglages locaux Claude Code
+.claude/settings.local.json
+
+# Éditeurs
+.idea/
+.vscode/
+*.swp
+
+# Journaux des tests Odoo (make test / upgrade)
+.test-logs/
