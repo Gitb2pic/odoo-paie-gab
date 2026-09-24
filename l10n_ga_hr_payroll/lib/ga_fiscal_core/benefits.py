@@ -13,6 +13,11 @@ from .rounding import round_fcfa
 from .social import social_contributions
 
 
+def benefit_code(kind):
+    """Code de la ligne de gain d'un avantage en nature dans ``PayResult.lines``."""
+    return f'AN_{kind.upper()}'
+
+
 def benefits_base(cash_subject_gains, p):
     """Base des avantages logement, domesticité, eau/électricité (D-11)."""
     contributions = social_contributions(cash_subject_gains, p)

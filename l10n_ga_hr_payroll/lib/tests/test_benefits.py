@@ -1,5 +1,5 @@
 import pytest
-from ga_fiscal_core.benefits import benefit_amount, benefits_base
+from ga_fiscal_core.benefits import benefit_amount, benefit_code, benefits_base
 
 
 def test_benefits_base_is_cash_minus_employee_contributions(params_2026):
@@ -25,3 +25,8 @@ def test_food_on_main_salary_with_cap(params_2026):
 def test_unknown_benefit(params_2026):
     with pytest.raises(ValueError, match='vehicle'):
         benefit_amount('vehicle', 930_000, 800_000, params_2026)
+
+
+def test_benefit_code_names_the_core_line():
+    assert benefit_code('housing') == 'AN_HOUSING'
+    assert benefit_code('food') == 'AN_FOOD'

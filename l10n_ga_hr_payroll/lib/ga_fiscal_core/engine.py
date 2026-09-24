@@ -8,7 +8,7 @@ ligne (règle d'or 9) ; les intermédiaires annuels (RNI, quotient) ne sont pas 
 
 from dataclasses import dataclass
 
-from .benefits import benefit_amount, benefits_base
+from .benefits import benefit_amount, benefit_code, benefits_base
 from .exemptions import ExemptionContext, GainLine, exemptions
 from .parts import tax_parts
 from .rounding import round_fcfa
@@ -82,7 +82,7 @@ def _benefit_lines(facts, ctx, p):
     cash_subject = sum(line.amount for line in cash.lines) - cash.social_excluded
     base = benefits_base(cash_subject, p)
     return tuple(
-        GainLine(f'AN_{kind.upper()}', benefit_amount(kind, base, facts.main_salary, p)) for kind in facts.benefits
+        GainLine(benefit_code(kind), benefit_amount(kind, base, facts.main_salary, p)) for kind in facts.benefits
     )
 
 
