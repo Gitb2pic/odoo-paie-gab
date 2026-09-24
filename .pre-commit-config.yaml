@@ -1,0 +1,40 @@
+# make lint = pre-commit run --all-files
+exclude: ^(docs/|prompts/|\.claude/)
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-xml
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=2048]
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: debug-statements
+
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: .venv/bin/ruff check --force-exclude
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff-format
+        entry: .venv/bin/ruff format --check --force-exclude
+        language: system
+        types: [python]
+      - id: odoo19-rules
+        name: odoo19-rules (syntaxe pré-19, noyau sans odoo)
+        entry: .venv/bin/python tools/check_odoo19_rules.py
+        language: system
+        files: ^l10n_ga_[a-z_]+/.*\.(py|xml)$
+      - id: pylint-odoo
+        name: pylint-odoo
+        # pas d'auteur imposé ni de README OCA dans ce dépôt privé
+        entry: .venv/bin/pylint --rcfile=.pylintrc --disable=manifest-required-author,missing-readme
+        language: system
+        types: [python]
+        files: ^l10n_ga_[a-z_]+/

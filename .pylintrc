@@ -1,0 +1,25 @@
+[MASTER]
+load-plugins=pylint_odoo
+score=n
+jobs=1
+# Analyse statique du code Odoo Community (pas d'exécution)
+init-hook='import sys; sys.path.append("/home/ubuntu/odoo/odoo")'
+
+[ODOOLINT]
+valid-odoo-versions=19.0
+manifest-required-authors=
+manifest-required-keys=license,version,countries
+license-allowed=OPL-1
+
+[MESSAGES CONTROL]
+# Style et formatage délégués à ruff ; on garde les contrôles Odoo (pylint-odoo)
+# et les erreurs Python.
+disable=all
+enable=odoolint,
+       E,
+       unused-import,
+       unused-variable,
+       dangerous-default-value,
+       pointless-statement,
+       unreachable,
+       redefined-builtin

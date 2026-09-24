@@ -1,0 +1,37 @@
+[project]
+name = "odoo-ga-payroll"
+version = "0.0.0"
+description = "Paie Gabon et déclarations DGI — addons Odoo 19 Enterprise (outillage de dev)"
+requires-python = ">=3.14"
+
+[tool.ruff]
+target-version = "py314"          # Python du service Odoo (venv-odoo-19.0 : 3.14.4)
+line-length = 120
+extend-exclude = ["docs", "prompts", ".claude"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM", "RUF", "PL"]
+ignore = [
+    "RUF001", "RUF002", "RUF003",  # libellés français : apostrophes et espaces insécables légitimes
+    "RUF012",                      # attributs de classe Odoo (_inherit, _order...) mutables par convention
+    "PLR0913", "PLR2004",          # signatures Odoo et index ; les nombres métier sont contrôlés par C3
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["odoo"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.pytest.ini_options]
+testpaths = ["l10n_ga_hr_payroll/lib"]
+addopts = [
+    "-q",
+    "--cov=l10n_ga_hr_payroll/lib/ga_fiscal_core",
+    "--cov-report=term-missing",
+    "--cov-fail-under=90",
+]
+
+[tool.coverage.run]
+branch = true
