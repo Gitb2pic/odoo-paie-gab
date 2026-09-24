@@ -14,6 +14,7 @@ from odoo.exceptions import UserError
 from ..lib.ga_fiscal_core.benefits import benefit_code
 from ..lib.ga_fiscal_core.engine import PayslipFacts, compute
 from ..lib.ga_fiscal_core.exemptions import GainLine
+from ..lib.ga_fiscal_core.labour import GAIN_VALUES, completed_years, leave_allowance, overtime_amount
 from ..lib.ga_fiscal_core.rounding import round_fcfa
 from ..lib.ga_fiscal_core.treatment import NONE, social_group, tax_group
 
@@ -23,6 +24,9 @@ BASIC_CATEGORY = 'BASIC'
 BENEFIT_PREFIX = 'benefit:'
 CACHE_KEY = 'l10n_ga_hr_payroll.payslip'
 VALIDATED_STATES = ('validated', 'paid')  # sprint 0 point 3 : pas d'état « done » en 19
+OVERTIME_PREFIX = 'overtime:'
+ALLOWANCE_PAY_MODE = 'allowance'  # congé payé : hors BASIC, payé par GA_CONGE (F4)
+MONTHS_PER_YEAR = 12  # période de référence de l'allocation de congé et droits annuels (base 05 §5)
 
 # Champ figé du bulletin → attribut de PayResult (montants du mois).
 FROZEN_RESULT_FIELDS = {
@@ -49,6 +53,14 @@ YTD_FIELDS = {
     'l10n_ga_ytd_cnss': 'l10n_ga_cnss_employee',
     'l10n_ga_ytd_bonus_exempt': 'l10n_ga_bonus_exempted',
 }
+
+
+def _one_year_before(day):
+    """Même jour un an plus tôt (29 février → 28 février)."""
+    try:
+        return day.replace(year=day.year - 1)
+    except ValueError:
+        return day.replace(year=day.year - 1, day=day.day - 1)
 
 
 def _frozen_amount(string):
@@ -233,9 +245,186 @@ class HrPayslip(models.Model):
             raise ValueError(f'Valeur du noyau inconnue : {code!r}')
         return getattr(result, code)
 
-    def _l10n_ga_compute(self, code, categories, result_rules):
-        """Point d'entrée des règles salariales (une ligne) : montant ``code`` du ``PayResult``."""
+    # --- gains calculés avant le PayResult (étape 2.4) -------------------------------------------
+
+    def _l10n_ga_seniority_bonus(self):
+        """Prime d'ancienneté du mois complet (proratisée ensuite par la règle, RG04, D-25)."""
         self.ensure_one()
+        version = self.version_id
+        agreement = version.l10n_ga_agreement_id
+        if not agreement:
+            return 0
+        rate = agreement._seniority_rate_at(version._l10n_ga_seniority_start(), self.date_to)
+        base = version.wage
+        if agreement.seniority_base == 'grade_minimum':
+            base = version._l10n_ga_grade_minimum(self.date_to) or base
+        return round_fcfa(base * rate)
+
+    def _l10n_ga_hourly_rate(self):
+        """Taux horaire des heures supplémentaires : salaire / heures mensuelles de référence (base 05 §2)."""
+        self.ensure_one()
+        if self.wage_type == 'hourly':
+            return self.version_id.hourly_wage
+        return self.version_id.contract_wage / self._rule_parameter('l10n_ga_hours_month_ref')
+
+    def _l10n_ga_overtime_hours(self, period):
+        self.ensure_one()
+        return sum(
+            line.number_of_hours
+            for line in self.worked_days_line_ids
+            if line.work_entry_type_id.l10n_ga_overtime_period == period
+        )
+
+    def _l10n_ga_overtime(self, period):
+        """Heures supplémentaires d'une période, majorées selon la convention (aucun taux par défaut)."""
+        self.ensure_one()
+        hours = self._l10n_ga_overtime_hours(period)
+        agreement = self.version_id.l10n_ga_agreement_id
+        tranches = agreement._overtime_tranches(period) if agreement else ()
+        try:
+            return overtime_amount(self._l10n_ga_hourly_rate() if hours else 0, hours, tranches)
+        except ValueError as error:
+            raise UserError(self._l10n_ga_overtime_message(period, error)) from error
+
+    def _l10n_ga_overtime_message(self, period, error):
+        return self.env._(
+            '%(employee)s : heures supplémentaires (%(period)s) — %(detail)s.',
+            employee=self.employee_id.name,
+            period=dict(self.env['l10n_ga.overtime.rate']._fields['period'].selection)[period],
+            detail=error,
+        )
+
+    def _l10n_ga_leave_lines(self):
+        return self.worked_days_line_ids.filtered(
+            lambda line: line.work_entry_type_id.l10n_ga_pay_mode == ALLOWANCE_PAY_MODE
+        )
+
+    def _l10n_ga_leave_reference_pay(self):
+        """Rémunération « base congés » des bulletins validés des 12 mois précédents (circulaire 565)."""
+        self.ensure_one()
+        start = _one_year_before(self.date_from)
+        [(total,)] = self.env['hr.payslip.line']._read_group(
+            [
+                ('slip_id.employee_id', '=', self.employee_id.id),
+                ('slip_id.company_id', '=', self.company_id.id),
+                ('slip_id.state', 'in', VALIDATED_STATES),
+                ('slip_id.date_to', '>=', start),
+                ('slip_id.date_to', '<', self.date_from),
+                ('salary_rule_id.l10n_ga_leave_base', '=', True),
+            ],
+            aggregates=['total:sum'],
+        )
+        return total or 0.0
+
+    def _l10n_ga_is_minor(self):
+        birthday = self.employee_id.birthday
+        majority = self._rule_parameter('l10n_ga_majority_age')
+        return bool(birthday) and completed_years(birthday, self.date_to) < majority
+
+    def _l10n_ga_working_days_per_week(self):
+        calendar = self.version_id.resource_calendar_id
+        return len(set(calendar.attendance_ids.mapped('dayofweek'))) if calendar else 0
+
+    def _l10n_ga_leave_allowance(self):
+        """Allocation de congé : plus favorable du maintien et de 1/12 (5/48 mineur) — base 05 §5, D-23."""
+        self.ensure_one()
+        leave_lines = self._l10n_ga_leave_lines()
+        if not leave_lines:
+            return 0
+        attendance_hours = sum(
+            line.number_of_hours for line in self.worked_days_line_ids if not line.work_entry_type_id.is_extra_hours
+        )
+        share = sum(leave_lines.mapped('number_of_hours')) / attendance_hours if attendance_hours else 0
+        # Maintien : salaire et indemnités « base congés » proratisées, au prorata des heures de congé.
+        prorated = self.struct_id.rule_ids.filtered(lambda r: r.l10n_ga_prorate and r.l10n_ga_leave_base)
+        monthly = self.version_id.contract_wage
+        monthly += sum(line.amount for line in self.input_line_ids if line.code in prorated.mapped('code'))
+        if 'seniority' in prorated.mapped('l10n_ga_core_value'):
+            monthly += self._l10n_ga_gain('seniority')
+        minor = self._l10n_ga_is_minor()
+        ratio = self._rule_parameter('l10n_ga_leave_ratio_minor' if minor else 'l10n_ga_leave_ratio_adult')
+        days_month = self._rule_parameter(
+            'l10n_ga_leave_days_month_minor' if minor else 'l10n_ga_leave_days_month_adult'
+        )
+        working_week = self._rule_parameter('l10n_ga_leave_working_days_week')
+        calendar_week = self._l10n_ga_working_days_per_week() or working_week
+        days_taken = sum(leave_lines.mapped('number_of_days')) * working_week / calendar_week
+        return leave_allowance(
+            maintained=monthly * share,
+            reference_pay=self._l10n_ga_leave_reference_pay(),
+            ratio=ratio,
+            days_taken=days_taken,
+            annual_days=days_month * MONTHS_PER_YEAR,
+        )
+
+    def _l10n_ga_gain(self, code):
+        """Gain calculé avant le PayResult (``GAIN_VALUES``), mis en cache pendant le calcul."""
+        self.ensure_one()
+        gains = self._l10n_ga_static().setdefault('gains', {})
+        if code not in gains:
+            if code == 'seniority':
+                gains[code] = self._l10n_ga_seniority_bonus()
+            elif code == 'leave_allowance':
+                gains[code] = self._l10n_ga_leave_allowance()
+            elif code.startswith(OVERTIME_PREFIX):
+                gains[code] = self._l10n_ga_overtime(code.removeprefix(OVERTIME_PREFIX))
+            else:
+                raise ValueError(f'Gain calculé inconnu : {code!r}')
+        return gains[code]
+
+    def _l10n_ga_blocking_issues(self):
+        """Anomalies bloquantes Gabon : salaire sous le minimum de la grille (RG18), heures sans taux."""
+        self.ensure_one()
+        messages = []
+        version = self.version_id
+        minimum = version._l10n_ga_grade_minimum(self.date_to) if version.l10n_ga_grade_id else 0
+        if version.wage < minimum:
+            messages.append(
+                self.env._(
+                    '%(employee)s : salaire %(wage)s inférieur au minimum %(minimum)s de la grille au %(date)s.',
+                    employee=self.employee_id.name,
+                    wage=version.wage,
+                    minimum=minimum,
+                    date=self.date_to,
+                )
+            )
+        agreement = version.l10n_ga_agreement_id
+        for period, _label in self.env['l10n_ga.overtime.rate']._fields['period'].selection:
+            hours = self._l10n_ga_overtime_hours(period)
+            try:
+                overtime_amount(1, hours, agreement._overtime_tranches(period) if agreement else ())
+            except ValueError as error:
+                messages.append(self._l10n_ga_overtime_message(period, error))
+        return messages
+
+    def _issues_dependencies(self):
+        return [
+            *super()._issues_dependencies(),
+            'version_id.wage',
+            'version_id.l10n_ga_grade_id',
+            'version_id.l10n_ga_agreement_id',
+            'worked_days_line_ids',
+        ]
+
+    def _get_errors_by_slip(self):
+        errors_by_slip = super()._get_errors_by_slip()
+        for slip in self.filtered(lambda s: s.state == 'draft' and s.l10n_ga_is_ga and s.version_id):
+            for message in slip._l10n_ga_blocking_issues():
+                errors_by_slip[slip].append(
+                    {
+                        'message': message,
+                        'action_text': self.env._('Salarié'),
+                        'action': slip.employee_id._get_records_action(name=self.env._('Salarié'), target='new'),
+                        'level': 'danger',
+                    }
+                )
+        return errors_by_slip
+
+    def _l10n_ga_compute(self, code, categories, result_rules):
+        """Point d'entrée des règles salariales (une ligne) : gain calculé ou montant du ``PayResult``."""
+        self.ensure_one()
+        if code in GAIN_VALUES:
+            return self._l10n_ga_gain(code)
         totals = {rule_code: values['total'] for rule_code, values in result_rules.items()}
         return self._l10n_ga_value(self._l10n_ga_result(categories[BASIC_CATEGORY], totals), code)
 
@@ -263,7 +452,7 @@ class HrPayslip(models.Model):
     def _l10n_ga_check_lines(self, result, totals):
         """Refuse le figement si le noyau, rejoué, ne retrouve pas les montants des lignes."""
         for rule in self.struct_id.rule_ids.filtered('l10n_ga_core_value'):
-            expected = rule._l10n_ga_sign() * self._l10n_ga_value(result, rule.l10n_ga_core_value)
+            expected = rule._l10n_ga_sign() * self._l10n_ga_expected(rule, result)
             if abs(totals.get(rule.code, 0.0) - expected) >= 1:
                 raise UserError(
                     self.env._(
@@ -276,6 +465,16 @@ class HrPayslip(models.Model):
                         expected=expected,
                     )
                 )
+
+    def _l10n_ga_expected(self, rule, result):
+        """Montant attendu d'une règle liée au noyau (gain proratisé comme dans ``_compute_rule``)."""
+        code = rule.l10n_ga_core_value
+        if code not in GAIN_VALUES:
+            return self._l10n_ga_value(result, code)
+        amount = self._l10n_ga_gain(code)
+        if rule.l10n_ga_prorate and amount:
+            amount = round_fcfa(amount * self._l10n_ga_paid_ratio())
+        return amount
 
     def _l10n_ga_line_codes(self):
         """Code de ligne du noyau → code de règle (les avantages en nature sont nommés par le noyau)."""
@@ -310,6 +509,9 @@ class HrPayslip(models.Model):
         """Stocke les valeurs imprimées et déclarées du bulletin (F7), depuis ses lignes."""
         for slip in self.filtered(lambda s: s.l10n_ga_is_ga and s.state == 'draft' and s.line_ids):
             slip._l10n_ga_clear_cache()
+            issues = slip._l10n_ga_blocking_issues()
+            if issues:
+                raise UserError('\n'.join(issues))
             totals = slip._l10n_ga_line_totals()
             result = slip._l10n_ga_result(slip._l10n_ga_main_salary(), totals)
             slip._l10n_ga_check_lines(result, totals)

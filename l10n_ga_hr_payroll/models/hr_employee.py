@@ -55,3 +55,12 @@ class HrEmployee(models.Model):
     l10n_ga_payment_mode = fields.Selection(
         related='version_id.l10n_ga_payment_mode', readonly=False, inherited=True, groups='hr.group_hr_user'
     )
+    l10n_ga_agreement_id = fields.Many2one(
+        related='version_id.l10n_ga_agreement_id', readonly=False, inherited=True, groups='hr.group_hr_user'
+    )
+    l10n_ga_grade_id = fields.Many2one(
+        related='version_id.l10n_ga_grade_id', readonly=False, inherited=True, groups='hr.group_hr_user'
+    )
+    l10n_ga_seniority_date = fields.Date(
+        related='version_id.l10n_ga_seniority_date', readonly=False, inherited=True, groups='hr.group_hr_user'
+    )

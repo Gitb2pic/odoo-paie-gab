@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Décision D-27 : convention d'EXEMPLE, à remplacer par celle du client. Ancienneté du tronc commun
+         (base 05 §4 : 2 % à 2 ans, +1 % par an ; plafond propre à chaque convention, non renseigné) ;
+         grille Commerce 2012 de la base 05 §4 (à actualiser). Aucun taux d'heures supplémentaires
+         (point 09-11) : des heures supplémentaires sans taux bloquent le bulletin. -->
+    <data noupdate="1">
+        <record id="agreement_example_common" model="l10n_ga.collective.agreement">
+            <field name="name">EXEMPLE — Tronc commun (grille Commerce 2012, à actualiser)</field>
+            <field name="code">EXEMPLE</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="is_example" eval="True"/>
+            <field name="seniority_start_years">2</field>
+            <field name="seniority_start_rate">0.02</field>
+            <field name="seniority_step_rate">0.01</field>
+            <field name="seniority_max_rate">0</field>
+            <field name="seniority_base">grade_minimum</field>
+        </record>
+        <record id="agreement_example_grade_1" model="l10n_ga.agreement.grade">
+            <field name="agreement_id" ref="agreement_example_common"/>
+            <field name="category">1</field>
+            <field name="date_from">2012-01-01</field>
+            <field name="minimum_wage">105000</field>
+        </record>
+        <record id="agreement_example_grade_7" model="l10n_ga.agreement.grade">
+            <field name="agreement_id" ref="agreement_example_common"/>
+            <field name="category">7</field>
+            <field name="date_from">2012-01-01</field>
+            <field name="minimum_wage">153500</field>
+        </record>
+        <record id="agreement_example_grade_am1" model="l10n_ga.agreement.grade">
+            <field name="agreement_id" ref="agreement_example_common"/>
+            <field name="category">AM1</field>
+            <field name="date_from">2012-01-01</field>
+            <field name="minimum_wage">194600</field>
+        </record>
+        <record id="agreement_example_grade_c1" model="l10n_ga.agreement.grade">
+            <field name="agreement_id" ref="agreement_example_common"/>
+            <field name="category">C1</field>
+            <field name="date_from">2012-01-01</field>
+            <field name="minimum_wage">295400</field>
+        </record>
+        <record id="agreement_example_grade_c4" model="l10n_ga.agreement.grade">
+            <field name="agreement_id" ref="agreement_example_common"/>
+            <field name="category">C4</field>
+            <field name="date_from">2012-01-01</field>
+            <field name="minimum_wage">592600</field>
+        </record>
+    </data>
+</odoo>

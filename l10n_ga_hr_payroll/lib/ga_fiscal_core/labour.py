@@ -9,6 +9,11 @@ import math
 
 from .rounding import round_fcfa
 
+# Périodes des heures supplémentaires (table de la convention, prestations GA_HS_*).
+OVERTIME_PERIODS = ('day', 'night', 'sunday', 'holiday')
+# Valeurs calculées par l'adaptateur avant le PayResult (gains), lues par les règles en une ligne.
+GAIN_VALUES = frozenset({'seniority', 'leave_allowance'} | {f'overtime:{period}' for period in OVERTIME_PERIODS})
+
 
 def completed_years(start, on):
     """Années révolues entre la date d'ancienneté ``start`` et ``on`` (0 si absente ou future)."""

@@ -37,6 +37,12 @@ class ResCompany(models.Model):
         default=lambda self: self._l10n_ga_default_cash_rounding(),
         help='Montant versé en espèces arrondi au multiple inférieur ; le reliquat est reporté. 0 = pas d’arrondi.',
     )
+    l10n_ga_cnss_subrogation = fields.Boolean(
+        string='Subrogation CNSS (maternité, accident du travail)',
+        default=True,
+        help='Vrai : salaire maintenu pendant la maternité et l’accident du travail, indemnités journalières '
+        'remboursées par la CNSS à l’employeur. Faux : ces jours sortent du salaire de base (décision D-26).',
+    )
     l10n_ga_loan_outstanding_cap = fields.Monetary(
         string='Plafond d’encours des prêts', help='Encours total des prêts d’un salarié. 0 = pas de plafond.'
     )

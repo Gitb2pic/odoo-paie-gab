@@ -23,3 +23,7 @@ enable=odoolint,
        pointless-statement,
        unreachable,
        redefined-builtin
+# no-member (E1101) est retiré sur la ligne de commande du hook (.pre-commit-config.yaml) :
+# champs et méthodes des modèles Odoo hérités (_inherit), créés dynamiquement et souvent définis
+# dans Enterprise hors du chemin d'analyse → faux positifs selon le découpage des lots de
+# pre-commit (constaté à l'étape 2.4). Les tests Odoo couvrent ces accès.

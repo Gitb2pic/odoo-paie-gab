@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_ga_collective_agreement_view_list" model="ir.ui.view">
+        <field name="name">l10n_ga.collective.agreement.list</field>
+        <field name="model">l10n_ga.collective.agreement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="is_example"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="l10n_ga_collective_agreement_view_search" model="ir.ui.view">
+        <field name="name">l10n_ga.collective.agreement.search</field>
+        <field name="model">l10n_ga.collective.agreement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="example" string="Exemples" domain="[('is_example', '=', True)]"/>
+                <filter name="archived" string="Archivées" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="l10n_ga_collective_agreement_view_form" model="ir.ui.view">
+        <field name="name">l10n_ga.collective.agreement.form</field>
+        <field name="model">l10n_ga.collective.agreement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="alert alert-warning" role="alert" invisible="not is_example">
+                        Convention d’exemple : à remplacer par la convention collective de l’entreprise.
+                    </div>
+                    <widget name="web_ribbon" title="Archivée" bg_color="text-bg-danger" invisible="active"/>
+                    <h1><field name="name" placeholder="ex. Convention collective du commerce"/></h1>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="is_example"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ancienneté" name="seniority">
+                            <group>
+                                <field name="seniority_start_years"/>
+                                <field name="seniority_start_rate" widget="percentage"/>
+                                <field name="seniority_step_rate" widget="percentage"/>
+                                <field name="seniority_max_rate" widget="percentage"/>
+                                <field name="seniority_base"/>
+                            </group>
+                        </page>
+                        <page string="Grille" name="grades">
+                            <field name="grade_ids">
+                                <list editable="bottom">
+                                    <field name="category"/>
+                                    <field name="echelon"/>
+                                    <field name="date_from"/>
+                                    <field name="minimum_wage"/>
+                                    <field name="hourly_rate"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Heures supplémentaires" name="overtime">
+                            <div class="text-muted mb-2">
+                                Tranches en heures du mois, par période ; aucune valeur par défaut (majorations de la
+                                convention de l’entreprise). Des heures supplémentaires sans taux bloquent le bulletin.
+                            </div>
+                            <field name="overtime_rate_ids">
+                                <list editable="bottom">
+                                    <field name="period"/>
+                                    <field name="hours_from"/>
+                                    <field name="hours_to"/>
+                                    <field name="rate" widget="percentage"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="l10n_ga_collective_agreement_action" model="ir.actions.act_window">
+        <field name="name">Conventions collectives</field>
+        <field name="res_model">l10n_ga.collective.agreement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_l10n_ga_collective_agreement"
+        name="Conventions collectives (Gabon)"
+        action="l10n_ga_collective_agreement_action"
+        parent="hr_payroll.menu_hr_salary_configuration"
+        sequence="90"/>
+</odoo>

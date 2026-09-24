@@ -17,6 +17,9 @@
             </field>
             <group name="payroll_group" position="inside">
                 <group name="l10n_ga_payroll" string="Gabon" groups="hr.group_hr_user" invisible="company_country_code != 'GA'">
+                    <field name="l10n_ga_agreement_id"/>
+                    <field name="l10n_ga_grade_id" invisible="not l10n_ga_agreement_id"/>
+                    <field name="l10n_ga_seniority_date"/>
                     <field name="l10n_ga_cnamgs_number"/>
                     <field name="l10n_ga_nif"/>
                     <field name="l10n_ga_nationality_code"/>

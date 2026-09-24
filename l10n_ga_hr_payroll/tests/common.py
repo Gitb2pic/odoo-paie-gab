@@ -1,11 +1,12 @@
 """Fabrique des tests Odoo de la paie gabonaise : société, salariés, bulletins (aucune donnée de démo)."""
 
-from datetime import date
+from datetime import date, datetime, time
 
 from odoo.tests import TransactionCase
 
 from ..lib.ga_fiscal_core.engine import PayslipFacts, compute
 from ..lib.ga_fiscal_core.exemptions import GainLine
+from ..lib.ga_fiscal_core.labour import GAIN_VALUES
 
 MODULE = 'l10n_ga_hr_payroll'
 
@@ -68,6 +69,42 @@ class GaPayrollCase(TransactionCase):
         slip.action_payslip_done()
         return slip
 
+    @classmethod
+    def _work_entry_type(cls, code):
+        return cls.env['hr.work.entry.type'].search([('code', '=', code)])
+
+    @classmethod
+    def _absence(cls, employee, code, first_day, last_day):
+        """Absence en jours entiers (congé du calendrier du salarié) reprise par les prestations."""
+        return cls.env['resource.calendar.leaves'].create(
+            {
+                'name': f'{code} {employee.name}',
+                'date_from': datetime.combine(first_day, time.min),
+                'date_to': datetime.combine(last_day, time(23, 59)),
+                'resource_id': employee.resource_id.id,
+                'calendar_id': employee.resource_calendar_id.id,
+                'work_entry_type_id': cls._work_entry_type(code).id,
+                'time_type': 'leave',
+            }
+        )
+
+    @classmethod
+    def _extra_hours(cls, employee, code, start, stop):
+        """Prestation d'heures supplémentaires (hors horaire, ex. un samedi)."""
+        values = cls.env['hr.version']._generate_work_entries_postprocess(
+            [
+                {
+                    'name': f'{code} {employee.name}',
+                    'version_id': employee.version_id.id,
+                    'employee_id': employee.id,
+                    'date_start': start,
+                    'date_stop': stop,
+                    'work_entry_type_id': cls._work_entry_type(code).id,
+                }
+            ]
+        )
+        return cls.env['hr.work.entry'].create(values)
+
     # --- lecture ---------------------------------------------------------------------------------
 
     @staticmethod
@@ -88,7 +125,7 @@ class GaPayrollCase(TransactionCase):
     def assertCoreParity(self, slip, result, other_deductions=0):
         """Chaque règle liée au noyau = valeur du noyau au franc près ; brut et net cohérents."""
         totals = self._totals(slip)
-        for rule in slip.struct_id.rule_ids.filtered('l10n_ga_core_value'):
+        for rule in slip.struct_id.rule_ids.filtered(lambda r: r.l10n_ga_core_value not in (False, *GAIN_VALUES)):
             expected = rule._l10n_ga_sign() * slip._l10n_ga_value(result, rule.l10n_ga_core_value)
             self.assertAlmostEqual(totals.get(rule.code, 0.0), expected, delta=1, msg=rule.code)
             if not expected:

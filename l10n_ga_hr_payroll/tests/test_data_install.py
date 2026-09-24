@@ -5,7 +5,7 @@ from odoo.tests import TransactionCase, tagged
 from ..lib.ga_fiscal_core.param_codes import PARAMETERS, params_from_values
 
 ABSENCES = {
-    'GA_CP': 'paid',
+    'GA_CP': 'allowance',
     'GA_MAL': 'paid',
     'GA_MAL_NP': 'unpaid',
     'GA_MAT': 'cnss',
@@ -86,7 +86,9 @@ class TestDataInstall(TransactionCase):
             self.assertEqual(len(entry_type), 1, code)
             self.assertTrue(entry_type.is_leave, code)
             self.assertEqual(entry_type.l10n_ga_pay_mode, mode, code)
-            self.assertEqual(self.structure in entry_type.unpaid_structure_ids, mode == 'unpaid', code)
+            self.assertEqual(
+                self.structure in entry_type.unpaid_structure_ids, mode in ('unpaid', 'allowance'), code
+            )  # congé payé : GA_CONGE
             leave_type = self.env['hr.leave.type'].search([('work_entry_type_id', '=', entry_type.id)])
             self.assertEqual(len(leave_type), 1, code)
             self.assertEqual(leave_type.unpaid, mode == 'unpaid', code)
@@ -99,7 +101,10 @@ class TestDataInstall(TransactionCase):
             entry_type = self.env['hr.work.entry.type'].search([('code', '=', code)])
             self.assertEqual(len(entry_type), 1, code)
             self.assertFalse(entry_type.is_leave, code)
-            self.assertFalse(entry_type.is_extra_hours, code)  # point 09-11 : calcul par la convention (2.4)
+            # hors salaire de base ; payées par GA_HS_* selon la convention (point 09-11, étape 2.4)
+            self.assertTrue(entry_type.is_extra_hours, code)
+            self.assertEqual(entry_type.amount_rate, 0, code)
+            self.assertTrue(entry_type.l10n_ga_overtime_period, code)
 
     def test_loan_sequence(self):
         sequence = self.env.ref('l10n_ga_hr_payroll.sequence_employee_loan')

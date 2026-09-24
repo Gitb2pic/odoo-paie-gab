@@ -33,8 +33,8 @@ repos:
         files: ^l10n_ga_[a-z_]+/.*\.(py|xml)$
       - id: pylint-odoo
         name: pylint-odoo
-        # pas d'auteur imposé ni de README OCA dans ce dépôt privé
-        entry: .venv/bin/pylint --rcfile=.pylintrc --disable=manifest-required-author,missing-readme
+        # pas d'auteur imposé ni de README OCA dans ce dépôt privé ; no-member : voir .pylintrc
+        entry: .venv/bin/pylint --rcfile=.pylintrc --disable=manifest-required-author,missing-readme,no-member
         language: system
         types: [python]
         files: ^l10n_ga_[a-z_]+/

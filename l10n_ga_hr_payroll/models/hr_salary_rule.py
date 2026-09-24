@@ -59,8 +59,7 @@ class HrSalaryRule(models.Model):
         """-1 pour une retenue (catégorie DED ou descendante), 1 sinon : signe de la ligne."""
         self.ensure_one()
         deduction = self.env.ref('hr_payroll.DED')
-        # hr.salary.rule est défini dans Enterprise, hors du chemin d'analyse de pylint
-        category = self.category_id  # pylint: disable=no-member
+        category = self.category_id
         while category:
             if category == deduction:
                 return -1
@@ -69,7 +68,7 @@ class HrSalaryRule(models.Model):
 
     def _compute_rule(self, localdict):
         """Proratisation par la présence payée (sprint 0 point 12, décision D-21), arrondie au franc."""
-        amount, qty, rate = super()._compute_rule(localdict)  # pylint: disable=no-member  # Enterprise
+        amount, qty, rate = super()._compute_rule(localdict)
         if self.l10n_ga_prorate and amount:
             ratio = localdict['payslip']._l10n_ga_paid_ratio()
             amount = float_round(amount * ratio, precision_digits=0)

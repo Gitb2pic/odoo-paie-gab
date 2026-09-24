@@ -1,1 +1,13 @@
-from . import hr_employee, hr_payslip, hr_payslip_line, hr_salary_rule, hr_version, hr_work_entry_type, res_company
+from . import (
+    hr_employee,
+    hr_payslip,
+    hr_payslip_line,
+    hr_payslip_worked_days,
+    hr_salary_rule,
+    hr_version,
+    hr_work_entry_type,
+    l10n_ga_agreement_grade,
+    l10n_ga_collective_agreement,
+    l10n_ga_overtime_rate,
+    res_company,
+)

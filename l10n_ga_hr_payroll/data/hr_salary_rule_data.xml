@@ -49,31 +49,88 @@ result_name = inputs['GA_SURSAL'].name</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = 'GA_ANC' in inputs</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('seniority', categories, result_rules))</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs['GA_ANC'].amount
-result_name = inputs['GA_ANC'].name</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('seniority', categories, result_rules)</field>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">seniority</field>
             <field name="l10n_ga_prorate" eval="True"/>
             <field name="l10n_ga_leave_base" eval="True"/>
             <field name="l10n_ga_severance_base" eval="True"/>
             <field name="l10n_ga_das_column">presence</field>
             <field name="l10n_ga_das_exempt_column">none</field>
         </record>
-        <record id="rule_ga_hs" model="hr.salary.rule">
-            <field name="name">Heures supplémentaires</field>
-            <field name="code">GA_HS</field>
+        <record id="rule_ga_hs_j" model="hr.salary.rule">
+            <field name="name">Heures supplémentaires de jour</field>
+            <field name="code">GA_HS_J</field>
             <field name="sequence">12</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = 'GA_HS' in inputs</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('overtime:day', categories, result_rules))</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs['GA_HS'].amount
-result_name = inputs['GA_HS'].name</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('overtime:day', categories, result_rules)</field>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">overtime:day</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_hs_n" model="hr.salary.rule">
+            <field name="name">Heures supplémentaires de nuit</field>
+            <field name="code">GA_HS_N</field>
+            <field name="sequence">16</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('overtime:night', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('overtime:night', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">overtime:night</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_hs_dim" model="hr.salary.rule">
+            <field name="name">Heures supplémentaires du dimanche</field>
+            <field name="code">GA_HS_DIM</field>
+            <field name="sequence">17</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('overtime:sunday', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('overtime:sunday', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">overtime:sunday</field>
+            <field name="l10n_ga_prorate" eval="False"/>
+            <field name="l10n_ga_leave_base" eval="True"/>
+            <field name="l10n_ga_severance_base" eval="True"/>
+            <field name="l10n_ga_das_column">presence</field>
+            <field name="l10n_ga_das_exempt_column">none</field>
+        </record>
+        <record id="rule_ga_hs_fer" model="hr.salary.rule">
+            <field name="name">Heures supplémentaires des jours fériés</field>
+            <field name="code">GA_HS_FER</field>
+            <field name="sequence">18</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="structure_ga_employee"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('overtime:holiday', categories, result_rules))</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('overtime:holiday', categories, result_rules)</field>
+            <field name="l10n_ga_social_base">subject</field>
+            <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">overtime:holiday</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="True"/>
             <field name="l10n_ga_severance_base" eval="True"/>
@@ -883,12 +940,12 @@ result_name = inputs['GA_COMPL_IJ'].name</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = 'GA_CONGE' in inputs</field>
+            <field name="condition_python">result = bool(payslip._l10n_ga_compute('leave_allowance', categories, result_rules))</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs['GA_CONGE'].amount
-result_name = inputs['GA_CONGE'].name</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_compute('leave_allowance', categories, result_rules)</field>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
+            <field name="l10n_ga_core_value">leave_allowance</field>
             <field name="l10n_ga_prorate" eval="False"/>
             <field name="l10n_ga_leave_base" eval="False"/>
             <field name="l10n_ga_severance_base" eval="True"/>

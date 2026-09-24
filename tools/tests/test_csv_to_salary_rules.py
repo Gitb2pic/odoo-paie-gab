@@ -16,6 +16,7 @@ sys.path.insert(0, str(TOOLS))
 import csv_to_salary_rules as gen  # noqa: E402
 from ga_fiscal_core.engine import PayResult  # noqa: E402
 from ga_fiscal_core.exemptions import SOCIAL_CAPS, TAX_CAPS  # noqa: E402
+from ga_fiscal_core.labour import GAIN_VALUES  # noqa: E402
 from ga_fiscal_core.params import BENEFIT_KINDS  # noqa: E402
 
 ODOO_PATH = Path(os.environ.get('ODOO_PATH', '/home/ubuntu/odoo/odoo'))
@@ -208,7 +209,23 @@ def test_core_values_are_payresult_fields(rows):
     fields = {f.name for f in dataclasses.fields(PayResult)}
     for row in rows:
         if row['kind'] == 'core' and not row['core_value'].startswith('benefit:'):
-            assert row['core_value'] in fields, row['code']
+            assert row['core_value'] in fields | GAIN_VALUES, row['code']
+
+
+def test_labour_rubrics_computed(rows):
+    by_code = {row['code']: row for row in rows}
+    assert 'GA_HS' not in by_code  # remplacé par une rubrique par période (étape 2.4)
+    expected = {
+        'GA_ANC': 'seniority',
+        'GA_CONGE': 'leave_allowance',
+        'GA_HS_J': 'overtime:day',
+        'GA_HS_N': 'overtime:night',
+        'GA_HS_DIM': 'overtime:sunday',
+        'GA_HS_FER': 'overtime:holiday',
+    }
+    for code, value in expected.items():
+        assert (by_code[code]['kind'], by_code[code]['core_value'], by_code[code]['category']) == ('core', value, 'ALW')
+    assert {row['core_value'] for row in rows if row['core_value'] in GAIN_VALUES} == GAIN_VALUES
 
 
 def test_cash_gains_computed_before_benefits_in_kind(rows):

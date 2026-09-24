@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Heures supplémentaires : aucun taux ici (point 09-11) ; calcul par la convention à l'étape 2.4. -->
+        <!-- Heures supplémentaires : hors salaire de base (is_extra_hours, amount_rate 0) ; payées par les
+             rubriques GA_HS_* selon la table de la convention (point 09-11 : aucun taux ici, D-24). -->
         <record id="work_entry_type_ga_hs_j" model="hr.work.entry.type">
             <field name="name">Heures supplémentaires de jour</field>
             <field name="code">GA_HS_J</field>
             <field name="display_code">HSJ</field>
             <field name="country_id" ref="base.ga"/>
             <field name="is_leave" eval="False"/>
+            <field name="is_extra_hours" eval="True"/>
+            <field name="amount_rate">0</field>
+            <field name="l10n_ga_overtime_period">day</field>
             <field name="l10n_ga_pay_mode">paid</field>
             <field name="color">4</field>
         </record>
@@ -17,6 +21,9 @@
             <field name="display_code">HSN</field>
             <field name="country_id" ref="base.ga"/>
             <field name="is_leave" eval="False"/>
+            <field name="is_extra_hours" eval="True"/>
+            <field name="amount_rate">0</field>
+            <field name="l10n_ga_overtime_period">night</field>
             <field name="l10n_ga_pay_mode">paid</field>
             <field name="color">4</field>
         </record>
@@ -26,6 +33,9 @@
             <field name="display_code">HSD</field>
             <field name="country_id" ref="base.ga"/>
             <field name="is_leave" eval="False"/>
+            <field name="is_extra_hours" eval="True"/>
+            <field name="amount_rate">0</field>
+            <field name="l10n_ga_overtime_period">sunday</field>
             <field name="l10n_ga_pay_mode">paid</field>
             <field name="color">4</field>
         </record>
@@ -35,6 +45,9 @@
             <field name="display_code">HSF</field>
             <field name="country_id" ref="base.ga"/>
             <field name="is_leave" eval="False"/>
+            <field name="is_extra_hours" eval="True"/>
+            <field name="amount_rate">0</field>
+            <field name="l10n_ga_overtime_period">holiday</field>
             <field name="l10n_ga_pay_mode">paid</field>
             <field name="color">4</field>
         </record>
@@ -45,7 +58,9 @@
             <field name="display_code">CP</field>
             <field name="country_id" ref="base.ga"/>
             <field name="is_leave" eval="True"/>
-            <field name="l10n_ga_pay_mode">paid</field>
+            <field name="l10n_ga_pay_mode">allowance</field>
+            <!-- F4 : hors salaire de base, payé par l'allocation de congé GA_CONGE -->
+            <field name="unpaid_structure_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
             <field name="color">3</field>
         </record>
         <record id="work_entry_type_ga_mal" model="hr.work.entry.type">

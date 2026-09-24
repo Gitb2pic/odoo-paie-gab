@@ -12,20 +12,6 @@
             <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
             <field name="available_in_attachments" eval="True"/>
         </record>
-        <record id="input_type_ga_anc" model="hr.payslip.input.type">
-            <field name="name">Prime d'ancienneté</field>
-            <field name="code">GA_ANC</field>
-            <field name="country_id" ref="base.ga"/>
-            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
-            <field name="available_in_attachments" eval="False"/>
-        </record>
-        <record id="input_type_ga_hs" model="hr.payslip.input.type">
-            <field name="name">Heures supplémentaires</field>
-            <field name="code">GA_HS</field>
-            <field name="country_id" ref="base.ga"/>
-            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
-            <field name="available_in_attachments" eval="False"/>
-        </record>
         <record id="input_type_ga_recall" model="hr.payslip.input.type">
             <field name="name">Rappel de salaire</field>
             <field name="code">GA_RECALL</field>
@@ -309,13 +295,6 @@
         <record id="input_type_ga_compl_ij" model="hr.payslip.input.type">
             <field name="name">Complément employeur aux indemnités journalières</field>
             <field name="code">GA_COMPL_IJ</field>
-            <field name="country_id" ref="base.ga"/>
-            <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
-            <field name="available_in_attachments" eval="False"/>
-        </record>
-        <record id="input_type_ga_conge" model="hr.payslip.input.type">
-            <field name="name">Allocation de congés payés</field>
-            <field name="code">GA_CONGE</field>
             <field name="country_id" ref="base.ga"/>
             <field name="struct_ids" eval="[Command.link(ref('structure_ga_employee'))]"/>
             <field name="available_in_attachments" eval="False"/>

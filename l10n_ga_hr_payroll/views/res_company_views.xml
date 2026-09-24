@@ -20,6 +20,7 @@
                             <field name="l10n_ga_cfp_base"/>
                             <field name="l10n_ga_cfp_declaration"/>
                             <field name="l10n_ga_cash_rounding"/>
+                            <field name="l10n_ga_cnss_subrogation"/>
                             <field name="l10n_ga_loan_outstanding_cap"/>
                         </group>
                     </group>

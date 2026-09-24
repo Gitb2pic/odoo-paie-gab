@@ -89,6 +89,55 @@ class HrVersion(models.Model):
         PAYMENT_MODE_SELECTION, string='Mode de paiement', default='transfer', groups='hr.group_hr_user'
     )
 
+    # Convention et grille (RG04, RG18, F5)
+    l10n_ga_agreement_id = fields.Many2one(
+        'l10n_ga.collective.agreement',
+        string='Convention collective',
+        groups='hr.group_hr_user',
+        tracking=True,
+        check_company=True,
+    )
+    l10n_ga_grade_id = fields.Many2one(
+        'l10n_ga.agreement.grade',
+        string='Grade',
+        groups='hr.group_hr_user',
+        tracking=True,
+        check_company=True,
+        domain="[('agreement_id', '=', l10n_ga_agreement_id)]",
+    )
+    l10n_ga_seniority_date = fields.Date(
+        string='Date d’ancienneté',
+        groups='hr.group_hr_user',
+        tracking=True,
+        help='Vide : première date de contrat. À ajuster pour une reprise ou une suspension de l’ancienneté.',
+    )
+
+    def _l10n_ga_seniority_start(self):
+        self.ensure_one()
+        return self.l10n_ga_seniority_date or self.employee_id._get_first_contract_date()
+
+    def _l10n_ga_grade_minimum(self, on_date):
+        """Minimum du grade en vigueur à ``on_date`` (0 sans grade ou avant la première date d'effet)."""
+        self.ensure_one()
+        return self.l10n_ga_grade_id._applicable(on_date).minimum_wage if self.l10n_ga_grade_id else 0.0
+
+    @api.constrains('wage', 'date_version', 'l10n_ga_grade_id', 'l10n_ga_agreement_id')
+    def _check_l10n_ga_grade(self):
+        """RG18 : le grade appartient à la convention et le salaire atteint son minimum (bloquant)."""
+        for version in self.filtered('l10n_ga_grade_id'):
+            if version.l10n_ga_grade_id.agreement_id != version.l10n_ga_agreement_id:
+                raise ValidationError(self.env._('Le grade doit appartenir à la convention collective de la version.'))
+            minimum = version._l10n_ga_grade_minimum(version.date_version)
+            if version.wage < minimum:
+                raise ValidationError(
+                    self.env._(
+                        'Salaire %(wage)s inférieur au minimum %(minimum)s du grade %(grade)s.',
+                        wage=version.wage,
+                        minimum=minimum,
+                        grade=version.l10n_ga_grade_id.display_name,
+                    )
+                )
+
     def _l10n_ga_benefit_kinds(self):
         """Natures d'avantages en nature fournis, dans l'ordre du noyau."""
         self.ensure_one()
