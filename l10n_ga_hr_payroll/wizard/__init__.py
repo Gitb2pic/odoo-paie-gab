@@ -1,1 +1,1 @@
-from . import l10n_ga_loan_early_repayment, l10n_ga_payslip_input_import
+from . import l10n_ga_loan_early_repayment, l10n_ga_payroll_report, l10n_ga_payslip_input_import

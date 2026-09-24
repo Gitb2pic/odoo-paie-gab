@@ -22,6 +22,7 @@ Chaque point indique l'hypothèse retenue par défaut dans la base et dans le pa
 | 16 | Code rubrique ID10 et nomenclature « code emploi / code niveau » DAS | Non fournis dans les documents | Champs libres | DGI |
 | 17 | Échéance le week-end ou jour férié | Aucun texte trouvé | Pas de report | DGI |
 | 18 | Barème du document `BAREME-IRPP.pdf` | Barème 0/8/15/28/40 % sans rapport avec le CGI | Écarté | — |
+| 19 | Mentions obligatoires du bulletin de paie | Aucune liste dans les documents fournis (Code du travail, loi 022/2021, non repris) | Identités employeur (NIF, n° CNSS/CNAMGS) et salarié (matricule, emploi, grade, embauche, n° CNSS), période, date de paiement, jours et heures, rubriques (ancienneté distincte), bases, cumuls, net à payer (décision D-47) | Inspection du travail |
 
 ## Sources consultées sur Internet
 

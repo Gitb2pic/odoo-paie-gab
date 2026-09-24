@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Bulletin de paie gabonais figé (F7, RG24, D-47, D-48) : un bulletin validé n'imprime que
+        ses champs figés et ses lignes stockées (o._l10n_ga_report_data(), o._l10n_ga_report_lines()),
+        jamais la fiche du jour. Posé comme report_id de la structure « Gabon — Employé » : le
+        standard l'utilise pour l'impression et le PDF joint (E/hr_payroll/models/hr_payslip.py:535-543).
+    -->
+    <record id="action_report_payslip_ga" model="ir.actions.report">
+        <field name="name">Bulletin de paie (Gabon)</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_hr_payroll.report_payslip_ga_lang</field>
+        <field name="report_file">l10n_ga_hr_payroll.report_payslip_ga_lang</field>
+        <field name="print_report_name">'Bulletin - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="hr_payroll.paperformat_euro_light"/>
+        <field name="attachment"></field>
+        <field name="attachment_use" eval="False"/>
+    </record>
+
+    <record id="structure_ga_employee" model="hr.payroll.structure">
+        <field name="report_id" ref="action_report_payslip_ga"/>
+    </record>
+
+    <template id="report_payslip_ga">
+        <t t-call="web.external_layout">
+            <t t-set="data" t-value="o._l10n_ga_report_data()"/>
+            <t t-set="lines" t-value="o._l10n_ga_report_lines()"/>
+            <t t-set="fmt" t-value="o._l10n_ga_fmt"/>
+            <div class="page o_l10n_ga_payslip">
+                <h3>Bulletin de paie — <span t-field="o.date_from" t-options="{'format': 'MMMM yyyy'}"/></h3>
+                <p t-if="not data['frozen']" class="text-danger fw-bold" id="l10n_ga_not_validated">
+                    Bulletin non validé — document sans valeur légale.
+                </p>
+
+                <table class="table table-sm table-borderless" id="l10n_ga_identities">
+                    <tr>
+                        <td class="w-50 align-top">
+                            <strong>Employeur</strong><br/>
+                            <span t-out="o.company_id.name"/><br/>
+                            NIF : <span t-out="data['l10n_ga_company_nif'] or '—'"/><br/>
+                            N° CNSS : <span t-out="data['l10n_ga_company_cnss'] or '—'"/><br/>
+                            N° CNAMGS : <span t-out="data['l10n_ga_company_cnamgs'] or '—'"/>
+                        </td>
+                        <td class="w-50 align-top">
+                            <strong>Salarié</strong><br/>
+                            <span t-out="data['l10n_ga_employee_name']"/>
+                            <t t-if="data['l10n_ga_registration_number']">
+                                (matricule <span t-out="data['l10n_ga_registration_number']"/>)
+                            </t><br/>
+                            Emploi : <span t-out="data['l10n_ga_job_title'] or '—'"/>
+                            <t t-if="data['l10n_ga_department']"> — <span t-out="data['l10n_ga_department']"/></t><br/>
+                            Catégorie : <span t-out="data['l10n_ga_grade'] or '—'"/><br/>
+                            Embauche : <span t-out="data['l10n_ga_hire_date'] and data['l10n_ga_hire_date'].strftime('%d/%m/%Y') or '—'"/>
+                            — ancienneté depuis le
+                            <span t-out="data['l10n_ga_seniority_date'] and data['l10n_ga_seniority_date'].strftime('%d/%m/%Y') or '—'"/><br/>
+                            N° CNSS : <span t-out="data['l10n_ga_ssnid'] or '—'"/>
+                            — N° CNAMGS : <span t-out="data['l10n_ga_cnamgs_number'] or '—'"/>
+                            — NIF : <span t-out="data['l10n_ga_nif'] or '—'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Période du <span t-out="o.date_from.strftime('%d/%m/%Y')"/>
+                            au <span t-out="o.date_to.strftime('%d/%m/%Y')"/><br/>
+                            Payé le <span t-out="o.l10n_ga_payment_date and o.l10n_ga_payment_date.strftime('%d/%m/%Y') or '—'"/>
+                            par <span t-out="data['payment_mode_label'] or '—'"/>
+                            <t t-if="data['l10n_ga_bank_account']">
+                                (<span t-out="data['l10n_ga_bank_name'] or ''"/> <span t-out="data['l10n_ga_bank_account']"/>)
+                            </t>
+                        </td>
+                        <td>
+                            Situation : <span t-out="data['marital_label'] or '—'"/>,
+                            <span t-out="data['l10n_ga_children_used'] or 0"/> enfant(s) —
+                            parts fiscales : <span t-out="data['l10n_ga_tax_parts_used'] or '—'"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-sm" id="l10n_ga_worked_days" t-if="o.worked_days_line_ids">
+                    <thead><tr><th>Temps</th><th class="text-end">Jours</th><th class="text-end">Heures</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="o.worked_days_line_ids" t-as="wd">
+                            <td t-out="wd.name"/>
+                            <td class="text-end" t-out="wd.number_of_days"/>
+                            <td class="text-end" t-out="wd.number_of_hours"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-sm" id="l10n_ga_lines">
+                    <thead>
+                        <tr>
+                            <th>Code</th><th>Rubrique</th>
+                            <th class="text-end">Base / nombre</th><th class="text-end">Taux</th>
+                            <th class="text-end">Gains</th><th class="text-end">Retenues</th>
+                            <th class="text-end">Charges patronales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="lines" t-as="line" t-att-class="'fw-bold' if line['kind'] in ('total', 'pay') else None">
+                            <td t-out="line['code']"/>
+                            <td>
+                                <span t-out="line['name']"/>
+                                <em t-if="line['kind'] == 'benefit'"> (avantage en nature, non versé)</em>
+                            </td>
+                            <td class="text-end"><t t-if="line['quantity'] != 1" t-out="line['quantity']"/></td>
+                            <td class="text-end"><t t-if="line['rate'] != 100" t-out="line['rate']"/></td>
+                            <td class="text-end">
+                                <t t-if="line['kind'] in ('gain', 'benefit', 'total', 'pay')" t-out="fmt(line['amount'])"/>
+                            </td>
+                            <td class="text-end"><t t-if="line['kind'] == 'deduction'" t-out="fmt(-line['amount'])"/></td>
+                            <td class="text-end"><t t-if="line['kind'] == 'employer'" t-out="fmt(line['amount'])"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row" id="l10n_ga_bases">
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <thead><tr><th colspan="2">Bases du mois</th></tr></thead>
+                            <tr><td>Brut</td><td class="text-end" t-out="fmt(data['l10n_ga_gross'])"/></tr>
+                            <tr><td>Avantages en nature</td><td class="text-end" t-out="fmt(data['l10n_ga_benefits_in_kind'])"/></tr>
+                            <tr><td>Assiette sociale</td><td class="text-end" t-out="fmt(data['l10n_ga_social_base'])"/></tr>
+                            <tr><td>Plafond CNSS appliqué</td><td class="text-end" t-out="fmt(data['l10n_ga_cnss_ceiling_used'])"/></tr>
+                            <tr><td>Plafond CNAMGS appliqué</td><td class="text-end" t-out="fmt(data['l10n_ga_cnamgs_ceiling_used'])"/></tr>
+                            <tr><td>Brut imposable</td><td class="text-end" t-out="fmt(data['l10n_ga_taxable_gross'])"/></tr>
+                            <tr><td>Base TCS</td><td class="text-end" t-out="fmt(data['l10n_ga_tcs_base'])"/></tr>
+                            <tr><td>Base IRPP</td><td class="text-end" t-out="fmt(data['l10n_ga_irpp_base'])"/></tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-sm" id="l10n_ga_ytd">
+                            <thead><tr><th colspan="2">Cumuls de l’année</th></tr></thead>
+                            <tr><td>Brut</td><td class="text-end" t-out="fmt(data['l10n_ga_ytd_gross'])"/></tr>
+                            <tr><td>Imposable</td><td class="text-end" t-out="fmt(data['l10n_ga_ytd_taxable'])"/></tr>
+                            <tr><td>Base IRPP</td><td class="text-end" t-out="fmt(data['l10n_ga_ytd_irpp_base'])"/></tr>
+                            <tr><td>IRPP</td><td class="text-end" t-out="fmt(data['l10n_ga_ytd_irpp'])"/></tr>
+                            <tr><td>TCS</td><td class="text-end" t-out="fmt(data['l10n_ga_ytd_tcs'])"/></tr>
+                            <tr><td>CNSS salariale</td><td class="text-end" t-out="fmt(data['l10n_ga_ytd_cnss'])"/></tr>
+                            <tr><td>Gratifications exonérées</td><td class="text-end" t-out="fmt(data['l10n_ga_ytd_bonus_exempt'])"/></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <p t-if="data['l10n_ga_rounding_carry']" id="l10n_ga_carry">
+                    Reliquat d’arrondi reporté au mois suivant : <span t-out="fmt(data['l10n_ga_rounding_carry'])"/> FCFA.
+                </p>
+                <p class="small text-muted" id="l10n_ga_mentions">
+                    Montants en francs CFA. Bulletin à conserver sans limitation de durée.
+                    <t t-if="data['frozen']">Bulletin validé le <span t-out="o.l10n_ga_frozen_date.strftime('%d/%m/%Y')"/> : valeurs figées.</t>
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_payslip_ga_lang">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="o" t-value="o.with_context(lang=o.employee_id.lang or o.env.lang)"/>
+                <t t-call="l10n_ga_hr_payroll.report_payslip_ga" t-lang="o.env.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

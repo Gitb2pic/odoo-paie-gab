@@ -20,6 +20,7 @@ from ..lib.ga_fiscal_core.labour import GAIN_VALUES, completed_years, leave_allo
 from ..lib.ga_fiscal_core.loans import seizable_portion
 from ..lib.ga_fiscal_core.rounding import CASH_ADJUST, CASH_PAY, CASH_PREV, CASH_VALUES, cash_round, round_fcfa
 from ..lib.ga_fiscal_core.treatment import NONE, social_group, tax_group
+from .hr_version import PAYMENT_MODE_SELECTION
 from .l10n_ga_payroll_check import BLOCKING
 
 GA_CODE = 'GA'
@@ -60,6 +61,17 @@ YTD_FIELDS = {
     'l10n_ga_ytd_cnss': 'l10n_ga_cnss_employee',
     'l10n_ga_ytd_bonus_exempt': 'l10n_ga_bonus_exempted',
 }
+
+
+# Catégories de règle → colonne du bulletin imprimé (F7).
+REPORT_KINDS = (
+    ('GA_CASH', 'pay'),
+    ('GA_EMPLOYER', 'employer'),
+    ('GA_AIK', 'benefit'),
+    ('DED', 'deduction'),
+    ('GROSS', 'total'),
+    ('NET', 'total'),
+)
 
 
 def _one_year_before(day):
@@ -112,6 +124,25 @@ class HrPayslip(models.Model):
     l10n_ga_ytd_cnss = _frozen_amount('Cumul CNSS salariale')
     l10n_ga_ytd_bonus_exempt = _frozen_amount('Cumul gratifications exonérées')
     l10n_ga_rounding_carry = _frozen_amount('Reliquat d’arrondi reporté')
+    # Identité imprimée, figée à la validation (RG24, D-48) : une fiche modifiée ne change pas un ancien bulletin.
+    l10n_ga_employee_name = fields.Char(string='Salarié (figé)', readonly=True, copy=False)
+    l10n_ga_registration_number = fields.Char(string='Matricule (figé)', readonly=True, copy=False)
+    l10n_ga_job_title = fields.Char(string='Emploi (figé)', readonly=True, copy=False)
+    l10n_ga_department = fields.Char(string='Service (figé)', readonly=True, copy=False)
+    l10n_ga_grade = fields.Char(string='Catégorie (figée)', readonly=True, copy=False)
+    l10n_ga_hire_date = fields.Date(string='Date d’embauche (figée)', readonly=True, copy=False)
+    l10n_ga_seniority_date = fields.Date(string='Date d’ancienneté (figée)', readonly=True, copy=False)
+    l10n_ga_ssnid = fields.Char(string='N° CNSS (figé)', readonly=True, copy=False)
+    l10n_ga_cnamgs_number = fields.Char(string='N° CNAMGS (figé)', readonly=True, copy=False)
+    l10n_ga_nif = fields.Char(string='NIF (figé)', readonly=True, copy=False)
+    l10n_ga_payment_mode = fields.Selection(
+        PAYMENT_MODE_SELECTION, string='Mode de paiement (figé)', readonly=True, copy=False
+    )
+    l10n_ga_bank_name = fields.Char(string='Banque (figée)', readonly=True, copy=False)
+    l10n_ga_bank_account = fields.Char(string='Compte bancaire (figé)', readonly=True, copy=False)
+    l10n_ga_company_nif = fields.Char(string='NIF employeur (figé)', readonly=True, copy=False)
+    l10n_ga_company_cnss = fields.Char(string='N° CNSS employeur (figé)', readonly=True, copy=False)
+    l10n_ga_company_cnamgs = fields.Char(string='N° CNAMGS employeur (figé)', readonly=True, copy=False)
     l10n_ga_issue_ids = fields.One2many('l10n_ga.check.issue', 'payslip_id', string='Anomalies Gabon')
     l10n_ga_is_ga = fields.Boolean(compute='_compute_l10n_ga_is_ga')
 
@@ -618,6 +649,52 @@ class HrPayslip(models.Model):
                     remaining[field_name] = amount - values[field_name]
                 line.write(values)
 
+    def _l10n_ga_identity(self):
+        """Identité imprimée lue sur la fiche du jour (figée à la validation, D-48)."""
+        self.ensure_one()
+        version = self.version_id
+        employee = self.employee_id
+        bank = employee.primary_bank_account_id
+        return {
+            'l10n_ga_employee_name': employee.name,
+            'l10n_ga_registration_number': employee.registration_number or False,
+            'l10n_ga_job_title': version.job_title or version.job_id.name or False,
+            'l10n_ga_department': version.department_id.name or False,
+            'l10n_ga_grade': version.l10n_ga_grade_id.display_name or False,
+            'l10n_ga_hire_date': version.contract_date_start or employee._get_first_contract_date() or False,
+            'l10n_ga_seniority_date': version._l10n_ga_seniority_start() or False,
+            'l10n_ga_ssnid': version.ssnid or False,
+            'l10n_ga_cnamgs_number': version.l10n_ga_cnamgs_number or False,
+            'l10n_ga_nif': version.l10n_ga_nif or False,
+            'l10n_ga_payment_mode': version.l10n_ga_payment_mode or False,
+            'l10n_ga_bank_name': bank.bank_id.name or False,
+            'l10n_ga_bank_account': bank.acc_number or False,
+            'l10n_ga_company_nif': self.company_id.l10n_ga_nif or False,
+            'l10n_ga_company_cnss': self.company_id.l10n_ga_cnss_number or False,
+            'l10n_ga_company_cnamgs': self.company_id.l10n_ga_cnamgs_number or False,
+        }
+
+    def _l10n_ga_snapshot(self):
+        """Valeurs à figer, calculées depuis les lignes du bulletin : ``(valeurs, PayResult, totaux)``."""
+        self.ensure_one()
+        totals = self._l10n_ga_line_totals()
+        result = self._l10n_ga_result(self._l10n_ga_main_salary(), totals)
+        params = self._l10n_ga_static()['params']
+        values = {field_name: getattr(result, attr) for field_name, attr in FROZEN_RESULT_FIELDS.items()}
+        values.update(
+            l10n_ga_irpp_withheld=result.irpp + result.irpp_regularisation,
+            l10n_ga_tax_parts_used=result.tax_parts,
+            l10n_ga_marital_used=self.version_id.marital,
+            l10n_ga_children_used=self.version_id.children,
+            l10n_ga_cnss_ceiling_used=params.cnss_ceiling,
+            l10n_ga_cnamgs_ceiling_used=params.cnamgs_ceiling,
+            l10n_ga_rounding_carry=-totals.get('GA_ROUND', 0.0),
+            **self._l10n_ga_identity(),
+        )
+        for ytd_field, month_field in YTD_FIELDS.items():
+            values[ytd_field] = self._l10n_ga_ytd(month_field) + values[month_field]
+        return values, result, totals
+
     def _l10n_ga_freeze(self):
         """Stocke les valeurs imprimées et déclarées du bulletin (F7), depuis ses lignes."""
         for slip in self.filtered(lambda s: s.l10n_ga_is_ga and s.state == 'draft' and s.line_ids):
@@ -625,26 +702,79 @@ class HrPayslip(models.Model):
             issues = slip._l10n_ga_blocking_issues()
             if issues:
                 raise UserError('\n'.join(issues))
-            totals = slip._l10n_ga_line_totals()
-            result = slip._l10n_ga_result(slip._l10n_ga_main_salary(), totals)
+            values, result, totals = slip._l10n_ga_snapshot()
             slip._l10n_ga_check_lines(result, totals)
-            params = slip._l10n_ga_static()['params']
-            values = {field_name: getattr(result, attr) for field_name, attr in FROZEN_RESULT_FIELDS.items()}
-            values.update(
-                l10n_ga_irpp_withheld=result.irpp + result.irpp_regularisation,
-                l10n_ga_tax_parts_used=result.tax_parts,
-                l10n_ga_marital_used=slip.version_id.marital,
-                l10n_ga_children_used=slip.version_id.children,
-                l10n_ga_cnss_ceiling_used=params.cnss_ceiling,
-                l10n_ga_cnamgs_ceiling_used=params.cnamgs_ceiling,
-                l10n_ga_frozen_date=fields.Datetime.now(),
-                l10n_ga_rounding_carry=-totals.get('GA_ROUND', 0.0),
-            )
-            for ytd_field, month_field in YTD_FIELDS.items():
-                values[ytd_field] = slip._l10n_ga_ytd(month_field) + values[month_field]
-            slip.write(values)
+            slip.write({**values, 'l10n_ga_frozen_date': fields.Datetime.now()})
             slip._l10n_ga_freeze_lines(result)
             slip._l10n_ga_clear_cache()
+
+    # --- bulletin imprimé (F7, RG24) -------------------------------------------------------------
+
+    def _l10n_ga_is_frozen(self):
+        self.ensure_one()
+        return self.state in VALIDATED_STATES and bool(self.l10n_ga_frozen_date)
+
+    def _l10n_ga_report_data(self):
+        """Valeurs imprimées : champs figés d'un bulletin validé, sinon calcul du jour (brouillon)."""
+        self.ensure_one()
+        names = [
+            *self._l10n_ga_identity(),
+            *FROZEN_RESULT_FIELDS,
+            *YTD_FIELDS,
+            'l10n_ga_irpp_withheld',
+            'l10n_ga_tax_parts_used',
+            'l10n_ga_marital_used',
+            'l10n_ga_children_used',
+            'l10n_ga_cnss_ceiling_used',
+            'l10n_ga_cnamgs_ceiling_used',
+            'l10n_ga_rounding_carry',
+        ]
+        if self._l10n_ga_is_frozen():
+            data = {name: self[name] for name in names}
+        elif self.line_ids:
+            self._l10n_ga_clear_cache()
+            data = self._l10n_ga_snapshot()[0]
+            self._l10n_ga_clear_cache()
+        else:
+            data = dict.fromkeys(names, False) | self._l10n_ga_identity()
+        data['frozen'] = self._l10n_ga_is_frozen()
+        data['payment_mode_label'] = dict(PAYMENT_MODE_SELECTION).get(data['l10n_ga_payment_mode'], '')
+        marital = dict(self.env['hr.version']._fields['marital']._description_selection(self.env))
+        data['marital_label'] = marital.get(data['l10n_ga_marital_used'], data['l10n_ga_marital_used'] or '')
+        return data
+
+    def _l10n_ga_line_kind(self, line):
+        categories = []
+        category = line.category_id
+        while category:
+            categories.append(category.code)
+            category = category.parent_id
+        for code, kind in REPORT_KINDS:
+            if code in categories:
+                return kind
+        return 'gain'
+
+    def _l10n_ga_report_lines(self):
+        """Lignes imprimées (stockées) : gains, avantages en nature, retenues, charges, totaux, net à payer."""
+        self.ensure_one()
+        lines = []
+        for line in self.line_ids.filtered('appears_on_payslip').sorted(lambda li: (li.sequence, li.id)):
+            lines.append(
+                {
+                    'code': line.code,
+                    'name': line.name,
+                    'quantity': line.quantity,
+                    'rate': line.rate,
+                    'amount': line.total,
+                    'kind': self._l10n_ga_line_kind(line),
+                }
+            )
+        return lines
+
+    @staticmethod
+    def _l10n_ga_fmt(amount):
+        """Montant au franc, séparateur de milliers insécable (bulletin imprimé)."""
+        return f'{round_fcfa(amount or 0):,}'.replace(',', '\u202f')
 
     def action_payslip_done(self):
         # Avant super() : bulletin encore en brouillon, lignes calculées (sprint 0 point 13).

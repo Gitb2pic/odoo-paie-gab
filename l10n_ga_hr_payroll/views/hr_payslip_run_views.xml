@@ -40,6 +40,8 @@
                         string="Importer les variables" invisible="not l10n_ga_is_ga or state != '01_ready'"/>
                 <button name="action_l10n_ga_issues" type="object" class="btn btn-secondary" string="Anomalies"
                         invisible="not l10n_ga_blocking_count and not l10n_ga_warning_count"/>
+                <button name="action_l10n_ga_reports" type="object" class="btn btn-secondary" string="États de paie"
+                        invisible="not l10n_ga_is_ga or state not in ('02_close', '03_paid')"/>
             </xpath>
         </field>
     </record>

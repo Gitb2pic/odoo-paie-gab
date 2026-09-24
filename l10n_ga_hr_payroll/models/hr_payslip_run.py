@@ -104,3 +104,14 @@ class HrPayslipRun(models.Model):
             'view_mode': 'list,form',
             'domain': [('payslip_run_id', '=', self.id)],
         }
+
+    def action_l10n_ga_reports(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._('États de paie'),
+            'res_model': 'l10n_ga.payroll.report',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_payslip_run_id': self.id, 'default_company_id': self.company_id.id},
+        }

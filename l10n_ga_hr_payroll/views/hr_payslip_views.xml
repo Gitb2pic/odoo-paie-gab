@@ -38,6 +38,26 @@
                             <field name="l10n_ga_tcs"/>
                             <field name="l10n_ga_irpp_withheld"/>
                         </group>
+                        <group string="Identité imprimée (figée)">
+                            <field name="l10n_ga_employee_name"/>
+                            <field name="l10n_ga_registration_number"/>
+                            <field name="l10n_ga_job_title"/>
+                            <field name="l10n_ga_department"/>
+                            <field name="l10n_ga_grade"/>
+                            <field name="l10n_ga_hire_date"/>
+                            <field name="l10n_ga_seniority_date"/>
+                            <field name="l10n_ga_ssnid"/>
+                            <field name="l10n_ga_cnamgs_number"/>
+                            <field name="l10n_ga_nif"/>
+                            <field name="l10n_ga_payment_mode"/>
+                            <field name="l10n_ga_bank_name"/>
+                            <field name="l10n_ga_bank_account"/>
+                        </group>
+                        <group string="Employeur (figé)">
+                            <field name="l10n_ga_company_nif"/>
+                            <field name="l10n_ga_company_cnss"/>
+                            <field name="l10n_ga_company_cnamgs"/>
+                        </group>
                         <group string="Cumuls de l’année">
                             <field name="l10n_ga_ytd_gross"/>
                             <field name="l10n_ga_ytd_taxable"/>

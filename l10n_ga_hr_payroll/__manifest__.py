@@ -1,6 +1,6 @@
 {
     'name': 'Gabon - Paie',
-    'version': '19.0.1.4.0',
+    'version': '19.0.1.5.0',
     'summary': 'Paie gabonaise : cotisations, impôts, rubriques, absences, prêts, import, contrôles, arrondi',
     'countries': ['ga'],
     'category': 'Human Resources/Payroll',
@@ -32,6 +32,8 @@
         'views/hr_payslip_run_views.xml',
         'views/l10n_ga_ytd_opening_views.xml',
         'wizard/l10n_ga_payslip_input_import_views.xml',
+        'wizard/l10n_ga_payroll_report_views.xml',
+        'report/report_payslip_ga.xml',
     ],
     'post_init_hook': '_post_init_hook',
     'external_dependencies': {'python': ['openpyxl', 'xlsxwriter']},

@@ -49,3 +49,10 @@
 | D-44 | Montant de `GA_ROUND` | a) ajustement négatif (−reliquat), `GA_NET_PAY = NET + GA_ROUND_PREV + GA_ROUND`, reliquat antérieur versé hors espèces ; b) montant arrondi | a) | **Décidé** (24/09/2026, P7) |
 | D-45 | Champs du cumul d'ouverture | a) F12 + `irpp_base`, verrouillé après le premier bulletin validé de l'année ; b) F12 seul | a) | **Décidé** (24/09/2026, P8) |
 | D-46 | Date de paiement du lot | a) `l10n_ga_payment_date` sur le lot, reprise par ses bulletins ; b) bulletin seul | a) | **Décidé** (24/09/2026, P9) |
+| D-47 | Mentions légales du bulletin (aucune liste dans la base) | a) identités employeur et salarié, période, paiement, jours/heures, rubriques (ancienneté distincte), bases, cumuls, net ; point ajouté au fichier 09 ; b) attendre une liste | a) | **Décidé** (go anticipé « avec tes recommandations », 24/09/2026, plan 2.7 P1) — à confirmer par Alex |
+| D-48 | Identité imprimée sur le bulletin | a) figée à la validation ; b) lue sur la fiche | a) (RG24) | **Décidé** (24/09/2026, P2) |
+| D-49 | Sélection des états de paie | a) par lot ou par période (date de fin), bulletins validés ou payés ; b) par date de paiement | a) | **Décidé** (24/09/2026, P3) |
+| D-50 | Colonnes du livre de paie | a) rubriques ayant un montant sur la sélection ; b) toutes les rubriques | a) | **Décidé** (24/09/2026, P4) |
+| D-51 | Rapprochement de l'état des charges avec 43x/44x | a) étape 3 (dépendance comptable) ; b) ici | a) (règle d'or 14) | **Décidé** (24/09/2026, P5) |
+| D-52 | Chèques et comptes manquants dans les virements | a) feuilles « Chèques » et « Sans compte » ; b) exclus | a) | **Décidé** (24/09/2026, P6) |
+| D-53 | Format des états | a) Excel pour livre, virements, billetage ; PDF pour le bulletin ; b) PDF partout | a) | **Décidé** (24/09/2026, P7) |
