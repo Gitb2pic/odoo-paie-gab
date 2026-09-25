@@ -89,3 +89,11 @@
 | D-84 | Régularisation annuelle du plafond CNSS (option base 03 §1) | a) hors DTS, dépassement mensuel signalé ; b) calcul de régularisation | a) | **Décidé** (25/09/2026, Q3) |
 | D-85 | Échéance des DTS | a) le 30 du mois suivant le trimestre, sans décalage ; b) autre | a) | **Décidé** (25/09/2026, Q4) |
 | D-86 | N° CNSS sur la DTS CNAMGS | a) non exigé, n° CNAMGS exigé (bloquant) ; b) les deux | a) | **Décidé** (25/09/2026, Q5) |
+| D-87 | Gabarits `.xlsm` de la V1 absents pour la DAS (D-07) | a) classeur neuf mis en forme, `.xlsm` à brancher à leur arrivée ; b) attendre | a) | **Décidé par Alex** (« go pour la 4.4 sans les classeurs », 25/09/2026) — remplissage des `.xlsm` **reste à faire** à réception de la V1 |
+| D-88 | Seuils ID19 (80 000/mois), ID20 (1 000 000/mois), 39 lignes par feuille d'ID21 | a) paramètres datés ajoutés au YAML (règle d'or 1) ; b) constantes | a) | **Décidé** (go avec recommandations, 25/09/2026, plan 4.4) |
+| D-89 | Rattachement des bulletins à l'année DAS | a) date de paiement (comme l'ID10) ; b) période | a) | **Décidé** (25/09/2026) |
+| D-90 | Moyenne mensuelle (ID19, ID20) | a) rémunérations imposables / mois payés, option « imposables et non imposables » ; b) / 12 | a) | **Décidé** (25/09/2026) — à confirmer par le centre des impôts (point 09-6) |
+| D-91 | Colonne (1) de l'ID21 | a) nette des cotisations salariales (option société) ; b) brute | a) (point 09-6) | **Décidé** (25/09/2026) |
+| D-92 | Cumuls d'ouverture sans ventilation | a) imposable − avantages − cotisations en (1), avantages en (2), non imposable en « autres », CFP non reprise (avertissement) ; comptés dans le rapprochement ID10 ; b) saisie par colonne | a) | **Décidé** (25/09/2026) |
+| D-93 | Préparation de la DAS | a) cron J-10 et assistant, jamais à chaque bulletin ; b) à chaque bulletin | a) | **Décidé** (25/09/2026) |
+| D-94 | Codes nationalité / sexe / situation | a) 1-4 / 1-2 / 1 marié, 2 célibataire (et concubin), 3 veuf, 4 divorcé ; b) autre | a) (base 06 §3.1) | **Décidé** (25/09/2026) |
