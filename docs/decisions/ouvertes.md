@@ -67,3 +67,12 @@
 | D-62 | Plan `ga_syscebnl` (comptes de paie absents) | a) hors périmètre V1, contrôle `GA_NO_ACCOUNT` ; b) table dédiée | a) | **Décidé** (25/09/2026, Q5) |
 | D-63 | Dépendance `l10n_ga` du module comptable | a) ajoutée (modèle Kenya) ; b) non | a) | **Décidé** (25/09/2026, Q6) |
 | D-64 | Écriture de décaissement d'un prêt | a) saisie manuelle hors paie ; b) pièce générée | a) | **Décidé** (25/09/2026, Q7) |
+| D-65 | Unicité RG11 (un `unique` SQL laisse passer `rectified_id NULL`) | a) index unique partiel `WHERE rectified_id IS NULL AND state != 'cancel'` ; b) `unique` avec `rectified_id` (inopérant) | a) | **Décidé** (« go pour l'étape suivante », go anticipé avec recommandations, 25/09/2026, plan 4.1 Q1) |
+| D-66 | Transitions absentes du patron 7 | a) `computed → cancel`, `cancel → draft` ; « annuler la validation » retire l'instantané ; b) patron tel quel | a) | **Décidé** (25/09/2026, Q2) |
+| D-67 | Règle d'échéance | a) `due_months` + `due_day` (jour borné, pas de décalage week-end/férié, base 02 §3) ; b) texte « M+1 J15 » | a) | **Décidé** (25/09/2026, Q3) |
+| D-68 | Gabarit Excel | a) chemin `template_path` dans le module ; b) binaire en base | a) | **Décidé** (25/09/2026, Q4) |
+| D-69 | Quittances et état « payée » | a) modèle `l10n_ga.declaration.payment` en 4.2, « Marquer payée » manuel en 4.1 ; b) tout en 4.1 | a) | **Décidé** (25/09/2026, Q5) |
+| D-70 | Générateur factice | a) registre patché dans les tests + générateur générique réel `payslip` (codes de rubriques sur les cases) ; b) module de test | a) | **Décidé** (25/09/2026, Q6) |
+| D-71 | N° CNSS manquant en déclaration | a) bloquant ; b) avertissement | a) | **Décidé** (25/09/2026, Q7) |
+| D-72 | Destinataire des activités | a) déclarant de la société, sinon 1er membre du groupe, sinon message ; b) responsable paie | a) | **Décidé** (25/09/2026, Q8) |
+| D-73 | `move_line_ids` du détail, `move_id` des quittances | a) ajoutés par `l10n_ga_dgi_edi_account` (règle d'or 14) ; b) dépendance `account` ici | a) | **Décidé** (25/09/2026, Q9) |

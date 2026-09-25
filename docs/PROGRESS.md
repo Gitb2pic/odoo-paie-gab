@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (complétude C-2).
+Mis à jour le 25/09/2026 (étape 4.1).
 
 ## Étapes
 
@@ -17,7 +17,7 @@ Mis à jour le 25/09/2026 (complétude C-2).
 | C-1 | `l10n_ga_hr_payroll` | complétude du module (`prompts/99_completude.md`) | **terminé** | 100 % (0 manque ; lint 0 erreur, noyau 483 tests couverture 100 %, 178 tests Odoo sur base neuve et en mise à jour) | `docs/completude/l10n_ga_hr_payroll_C-1.md` |
 | 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | **terminé** | 100 % (18/18 ; 28 tests Odoo, F16 compte par compte écart 0 ; installation sur société existante et désinstallation propres) | `docs/completude/l10n_ga_hr_payroll_account.md` |
 | C-2 | `l10n_ga_hr_payroll_account` | complétude du module | **terminé** | 100 % (3 manques corrigés, dont SYSCEBNL validé sans écriture ; 32 tests du module, 210 tests paie + comptabilité installées ensemble) | `docs/completude/l10n_ga_hr_payroll_account_C-2.md` |
-| 4.1 | `l10n_ga_dgi_edi` | moteur de déclarations | à faire | — | — |
+| 4.1 | `l10n_ga_dgi_edi` | moteur de déclarations | **terminé** — en attente du « go » pour 4.2 | 100 % (24/24 ; 47 tests Odoo sur base neuve et en mise à jour, 258 avec paie + comptabilité ; F16 déclaré écart 0 ; installation sur base existante et désinstallation propres) | `docs/completude/l10n_ga_dgi_edi_4.1.md` |
 | 4.2 | `l10n_ga_dgi_edi` | ID10, ID28, quittances multiples (F11) | à faire | — | — |
 | 4.3 | `l10n_ga_dgi_edi` | DTS CNSS et CNAMGS | à faire | — | — |
 | 4.4 | `l10n_ga_dgi_edi` | DAS ID19 à ID22, « Contrôle DAS », classeurs `.xlsm` | à faire | — | — |
@@ -39,8 +39,8 @@ Mis à jour le 25/09/2026 (complétude C-2).
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle), D-58 à D-64 (3, comptabilisation). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
+Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle), D-58 à D-64 (3, comptabilisation), D-65 à D-73 (4.1, moteur de déclarations, go anticipé). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
 
 ## Prochaine étape
 
-Étape 4.1 — `l10n_ga_dgi_edi`, moteur de déclarations (`prompts/04_l10n_ga_dgi_edi.md`) : plan `docs/plans/4.1.md` à présenter, puis « go » d'Alex avant de coder. Démo possible : `make demo MODULE=l10n_ga_hr_payroll_account` (redémarre le service `odoo19`, sur accord explicite d'Alex).
+Étape 4.2 — `l10n_ga_dgi_edi`, ID10, ID28 et quittances multiples (F11) : plan `docs/plans/4.2.md` à présenter, puis « go » d'Alex. Démo possible : `make demo MODULE=l10n_ga_dgi_edi` (redémarre le service `odoo19`, sur accord explicite d'Alex).
