@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Lot de paie (F3, F8, D-46) : date de paiement, contrôles avant paie, import des variables. -->
+    <!-- Lot de paie (F3, F8, D-46) : date de paiement, contrôles avant paie, import des variables.
+         Ce formulaire est la fenêtre « Nouveau lot » : « Sélectionner les salariés » transmet toutes ses
+         données en contexte, copiées en JSON (raw_record, E/hr_payroll/static/src/views/payslip_run_form/
+         hr_payslip_run_form.js:36-38). Aucun champ x2many ici (circularité → OwlError) : les anomalies
+         s'ouvrent par le bouton « Anomalies » du lot. -->
     <record id="hr_payslip_run_form_l10n_ga" model="ir.ui.view">
         <field name="name">hr.payslip.run.form.l10n_ga</field>
         <field name="model">hr.payslip.run</field>
@@ -9,16 +13,6 @@
             <xpath expr="//div[hasclass('o_row')]" position="after">
                 <field name="l10n_ga_is_ga" invisible="1"/>
                 <field name="l10n_ga_payment_date" invisible="not l10n_ga_is_ga"/>
-            </xpath>
-            <xpath expr="//form/group" position="after">
-                <field name="l10n_ga_issue_ids" invisible="not l10n_ga_issue_ids" readonly="1">
-                    <list decoration-danger="severity == 'blocking'" decoration-warning="severity == 'warning'">
-                        <field name="severity"/>
-                        <field name="employee_id"/>
-                        <field name="message"/>
-                        <field name="code" optional="hide"/>
-                    </list>
-                </field>
             </xpath>
         </field>
     </record>

@@ -1,3 +1,4 @@
+import re
 from datetime import date
 
 from odoo.exceptions import UserError
@@ -103,6 +104,15 @@ class TestPayrollChecks(GaPayrollCase):
                 'GA_ALLOWANCE_FORCED_NO_REASON',
             },
         )
+
+    def test_new_run_form_is_json_serializable(self):
+        """« Nouveau lot » : les données du formulaire partent en contexte (raw_record) → aucun x2many."""
+        view = self.env.ref('hr_payroll.hr_payslip_run_form')
+        arch = self.env['hr.payslip.run'].get_views([(view.id, 'form')])['views']['form']['arch']
+        names = re.findall(r'<field name="([^"]+)"', arch)
+        Run = self.env['hr.payslip.run']
+        self.assertIn('l10n_ga_payment_date', names)
+        self.assertFalse([name for name in names if Run._fields[name].type in ('one2many', 'many2many')])
 
     def test_abstract_rule_and_custom_chain(self):
         slip = self._run(self._complete('Abstrait')).slip_ids
