@@ -1,7 +1,9 @@
-"""Contrôle « comptes de paie manquants » ajouté à la chaîne F8 (patron 8, D-62).
+"""Contrôle « comptabilisation de la paie incomplète » ajouté à la chaîne F8 (patron 8, D-62).
 
-Sans compte, le standard équilibre la pièce en silence par une ligne « Adjustment Entry »
-(``E/hr_payroll_account/models/hr_payslip.py:113-116``) : le lot est bloqué à la place.
+Le standard ne comptabilise pas les bulletins dont la structure n'a pas de journal et équilibre
+en silence une pièce incomplète par une ligne « Adjustment Entry »
+(``E/hr_payroll_account/models/hr_payslip.py:51``, ``:113-116``) : le lot est bloqué à la place,
+dès que la société tient une comptabilité (plan comptable chargé).
 """
 
 from odoo.addons.l10n_ga_hr_payroll.models.l10n_ga_payroll_check import CheckRule
@@ -18,23 +20,40 @@ def missing_account_rules(structure, company):
     ]
 
 
+def payroll_account_issues(slip):
+    """Messages bloquants : structure sans journal de paie, règles sans compte."""
+    company = slip.company_id
+    if not company.chart_template:
+        return []
+    structure = slip.struct_id.with_company(company)
+    if not structure.journal_id:
+        return [
+            slip.env._(
+                '%(company)s : la structure %(structure)s n’a pas de journal de paie ; '
+                'les bulletins ne seraient pas comptabilisés. '
+                'Lancez « Configurer les comptes de paie Gabon » sur la société.',
+                company=company.name,
+                structure=structure.name,
+            )
+        ]
+    codes = missing_account_rules(structure, company)
+    if not codes:
+        return []
+    return [
+        slip.env._(
+            '%(company)s : règles de paie sans compte comptable (%(codes)s). '
+            'Lancez « Configurer les comptes de paie Gabon » sur la société.',
+            company=company.name,
+            codes=', '.join(codes),
+        )
+    ]
+
+
 class MissingRuleAccounts(CheckRule):
     code = 'GA_NO_ACCOUNT'
 
     def applies(self, slip):
-        return bool(slip.struct_id.with_company(slip.company_id).journal_id)
+        return bool(slip.struct_id and slip.company_id.chart_template)
 
     def run(self, slip):
-        codes = missing_account_rules(slip.struct_id, slip.company_id)
-        if not codes:
-            return []
-        return [self.issue(missing_accounts_message(slip, codes), slip.struct_id)]
-
-
-def missing_accounts_message(slip, codes):
-    return slip.env._(
-        '%(company)s : règles de paie sans compte comptable (%(codes)s). '
-        'Lancez « Configurer les comptes de paie Gabon » sur la société.',
-        company=slip.company_id.name,
-        codes=', '.join(codes),
-    )
+        return [self.issue(message, slip.struct_id) for message in payroll_account_issues(slip)]

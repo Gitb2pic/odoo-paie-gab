@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (étape 3).
+Mis à jour le 25/09/2026 (complétude C-2).
 
 ## Étapes
 
@@ -15,8 +15,8 @@ Mis à jour le 25/09/2026 (étape 3).
 | 2.6 | `l10n_ga_hr_payroll` | import Excel (F3), contrôles avant paie (F8), arrondi espèces (F2), cumuls d'ouverture (F12) | **terminé** | 100 % (22/22 ; 156 tests Odoo, 65 d'outillage, noyau 466 tests couverture 100 % ; lot bloqué RG26, F16 espèces 514 500 + reliquat 397, bascule en juillet = année complète) | `docs/completude/l10n_ga_hr_payroll_2.6.md` |
 | 2.7 | `l10n_ga_hr_payroll` | rapports : bulletin figé, livre de paie, virements, billetage | **terminé** (bulletin repris au format du modèle d'Alex, 2.7 b) — en attente du « go » pour C-1 | 100 % (16/16 + 9/9 écarts ; 178 tests Odoo, 72 d'outillage, noyau 483 tests couverture 100 % ; bulletin réimprimé identique ; D-47 à confirmer) | `docs/completude/l10n_ga_hr_payroll_2.7.md` |
 | C-1 | `l10n_ga_hr_payroll` | complétude du module (`prompts/99_completude.md`) | **terminé** | 100 % (0 manque ; lint 0 erreur, noyau 483 tests couverture 100 %, 178 tests Odoo sur base neuve et en mise à jour) | `docs/completude/l10n_ga_hr_payroll_C-1.md` |
-| 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | **terminé** — en attente du « go » pour C-2 | 100 % (18/18 ; 28 tests Odoo, F16 compte par compte écart 0 ; installation sur société existante et désinstallation propres) | `docs/completude/l10n_ga_hr_payroll_account.md` |
-| C-2 | `l10n_ga_hr_payroll_account` | complétude du module | à faire | — | — |
+| 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | **terminé** | 100 % (18/18 ; 28 tests Odoo, F16 compte par compte écart 0 ; installation sur société existante et désinstallation propres) | `docs/completude/l10n_ga_hr_payroll_account.md` |
+| C-2 | `l10n_ga_hr_payroll_account` | complétude du module | **terminé** | 100 % (3 manques corrigés, dont SYSCEBNL validé sans écriture ; 32 tests du module, 210 tests paie + comptabilité installées ensemble) | `docs/completude/l10n_ga_hr_payroll_account_C-2.md` |
 | 4.1 | `l10n_ga_dgi_edi` | moteur de déclarations | à faire | — | — |
 | 4.2 | `l10n_ga_dgi_edi` | ID10, ID28, quittances multiples (F11) | à faire | — | — |
 | 4.3 | `l10n_ga_dgi_edi` | DTS CNSS et CNAMGS | à faire | — | — |
@@ -43,4 +43,4 @@ Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Action
 
 ## Prochaine étape
 
-C-2 — complétude du module `l10n_ga_hr_payroll_account` (`prompts/99_completude.md`), puis étape 4.1 (`l10n_ga_dgi_edi`, moteur de déclarations), chacune après le « go » d'Alex. Démo possible : `make demo MODULE=l10n_ga_hr_payroll_account` (redémarre le service `odoo19`, sur accord explicite d'Alex).
+Étape 4.1 — `l10n_ga_dgi_edi`, moteur de déclarations (`prompts/04_l10n_ga_dgi_edi.md`) : plan `docs/plans/4.1.md` à présenter, puis « go » d'Alex avant de coder. Démo possible : `make demo MODULE=l10n_ga_hr_payroll_account` (redémarre le service `odoo19`, sur accord explicite d'Alex).

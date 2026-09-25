@@ -5,7 +5,7 @@ from odoo.tests import tagged
 from odoo.tools.misc import file_path
 
 from ..models.account_chart_template import JOURNAL, NO_ENTRY_RULES, RULE_ACCOUNTS
-from ..models.l10n_ga_payroll_check import MissingRuleAccounts
+from ..models.l10n_ga_payroll_check import MissingRuleAccounts, missing_account_rules
 from .common import SEPT, GaPayrollAccountCase
 
 
@@ -108,11 +108,31 @@ class TestAccountConfiguration(GaPayrollAccountCase):
             slip.action_payslip_done()
         self.assertIn('GA_IRPP', str(error.exception))
 
-    def test_check_skipped_without_payroll_journal(self):
+    def test_missing_journal_blocks(self):
         slip = self._payslip(self._complete('Sans journal'), *SEPT, compute_sheet=False)
         self.structure.with_company(self.company).journal_id = False
-        self.assertFalse(MissingRuleAccounts().applies(slip))
         self.assertIn('GA_NO_ACCOUNT', [check.code for check in slip._l10n_ga_payroll_checks()])
+        (issue,) = MissingRuleAccounts().run(slip)
+        self.assertIn('pas de journal de paie', issue[2])
+        self.assertEqual(issue[3], slip.struct_id)
+
+    def test_missing_account_rules_lists_codes(self):
+        self.assertEqual(missing_account_rules(self.structure, self.company), [])
+        self.structure.rule_ids.filtered(lambda r: r.code == 'GA_LOAN').with_company(self.company).account_debit = False
+        self.assertEqual(missing_account_rules(self.structure, self.company), ['GA_LOAN'])
+
+    def test_configure_payroll_account_ga_entry_point(self):
+        """Point d'accroche du standard (``_load_payroll_accounts`` → ``_configure_payroll_account_ga``)."""
+        rule = self.structure.rule_ids.filtered(lambda r: r.code == 'GA_CFP').with_company(self.company)
+        rule.write({'account_debit': False, 'account_credit': False})
+        self.env['account.chart.template']._configure_payroll_account_ga(self.company)
+        self.assertEqual((rule.account_debit, rule.account_credit), (self._account('6415'), self._account('4472')))
+
+    def test_company_without_accounting_is_not_checked(self):
+        company = self._new_company('Société sans comptabilité')
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=[company.id]))
+        slip = self._payslip(self._employee('Sans plan', 400_000, company_id=company.id), *SEPT, compute_sheet=False)
+        self.assertFalse(MissingRuleAccounts().applies(slip))
 
 
 @tagged('post_install', '-at_install')
@@ -137,3 +157,21 @@ class TestTwoCompanies(GaPayrollAccountCase):
             self.assertEqual(move.company_id, slip.company_id)
             self.assertEqual(move.line_ids.account_id.company_ids, slip.company_id)
             self.assertIn(self._account('422', slip.company_id), move.line_ids.account_id)
+
+
+@tagged('post_install', '-at_install')
+class TestSyscebnlCompany(GaPayrollAccountCase):
+    """D-62 : plan des associations (SYSCEBNL) non pris en charge → paie bloquée, jamais comptabilisée en silence."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.association = cls._new_company('Association Gabon')
+        cls.env['account.chart.template'].try_loading('ga_syscebnl', cls.association, install_demo=False)
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=[cls.association.id]))
+
+    def test_syscebnl_company_is_blocked(self):
+        slip = self._payslip(self._complete('Salarié association', company=self.association), *SEPT)
+        with self.assertRaises(UserError) as error:
+            slip.action_payslip_done()
+        self.assertIn('Configurer les comptes de paie Gabon', str(error.exception))

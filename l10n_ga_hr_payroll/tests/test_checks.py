@@ -110,7 +110,8 @@ class TestPayrollChecks(GaPayrollCase):
             CheckRule().run(slip)
         self.assertTrue(CheckRule().applies(slip))
         self.assertEqual(run_checks(slip, checks=()), [])
-        self.assertEqual(slip._l10n_ga_payroll_checks(), PAYROLL_CHECKS)
+        # préfixe : les modules supérieurs ajoutent leurs contrôles (GA_NO_ACCOUNT, étape 3)
+        self.assertEqual(slip._l10n_ga_payroll_checks()[: len(PAYROLL_CHECKS)], PAYROLL_CHECKS)
 
     def test_complete_employee_has_no_issue_and_is_computed(self):
         run = self._run(self._complete('Complet'))

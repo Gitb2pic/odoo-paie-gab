@@ -1,12 +1,13 @@
 from odoo import models
 
-from .l10n_ga_payroll_check import MissingRuleAccounts, missing_account_rules, missing_accounts_message
+from .l10n_ga_payroll_check import MissingRuleAccounts, payroll_account_issues
 
 
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
     def _l10n_ga_payroll_checks(self):
+        """Chaîne F8 de la paie + contrôle de comptabilisation (GA_NO_ACCOUNT)."""
         return (*super()._l10n_ga_payroll_checks(), MissingRuleAccounts())
 
     def _action_create_account_move(self):
@@ -26,9 +27,4 @@ class HrPayslip(models.Model):
 
     def _l10n_ga_blocking_issues(self):
         """Bulletin validé hors lot : même blocage que le contrôle du lot (GA_NO_ACCOUNT)."""
-        messages = super()._l10n_ga_blocking_issues()
-        if MissingRuleAccounts().applies(self):
-            codes = missing_account_rules(self.struct_id, self.company_id)
-            if codes:
-                messages.append(missing_accounts_message(self, codes))
-        return messages
+        return super()._l10n_ga_blocking_issues() + payroll_account_issues(self)
