@@ -2,6 +2,7 @@ from . import (
     test_absences,
     test_agreement,
     test_allowance,
+    test_basic_hours,
     test_checks,
     test_data_install,
     test_hr_version_ga,
