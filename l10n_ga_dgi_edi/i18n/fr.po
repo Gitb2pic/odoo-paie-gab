@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 08:34+0000\n"
-"PO-Revision-Date: 2026-09-25 08:34+0000\n"
+"POT-Creation-Date: 2026-09-25 10:29+0000\n"
+"PO-Revision-Date: 2026-09-25 10:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -85,6 +85,18 @@ msgid "%(name)s à déposer avant le %(date)s"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(type)s — détail — %(name)s"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(type)s — état nominatif — %(name)s"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi.action_report_dts
 msgid "'DTS - %s' % (object.name)"
 msgstr ""
@@ -102,68 +114,6 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi.action_report_id28
 msgid "'ID28 - %s' % (object.name)"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id28_document
-msgid "1 - Identification du contribuable"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id28_document
-msgid "2 - Détermination de la contribution à la formation professionnelle"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
-msgid "2 - Détermination des retenues sur salaires à payer"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
-msgid "3 - Détermination de la contribution à la formation professionnelle"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid ""
-"<br/>\n"
-"                    Période du"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid ""
-"<br/>\n"
-"                    État :"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
-msgid ""
-"<br/>\n"
-"            <strong>Raison sociale :</strong>"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
-msgid "<br/>Déclaration rectificative de"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
-msgid "<strong>Code résidence :</strong>"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
-msgid "<strong>Exercice :</strong>"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
-msgid "<strong>N° du contribuable (NIF) :</strong>"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -310,11 +260,6 @@ msgid "Aucune déclaration à déposer"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
-msgid "Aucune quittance enregistrée."
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__kind__other
 msgid "Autre"
 msgstr ""
@@ -422,11 +367,6 @@ msgid "CFP L7 — Taux"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
-msgid "CFP déclarée sur l'ID28."
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
 #: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r56
 msgid "CFP — Montant global dû"
 msgstr ""
@@ -461,8 +401,6 @@ msgstr ""
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__box_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__box_id
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_box_table
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "Case"
 msgstr ""
 
@@ -710,7 +648,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__date
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__date
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_payment_view_search
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Date"
 msgstr ""
 
@@ -868,13 +805,9 @@ msgid "Déposées ou payées"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_box_table
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 msgid "Désignation"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "Détail"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -885,11 +818,6 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__monthly
 msgid "Détail mensuel"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "Détail nominatif"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -909,11 +837,6 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__sha256
 msgid "Empreinte SHA-256"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
-msgid "Empreinte SHA-256 :"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1037,18 +960,6 @@ msgid "ID"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
-msgid ""
-"ID 10 — Retenue à la source sur les salaires et contribution à la formation "
-"professionnelle"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id28_document
-msgid "ID 28 — Contribution à la formation professionnelle"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
 #: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_id10
 msgid "ID10 — retenues sur salaires et CFP"
 msgstr ""
@@ -1080,8 +991,6 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#. odoo-python
-#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__type_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__type_id
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_type_view_form
@@ -1186,8 +1095,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#. odoo-python
-#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__label
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__name
@@ -1231,11 +1138,6 @@ msgid "Mesure"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
-msgid "Mode"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__mode
 msgid "Mode de versement"
 msgstr ""
@@ -1263,9 +1165,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_amount
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__amount
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__amount
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_box_table
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Montant"
 msgstr ""
 
@@ -1307,7 +1206,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_kind
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__kind
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_payment_view_search
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Nature"
 msgstr ""
 
@@ -1423,7 +1321,6 @@ msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__receipt_number
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "N° de quittance"
 msgstr ""
 
@@ -1572,6 +1469,8 @@ msgid "Quittances insuffisantes : déclaration repassée « déposée »."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_name
 #: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_hdr_name
 #: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_hdr_name
@@ -1668,13 +1567,6 @@ msgid "Rubriques sources"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
-msgid "Règlement de l'impôt"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#. odoo-python
-#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__name
 msgid "Référence"
 msgstr ""
@@ -1714,7 +1606,6 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "Salarié / tiers"
 msgstr ""
 
@@ -1745,19 +1636,12 @@ msgid "Site Internet"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#. odoo-python
-#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__company_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__company_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__company_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__company_id
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
 msgid "Société"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "Société :"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1803,6 +1687,8 @@ msgid "Tiers"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_payment_view_list
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_list
@@ -1826,11 +1712,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__is_total
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__is_total
 msgid "Total dû"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
-msgid "Total dû :"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1893,12 +1774,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 msgid "Une déclaration ne se duplique pas : créez une rectificative."
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#. odoo-python
-#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
-msgid "Valeur"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1995,14 +1870,15 @@ msgid "anomalie(s) bloquante(s)"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "au"
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "departure_date"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #. odoo-python
-#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
-msgid "departure_date"
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "du %(start)s au %(end)s"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -2017,6 +1893,8 @@ msgid "À déposer"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__due_date
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_type_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
@@ -2051,42 +1929,20 @@ msgid "Échéances des déclarations"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__state
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
 msgid "État"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
-msgid "— <strong>mois :</strong>"
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "État nominatif"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
-msgid "— <strong>échéance :</strong>"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "— NIF :"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "— rectifie"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
-msgid "— reste à payer :"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
-msgid "— versé :"
-msgstr ""
-
-#. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "— échéance :"
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_page
+msgid "— empreinte SHA-256 :"
 msgstr ""

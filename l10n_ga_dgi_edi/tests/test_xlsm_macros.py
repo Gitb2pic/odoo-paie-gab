@@ -98,9 +98,11 @@ class TestXlsmMacros(GaDeclarationCase):
         self.assertEqual(book.sheetnames, ['Déclaration', 'Détails'])
         rows = [[cell.value for cell in row] for row in book['Déclaration'].iter_rows()]
         self.assertIn(['B_IRPP', 'IRPP', F16_IRPP], rows)
-        self.assertIn(['Société', self.company.name, None], rows)
+        self.assertIn(['Raison sociale', self.company.name, None], rows)  # bloc d'identification
+        self.assertIn(['NIF', 'NIF-TEST', None], rows)  # case d'en-tête (valeur automatique)
         details = [[cell.value for cell in row] for row in book['Détails'].iter_rows()]
-        self.assertEqual(details[0], ['Case', 'Salarié / tiers', 'Montant'])
+        self.assertIn('détail', details[0][0])  # titre de la feuille
+        self.assertEqual(details[2], ['Case', 'Salarié / tiers', 'Montant'])
         self.assertIn(['B_IRPP', 'F16', F16_IRPP], details)
         for name, data in sheet_xml(content).items():
             if name.startswith('xl/worksheets/'):
@@ -119,6 +121,9 @@ class TestXlsmMacros(GaDeclarationCase):
         builder = XlsxDeclarationBuilder()
         builder.header({'Société': 'X'})
         builder.boxes(['Case'], [('A', 1)])
-        builder.table('Détails', 2, [('A', 1)])
-        book = load_workbook(io.BytesIO(builder.build()))
-        self.assertEqual(book['Détails'].cell(row=4, column=1).value, 'A')
+        builder.table('Détails', 2, [('A', 1)], title='Titre', totals=['Total', 1])
+        sheet = load_workbook(io.BytesIO(builder.build()))['Détails']
+        self.assertEqual(sheet.cell(row=3, column=1).value, 'Titre')
+        self.assertEqual([sheet.cell(row=5, column=c).value for c in (1, 2)], ['A', 1])
+        self.assertEqual([sheet.cell(row=6, column=c).value for c in (1, 2)], ['Total', 1])
+        self.assertTrue(sheet.cell(row=6, column=1).font.b)

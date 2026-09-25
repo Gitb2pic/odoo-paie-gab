@@ -6,6 +6,7 @@ from . import (
     test_id28,
     test_observer_cron,
     test_payments,
+    test_report_layout,
     test_security,
     test_snapshot,
     test_state_machine,

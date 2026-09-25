@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--
-        Rapport PDF générique d'une déclaration (patron 9) : lit uniquement les valeurs stockées
-        (cases, détails, empreinte), jamais les bulletins du jour. Un imprimé peut poser son propre
-        rapport sur son type (report_id : ID10, DAS… étapes 4.2 à 4.4).
+        PDF des déclarations = rendu fidèle de leur classeur Excel (gabarit officiel rempli, ou classeur
+        neuf mis en forme) : o._l10n_ga_excel_html() lit uniquement les valeurs figées ou stockées.
+        Pas d'en-tête Odoo : l'imprimé porte le sien. Police Roboto (rapports Odoo), 96 dpi.
     -->
+    <record id="paperformat_l10n_ga_declaration" model="report.paperformat">
+        <field name="name">A4 imprimé DGI (Gabon)</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">7</field>
+        <field name="margin_bottom">7</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+        <!-- 96 px = 1 pouce exactement : l'imprimé est mis à l'échelle par le rendu, pas par wkhtmltopdf -->
+        <field name="disable_shrinking" eval="True"/>
+    </record>
+
     <record id="action_report_declaration" model="ir.actions.report">
         <field name="name">Déclaration (Gabon)</field>
         <field name="model">l10n_ga.declaration</field>
@@ -12,137 +28,38 @@
         <field name="report_name">l10n_ga_dgi_edi.report_declaration</field>
         <field name="report_file">l10n_ga_dgi_edi.report_declaration</field>
         <field name="print_report_name">'Déclaration - %s' % (object.name)</field>
+        <field name="paperformat_id" ref="paperformat_l10n_ga_declaration"/>
         <field name="binding_model_id" ref="model_l10n_ga_declaration"/>
         <field name="binding_type">report</field>
     </record>
 
-    <!-- Macros partagées par les imprimés : cases (valeurs figées) et quittances. -->
-    <template id="report_declaration_box_table">
-        <table class="table table-sm o_main_table">
-            <thead>
-                <tr><th>Case</th><th>Désignation</th><th class="text-end">Montant</th></tr>
-            </thead>
-            <tbody>
-                <tr t-foreach="lines" t-as="line">
-                    <td><span t-field="line.code"/></td>
-                    <td><span t-field="line.box_id.name"/></td>
-                    <td class="text-end">
-                        <t t-if="line.value_blank"/>
-                        <span t-elif="line.value_kind == 'amount'" t-field="line.value_amount"/>
-                        <span t-elif="line.value_kind in ('number', 'rate')" t-field="line.value_number"/>
-                        <span t-elif="line.value_kind == 'date'" t-field="line.value_date"/>
-                        <span t-else="" t-field="line.value_text"/>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <template id="report_declaration_page">
+        <div class="article o_l10n_ga_declaration_report" t-att-data-oe-model="o._name" t-att-data-oe-id="o.id"
+             style="font-family: Roboto, Lato, 'DejaVu Sans', sans-serif;">
+            <t t-out="o._l10n_ga_excel_html(page_width)"/>
+            <p style="font-size: 7pt; color: #666; margin-top: 6px;">
+                <span t-field="o.name"/> — <span t-field="o.state"/>
+                <t t-if="o.sha256"> — empreinte SHA-256 : <span t-field="o.sha256"/></t>
+            </p>
+        </div>
     </template>
 
-    <template id="report_declaration_nominative">
-        <table class="table table-sm" style="font-size: 9px;">
-            <thead>
-                <tr><th t-foreach="columns" t-as="column"><span t-out="column[1]"/></th></tr>
-            </thead>
-            <tbody>
-                <tr t-foreach="o.detail_ids" t-as="detail">
-                    <t t-foreach="columns" t-as="column">
-                        <t t-set="value" t-value="(detail.payload or {}).get(column[0])"/>
-                        <td t-if="column[2] == 'amount'" class="text-end">
-                            <span t-out="'{:,.0f}'.format(value or 0).replace(',', ' ')"/>
-                        </td>
-                        <td t-else=""><span t-out="value or ''"/></td>
-                    </t>
-                </tr>
-            </tbody>
-        </table>
-    </template>
-
-    <template id="report_declaration_identity">
-        <p>
-            <strong>N° du contribuable (NIF) :</strong> <span t-field="o.company_id.l10n_ga_nif"/><br/>
-            <strong>Raison sociale :</strong> <span t-field="o.company_id.name"/><br/>
-            <t t-if="o.company_id.street"><span t-field="o.company_id.street"/> — </t>
-            <span t-field="o.company_id.city"/><br/>
-            <t t-if="o.company_id.l10n_ga_tax_center">
-                <strong>Code résidence :</strong> <span t-field="o.company_id.l10n_ga_tax_center"/><br/>
-            </t>
-            <strong>Exercice :</strong> <span t-out="o.date_to.year"/>
-            — <strong>mois :</strong> <span t-out="o.date_to.month"/>
-            — <strong>échéance :</strong> <span t-field="o.due_date"/>
-            <t t-if="o.rectified_id"><br/>Déclaration rectificative de <span t-field="o.rectified_id.name"/></t>
-        </p>
-    </template>
-
-    <template id="report_declaration_payments">
-        <h5>Règlement de l'impôt</h5>
-        <table t-if="o.payment_ids" class="table table-sm">
-            <thead>
-                <tr><th>Date</th><th>N° de quittance</th><th>Nature</th><th>Mode</th><th class="text-end">Montant</th></tr>
-            </thead>
-            <tbody>
-                <tr t-foreach="o.payment_ids" t-as="payment">
-                    <td><span t-field="payment.date"/></td>
-                    <td><span t-field="payment.receipt_number"/></td>
-                    <td><span t-field="payment.kind"/></td>
-                    <td><span t-field="payment.mode"/></td>
-                    <td class="text-end"><span t-field="payment.amount"/></td>
-                </tr>
-            </tbody>
-        </table>
-        <p t-else="" class="text-muted">Aucune quittance enregistrée.</p>
-        <p>
-            Total dû : <strong t-field="o.amount_total"/> — versé : <span t-field="o.amount_paid"/>
-            — reste à payer : <span t-field="o.amount_residual"/>
-        </p>
-        <p t-if="o.sha256" class="small text-muted">Empreinte SHA-256 : <span t-field="o.sha256"/></p>
-    </template>
-
-    <template id="report_declaration_document">
-        <t t-call="web.external_layout">
-            <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang or o.env.lang)"/>
-            <div class="page">
-                <h2>
-                    <span t-field="o.type_id.name"/> — <span t-field="o.name"/>
-                </h2>
-                <p>
-                    Société : <span t-field="o.company_id.name"/>
-                    <t t-if="o.company_id.l10n_ga_nif"> — NIF : <span t-field="o.company_id.l10n_ga_nif"/></t><br/>
-                    Période du <span t-field="o.date_from"/> au <span t-field="o.date_to"/>
-                    — échéance : <span t-field="o.due_date"/><br/>
-                    État : <span t-field="o.state"/>
-                    <t t-if="o.rectified_id"> — rectifie <span t-field="o.rectified_id.name"/></t>
-                </p>
-                <t t-set="lines" t-value="o.line_ids"/>
-                <t t-call="l10n_ga_dgi_edi.report_declaration_box_table"/>
-                <t t-set="columns" t-value="o._l10n_ga_detail_columns()"/>
-                <t t-if="o.detail_ids and columns">
-                    <h4>Détail nominatif</h4>
-                    <t t-call="l10n_ga_dgi_edi.report_declaration_nominative"/>
-                </t>
-                <t t-elif="o.detail_ids">
-                    <h4>Détail</h4>
-                    <table class="table table-sm">
-                        <thead>
-                            <tr><th>Case</th><th>Salarié / tiers</th><th class="text-end">Montant</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr t-foreach="o.detail_ids" t-as="detail">
-                                <td><span t-field="detail.box_id.code"/></td>
-                                <td><span t-field="detail.label"/></td>
-                                <td class="text-end"><span t-field="detail.amount"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </t>
-                <t t-call="l10n_ga_dgi_edi.report_declaration_payments"/>
-            </div>
-        </t>
-    </template>
-
+    <!-- A4 portrait, marges de 7 mm : 196 mm utiles à 96 dpi. -->
     <template id="report_declaration">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="l10n_ga_dgi_edi.report_declaration_document"/>
+                <t t-set="page_width" t-value="715"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_page"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- A4 paysage (états nominatifs) : 283 mm utiles. -->
+    <template id="report_declaration_landscape">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="page_width" t-value="1035"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_page"/>
             </t>
         </t>
     </template>

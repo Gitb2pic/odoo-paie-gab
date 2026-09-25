@@ -4,6 +4,7 @@ import json
 from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
+from markupsafe import Markup  # pylint: disable=import-error
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -11,6 +12,7 @@ from odoo.tools import float_compare, float_round
 
 from ..renderers.xlsm_template import XlsmTemplateRenderer
 from ..renderers.xlsx_builder import XlsxDeclarationBuilder
+from ..renderers.xlsx_html import workbook_to_html
 from .checks import BLOCKING, run_checks
 from .l10n_ga_declaration_frozen_mixin import FROZEN_STATES
 from .l10n_ga_declaration_type import PERIOD_MONTHS
@@ -30,6 +32,7 @@ DECLARANT_GROUP = 'l10n_ga_dgi_edi.group_l10n_ga_declarant'
 ACTIVITY_DUE = 'l10n_ga_dgi_edi.mail_activity_type_declaration_due'
 ACTIVITY_FIX = 'l10n_ga_dgi_edi.mail_activity_type_declaration_fix'
 OVERPAID = 'GA_DECL_OVERPAID'
+AMOUNT_FORMAT = '#,##0'
 
 
 class L10nGaDeclaration(models.Model):
@@ -568,7 +571,11 @@ class L10nGaDeclaration(models.Model):
         return attachments
 
     def _box_cells(self):
-        return [(line.box_id.cell_ref, line._value()) for line in self.line_ids if line.box_id.cell_ref]
+        return [
+            (line.box_id.cell_ref, line._value(), AMOUNT_FORMAT if line.box_id.value_kind == 'amount' else None)
+            for line in self.line_ids
+            if line.box_id.cell_ref
+        ]
 
     def _render_xlsx(self):
         """Builder (patron 9) : gabarit officiel rempli, sinon classeur neuf. Valeurs uniquement."""
@@ -579,41 +586,78 @@ class L10nGaDeclaration(models.Model):
             builder.boxes(self._box_cells())
             extension = 'xlsm' if self.type_id.template_path.lower().endswith('.xlsm') else 'xlsx'
             return builder.build(), extension
-        builder = XlsxDeclarationBuilder()
-        builder.header(
-            {
-                self.env._('Imprimé'): f'{self.type_id.code} — {self.type_id.name}',
-                self.env._('Société'): self.company_id.name,
-                self.env._('NIF'): self.company_id.l10n_ga_nif or '',
-                self.env._('Période'): f'{self.date_from} — {self.date_to}',
-                self.env._('Référence'): self.name,
-            }
+        return self._render_new_workbook(), 'xlsx'
+
+    def _render_new_workbook(self):
+        """Classeur neuf mis en forme (sans gabarit officiel : DTS, DAS…)."""
+        env = self.env
+        builder = XlsxDeclarationBuilder(title=self.type_id.name, subtitle=self.name)
+        auto_lines = self.line_ids.filtered(lambda line: line.box_id.auto_value)
+        # Année, mois, trimestre : des repères, pas des montants (écrits en texte).
+        identity = {
+            line.box_id.name: f'{line._value():.0f}' if line.box_id.value_kind == 'number' else line._value()
+            for line in auto_lines
+        }
+        identity.setdefault(env._('Raison sociale'), self.company_id.name)
+        identity.setdefault(env._('NIF'), self.company_id.l10n_ga_nif or '')
+        identity[env._('Période')] = env._(
+            'du %(start)s au %(end)s', start=f'{self.date_from:%d/%m/%Y}', end=f'{self.date_to:%d/%m/%Y}'
         )
+        identity[env._('Échéance')] = self.due_date
+        identity[env._('État')] = dict(STATES)[self.state]
+        builder.header(identity)
+        lines = self.line_ids - auto_lines
         builder.boxes(
-            [self.env._('Case'), self.env._('Libellé'), self.env._('Valeur')],
-            [(line.box_id.code, line.box_id.name, line._value()) for line in self.line_ids],
+            [env._('Case'), env._('Désignation'), env._('Montant')],
+            [(line.box_id.code, line.box_id.name, line._value()) for line in lines],
+            bold=lines.filtered(lambda line: line.box_id.sum_box_codes).mapped('code'),
         )
         columns = self._l10n_ga_detail_columns()
-        if columns:  # détail nominatif (DTS, DAS) : une ligne par salarié, colonnes du générateur
+        if columns:  # état nominatif (DTS, DAS) : une ligne par salarié, colonnes du générateur
+            rows = [[self._l10n_ga_cell(detail, column) for column in columns] for detail in self.detail_ids]
+            totals = [
+                sum(row[index] or 0 for row in rows) if column[2] == 'amount' else None
+                for index, column in enumerate(columns)
+            ]
+            totals[0] = env._('Total')
             builder.table(
-                self.env._('Détails'),
+                env._('État nominatif'),
                 0,
-                [[(detail.payload or {}).get(column[0]) for column in columns] for detail in self.detail_ids],
+                rows,
                 headers=[column[1] for column in columns],
+                title=env._('%(type)s — état nominatif — %(name)s', type=self.type_id.name, name=self.name),
+                totals=totals,
             )
         else:
             builder.table(
-                self.env._('Détails'),
+                env._('Détails'),
                 0,
                 [(detail.box_id.code, detail.label, detail.amount) for detail in self.detail_ids],
-                headers=[self.env._('Case'), self.env._('Salarié / tiers'), self.env._('Montant')],
+                headers=[env._('Case'), env._('Salarié / tiers'), env._('Montant')],
+                title=env._('%(type)s — détail — %(name)s', type=self.type_id.name, name=self.name),
             )
-        return builder.build(), 'xlsx'
+        return builder.build()
+
+    @staticmethod
+    def _l10n_ga_cell(detail, column):
+        """Valeur d'une colonne de l'état nominatif (dates ISO du détail → dates)."""
+        value = (detail.payload or {}).get(column[0])
+        if column[2] == 'date' and value:
+            return fields.Date.to_date(value)
+        return value
 
     def _l10n_ga_detail_columns(self):
         """Colonnes du détail nominatif, fournies par le générateur (rendus Excel et PDF)."""
         self.ensure_one()
         return self._generator()._detail_columns(self)
+
+    def _l10n_ga_excel_html(self, page_width_px):
+        """Le PDF reproduit le classeur de la déclaration : celui de l'instantané s'il existe, sinon le
+        classeur calculé sur les valeurs stockées (identique, puisque rendu depuis les mêmes champs)."""
+        self.ensure_one()
+        excel = self.snapshot_attachment_ids.filtered(lambda a: a.name.endswith(('.xlsx', '.xlsm')))[:1]
+        content = base64.b64decode(excel.datas) if excel else self._render_xlsx()[0]
+        return Markup(workbook_to_html(content, page_width_px))
 
     def _render_pdf(self):
         self.ensure_one()

@@ -9,6 +9,7 @@ import io
 
 from openpyxl import load_workbook
 from openpyxl.cell.cell import TYPE_STRING
+from openpyxl.styles import Font
 from openpyxl.utils.cell import coordinate_from_string
 from openpyxl.utils.exceptions import CellCoordinatesException
 
@@ -32,11 +33,28 @@ class XlsmTemplateRenderer(DeclarationBuilder):
             raise ValueError(f'Cellule invalide : {ref}') from error
         return sheet[coordinate]
 
+    @staticmethod
+    def _harmonize_font(cell):
+        """Valeur saisie à la taille du libellé de sa ligne (les zones de saisie des gabarits DGI sont
+        souvent en Calibri 11 sous des libellés en 14 ou 16) : lisible à l'écran comme sur le PDF."""
+        labels = [
+            other
+            for other in cell.parent[cell.row]
+            if other.column < cell.column and isinstance(other.value, str) and other.value.strip()
+        ]
+        if not labels:
+            return
+        label = labels[-1].font
+        if (label.sz or 0) > (cell.font.sz or 0):
+            font = cell.font
+            cell.font = Font(name=label.name, sz=label.sz, b=font.b, i=font.i, u=font.u, color=font.color)
+
     def _write(self, cell, value):
         if value is None or value is False:
             cell.value = None
             return
         cell.value = value
+        self._harmonize_font(cell)
         if isinstance(value, str) and value.startswith('='):
             cell.data_type = TYPE_STRING  # valeur, jamais formule
 
@@ -45,9 +63,13 @@ class XlsmTemplateRenderer(DeclarationBuilder):
             self._write(self._cell(ref), value)
 
     def boxes(self, cells):  # pylint: disable=arguments-differ
-        """``[(référence de cellule, valeur), ...]``."""
-        for ref, value in cells:
-            self._write(self._cell(ref), value)
+        """``[(référence de cellule, valeur), ...]`` ou ``(référence, valeur, format numérique)`` : un
+        montant écrit dans une cellule au format « Standard » du gabarit reçoit ce format (# ##0)."""
+        for ref, value, *number_format in cells:
+            cell = self._cell(ref)
+            self._write(cell, value)
+            if number_format and number_format[0] and cell.number_format == 'General':
+                cell.number_format = number_format[0]
 
     def table(self, sheet, start_row, rows, headers=()):
         """Lignes écrites à partir de ``start_row`` (0 = ligne 1), colonne A, dans la feuille ``sheet``."""

@@ -76,3 +76,14 @@ Aucun `TODO` ni bouchon ; manifeste complet ; aucun nouveau modèle concret (ACL
 
 - Le détail nominatif est recalculé à partir des mêmes faits pour les contrôles (deux passes) : volumes trimestriels faibles.
 - La date de sortie est lue sur la version du jour (non figée sur le bulletin) : elle n'entre dans aucun montant.
+
+## Complément du 25/09/2026 — PDF au format des classeurs Excel (demande d'Alex)
+
+Constat d'Alex : les PDF des déclarations ne respectaient pas la mise en page des fichiers Excel. Correctif :
+
+- **PDF = rendu fidèle du classeur de la déclaration** (`renderers/xlsx_html.py`) : cellules fusionnées, bordures, largeurs de colonnes, hauteurs de lignes, gras, alignements et formats numériques, mis à l'échelle de l'A4 (portrait 715 px, paysage 1 035 px à 96 dpi, réduction automatique de wkhtmltopdf désactivée). L'ID10 et l'ID28 reproduisent l'imprimé officiel rempli ; les DTS reproduisent leur classeur. Un validé lit le classeur de l'instantané.
+- **Police** : Roboto (fournie par les rapports Odoo ; Arial n'est pas installée sur le serveur). Les valeurs écrites dans les gabarits prennent la taille du libellé de leur ligne (zones de saisie en Calibri 11 sous des libellés en 14 / 16) ; montants au format `# ##0`, exercice et mois sans séparateur.
+- **Classeur neuf (DTS)** : titre, bloc d'identification encadré, récapitulatif (total en gras), état nominatif en paysage avec titre et en-tête grisé répétés, dates JJ/MM/AAAA, colonnes ajustées aux valeurs, ligne de total ; police Arial.
+- Styles des rapports Odoo neutralisés sur ces tableaux (`o_ignore_layout_styling`, bordure fantôme de Bootstrap 5 sur `tbody` / `thead` dans wkhtmltopdf).
+- Vérifié sur de vrais PDF (base jetable, serveur HTTP de test) : ID10, ID28 sur une page, DTS CNSS sur deux pages.
+- Tests : `test_report_layout.py` (3 tests) ; 78 tests du module sur base neuve et en mise à jour, 289 avec la paie et la comptabilité.

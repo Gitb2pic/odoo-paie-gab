@@ -136,13 +136,17 @@ class TestDts(GaDeclarationCase):
         declaration.with_user(self.declarant).action_validate()
         xlsx = declaration.snapshot_attachment_ids.filtered(lambda a: a.name.endswith('.xlsx'))
         book = load_workbook(io.BytesIO(base64.b64decode(xlsx.datas)))
-        rows = [[cell.value for cell in row] for row in book['Détails'].iter_rows()]
-        headers = rows[0]
+        rows = [[cell.value for cell in row] for row in book['État nominatif'].iter_rows()]
+        self.assertIn('état nominatif', rows[0][0])
+        headers = rows[2]
         self.assertEqual(headers[:4], ['N° CNSS', 'Nom et prénoms', 'Date d’entrée', 'Date de sortie'])
         self.assertIn('Salaires soumis 07/2026', headers)
-        record = dict(zip(headers, rows[1], strict=True))
+        record = dict(zip(headers, rows[3], strict=True))
+        self.assertEqual(record['Date d’entrée'].date(), date(2025, 1, 1))  # vraie date, format JJ/MM/AAAA
+        totals = dict(zip(headers, rows[4], strict=True))
+        self.assertEqual((totals['N° CNSS'], totals['Salaires soumis']), ('Total', 3 * F16_SOCIAL_BASE))
         self.assertEqual((record['N° CNSS'], record['Salaires soumis 09/2026']), ('CNSS-F16', F16_SOCIAL_BASE))
         self.assertEqual(record['Cotisation salariale (pensions)'], 3 * F16_CNSS)
         html = base64.b64decode((declaration.snapshot_attachment_ids - xlsx).datas).decode()
-        self.assertIn('Détail nominatif', html)
+        self.assertIn('Salaires soumis 07/2026', html)  # en-tête de l'état nominatif, comme dans l'Excel
         self.assertIn('CNSS-F16', html)

@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Récapitulatif PDF des DTS (plan 4.3) : cases et état nominatif figés, au format paysage. -->
+    <!-- PDF des DTS : rendu du classeur (récapitulatif + état nominatif), en paysage. -->
     <record id="paperformat_l10n_ga_dts" model="report.paperformat">
         <field name="name">A4 paysage (DTS Gabon)</field>
         <field name="default" eval="False"/>
         <field name="format">A4</field>
         <field name="orientation">Landscape</field>
-        <field name="margin_top">25</field>
-        <field name="margin_bottom">15</field>
+        <field name="margin_top">7</field>
+        <field name="margin_bottom">7</field>
         <field name="margin_left">7</field>
         <field name="margin_right">7</field>
-        <field name="header_spacing">20</field>
-        <field name="dpi">90</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+        <!-- 96 px = 1 pouce exactement : l'imprimé est mis à l'échelle par le rendu, pas par wkhtmltopdf -->
+        <field name="disable_shrinking" eval="True"/>
     </record>
 
     <record id="action_report_dts" model="ir.actions.report">
         <field name="name">DTS (récapitulatif)</field>
         <field name="model">l10n_ga.declaration</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">l10n_ga_dgi_edi.report_declaration</field>
-        <field name="report_file">l10n_ga_dgi_edi.report_declaration</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_declaration_landscape</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_declaration_landscape</field>
         <field name="print_report_name">'DTS - %s' % (object.name)</field>
         <field name="paperformat_id" ref="paperformat_l10n_ga_dts"/>
     </record>
