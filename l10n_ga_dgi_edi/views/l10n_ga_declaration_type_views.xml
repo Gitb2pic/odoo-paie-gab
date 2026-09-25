@@ -57,7 +57,11 @@
                             <field name="is_total"/>
                             <field name="auto_value" optional="show"/>
                             <field name="source_codes" optional="show"/>
-                            <field name="negate" optional="show"/>
+                            <field name="source_categories" optional="show"/>
+                            <field name="source_measure" optional="show"/>
+                            <field name="sum_box_codes" optional="show"/>
+                            <field name="parameter_code" optional="show"/>
+                            <field name="section" optional="show"/>
                         </list>
                     </field>
                 </sheet>

@@ -24,6 +24,7 @@ class L10nGaDeclarationLine(models.Model):
     value_number = fields.Float(string='Nombre / taux', digits=(16, 6), readonly=True)
     value_text = fields.Char(string='Texte', readonly=True)
     value_date = fields.Date(string='Date', readonly=True)
+    value_blank = fields.Boolean(string='Non renseignée', readonly=True, help='Case laissée vide sur l’imprimé.')
 
     _box_unique = models.Constraint(
         'unique (declaration_id, box_id)', 'Une case n’a qu’une valeur par déclaration (RG12).'
@@ -32,6 +33,8 @@ class L10nGaDeclarationLine(models.Model):
     def _value(self):
         """Valeur typée de la case, lue sur les champs stockés (rendus Excel et PDF)."""
         self.ensure_one()
+        if self.value_blank:
+            return None
         kind = self.box_id.value_kind
         if kind == 'amount':
             return self.value_amount

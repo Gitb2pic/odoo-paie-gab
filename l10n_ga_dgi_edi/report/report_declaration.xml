@@ -16,6 +16,68 @@
         <field name="binding_type">report</field>
     </record>
 
+    <!-- Macros partagées par les imprimés : cases (valeurs figées) et quittances. -->
+    <template id="report_declaration_box_table">
+        <table class="table table-sm o_main_table">
+            <thead>
+                <tr><th>Case</th><th>Désignation</th><th class="text-end">Montant</th></tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="lines" t-as="line">
+                    <td><span t-field="line.code"/></td>
+                    <td><span t-field="line.box_id.name"/></td>
+                    <td class="text-end">
+                        <t t-if="line.value_blank"/>
+                        <span t-elif="line.value_kind == 'amount'" t-field="line.value_amount"/>
+                        <span t-elif="line.value_kind in ('number', 'rate')" t-field="line.value_number"/>
+                        <span t-elif="line.value_kind == 'date'" t-field="line.value_date"/>
+                        <span t-else="" t-field="line.value_text"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="report_declaration_identity">
+        <p>
+            <strong>N° du contribuable (NIF) :</strong> <span t-field="o.company_id.l10n_ga_nif"/><br/>
+            <strong>Raison sociale :</strong> <span t-field="o.company_id.name"/><br/>
+            <t t-if="o.company_id.street"><span t-field="o.company_id.street"/> — </t>
+            <span t-field="o.company_id.city"/><br/>
+            <t t-if="o.company_id.l10n_ga_tax_center">
+                <strong>Code résidence :</strong> <span t-field="o.company_id.l10n_ga_tax_center"/><br/>
+            </t>
+            <strong>Exercice :</strong> <span t-out="o.date_to.year"/>
+            — <strong>mois :</strong> <span t-out="o.date_to.month"/>
+            — <strong>échéance :</strong> <span t-field="o.due_date"/>
+            <t t-if="o.rectified_id"><br/>Déclaration rectificative de <span t-field="o.rectified_id.name"/></t>
+        </p>
+    </template>
+
+    <template id="report_declaration_payments">
+        <h5>Règlement de l'impôt</h5>
+        <table t-if="o.payment_ids" class="table table-sm">
+            <thead>
+                <tr><th>Date</th><th>N° de quittance</th><th>Nature</th><th>Mode</th><th class="text-end">Montant</th></tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="o.payment_ids" t-as="payment">
+                    <td><span t-field="payment.date"/></td>
+                    <td><span t-field="payment.receipt_number"/></td>
+                    <td><span t-field="payment.kind"/></td>
+                    <td><span t-field="payment.mode"/></td>
+                    <td class="text-end"><span t-field="payment.amount"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <p t-else="" class="text-muted">Aucune quittance enregistrée.</p>
+        <p>
+            Total dû : <strong t-field="o.amount_total"/> — versé : <span t-field="o.amount_paid"/>
+            — reste à payer : <span t-field="o.amount_residual"/>
+        </p>
+        <p t-if="o.sha256" class="small text-muted">Empreinte SHA-256 : <span t-field="o.sha256"/></p>
+    </template>
+
     <template id="report_declaration_document">
         <t t-call="web.external_layout">
             <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang or o.env.lang)"/>
@@ -31,27 +93,8 @@
                     État : <span t-field="o.state"/>
                     <t t-if="o.rectified_id"> — rectifie <span t-field="o.rectified_id.name"/></t>
                 </p>
-                <table class="table table-sm o_main_table">
-                    <thead>
-                        <tr><th>Case</th><th>Libellé</th><th class="text-end">Valeur</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr t-foreach="o.line_ids" t-as="line">
-                            <td><span t-field="line.code"/></td>
-                            <td><span t-field="line.box_id.name"/></td>
-                            <td class="text-end">
-                                <span t-if="line.value_kind == 'amount'" t-field="line.value_amount"/>
-                                <span t-elif="line.value_kind in ('number', 'rate')" t-field="line.value_number"/>
-                                <span t-elif="line.value_kind == 'date'" t-field="line.value_date"/>
-                                <span t-else="" t-field="line.value_text"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td/><td><strong>Total dû</strong></td>
-                            <td class="text-end"><strong t-field="o.amount_total"/></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <t t-set="lines" t-value="o.line_ids"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_box_table"/>
                 <t t-if="o.detail_ids">
                     <h4>Détail</h4>
                     <table class="table table-sm">
@@ -67,7 +110,7 @@
                         </tbody>
                     </table>
                 </t>
-                <p t-if="o.sha256" class="small text-muted">Empreinte SHA-256 : <span t-field="o.sha256"/></p>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_payments"/>
             </div>
         </t>
     </template>

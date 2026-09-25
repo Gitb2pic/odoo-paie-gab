@@ -54,9 +54,14 @@ class TestStateMachine(GaDeclarationCase):
         declaration.action_mark_filed()
         self.assertEqual(declaration.state, 'filed')
         self.assertTrue(declaration.filing_date)
-        declaration.action_mark_paid()
-        self.assertEqual(declaration.state, 'paid')
-        for action in ('action_compute', 'action_validate', 'action_mark_filed', 'action_reset_draft', 'action_cancel'):
+        with self.assertRaises(UserError):
+            declaration.action_mark_paid()  # RG16 : quittances insuffisantes
+        self.env['l10n_ga.declaration.payment'].with_user(self.declarant).create(
+            {'declaration_id': declaration.id, 'amount': declaration.amount_total, 'receipt_number': 'Q-1'}
+        )
+        self.assertEqual(declaration.state, 'paid')  # passage automatique (D-78)
+
+        for action in ('action_compute', 'action_validate', 'action_mark_filed', 'action_mark_paid', 'action_cancel'):
             with self.subTest(action=action), self.assertRaises(UserError):
                 getattr(declaration, action)()
 

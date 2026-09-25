@@ -1,7 +1,7 @@
 {
     'name': 'Gabon - Déclarations DGI et sociales',
     'version': '19.0.2.0.0',
-    'summary': 'Moteur de déclarations : types, cases, calcul, contrôles, instantané figé, échéancier, Excel et PDF',
+    'summary': 'Déclarations de la paie : ID10, ID28, quittances ; moteur, contrôles, instantané figé, Excel, PDF',
     'countries': ['ga'],
     'category': 'Human Resources/Payroll',
     'author': 'OMIAS Leadership Group',
@@ -14,6 +14,9 @@
         'data/mail_activity_type_data.xml',
         'data/ir_cron_data.xml',
         'report/report_declaration.xml',
+        'report/report_id10.xml',
+        'report/report_id28.xml',
+        'data/l10n_ga_declaration_type_data.xml',
         'views/l10n_ga_declaration_type_views.xml',
         'views/l10n_ga_declaration_views.xml',
         'views/l10n_ga_check_issue_views.xml',

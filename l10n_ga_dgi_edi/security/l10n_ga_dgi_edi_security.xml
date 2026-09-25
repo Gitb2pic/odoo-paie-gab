@@ -43,4 +43,9 @@
         <field name="model_id" ref="model_l10n_ga_declaration_detail"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
+    <record id="rule_l10n_ga_declaration_payment_company" model="ir.rule">
+        <field name="name">Quittance de déclaration : sociétés autorisées</field>
+        <field name="model_id" ref="model_l10n_ga_declaration_payment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
 </odoo>

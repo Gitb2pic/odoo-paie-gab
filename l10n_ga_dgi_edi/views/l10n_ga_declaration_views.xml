@@ -13,6 +13,7 @@
                 <field name="date_to"/>
                 <field name="due_date" widget="remaining_days" invisible="state in ('filed', 'paid', 'cancel')"/>
                 <field name="amount_total" sum="Total"/>
+                <field name="amount_residual" optional="show" sum="Reste"/>
                 <field name="currency_id" column_invisible="1"/>
                 <field name="blocking_count" optional="show"/>
                 <field name="filing_number" optional="hide"/>
@@ -71,6 +72,8 @@
                         </group>
                         <group>
                             <field name="amount_total"/>
+                            <field name="amount_paid" invisible="not payment_ids"/>
+                            <field name="amount_residual" invisible="not payment_ids"/>
                             <field name="blocking_count" invisible="not blocking_count" decoration-danger="1"/>
                             <field name="warning_count" invisible="not warning_count"/>
                             <field name="filing_date" readonly="state not in ('validated', 'filed')"/>
@@ -91,6 +94,7 @@
                                     <field name="value_number" invisible="value_kind not in ('number', 'rate')"/>
                                     <field name="value_text" invisible="value_kind != 'text'"/>
                                     <field name="value_date" invisible="value_kind != 'date'"/>
+                                    <field name="value_blank" optional="hide"/>
                                     <field name="is_total" optional="show"/>
                                     <field name="currency_id" column_invisible="1"/>
                                 </list>
@@ -104,6 +108,20 @@
                                     <field name="employee_id" optional="hide"/>
                                     <field name="partner_id" optional="hide"/>
                                     <field name="amount" sum="Total"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Quittances" name="payments" invisible="state not in ('validated', 'filed', 'paid')">
+                            <field name="payment_ids" readonly="state not in ('validated', 'filed', 'paid')">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="receipt_number"/>
+                                    <field name="kind"/>
+                                    <field name="mode"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="attachment_ids" widget="many2many_binary"/>
+                                    <field name="note" optional="hide"/>
                                     <field name="currency_id" column_invisible="1"/>
                                 </list>
                             </field>
@@ -212,6 +230,45 @@
             <p class="o_view_nocontent_smiling_face">Aucune déclaration à déposer</p>
             <p>Les déclarations sont préparées à la validation des bulletins et dix jours avant l'échéance.</p>
         </field>
+    </record>
+
+    <record id="l10n_ga_declaration_payment_view_list" model="ir.ui.view">
+        <field name="name">l10n_ga.declaration.payment.list</field>
+        <field name="model">l10n_ga.declaration.payment</field>
+        <field name="arch" type="xml">
+            <list create="0">
+                <field name="declaration_id"/>
+                <field name="date"/>
+                <field name="receipt_number"/>
+                <field name="kind"/>
+                <field name="mode"/>
+                <field name="amount" sum="Total"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="l10n_ga_declaration_payment_view_search" model="ir.ui.view">
+        <field name="name">l10n_ga.declaration.payment.search</field>
+        <field name="model">l10n_ga.declaration.payment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="declaration_id"/>
+                <field name="receipt_number"/>
+                <filter name="date" string="Date" date="date"/>
+                <group>
+                    <filter name="group_kind" string="Nature" context="{'group_by': 'kind'}"/>
+                    <filter name="group_declaration" string="Déclaration" context="{'group_by': 'declaration_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="l10n_ga_declaration_payment_action" model="ir.actions.act_window">
+        <field name="name">Quittances</field>
+        <field name="res_model">l10n_ga.declaration.payment</field>
+        <field name="view_mode">list</field>
     </record>
 
     <record id="l10n_ga_declaration_action" model="ir.actions.act_window">

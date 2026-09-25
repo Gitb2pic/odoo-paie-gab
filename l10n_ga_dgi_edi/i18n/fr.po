@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 07:24+0000\n"
-"PO-Revision-Date: 2026-09-25 07:24+0000\n"
+"POT-Creation-Date: 2026-09-25 08:04+0000\n"
+"PO-Revision-Date: 2026-09-25 08:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,25 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(name)s : quittances %(paid)s pour %(total)s dus."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(name)s : supprimez d’abord les quittances enregistrées."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration_payment.py:0
+msgid ""
+"%(name)s : une quittance ne s’enregistre que sur une déclaration validée."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 msgid "%(name)s ne peut pas être validée : anomalies bloquantes à corriger."
 msgstr ""
 
@@ -54,6 +73,37 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi.action_report_declaration
 msgid "'Déclaration - %s' % (object.name)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi.action_report_id10
+msgid "'ID10 - %s' % (object.name)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi.action_report_id28
+msgid "'ID28 - %s' % (object.name)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id28_document
+msgid "1 - Identification du contribuable"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id28_document
+msgid "2 - Détermination de la contribution à la formation professionnelle"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
+msgid "2 - Détermination des retenues sur salaires à payer"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
+msgid "3 - Détermination de la contribution à la formation professionnelle"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -71,8 +121,30 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
-msgid "<strong>Total dû</strong>"
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
+msgid ""
+"<br/>\n"
+"            <strong>Raison sociale :</strong>"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
+msgid "<br/>Déclaration rectificative de"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
+msgid "<strong>Code résidence :</strong>"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
+msgid "<strong>Exercice :</strong>"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
+msgid "<strong>N° du contribuable (NIF) :</strong>"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -115,6 +187,18 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__is_total
 #: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__is_total
 msgid "Additionnée dans le total de la déclaration."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_street
+msgid "Adresse / boîte postale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_email
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_email
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_email
+msgid "Adresse e-mail"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -196,6 +280,26 @@ msgid "Aucune déclaration à déposer"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
+msgid "Aucune quittance enregistrée."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__kind__other
+msgid "Autre"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l4
+msgid "Avantages en nature"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l2
+msgid "Avantages en numéraire"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
 msgid "Avec anomalies bloquantes"
 msgstr ""
@@ -206,13 +310,95 @@ msgid "Avertissements"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l5
+msgid "Base CFP (plafonnée par salarié)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__period_basis
 msgid "Base de période"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_measure
+msgid ""
+"Base figée : base imprimée à la validation (base plafonnée). Part CFP : "
+"montant moins la part exclue de l’assiette sociale, ou montant entier si la "
+"société a choisi l’assiette « brut »."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__source_measure__base
+msgid "Base figée de la ligne"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_street
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_street
+msgid "Boîte postale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__draft
 msgid "Brouillon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__kind__cfp
+msgid "CFP"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/id10.py:0
+msgid ""
+"CFP : base %(base)s × taux %(rate)s ≠ %(amount)s déclarés (écart supérieur "
+"aux arrondis par salarié)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r49
+msgid "CFP L1 — Salaire de base"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r50
+msgid "CFP L2 — Avantages en numéraire"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r51
+msgid "CFP L3 — Cotisations CNSS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r52
+msgid "CFP L4 — Cotisations CNAMGS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r53
+msgid "CFP L5 — Avantages en nature"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r54
+msgid "CFP L6 — Base CFP (plafonnée par salarié)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r55
+msgid "CFP L7 — Taux"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
+msgid "CFP déclarée sur l'ID28."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_r56
+msgid "CFP — Montant global dû"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -223,6 +409,11 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__authority__cnss
 msgid "CNSS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__section
+msgid "Cadre"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -240,6 +431,7 @@ msgstr ""
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__box_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__box_id
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_box_table
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "Case"
 msgstr ""
@@ -267,6 +459,22 @@ msgid "Case inconnue dans le détail : %(code)s."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_blank
+msgid "Case laissée vide sur l’imprimé."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__sum_box_codes
+msgid "Case égale à la somme d’autres cases (codes séparés par des virgules)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__parameter_code
+msgid ""
+"Case égale à la valeur du paramètre de paie à la fin de période (ex. taux)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__line_ids
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__box_ids
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
@@ -277,6 +485,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 msgid "Cases inconnues de l’imprimé %(type)s : %(codes)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_categories
+msgid "Catégories sources"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -298,6 +511,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__mode__cheque
+msgid "Chèque"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__generator_key
 msgid "Clé du registre des générateurs."
 msgstr ""
@@ -315,10 +533,29 @@ msgid "Code imprimé"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_tax_center
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_tax_center
+msgid "Code résidence"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_tax_center
+msgid "Code résidence (centre des impôts)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_categories
+msgid ""
+"Codes de catégories de rubriques additionnées (ex. ALW, GA_AIK), même "
+"syntaxe que les rubriques."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_codes
 msgid ""
-"Codes de rubriques de paie additionnés par le générateur générique, séparés "
-"par des virgules."
+"Codes de rubriques additionnés par le générateur générique, séparés par des "
+"virgules ; « -CODE » inverse le signe (retenue négative sur le bulletin, "
+"déclarée en positif)."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -337,8 +574,18 @@ msgid "Configure les imprimés et supprime les déclarations brouillon."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi.declaration_type_id28
+msgid "Contribution à la formation professionnelle"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_check_issue_view_list_declaration
 msgid "Corriger"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l3
+msgid "Cotisations CNSS"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -346,6 +593,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__create_uid
 msgid "Created by"
 msgstr ""
@@ -355,6 +603,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__create_date
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__create_date
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__create_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__create_date
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__create_date
 msgid "Created on"
 msgstr ""
@@ -375,6 +624,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__currency_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__currency_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__currency_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__currency_id
 msgid "Currency"
 msgstr ""
 
@@ -385,7 +635,10 @@ msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__date
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__date
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_payment_view_search
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Date"
 msgstr ""
 
@@ -419,8 +672,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_frozen_mixin__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_base__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id10__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id28__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_payslip__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_res_company__display_name
 msgid "Display Name"
@@ -446,14 +702,26 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_check_issue__declaration_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__declaration_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__declaration_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__declaration_id
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_check_issue__scope__declaration
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_check_issue_view_search_declaration
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_payment_view_search
 msgid "Déclaration"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.actions.report,name:l10n_ga_dgi_edi.action_report_declaration
 msgid "Déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,name:l10n_ga_dgi_edi.action_report_id10
+msgid "Déclaration ID10"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,name:l10n_ga_dgi_edi.action_report_id28
+msgid "Déclaration ID28"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -504,6 +772,11 @@ msgid "Déposées ou payées"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_box_table
+msgid "Désignation"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "Détail"
 msgstr ""
@@ -533,7 +806,7 @@ msgid "Empreinte SHA-256"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Empreinte SHA-256 :"
 msgstr ""
 
@@ -547,6 +820,22 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
 msgid "En retard"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__mode__cash
+msgid "Espèces"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_year
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_year
+msgid "Exercice"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__kind__fnh
+msgid "FNH"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -590,6 +879,11 @@ msgid "Gabon : préparer les déclarations à échéance"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__section
+msgid "Groupe de cases qu’un imprimé peut laisser vide (ex. cfp)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__generator_key
 msgid "Générateur"
 msgstr ""
@@ -601,7 +895,7 @@ msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_payslip
-msgid "Générateur générique : somme de rubriques de paie"
+msgid "Générateur générique : rubriques de paie"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -624,11 +918,36 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_frozen_mixin__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_base__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id10__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id28__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_payslip__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_res_company__id
 msgid "ID"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id10_document
+msgid ""
+"ID 10 — Retenue à la source sur les salaires et contribution à la formation "
+"professionnelle"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_id28_document
+msgid "ID 28 — Contribution à la formation professionnelle"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_id10
+msgid "ID10 — retenues sur salaires et CFP"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_id28
+msgid "ID28 — contribution à la formation professionnelle"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -663,8 +982,8 @@ msgid "Imprimé"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__negate
-msgid "Inverser le signe"
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_l40
+msgid "Impôt sur le revenu des personnes physiques"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -704,10 +1023,19 @@ msgid "La fin de validité doit suivre le début."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/id28.py:0
+msgid ""
+"La société déclare la CFP sur l’ID10 : l’ID28 la déclarerait une seconde "
+"fois."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__write_uid
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -717,6 +1045,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__write_date
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__write_date
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__write_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__write_date
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -737,6 +1066,11 @@ msgid "Le jour d’échéance doit être compris entre 1 et 31."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_payment_amount_positive
+msgid "Le montant d’une quittance doit être positif."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model_terms:ir.actions.act_window,help:l10n_ga_dgi_edi.l10n_ga_declaration_action_dashboard
 msgid ""
 "Les déclarations sont préparées à la validation des bulletins et dix jours "
@@ -750,7 +1084,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__label
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__name
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "Libellé"
 msgstr ""
 
@@ -785,6 +1118,27 @@ msgid "Messages"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_measure
+msgid "Mesure"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
+msgid "Mode"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__mode
+msgid "Mode de versement"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_month
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_month
+msgid "Mois"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
 msgid "Mois d'échéance"
 msgstr ""
@@ -799,9 +1153,27 @@ msgstr ""
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__amount
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_amount
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__amount
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__amount
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_box_table
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Montant"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__source_measure__total
+msgid "Montant de la ligne"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l7
+msgid "Montant global dû"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_l43
+msgid "Montant global dû (retenues)"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -812,6 +1184,8 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_nif
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_nif
 msgid "NIF"
 msgstr ""
 
@@ -823,6 +1197,9 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__value_kind
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_kind
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__kind
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_payment_view_search
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Nature"
 msgstr ""
 
@@ -847,6 +1224,11 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_taxpayer
+msgid "Nom du contribuable"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__label
 msgid "Nom figé au calcul."
 msgstr ""
@@ -859,6 +1241,16 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_number
 msgid "Nombre / taux"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_blank
+msgid "Non renseignée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__note
+msgid "Note"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -893,6 +1285,12 @@ msgid "N° de dépôt"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__receipt_number
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
+msgid "N° de quittance"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_cnamgs
 msgid "N° employeur CNAMGS"
 msgstr ""
@@ -909,9 +1307,19 @@ msgid "Organisme"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__parameter_code
+msgid "Paramètre daté"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/checks.py:0
 msgid "Paramètre « %(code)s » sans valeur au %(date)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__source_measure__cfp
+msgid "Part retenue dans l’assiette CFP"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -922,6 +1330,16 @@ msgstr "Fiche de paie"
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__paid
 msgid "Payée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__attachment_ids
+msgid "Pièces jointes"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_l42
+msgid "Prélèvement pour le Fonds national de l'habitat"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -963,7 +1381,34 @@ msgid "Périodicité"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_payment
+msgid "Quittance de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.act_window,name:l10n_ga_dgi_edi.l10n_ga_declaration_payment_action
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__payment_ids
+#: model:ir.ui.menu,name:l10n_ga_dgi_edi.menu_l10n_ga_declaration_payment
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Quittances"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Quittances couvrant le total dû : déclaration payée."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Quittances insuffisantes : déclaration repassée « déposée »."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_name
 msgid "Raison sociale"
 msgstr ""
 
@@ -1030,15 +1475,33 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
-#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__negate
-msgid ""
-"Retenues : les lignes de bulletin sont négatives, la case déclare le montant"
-" positif."
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_list
+msgid "Reste"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__amount_residual
+msgid "Reste à payer"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi.declaration_type_id10
+msgid "Retenue à la source sur salaires et CFP"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__kind__rs
+msgid "Retenues sur salaires (IRPP, TCS)"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_codes
 msgid "Rubriques sources"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
+msgid "Règlement de l'impôt"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1051,6 +1514,11 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_sms_error
 msgid "SMS Delivery error"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l1
+msgid "Salaires de base"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1085,11 +1553,19 @@ msgid "Seule une déclaration déposée ou payée se rectifie."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_website
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_web
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_web
+msgid "Site Internet"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__company_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__company_id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__company_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__company_id
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
 msgid "Société"
 msgstr ""
@@ -1097,6 +1573,11 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "Société :"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__sum_box_codes
+msgid "Somme des cases"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1109,8 +1590,20 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Sur-paiement : %(paid)s versés pour %(total)s dus."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__rate
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l6
 msgid "Taux"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_l41
+msgid "Taxe complémentaire sur les traitements et salaires"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1125,6 +1618,7 @@ msgid "Tiers"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_payment_view_list
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_list
 msgid "Total"
@@ -1135,6 +1629,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__is_total
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__is_total
 msgid "Total dû"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
+msgid "Total dû :"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1156,6 +1655,13 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_ga_dgi_edi.l10n_ga_declaration_type_action
 #: model:ir.ui.menu,name:l10n_ga_dgi_edi.menu_l10n_ga_declaration_type
 msgid "Types de déclaration"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_phone
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_phone
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_phone
+msgid "Téléphone"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1184,7 +1690,6 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
-#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "Valeur"
 msgstr ""
 
@@ -1242,6 +1747,23 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__validated_by_id
 msgid "Validée par"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__amount_paid
+msgid "Versé"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_city
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_city
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_city
+msgid "Ville"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_payment__mode__transfer
+msgid "Virement"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1315,6 +1837,16 @@ msgid "État"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
+msgid "— <strong>mois :</strong>"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_identity
+msgid "— <strong>échéance :</strong>"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "— NIF :"
 msgstr ""
@@ -1322,6 +1854,16 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "— rectifie"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
+msgid "— reste à payer :"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
+msgid "— versé :"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi

@@ -19,6 +19,12 @@
         parent="menu_l10n_ga_declaration_root"
         sequence="20"/>
     <menuitem
+        id="menu_l10n_ga_declaration_payment"
+        name="Quittances"
+        action="l10n_ga_declaration_payment_action"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="25"/>
+    <menuitem
         id="menu_l10n_ga_declaration_issue"
         name="Anomalies"
         action="l10n_ga_check_issue_action_declaration"

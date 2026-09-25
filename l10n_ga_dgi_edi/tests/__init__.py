@@ -1,7 +1,10 @@
 from . import (
     test_checks,
     test_generator_registry,
+    test_id10,
+    test_id28,
     test_observer_cron,
+    test_payments,
     test_security,
     test_snapshot,
     test_state_machine,

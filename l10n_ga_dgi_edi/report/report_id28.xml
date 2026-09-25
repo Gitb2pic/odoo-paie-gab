@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Imprimé ID28 (plan 4.2) : cadres de l'imprimé officiel, valeurs figées de la déclaration. -->
+    <record id="action_report_id28" model="ir.actions.report">
+        <field name="name">Déclaration ID28</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_id28</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_id28</field>
+        <field name="print_report_name">'ID28 - %s' % (object.name)</field>
+    </record>
+
+    <template id="report_id28_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h3>ID 28 — Contribution à la formation professionnelle</h3>
+                <h5>1 - Identification du contribuable</h5>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_identity"/>
+                <h5>2 - Détermination de la contribution à la formation professionnelle</h5>
+                <t t-set="lines" t-value="o.line_ids.filtered(lambda l: not l.box_id.auto_value)"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_box_table"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_payments"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_id28">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="l10n_ga_dgi_edi.report_id28_document"/>
+            </t>
+        </t>
+    </template>
+</odoo>

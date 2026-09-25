@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import float_round
+from odoo.tools import float_compare, float_round
 
 from ..renderers.xlsm_template import XlsmTemplateRenderer
 from ..renderers.xlsx_builder import XlsxDeclarationBuilder
@@ -29,6 +29,7 @@ ENGINE = 'l10n_ga_declaration_engine'
 DECLARANT_GROUP = 'l10n_ga_dgi_edi.group_l10n_ga_declarant'
 ACTIVITY_DUE = 'l10n_ga_dgi_edi.mail_activity_type_declaration_due'
 ACTIVITY_FIX = 'l10n_ga_dgi_edi.mail_activity_type_declaration_fix'
+OVERPAID = 'GA_DECL_OVERPAID'
 
 
 class L10nGaDeclaration(models.Model):
@@ -74,6 +75,9 @@ class L10nGaDeclaration(models.Model):
     issue_ids = fields.One2many('l10n_ga.check.issue', 'declaration_id', string='Anomalies')
     blocking_count = fields.Integer(string='Anomalies bloquantes', compute='_compute_issue_counts')
     warning_count = fields.Integer(string='Avertissements', compute='_compute_issue_counts')
+    payment_ids = fields.One2many('l10n_ga.declaration.payment', 'declaration_id', string='Quittances')
+    amount_paid = fields.Monetary(string='Versé', compute='_compute_amount_paid', store=True)
+    amount_residual = fields.Monetary(string='Reste à payer', compute='_compute_amount_paid', store=True)
     rectified_id = fields.Many2one(
         'l10n_ga.declaration',
         string='Rectifie',
@@ -134,6 +138,12 @@ class L10nGaDeclaration(models.Model):
     def _compute_amount_total(self):
         for decl in self:
             decl.amount_total = sum(decl.line_ids.filtered('is_total').mapped('value_amount'))
+
+    @api.depends('payment_ids.amount', 'amount_total')
+    def _compute_amount_paid(self):
+        for decl in self:
+            decl.amount_paid = sum(decl.payment_ids.mapped('amount'))
+            decl.amount_residual = decl.amount_total - decl.amount_paid
 
     @api.depends('issue_ids.severity')
     def _compute_issue_counts(self):
@@ -230,6 +240,12 @@ class L10nGaDeclaration(models.Model):
             'company_nif': company.l10n_ga_nif,
             'company_cnss': company.l10n_ga_cnss_number,
             'company_cnamgs': company.l10n_ga_cnamgs_number,
+            'company_street': company.street,
+            'company_city': company.city,
+            'company_phone': company.phone,
+            'company_email': company.email,
+            'company_website': company.website,
+            'company_tax_center': company.l10n_ga_tax_center,
             'period_month': self.date_to.month,
             'period_year': self.date_to.year,
             'date_from': self.date_from,
@@ -238,6 +254,8 @@ class L10nGaDeclaration(models.Model):
         return {box.code: values[box.auto_value] for box in self.type_id.box_ids if box.auto_value}
 
     def _line_values(self, box, value):
+        if value is None:  # case que le générateur ne renseigne pas (cadre vide, D-76)
+            return {'value_blank': True}
         kind = box.value_kind
         if kind == 'amount':
             # Règle d'or 9 : arrondi au franc, case par case.
@@ -331,6 +349,8 @@ class L10nGaDeclaration(models.Model):
         self._check_declarant()
         for decl in self:
             decl._ensure_state('computed', sources=('validated',))
+            if decl.payment_ids:
+                raise UserError(self.env._('%(name)s : supprimez d’abord les quittances enregistrées.', name=decl.name))
             attachments = decl.snapshot_attachment_ids
             decl._engine().write(
                 {'state': 'computed', 'sha256': False, 'validated_date': False, 'validated_by_id': False}
@@ -345,14 +365,60 @@ class L10nGaDeclaration(models.Model):
             decl._ensure_state('filed')
             decl.write({'state': 'filed', 'filing_date': decl.filing_date or fields.Date.context_today(decl)})
             decl.activity_feedback([ACTIVITY_DUE])
+            decl._l10n_ga_update_payment_state()  # quittances déjà enregistrées à la validation
         return True
 
     def action_mark_paid(self):
+        """RG16 : « payée » seulement quand les quittances couvrent le total dû."""
         self._check_declarant()
         for decl in self:
             decl._ensure_state('paid')
+            if not decl._is_covered():
+                raise UserError(
+                    self.env._(
+                        '%(name)s : quittances %(paid)s pour %(total)s dus.',
+                        name=decl.name,
+                        paid=decl.amount_paid,
+                        total=decl.amount_total,
+                    )
+                )
             decl.state = 'paid'
         return True
+
+    def _is_covered(self):
+        self.ensure_one()
+        return float_compare(self.amount_paid, self.amount_total, precision_rounding=self.currency_id.rounding) >= 0
+
+    def _l10n_ga_update_payment_state(self):
+        """Après chaque quittance (F11, RG16, D-78) : « déposée » ↔ « payée », sur-paiement signalé."""
+        Issue = self.env['l10n_ga.check.issue'].sudo()
+        for decl in self:
+            engine = decl._engine()
+            if decl.state == 'filed' and decl._is_covered():
+                engine.state = 'paid'
+                decl.message_post(body=self.env._('Quittances couvrant le total dû : déclaration payée.'))
+            elif decl.state == 'paid' and not decl._is_covered():
+                engine.state = 'filed'
+                decl.message_post(body=self.env._('Quittances insuffisantes : déclaration repassée « déposée ».'))
+            Issue.search([('declaration_id', '=', decl.id), ('code', '=', OVERPAID)]).unlink()
+            rounding = decl.currency_id.rounding
+            if float_compare(decl.amount_paid, decl.amount_total, precision_rounding=rounding) > 0:
+                message = self.env._(
+                    'Sur-paiement : %(paid)s versés pour %(total)s dus.', paid=decl.amount_paid, total=decl.amount_total
+                )
+                Issue.create(
+                    {
+                        'company_id': decl.company_id.id,
+                        'scope': 'declaration',
+                        'declaration_id': decl.id,
+                        'severity': 'warning',
+                        'code': OVERPAID,
+                        'message': message,
+                        'res_model': decl._name,
+                        'res_id': decl.id,
+                    }
+                )
+                decl.message_post(body=message)
 
     def action_reset_draft(self):
         for decl in self:
@@ -410,7 +476,14 @@ class L10nGaDeclaration(models.Model):
         """Contenu canonique de l'instantané (cases et détails), base de l'empreinte."""
         self.ensure_one()
         lines = sorted(
-            [line.box_id.code, line.value_amount, line.value_number, line.value_text or '', str(line.value_date or '')]
+            [
+                line.box_id.code,
+                line.value_amount,
+                line.value_number,
+                line.value_text or '',
+                str(line.value_date or ''),
+                line.value_blank,
+            ]
             for line in self.line_ids
         )
         details = sorted(
@@ -568,7 +641,8 @@ class L10nGaDeclaration(models.Model):
         slips = slips.filtered('l10n_ga_is_ga')
         periods = set()
         for decl_type in self._l10n_ga_auto_types():
-            for slip in slips:
+            generator = self.env['l10n_ga.declaration.generator']._get(decl_type.generator_key)
+            for slip in slips.filtered(lambda s, generator=generator: generator._applies(s.company_id)):
                 day = slip.l10n_ga_payment_date if decl_type.period_basis == 'payment_date' else slip.date_to
                 if day and decl_type._is_active_on(day):
                     periods.add((slip.company_id, decl_type, *decl_type._period_bounds(day)))
@@ -632,6 +706,7 @@ class L10nGaDeclaration(models.Model):
                 due = decl_type._due_date(date_to)
                 if not (today <= due <= horizon and decl_type._is_active_on(date_to)):
                     continue
-                for company in companies:
+                generator = self.env['l10n_ga.declaration.generator']._get(decl_type.generator_key)
+                for company in companies.filtered(generator._applies):
                     declaration = self._l10n_ga_prepare(company, decl_type, date_from, date_to)
                     declaration._l10n_ga_schedule_activities()

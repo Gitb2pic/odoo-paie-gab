@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Imprimé ID10 (plan 4.2) : cadres de l'imprimé officiel, valeurs figées de la déclaration. -->
+    <record id="action_report_id10" model="ir.actions.report">
+        <field name="name">Déclaration ID10</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_id10</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_id10</field>
+        <field name="print_report_name">'ID10 - %s' % (object.name)</field>
+    </record>
+
+    <template id="report_id10_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h3>ID 10 — Retenue à la source sur les salaires et contribution à la formation professionnelle</h3>
+                <h5>1 - Identification du contribuable</h5>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_identity"/>
+                <h5>2 - Détermination des retenues sur salaires à payer</h5>
+                <t t-set="lines" t-value="o.line_ids.filtered(lambda l: not l.box_id.auto_value and l.box_id.section != 'cfp')"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_box_table"/>
+                <h5>3 - Détermination de la contribution à la formation professionnelle</h5>
+                <t t-set="lines" t-value="o.line_ids.filtered(lambda l: l.box_id.section == 'cfp')"/>
+                <p t-if="all(lines.mapped('value_blank'))" class="text-muted">CFP déclarée sur l'ID28.</p>
+                <t t-else="" t-call="l10n_ga_dgi_edi.report_declaration_box_table"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_payments"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_id10">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="l10n_ga_dgi_edi.report_id10_document"/>
+            </t>
+        </t>
+    </template>
+</odoo>
