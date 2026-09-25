@@ -28,3 +28,6 @@ docs/sources_pdf/
 
 # Journaux des tests Odoo (make test / upgrade)
 .test-logs/
+
+# Modèles fournis par Alex contenant des données réelles de salariés (CLAUDE.md §8) : jamais versionnés
+docs/model-Bulletin-paie.pdf

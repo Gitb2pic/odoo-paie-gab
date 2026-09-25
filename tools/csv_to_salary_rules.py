@@ -33,6 +33,7 @@ sys.path.insert(0, str(REPO / 'l10n_ga_hr_payroll' / 'lib'))
 from ga_fiscal_core.engine import PayResult  # noqa: E402
 from ga_fiscal_core.labour import GAIN_VALUES  # noqa: E402
 from ga_fiscal_core.params import BENEFIT_KINDS  # noqa: E402
+from ga_fiscal_core.print_layout import CONTRIBUTIONS, GAINS, VIRTUAL_CODES, section  # noqa: E402
 from ga_fiscal_core.rounding import CASH_VALUES  # noqa: E402
 from ga_fiscal_core.treatment import DAS_COLUMNS, check_treatment  # noqa: E402
 
@@ -59,6 +60,8 @@ COLUMNS = (
     'das_column',
     'das_exempt_column',
     'account',
+    'print_code',
+    'print_name',
     'source',
 )
 CATEGORIES = {
@@ -168,7 +171,43 @@ def load_catalogue(path=CSV_PATH):
         seen.add(row['code'])
         _check_row(row)
     _check_gains_before_benefits(rows)
+    _check_print_codes(rows)
     return rows
+
+
+def _expected_section(row):
+    """Section d'impression attendue d'après la catégorie et le traitement fiscal (D-54, D-55)."""
+    if row['category'] in ('BASIC', 'ALW'):
+        return GAINS if row['tax_base'] == 'taxable' else 'allowances'
+    if row['category'] in ('GA_SOC', 'GA_EMPLOYER') or row['core_value'] == 'fnh_employee':
+        return CONTRIBUTIONS
+    return {'GA_AIK': 'benefits', 'GA_TAX': 'taxes', 'DED': 'deductions', 'NET': 'pay', 'GA_CASH': 'pay'}.get(
+        row['category']
+    )
+
+
+def _check_print_codes(rows):
+    """Code d'impression : 5 chiffres, dans la section de la rubrique, unique sauf parts d'un même organisme."""
+    by_code = {}
+    for row in rows:
+        code = row['print_code']
+        if row['category'] == 'GROSS':
+            if code:
+                _fail(row, 'GROSS n’est pas imprimé (TOTAL BRUT et TOTAL GAINS sont calculés à l’impression)')
+            continue
+        if not re.fullmatch(r'\d{5}', code):
+            _fail(row, f'print_code invalide {code!r} (5 chiffres)')
+        if int(code) in VIRTUAL_CODES:
+            _fail(row, f'print_code {code} réservé à une ligne calculée à l’impression')
+        if section(code) != _expected_section(row):
+            _fail(row, f'print_code {code} hors de la section {_expected_section(row)}')
+        by_code.setdefault(code, []).append(row)
+    for code, shared in by_code.items():
+        if len(shared) == 1:
+            continue
+        employee_rows = [row for row in shared if row['category'] != 'GA_EMPLOYER']
+        if section(code) != CONTRIBUTIONS or len(employee_rows) > 1:
+            _fail(shared[1], f'print_code {code} partagé hors parts salariale / patronales d’un organisme')
 
 
 def _check_gains_before_benefits(rows):
@@ -233,7 +272,7 @@ def _rule(row):
         f'            <field name="l10n_ga_social_base">{row["social_base"]}</field>',
         f'            <field name="l10n_ga_tax_base">{row["tax_base"]}</field>',
     ]
-    for column in ('social_cap_group', 'tax_cap_group', 'core_value'):
+    for column in ('social_cap_group', 'tax_cap_group', 'core_value', 'print_code', 'print_name'):
         if row[column]:
             lines.append(f'            <field name="l10n_ga_{column}">{row[column]}</field>')
     lines += [

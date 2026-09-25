@@ -13,6 +13,10 @@ OPENING_FIELDS = {
     'l10n_ga_tcs': 'tcs',
     'l10n_ga_cnss_employee': 'cnss',
     'l10n_ga_bonus_exempted': 'bonus_exempt',
+    'l10n_ga_employee_contributions': 'contributions',
+    'l10n_ga_benefits_in_kind': 'benefits',
+    'l10n_ga_fnh_employer': 'fnh',
+    'l10n_ga_tax_exempt': 'tax_exempt',
 }
 
 
@@ -45,6 +49,11 @@ class L10nGaYtdOpening(models.Model):
     tcs = fields.Monetary(string='TCS')
     cnss = fields.Monetary(string='CNSS salariale')
     bonus_exempt = fields.Monetary(string='Gratifications exonérées')
+    # Colonnes des cumuls du bulletin imprimé (plan 2.7 b) : facultatives, 0 si inconnues.
+    contributions = fields.Monetary(string='Cotisations salariales')
+    benefits = fields.Monetary(string='Avantages en nature')
+    fnh = fields.Monetary(string='FNH patronal')
+    tax_exempt = fields.Monetary(string='Indemnités non imposables')
     note = fields.Text(string='Origine des cumuls')
 
     _employee_year_unique = models.Constraint(

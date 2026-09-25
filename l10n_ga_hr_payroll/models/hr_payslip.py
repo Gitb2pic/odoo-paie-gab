@@ -13,11 +13,13 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Command
 
+from ..lib.ga_fiscal_core import print_layout as layout
 from ..lib.ga_fiscal_core.benefits import benefit_code
 from ..lib.ga_fiscal_core.engine import PayslipFacts, compute
 from ..lib.ga_fiscal_core.exemptions import GainLine
 from ..lib.ga_fiscal_core.labour import GAIN_VALUES, completed_years, leave_allowance, overtime_amount
 from ..lib.ga_fiscal_core.loans import seizable_portion
+from ..lib.ga_fiscal_core.print_bases import print_bases
 from ..lib.ga_fiscal_core.rounding import CASH_ADJUST, CASH_PAY, CASH_PREV, CASH_VALUES, cash_round, round_fcfa
 from ..lib.ga_fiscal_core.treatment import NONE, social_group, tax_group
 from .hr_version import PAYMENT_MODE_SELECTION
@@ -50,6 +52,7 @@ FROZEN_RESULT_FIELDS = {
     'l10n_ga_cnss_employee': 'cnss_employee',
     'l10n_ga_cnamgs_employee': 'cnamgs_employee',
     'l10n_ga_tcs': 'tcs',
+    'l10n_ga_fnh_employer': 'fnh',
 }
 # Cumul annuel (ce bulletin compris) → champ mensuel cumulé.
 YTD_FIELDS = {
@@ -60,18 +63,12 @@ YTD_FIELDS = {
     'l10n_ga_ytd_tcs': 'l10n_ga_tcs',
     'l10n_ga_ytd_cnss': 'l10n_ga_cnss_employee',
     'l10n_ga_ytd_bonus_exempt': 'l10n_ga_bonus_exempted',
+    'l10n_ga_ytd_contributions': 'l10n_ga_employee_contributions',
+    'l10n_ga_ytd_benefits': 'l10n_ga_benefits_in_kind',
+    'l10n_ga_ytd_fnh': 'l10n_ga_fnh_employer',
+    'l10n_ga_ytd_tax_exempt': 'l10n_ga_tax_exempt',
 }
-
-
-# Catégories de règle → colonne du bulletin imprimé (F7).
-REPORT_KINDS = (
-    ('GA_CASH', 'pay'),
-    ('GA_EMPLOYER', 'employer'),
-    ('GA_AIK', 'benefit'),
-    ('DED', 'deduction'),
-    ('GROSS', 'total'),
-    ('NET', 'total'),
-)
+LEAVE_TYPE_XMLID = 'l10n_ga_hr_payroll.leave_type_ga_cp'
 
 
 def _one_year_before(day):
@@ -124,6 +121,20 @@ class HrPayslip(models.Model):
     l10n_ga_ytd_cnss = _frozen_amount('Cumul CNSS salariale')
     l10n_ga_ytd_bonus_exempt = _frozen_amount('Cumul gratifications exonérées')
     l10n_ga_rounding_carry = _frozen_amount('Reliquat d’arrondi reporté')
+    # Bulletin imprimé (plan 2.7 b) : salaire contractuel, organisme FNH, cumuls et congés figés.
+    l10n_ga_wage = _frozen_amount('Salaire contractuel (figé)')
+    l10n_ga_employee_contributions = _frozen_amount('Cotisations salariales')
+    l10n_ga_fnh_employer = _frozen_amount('FNH patronal')
+    l10n_ga_ytd_contributions = _frozen_amount('Cumul cotisations salariales')
+    l10n_ga_ytd_benefits = _frozen_amount('Cumul avantages en nature')
+    l10n_ga_ytd_fnh = _frozen_amount('Cumul FNH patronal')
+    l10n_ga_ytd_tax_exempt = _frozen_amount('Cumul indemnités non imposables')
+    l10n_ga_leave_base = _frozen_amount('Base congés (12 mois)')
+    l10n_ga_leave_acquired = fields.Float(string='Congés acquis (jours)', readonly=True, copy=False)
+    l10n_ga_leave_taken = fields.Float(string='Congés pris (jours)', readonly=True, copy=False)
+    l10n_ga_leave_balance = fields.Float(string='Solde de congés (jours)', readonly=True, copy=False)
+    l10n_ga_employee_city = fields.Char(string='Ville du salarié (figée)', readonly=True, copy=False)
+    l10n_ga_direction = fields.Char(string='Direction (figée)', readonly=True, copy=False)
     # Identité imprimée, figée à la validation (RG24, D-48) : une fiche modifiée ne change pas un ancien bulletin.
     l10n_ga_employee_name = fields.Char(string='Salarié (figé)', readonly=True, copy=False)
     l10n_ga_registration_number = fields.Char(string='Matricule (figé)', readonly=True, copy=False)
@@ -660,6 +671,9 @@ class HrPayslip(models.Model):
             'l10n_ga_registration_number': employee.registration_number or False,
             'l10n_ga_job_title': version.job_title or version.job_id.name or False,
             'l10n_ga_department': version.department_id.name or False,
+            'l10n_ga_direction': version.department_id.parent_id.name or False,
+            'l10n_ga_employee_city': version.private_city or False,
+            'l10n_ga_wage': version.contract_wage,
             'l10n_ga_grade': version.l10n_ga_grade_id.display_name or False,
             'l10n_ga_hire_date': version.contract_date_start or employee._get_first_contract_date() or False,
             'l10n_ga_seniority_date': version._l10n_ga_seniority_start() or False,
@@ -689,7 +703,9 @@ class HrPayslip(models.Model):
             l10n_ga_cnss_ceiling_used=params.cnss_ceiling,
             l10n_ga_cnamgs_ceiling_used=params.cnamgs_ceiling,
             l10n_ga_rounding_carry=-totals.get('GA_ROUND', 0.0),
+            l10n_ga_employee_contributions=result.cnss_employee + result.cnamgs_employee + result.fnh_employee,
             **self._l10n_ga_identity(),
+            **self._l10n_ga_leave_counters(),
         )
         for ytd_field, month_field in YTD_FIELDS.items():
             values[ytd_field] = self._l10n_ga_ytd(month_field) + values[month_field]
@@ -706,6 +722,8 @@ class HrPayslip(models.Model):
             slip._l10n_ga_check_lines(result, totals)
             slip.write({**values, 'l10n_ga_frozen_date': fields.Datetime.now()})
             slip._l10n_ga_freeze_lines(result)
+            for line, (base, rate) in slip._l10n_ga_line_print_values(result).items():
+                line.write({'l10n_ga_base': base or 0.0, 'l10n_ga_rate': rate or 0.0})
             slip._l10n_ga_clear_cache()
 
     # --- bulletin imprimé (F7, RG24) -------------------------------------------------------------
@@ -714,10 +732,54 @@ class HrPayslip(models.Model):
         self.ensure_one()
         return self.state in VALIDATED_STATES and bool(self.l10n_ga_frozen_date)
 
-    def _l10n_ga_report_data(self):
-        """Valeurs imprimées : champs figés d'un bulletin validé, sinon calcul du jour (brouillon)."""
+    def _l10n_ga_leave_counters(self):
+        """Congés payés au jour du bulletin (D-56) : base des 12 mois, jours acquis, pris, solde."""
         self.ensure_one()
-        names = [
+        leave_type = self.env.ref(LEAVE_TYPE_XMLID, raise_if_not_found=False)
+        acquired = taken = 0.0
+        if leave_type:
+            domain = [('employee_id', '=', self.employee_id.id), ('holiday_status_id', '=', leave_type.id)]
+            allocations = (
+                self.env['hr.leave.allocation']
+                .sudo()
+                .search([*domain, ('state', '=', 'validate'), ('date_from', '<=', self.date_to)])
+            )
+            leaves = (
+                self.env['hr.leave']
+                .sudo()
+                .search([*domain, ('state', '=', 'validate'), ('request_date_from', '<=', self.date_to)])
+            )
+            acquired = sum(allocations.mapped('number_of_days'))
+            taken = sum(leaves.mapped('number_of_days'))
+        current = sum(self.line_ids.filtered(lambda line: line.salary_rule_id.l10n_ga_leave_base).mapped('total'))
+        return {
+            'l10n_ga_leave_base': self._l10n_ga_leave_reference_pay() + current,
+            'l10n_ga_leave_acquired': acquired,
+            'l10n_ga_leave_taken': taken,
+            'l10n_ga_leave_balance': acquired - taken,
+        }
+
+    def _l10n_ga_line_print_values(self, result):
+        """Base et taux imprimés par ligne (E3) : cotisations et impôts (noyau), heures supplémentaires."""
+        self.ensure_one()
+        bases = print_bases(result, self._l10n_ga_static()['params'])
+        values = {}
+        for line in self.line_ids:
+            code = line.salary_rule_id.l10n_ga_core_value
+            if code in bases:
+                values[line] = bases[code]
+            elif code and code.startswith(OVERTIME_PREFIX):
+                values[line] = (self._l10n_ga_overtime_hours(code.removeprefix(OVERTIME_PREFIX)), None)
+        return values
+
+    # --- bulletin imprimé (F7, RG24, plan 2.7 b) ---------------------------------------------------
+
+    def _l10n_ga_is_frozen(self):
+        self.ensure_one()
+        return self.state in VALIDATED_STATES and bool(self.l10n_ga_frozen_date)
+
+    def _l10n_ga_report_field_names(self):
+        return [
             *self._l10n_ga_identity(),
             *FROZEN_RESULT_FIELDS,
             *YTD_FIELDS,
@@ -728,53 +790,203 @@ class HrPayslip(models.Model):
             'l10n_ga_cnss_ceiling_used',
             'l10n_ga_cnamgs_ceiling_used',
             'l10n_ga_rounding_carry',
+            'l10n_ga_employee_contributions',
+            'l10n_ga_leave_base',
+            'l10n_ga_leave_acquired',
+            'l10n_ga_leave_taken',
+            'l10n_ga_leave_balance',
         ]
+
+    def _l10n_ga_report_data(self):
+        """Valeurs imprimées : champs figés d'un bulletin validé, sinon calcul du jour (brouillon).
+
+        ``line_values`` : ligne → (base, taux) figés (validé) ou calculés (brouillon).
+        """
+        self.ensure_one()
+        names = self._l10n_ga_report_field_names()
         if self._l10n_ga_is_frozen():
             data = {name: self[name] for name in names}
+            data['line_values'] = {line: (line.l10n_ga_base, line.l10n_ga_rate) for line in self.line_ids}
+            data['edited'] = self.l10n_ga_frozen_date.date()
         elif self.line_ids:
             self._l10n_ga_clear_cache()
-            data = self._l10n_ga_snapshot()[0]
+            data, result, _totals = self._l10n_ga_snapshot()
+            data['line_values'] = self._l10n_ga_line_print_values(result)
             self._l10n_ga_clear_cache()
+            data['edited'] = fields.Date.context_today(self)
         else:
             data = dict.fromkeys(names, False) | self._l10n_ga_identity()
+            data['line_values'] = {}
+            data['edited'] = fields.Date.context_today(self)
         data['frozen'] = self._l10n_ga_is_frozen()
         data['payment_mode_label'] = dict(PAYMENT_MODE_SELECTION).get(data['l10n_ga_payment_mode'], '')
         marital = dict(self.env['hr.version']._fields['marital']._description_selection(self.env))
         data['marital_label'] = marital.get(data['l10n_ga_marital_used'], data['l10n_ga_marital_used'] or '')
+        data['month_hours'] = sum(self._l10n_ga_month_lines().mapped('number_of_hours'))
+        totals = self._l10n_ga_line_totals()
+        data['net_pay'] = totals.get('GA_NET_PAY', totals.get('NET', 0.0))
         return data
 
-    def _l10n_ga_line_kind(self, line):
-        categories = []
+    def _l10n_ga_month_lines(self):
+        """Prestations du mois hors heures supplémentaires (horaires du bulletin)."""
+        return self.worked_days_line_ids.filtered(lambda wd: not wd.work_entry_type_id.is_extra_hours)
+
+    def _l10n_ga_is_employer_line(self, line):
         category = line.category_id
         while category:
-            categories.append(category.code)
+            if category.code == 'GA_EMPLOYER':
+                return True
             category = category.parent_id
-        for code, kind in REPORT_KINDS:
-            if code in categories:
-                return kind
-        return 'gain'
-
-    def _l10n_ga_report_lines(self):
-        """Lignes imprimées (stockées) : gains, avantages en nature, retenues, charges, totaux, net à payer."""
-        self.ensure_one()
-        lines = []
-        for line in self.line_ids.filtered('appears_on_payslip').sorted(lambda li: (li.sequence, li.id)):
-            lines.append(
-                {
-                    'code': line.code,
-                    'name': line.name,
-                    'quantity': line.quantity,
-                    'rate': line.rate,
-                    'amount': line.total,
-                    'kind': self._l10n_ga_line_kind(line),
-                }
-            )
-        return lines
+        return False
 
     @staticmethod
-    def _l10n_ga_fmt(amount):
-        """Montant au franc, séparateur de milliers insécable (bulletin imprimé)."""
-        return f'{round_fcfa(amount or 0):,}'.replace(',', '\u202f')
+    def _l10n_ga_row(code, name, amount=None, *, base=None, rate=None, style='line', **values):
+        return {
+            'code': code,
+            'name': name,
+            'base': base,
+            'rate': rate,
+            'amount': amount,
+            'employer_rate': values.get('employer_rate'),
+            'employer_amount': values.get('employer_amount'),
+            'base_digits': values.get('base_digits', 0),
+            'style': style,
+        }
+
+    def _l10n_ga_group_row(self, code, lines, line_values):
+        """Une ligne par code imprimé : part salariale et parts patronales d'un organisme réunies (D-54)."""
+        employee = [line for line in lines if not self._l10n_ga_is_employer_line(line)]
+        employer = [line for line in lines if self._l10n_ga_is_employer_line(line)]
+        first = (employee or employer)[0]
+        name = first.salary_rule_id.l10n_ga_print_name or first.name
+        base, rate = line_values.get(first, (None, None))
+        employer_values = [line_values.get(line, (None, None)) for line in employer]
+        employer_rate = None
+        if employer_values and all(r for _b, r in employer_values) and len({b for b, _r in employer_values}) == 1:
+            employer_rate = sum(r for _b, r in employer_values)
+        if not employee:
+            rate = None  # base commune affichée, taux patronal dans sa colonne
+        overtime = (first.salary_rule_id.l10n_ga_core_value or '').startswith(OVERTIME_PREFIX)
+        return self._l10n_ga_row(
+            code,
+            name,
+            amount=sum(line.total for line in employee) if employee else None,
+            base=base or None,
+            rate=rate or None,
+            employer_rate=employer_rate,
+            employer_amount=sum(line.total for line in employer) if employer else None,
+            base_digits=2 if overtime else 0,
+        )
+
+    def _l10n_ga_basic_rows(self, row, data):
+        """Salaire de base en deux lignes (E4, affichage seulement) : mensuel, puis absences non payées."""
+        wage = data.get('l10n_ga_wage') or 0.0
+        hours = data['month_hours']
+        if self.wage_type == 'hourly' or not wage or not hours:
+            return [row]
+        hourly = wage / hours
+        basic = row['amount'] or 0.0
+        rows = [dict(row, amount=wage, base=hours, rate=hourly, base_digits=2)]
+        if round_fcfa(basic) != round_fcfa(wage):
+            absent = sum(self._l10n_ga_month_lines().filtered(lambda wd: not wd.amount).mapped('number_of_hours'))
+            rows.append(
+                self._l10n_ga_row(
+                    str(layout.ABSENCE),
+                    self.env._('Absences et congés non payés au salaire de base'),
+                    amount=basic - wage,
+                    base=absent or None,
+                    rate=-hourly,
+                    base_digits=2,
+                )
+            )
+        return rows
+
+    def _l10n_ga_report_rows(self, data=None):
+        """Lignes du bulletin imprimé dans l'ordre du modèle (plan 2.7 b), totaux compris (D-55)."""
+        self.ensure_one()
+        data = data or self._l10n_ga_report_data()
+        groups = defaultdict(list)
+        for line in self.line_ids.sorted(lambda li: (li.sequence, li.id)):
+            code = line.salary_rule_id.l10n_ga_print_code
+            if code and line.total:
+                groups[code].append(line)
+        rows = []
+        sums = defaultdict(float)
+        for code, lines in groups.items():
+            row = self._l10n_ga_group_row(code, lines, data['line_values'])
+            section = layout.section(code)
+            sums[section] += row['amount'] or 0.0
+            if section == layout.CONTRIBUTIONS:
+                sums['employer'] += row['employer_amount'] or 0.0
+            if lines[0].code == 'BASIC':
+                rows += self._l10n_ga_basic_rows(row, data)
+            else:
+                rows.append(row)
+        pay_codes = {
+            line.code
+            for lines in groups.values()
+            for line in lines
+            if layout.section(line.salary_rule_id.l10n_ga_print_code) == layout.PAY
+        }
+        if not pay_codes & {'GA_ROUND_PREV', 'GA_ROUND'}:
+            rows = [row for row in rows if not (groups.get(row['code']) and groups[row['code']][0].code == 'NET')]
+        total = self._l10n_ga_row
+        rows.append(total(str(layout.TOTAL_GROSS), self.env._('TOTAL BRUT'), sums[layout.GAINS], style='total'))
+        if sums[layout.CONTRIBUTIONS] or sums['employer']:
+            rows.append(
+                total(
+                    str(layout.TOTAL_CONTRIBUTIONS),
+                    self.env._('TOTAL COTISATIONS'),
+                    sums[layout.CONTRIBUTIONS],
+                    employer_amount=sums['employer'],
+                    style='total',
+                )
+            )
+        if sums[layout.BENEFITS]:
+            rows.append(
+                total(
+                    str(layout.TOTAL_BENEFITS),
+                    self.env._('Total avantages en nature'),
+                    sums[layout.BENEFITS],
+                    style='total',
+                )
+            )
+        if data.get('l10n_ga_tcs_base'):
+            rows.append(
+                total(
+                    str(layout.TCS_BASE), self.env._('Base TCS mensuelle'), base=data['l10n_ga_tcs_base'], style='info'
+                )
+            )
+        rows.append(
+            total(
+                str(layout.TOTAL_GAINS),
+                self.env._('TOTAL GAINS'),
+                sums[layout.GAINS] + sums[layout.ALLOWANCES],
+                style='total',
+            )
+        )
+        deductions = sums[layout.CONTRIBUTIONS] + sums[layout.TAXES] + sums[layout.DEDUCTIONS]
+        rows.append(total(str(layout.TOTAL_DEDUCTIONS), self.env._('TOTAL RETENUES'), deductions, style='total'))
+        for row in rows:
+            if row['code'] in groups and groups[row['code']][0].code == 'GA_NET_PAY':
+                row['style'] = 'total'
+        return sorted(rows, key=lambda row: int(row['code']))
+
+    @staticmethod
+    def _l10n_ga_fmt(amount, digits=0):
+        """Nombre imprimé : séparateur de milliers insécable, virgule décimale (vide si ``None``)."""
+        if amount is None or amount is False:
+            return ''
+        value = round_fcfa(amount) if not digits else round(amount, digits)
+        text = f'{value:,.{digits}f}'
+        return text.replace(',', '\u202f').replace('.', ',')
+
+    @staticmethod
+    def _l10n_ga_fmt_rate(rate):
+        """Taux imprimé : décimales inutiles retirées (2,5 ; 16 ; 4,1)."""
+        if not rate:
+            return ''
+        return f'{rate:.3f}'.rstrip('0').rstrip('.').replace('.', ',')
 
     def action_payslip_done(self):
         # Avant super() : bulletin encore en brouillon, lignes calculées (sprint 0 point 13).

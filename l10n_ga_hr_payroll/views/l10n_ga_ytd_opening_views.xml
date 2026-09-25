@@ -50,6 +50,10 @@
                             <field name="tcs"/>
                             <field name="cnss"/>
                             <field name="bonus_exempt"/>
+                            <field name="contributions"/>
+                            <field name="benefits"/>
+                            <field name="fnh"/>
+                            <field name="tax_exempt"/>
                         </group>
                     </group>
                     <field name="note" placeholder="Origine des cumuls (ancien logiciel, bulletins papier…)"/>

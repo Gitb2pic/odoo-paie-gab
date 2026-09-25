@@ -56,3 +56,7 @@
 | D-51 | Rapprochement de l'état des charges avec 43x/44x | a) étape 3 (dépendance comptable) ; b) ici | a) (règle d'or 14) | **Décidé** (24/09/2026, P5) |
 | D-52 | Chèques et comptes manquants dans les virements | a) feuilles « Chèques » et « Sans compte » ; b) exclus | a) | **Décidé** (24/09/2026, P6) |
 | D-53 | Format des états | a) Excel pour livre, virements, billetage ; PDF pour le bulletin ; b) PDF partout | a) | **Décidé** (24/09/2026, P7) |
+| D-54 | Codes imprimés sur le bulletin (modèle d'Alex : codes numériques) | a) colonne `print_code` numérique du catalogue, partagée par la part salariale et les parts patronales d'un même organisme ; b) codes `GA_*` | a) | **Décidé** (« go avec tes recommandations », 25/09/2026, plan 2.7 b Q1) |
+| D-55 | Contenu de « TOTAL BRUT » imprimé | a) gains en espèces imposables ; exonérés / partiellement exonérés listés après TCS et IRPP ; TOTAL GAINS = tous les gains ; b) brut complet | a) (modèle) | **Décidé** (25/09/2026, Q2) |
+| D-56 | Tableau des congés du bulletin | a) base congés, jours acquis / pris / solde du type « Congé payé » figés à la validation ; b) aucun | a) | **Décidé** (25/09/2026, Q3) |
+| D-57 | Lignes propres au modèle (assurance décès-invalidité, base TCS lissée, avantage domesticité soumis CNAMGS) | a) non reprises ; b) ajoutées | a) (absentes du catalogue gabonais) | **Décidé** (25/09/2026, Q4) |

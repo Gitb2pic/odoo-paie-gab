@@ -50,6 +50,11 @@ class HrSalaryRule(models.Model):
     l10n_ga_severance_base = fields.Boolean(string='Base des indemnités de rupture')
     l10n_ga_das_column = fields.Selection(DAS_COLUMN_SELECTION, string='Colonne DAS (part imposable)')
     l10n_ga_das_exempt_column = fields.Selection(DAS_COLUMN_SELECTION, string='Colonne DAS (part exonérée)')
+    # Bulletin imprimé (plan 2.7 b, D-54) : code numérique (ordre et section), libellé de la ligne d'organisme.
+    l10n_ga_print_code = fields.Char(
+        string='Code imprimé', help='Parts salariale et patronales d’un organisme : même code.'
+    )
+    l10n_ga_print_name = fields.Char(string='Libellé imprimé', help='Libellé de la ligne (vide : nom de la rubrique).')
     l10n_ga_core_value = fields.Char(
         string='Valeur du noyau',
         help='Montant de PayResult lu par la règle (ex. irpp, benefit:housing) : contrôlé à la validation du bulletin.',

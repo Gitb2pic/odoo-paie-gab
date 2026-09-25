@@ -132,6 +132,12 @@ def test_target_accounts_exist_in_syscohada(rows):
         (lambda d: [r.update(core_value='benefit:car') for r in d if r['code'] == 'GA_AN_LOGT'], 'core_value'),
         (lambda d: [r.update(input_kind='monthly') for r in d if r['code'] == 'GA_IRPP'], 'input_kind'),
         (lambda d: [r.update(sequence='95') for r in d if r['code'] == 'GA_SURSAL'], 'avantages en nature'),
+        (lambda d: d[1].update(print_code='101'), 'print_code invalide'),
+        (lambda d: d[1].update(print_code='20900'), 'réservé'),
+        (lambda d: d[1].update(print_code='34999'), 'section'),
+        (lambda d: [r.update(print_code='10000') for r in d if r['code'] == 'GA_SURSAL'], 'partagé'),
+        (lambda d: [r.update(print_code='25150') for r in d if r['code'] == 'GA_CNAMGS_SAL'], 'partagé'),
+        (lambda d: [r.update(print_code='20000') for r in d if r['code'] == 'GROSS'], 'GROSS'),
     ],
 )
 def test_invalid_catalogue_rejected(tmp_path, mutate, message):
@@ -243,6 +249,20 @@ def test_cash_rounding_rules_after_single_net(rows):
     assert net_sequence < sequences[0] < sequences[1] < sequences[2]
     assert {row['core_value'] for row in rows if row['category'] == 'GA_CASH'} == CASH_VALUES
     assert [row['code'] for row in rows if row['category'] == 'NET'] == ['NET']
+
+
+def test_print_codes_follow_the_model(rows):
+    """Plan 2.7 b, D-54, D-55 : sections du modèle, organismes sur une ligne, GROSS non imprimé."""
+    by_code = {row['code']: row for row in rows}
+    cnss = {row['code'] for row in rows if row['print_code'] == '25150'}
+    assert cnss == {'GA_CNSS_SAL', 'GA_CNSS_PF', 'GA_CNSS_AT', 'GA_CNSS_AVID'}
+    assert by_code['GA_CNAMGS_SAL']['print_code'] == by_code['GA_CNAMGS_PAT']['print_code']
+    assert by_code['GA_FNH_SAL']['print_code'] == by_code['GA_FNH']['print_code']
+    assert by_code['GROSS']['print_code'] == ''
+    assert int(by_code['BASIC']['print_code']) < int(by_code['GA_TCS']['print_code'])
+    assert int(by_code['GA_IRPP']['print_code']) < int(by_code['GA_TRANSP']['print_code'])  # non imposables après
+    assert int(by_code['GA_SURSAL']['print_code']) < int(by_code['GA_CNSS_SAL']['print_code'])
+    assert by_code['GA_NET_PAY']['print_name'] == 'NET À PAYER'
 
 
 def test_cash_gains_computed_before_benefits_in_kind(rows):

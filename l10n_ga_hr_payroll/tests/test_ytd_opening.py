@@ -51,6 +51,10 @@ class TestYtdOpening(GaPayrollCase):
                 'tcs': june.l10n_ga_ytd_tcs,
                 'cnss': june.l10n_ga_ytd_cnss,
                 'bonus_exempt': june.l10n_ga_ytd_bonus_exempt,
+                'contributions': june.l10n_ga_ytd_contributions,
+                'benefits': june.l10n_ga_ytd_benefits,
+                'fnh': june.l10n_ga_ytd_fnh,
+                'tax_exempt': june.l10n_ga_ytd_tax_exempt,
                 **values,
             }
         )
