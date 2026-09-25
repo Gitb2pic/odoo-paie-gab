@@ -31,6 +31,12 @@ repos:
         entry: .venv/bin/python tools/check_odoo19_rules.py
         language: system
         files: ^l10n_ga_[a-z_]+/.*\.(py|xml)$
+      - id: view-fields
+        name: view-fields (champs l10n_ga_* des vues définis en Python, FIX 02)
+        entry: .venv/bin/python tools/check_view_fields.py
+        language: system
+        pass_filenames: false
+        files: ^l10n_ga_[a-z_]+/.*\.(py|xml)$
       - id: pylint-odoo
         name: pylint-odoo
         # pas d'auteur imposé ni de README OCA dans ce dépôt privé ; no-member : voir .pylintrc

@@ -11,10 +11,10 @@ DB        ?=
 
 export ODOO_PY ODOO_BIN ODOO_CONF
 
-.PHONY: help lint test-core test upgrade i18n demo shell restart logs
+.PHONY: help lint test-core test upgrade i18n demo update-demo shell restart logs
 
 help:
-	@echo "make lint | test-core | test MODULE=x | upgrade MODULE=x | i18n MODULE=x | demo MODULE=x | shell DB=test_ga_x | restart | logs"
+	@echo "make lint | test-core | test MODULE=x | upgrade MODULE=x | i18n MODULE=x | demo MODULE=x | update-demo MODULE=x | shell DB=test_ga_x | restart | logs"
 
 lint:
 	$(VENV)/bin/pre-commit run --all-files
@@ -45,9 +45,16 @@ i18n:
 
 # Base de démonstration d'Alex (odoo19, décision D-09) : installe ou met à jour
 # un module l10n_ga_* validé, sans tests, puis redémarre le service.
+# FIX 02 : la mise à jour passe TOUJOURS par un processus neuf (odoo-bin -u … --stop-after-init),
+# qui charge le Python du disque, puis le service est redémarré. Ne jamais mettre à jour un module
+# dont le code a changé avec le bouton « Mettre à jour » de l'interface : le service en cours garde
+# l'ancien Python en mémoire et refuse les vues qui citent les nouveaux champs.
 demo:
 	@test -n "$(MODULE)" || (echo "usage : make demo MODULE=<module>" && exit 2)
 	tools/odoo_demo.sh '$(MODULE)'
+
+# Alias explicite de « demo » pour une mise à jour (même procédure sûre).
+update-demo: demo
 
 shell:
 	@case "$(DB)" in test_ga_*) ;; *) echo "refus : DB doit commencer par test_ga_" && exit 2 ;; esac

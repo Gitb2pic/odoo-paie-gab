@@ -57,6 +57,7 @@ En cas de contradiction entre deux sources : ne tranche pas seul. Écris le conf
 ## 5. Commandes (voir `Makefile`, créé au sprint 0 sur l'installation Odoo existante du VPS)
 
 Sur le VPS : ne jamais toucher aux bases existantes (bases de test préfixées `test_ga_`), ne jamais arrêter le service Odoo pour lancer des tests, ne jamais modifier les autres modules présents dans `extra-addon`.
+Après toute modification d'un fichier `.py`, **redémarrer le service Odoo avant de mettre à jour le module** (`make demo` / `make update-demo` : processus neuf `-u … --stop-after-init`, puis redémarrage) ; **ne jamais utiliser le bouton « Mettre à jour » de l'interface pour du code modifié** : le service en cours garde l'ancien Python et refuse les vues qui citent de nouveaux champs (incident FIX 02 du 25/09/2026).
 Seule exception (décision D-09) : la base de démonstration `odoo19` d'Alex reçoit les modules `l10n_ga_*` **validés**, uniquement via `make demo MODULE=...` (installation ou mise à jour, puis redémarrage du service) ; jamais de tests ni de données de test dans `odoo19`.
 
 ```bash
@@ -65,6 +66,7 @@ make test-core                     # pytest l10n_ga_hr_payroll/lib --cov (sans O
 make test MODULE=l10n_ga_hr_payroll   # base neuve, -i MODULE --test-tags /MODULE --stop-after-init
 make upgrade MODULE=...            # -u MODULE sur une base existante (test de mise à jour)
 make demo MODULE=...               # installe / met à jour un module validé dans la base de démo odoo19 (D-09)
+make update-demo MODULE=...        # alias de demo : processus neuf puis redémarrage (jamais le bouton de l'interface)
 ```
 
 ## 6. Déroulé d'une session (obligatoire)
@@ -88,7 +90,7 @@ Une étape n'est **terminée** que lorsque ce protocole passe entièrement. Tu n
 - `grep -rnE "TODO|FIXME|XXX|HACK|NotImplementedError|pass\s*$|\.\.\.\s*$"` sur le module (hors interfaces abstraites documentées) ;
 - fichiers cités dans `__manifest__.py` absents, ou fichiers XML/CSV présents mais non déclarés ;
 - modèles sans ligne dans `ir.model.access.csv`, modèles multi-société sans record rule ;
-- champs référencés dans une vue/rapport mais inexistants sur le modèle ;
+- champs référencés dans une vue/rapport mais inexistants sur le modèle (automatique pour les champs `l10n_ga_*` des vues : `tools/check_view_fields.py`, lancé par `make lint`) ;
 - nombres littéraux dans `amount_python_compute`, les générateurs ou le noyau (autres que 0, 1, 100 et index) → doivent venir d'un paramètre ;
 - imports `odoo` dans `lib/ga_fiscal_core` ;
 - `_sql_constraints`, `attrs=`, `<tree` (syntaxe pré-19) ;
