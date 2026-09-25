@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_l10n_ga_declaration_type_user,l10n_ga.declaration.type user,model_l10n_ga_declaration_type,hr_payroll.group_hr_payroll_user,1,0,0,0
+access_l10n_ga_declaration_type_manager,l10n_ga.declaration.type manager,model_l10n_ga_declaration_type,group_l10n_ga_declaration_manager,1,1,1,1
+access_l10n_ga_declaration_box_user,l10n_ga.declaration.box user,model_l10n_ga_declaration_box,hr_payroll.group_hr_payroll_user,1,0,0,0
+access_l10n_ga_declaration_box_manager,l10n_ga.declaration.box manager,model_l10n_ga_declaration_box,group_l10n_ga_declaration_manager,1,1,1,1
+access_l10n_ga_declaration_user,l10n_ga.declaration user,model_l10n_ga_declaration,hr_payroll.group_hr_payroll_user,1,1,1,0
+access_l10n_ga_declaration_manager,l10n_ga.declaration manager,model_l10n_ga_declaration,group_l10n_ga_declaration_manager,1,1,1,1
+access_l10n_ga_declaration_line_user,l10n_ga.declaration.line user,model_l10n_ga_declaration_line,hr_payroll.group_hr_payroll_user,1,1,1,1
+access_l10n_ga_declaration_detail_user,l10n_ga.declaration.detail user,model_l10n_ga_declaration_detail,hr_payroll.group_hr_payroll_user,1,1,1,1

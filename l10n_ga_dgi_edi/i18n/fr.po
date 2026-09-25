@@ -1,0 +1,1330 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_ga_dgi_edi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-25 07:24+0000\n"
+"PO-Revision-Date: 2026-09-25 07:24+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/checks.py:0
+msgid "%(employee)s : n° CNSS absent."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(name)s (rectificative)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(name)s : %(count)s anomalie(s) bloquante(s)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(name)s : passage de l’état « %(from)s » à « %(to)s » impossible."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(name)s ne peut pas être validée : anomalies bloquantes à corriger."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "%(name)s à déposer avant le %(date)s"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi.action_report_declaration
+msgid "'Déclaration - %s' % (object.name)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid ""
+"<br/>\n"
+"                    Période du"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid ""
+"<br/>\n"
+"                    État :"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "<strong>Total dû</strong>"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Action réservée au groupe « Déclarant fiscal »."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__active
+msgid "Active"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__is_total
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__is_total
+msgid "Additionnée dans le total de la déclaration."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__periodicity__yearly
+msgid "Annuelle"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Annuler"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Annuler la validation"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__cancel
+msgid "Annulée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__period_year
+msgid "Année de la période"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_check_issue
+msgid "Anomalie de contrôle (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__issue_ids
+#: model:ir.ui.menu,name:l10n_ga_dgi_edi.menu_l10n_ga_declaration_issue
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Anomalies"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__blocking_count
+msgid "Anomalies bloquantes"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:mail.activity.type,summary:l10n_ga_dgi_edi.mail_activity_type_declaration_fix
+msgid "Anomalies bloquantes à corriger"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.act_window,name:l10n_ga_dgi_edi.l10n_ga_check_issue_action_declaration
+msgid "Anomalies des déclarations"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_type_view_form
+msgid "Archivé"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__date_to
+msgid "Au"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Aucun déclarant fiscal : définissez-le sur la société."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.actions.act_window,help:l10n_ga_dgi_edi.l10n_ga_declaration_action_dashboard
+msgid "Aucune déclaration à déposer"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Avec anomalies bloquantes"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__warning_count
+msgid "Avertissements"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__period_basis
+msgid "Base de période"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__draft
+msgid "Brouillon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__authority__cnamgs
+msgid "CNAMGS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__authority__cnss
+msgid "CNSS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Calculer"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__computed
+msgid "Calculée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__box_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__box_id
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Case"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/checks.py:0
+msgid "Case %(box)s : %(value)s déclaré, %(total)s dans le détail."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_box
+msgid "Case de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__auto_value
+msgid "Case d’en-tête remplie par le moteur (identité, période)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Case inconnue dans le détail : %(code)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__line_ids
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__box_ids
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Cases"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Cases inconnues de l’imprimé %(type)s : %(codes)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__cell_ref
+msgid "Cellule"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__cell_ref
+msgid "Cellule du gabarit : « P40 » (1re feuille) ou « Feuille!P40 »."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__template_path
+msgid ""
+"Chemin du gabarit dans un module (ex. "
+"l10n_ga_dgi_edi/static/templates/ID10.xlsx). Sans gabarit, un classeur neuf "
+"est produit."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__generator_key
+msgid "Clé du registre des générateurs."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__code
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__code
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__code
+msgid "Code"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__type_code
+msgid "Code imprimé"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_codes
+msgid ""
+"Codes de rubriques de paie additionnés par le générateur générique, séparés "
+"par des virgules."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__payload
+msgid "Colonnes"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: l10n_ga_dgi_edi
+#: model:res.groups,comment:l10n_ga_dgi_edi.group_l10n_ga_declaration_manager
+msgid "Configure les imprimés et supprime les déclarations brouillon."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_check_issue_view_list_declaration
+msgid "Corriger"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__create_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__create_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__create_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__create_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__create_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Créer une rectificative"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__auto_create
+msgid ""
+"Créée et recalculée à la validation des bulletins et par le cron des "
+"échéances (ADR-10)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__currency_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__currency_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__authority__dgi
+msgid "DGI"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_date
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__date
+msgid "Date"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__period_basis__payment_date
+msgid "Date de paiement"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid ""
+"Des bulletins de la période ont changé après la validation : les valeurs "
+"figées sont conservées ; une rectificative est peut-être nécessaire."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_res_company__l10n_ga_declarant_id
+msgid ""
+"Destinataire des activités d’échéance et de correction des déclarations "
+"(D-72). À défaut : premier membre du groupe « Déclarant fiscal » de la "
+"société."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_hr_payslip__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_check_issue__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_frozen_mixin__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_base__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_payslip__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_res_company__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__date_from
+msgid "Du"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__date_from
+msgid "Début de période"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_res_company__l10n_ga_declarant_id
+#: model:res.groups,name:l10n_ga_dgi_edi.group_l10n_ga_declarant
+msgid "Déclarant fiscal"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_check_issue__declaration_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__declaration_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__declaration_id
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_check_issue__scope__declaration
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_check_issue_view_search_declaration
+msgid "Déclaration"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,name:l10n_ga_dgi_edi.action_report_declaration
+msgid "Déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration
+msgid "Déclaration fiscale ou sociale (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:mail.activity.type,name:l10n_ga_dgi_edi.mail_activity_type_declaration_fix
+msgid "Déclaration à corriger"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:mail.activity.type,name:l10n_ga_dgi_edi.mail_activity_type_declaration_due
+msgid "Déclaration à déposer"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:mail.activity.type,summary:l10n_ga_dgi_edi.mail_activity_type_declaration_due
+msgid "Déclaration à déposer avant l'échéance"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.act_window,name:l10n_ga_dgi_edi.l10n_ga_declaration_action
+#: model:ir.ui.menu,name:l10n_ga_dgi_edi.menu_l10n_ga_declaration
+msgid "Déclarations"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.ui.menu,name:l10n_ga_dgi_edi.menu_l10n_ga_declaration_root
+#: model:res.groups.privilege,name:l10n_ga_dgi_edi.res_groups_privilege_l10n_ga_declaration
+msgid "Déclarations Gabon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__filed
+msgid "Déposée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__filing_date
+msgid "Déposée le"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Déposées ou payées"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Détail"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_detail
+msgid "Détail de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__detail_ids
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Détails"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Empreinte NON conforme : les valeurs figées ont été altérées."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__sha256
+msgid "Empreinte SHA-256"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Empreinte SHA-256 :"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid ""
+"Empreinte conforme : la déclaration n’a pas changé depuis sa validation."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "En retard"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Fichiers"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__snapshot_attachment_ids
+msgid "Fichiers figés"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__date_to
+msgid "Fin de période"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__template_path
+msgid "Gabarit Excel"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.server,name:l10n_ga_dgi_edi.ir_cron_l10n_ga_declaration_schedule_ir_actions_server
+msgid "Gabon : préparer les déclarations à échéance"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__generator_key
+msgid "Générateur"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_base
+msgid "Générateur de déclaration (interface)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_payslip
+msgid "Générateur générique : somme de rubriques de paie"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration_type.py:0
+msgid "Générateur « %(key)s » inconnu du registre."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_hr_payslip__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_check_issue__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_frozen_mixin__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_base__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_payslip__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_error
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__type_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__type_id
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_type_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Imprimé"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__negate
+msgid "Inverser le signe"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "L'instantané et ses fichiers seront retirés. Continuer ?"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid ""
+"La déclaration %(name)s est validée : elle ne peut plus être modifiée. Créez"
+" une déclaration rectificative."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration_frozen_mixin.py:0
+msgid ""
+"La déclaration %(name)s est validée : ses valeurs sont figées. Créez une "
+"déclaration rectificative."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_dates_check
+msgid "La fin de période doit suivre son début."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_type_dates_check
+msgid "La fin de validité doit suivre le début."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__write_uid
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__write_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__write_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__write_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__write_date
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_type_code_unique
+msgid "Le code du type de déclaration doit être unique."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__lead_days
+msgid "Le cron prépare la déclaration J-N."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_type_due_day_check
+msgid "Le jour d’échéance doit être compris entre 1 et 31."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.actions.act_window,help:l10n_ga_dgi_edi.l10n_ga_declaration_action_dashboard
+msgid ""
+"Les déclarations sont préparées à la validation des bulletins et dix jours "
+"avant l'échéance."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__label
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__name
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Libellé"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__payslip_line_ids
+msgid "Lignes de bulletin"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Marquer déposée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Marquer payée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__periodicity__monthly
+msgid "Mensuelle"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Mois d'échéance"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__period_month
+msgid "Mois de la période"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__amount
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_amount
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__amount
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Montant"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "NIF"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_nif
+msgid "NIF de la société"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__value_kind
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_kind
+msgid "Nature"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__label
+msgid "Nom figé au calcul."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__number
+msgid "Nombre"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_number
+msgid "Nombre / taux"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Nouvelle déclaration"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__filing_number
+msgid "N° de dépôt"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_cnamgs
+msgid "N° employeur CNAMGS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_cnss
+msgid "N° employeur CNSS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__authority
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__authority
+msgid "Organisme"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/checks.py:0
+msgid "Paramètre « %(code)s » sans valeur au %(date)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_hr_payslip
+msgid "Pay Slip"
+msgstr "Fiche de paie"
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__paid
+msgid "Payée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__lead_days
+msgid "Préparation (jours avant échéance)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__auto_create
+msgid "Préparation automatique"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_check_issue__scope
+msgid "Périmètre"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Période"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__period_basis__period
+msgid "Période de paie"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/checks.py:0
+msgid "Période déjà couverte par la déclaration %(name)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__periodicity
+msgid "Périodicité"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_name
+msgid "Raison sociale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__report_id
+msgid "Rapport PDF"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__period_basis
+msgid ""
+"Rattachement des bulletins : date de paiement (ID10, base 02 §3) ou date de "
+"fin de période."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Recalculer"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Rectificative"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Rectificative créée : %(name)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__rectification_ids
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Rectificatives"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__rectified_id
+msgid "Rectifie"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator
+msgid "Registre des générateurs de déclarations (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Remettre en brouillon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:res.groups,name:l10n_ga_dgi_edi.group_l10n_ga_declaration_manager
+msgid "Responsable"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__negate
+msgid ""
+"Retenues : les lignes de bulletin sont négatives, la case déclare le montant"
+" positif."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_codes
+msgid "Rubriques sources"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__name
+msgid "Référence"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__employee_id
+msgid "Salarié"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Salarié / tiers"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__sequence
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__sequence
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Seule une déclaration brouillon ou annulée peut être supprimée."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Seule une déclaration déposée ou payée se rectifie."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__company_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__company_id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__company_id
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Société"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Société :"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__rate
+msgid "Taux"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_text
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__text
+msgid "Texte"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__partner_id
+msgid "Tiers"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_list
+msgid "Total"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__amount_total
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__is_total
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__is_total
+msgid "Total dû"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__periodicity__quarterly
+msgid "Trimestrielle"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_type
+msgid "Type de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.act_window,name:l10n_ga_dgi_edi.l10n_ga_declaration_type_action
+#: model:ir.ui.menu,name:l10n_ga_dgi_edi.menu_l10n_ga_declaration_type
+msgid "Types de déclaration"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_box_code_unique
+msgid "Une case a un code unique par type de déclaration."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_line_box_unique
+msgid "Une case n’a qu’une valeur par déclaration (RG12)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.constraint,message:l10n_ga_dgi_edi.constraint_l10n_ga_declaration_period_unique
+msgid ""
+"Une déclaration de ce type existe déjà pour cette société et cette période ;"
+" créez une rectificative."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Une déclaration ne se duplique pas : créez une rectificative."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Valeur"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__auto_value
+msgid "Valeur automatique"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_line
+msgid "Valeur de case de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_frozen_mixin
+msgid "Valeur figée de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
+msgid "Validation annulée : instantané retiré."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__active_to
+msgid "Valide au"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__active_from
+msgid "Valide du"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:res.groups,comment:l10n_ga_dgi_edi.group_l10n_ga_declarant
+msgid "Valide les déclarations, les marque déposées et payées."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Valider"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__validated
+msgid "Validée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__validated_date
+msgid "Validée le"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__validated_by_id
+msgid "Validée par"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_form
+msgid "Vérifier l'empreinte"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_kanban
+msgid "anomalie(s) bloquante(s)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "au"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "À déposer"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__due_date
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_type_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "Échéance"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__due_day
+msgid "Échéance : jour du mois"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__due_months
+msgid "Échéance : mois après la période"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__due_months
+msgid ""
+"Échéance = fin de période + N mois, au jour indiqué (ID10 : 1 mois, le 15 ; "
+"DAS : 4 mois, le 30)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.ui.menu,name:l10n_ga_dgi_edi.menu_l10n_ga_declaration_dashboard
+msgid "Échéances"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.act_window,name:l10n_ga_dgi_edi.l10n_ga_declaration_action_dashboard
+msgid "Échéances des déclarations"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__state
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.l10n_ga_declaration_view_search
+msgid "État"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "— NIF :"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "— rectifie"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "— échéance :"
+msgstr ""

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_company_view_form_l10n_ga_dgi_edi" model="ir.ui.view">
+        <field name="name">res.company.form.l10n_ga_dgi_edi</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="l10n_ga_hr_payroll.res_company_view_form_l10n_ga_payroll"/>
+        <field name="arch" type="xml">
+            <field name="l10n_ga_segment" position="after">
+                <field name="l10n_ga_declarant_id" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

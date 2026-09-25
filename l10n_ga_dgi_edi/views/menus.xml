@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_l10n_ga_declaration_root"
+        name="Déclarations Gabon"
+        parent="hr_work_entry_enterprise.menu_hr_payroll_root"
+        groups="hr_payroll.group_hr_payroll_user"
+        sequence="75"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_dashboard"
+        name="Échéances"
+        action="l10n_ga_declaration_action_dashboard"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="10"/>
+    <menuitem
+        id="menu_l10n_ga_declaration"
+        name="Déclarations"
+        action="l10n_ga_declaration_action"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="20"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_issue"
+        name="Anomalies"
+        action="l10n_ga_check_issue_action_declaration"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="30"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_type"
+        name="Types de déclaration"
+        action="l10n_ga_declaration_type_action"
+        parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
+        groups="l10n_ga_dgi_edi.group_l10n_ga_declaration_manager"
+        sequence="80"/>
+</odoo>

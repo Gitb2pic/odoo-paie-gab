@@ -1,0 +1,25 @@
+{
+    'name': 'Gabon - Déclarations DGI et sociales',
+    'version': '19.0.2.0.0',
+    'summary': 'Moteur de déclarations : types, cases, calcul, contrôles, instantané figé, échéancier, Excel et PDF',
+    'countries': ['ga'],
+    'category': 'Human Resources/Payroll',
+    'author': 'OMIAS Leadership Group',
+    'maintainer': 'MPAMI MPAMI Nathan Mael Alex',
+    # Ne lit que la paie (ADR-02, règle d'or 14) : la comptabilité relève de l10n_ga_dgi_edi_account.
+    'depends': ['l10n_ga_hr_payroll', 'mail'],
+    'data': [
+        'security/l10n_ga_dgi_edi_security.xml',
+        'security/ir.model.access.csv',
+        'data/mail_activity_type_data.xml',
+        'data/ir_cron_data.xml',
+        'report/report_declaration.xml',
+        'views/l10n_ga_declaration_type_views.xml',
+        'views/l10n_ga_declaration_views.xml',
+        'views/l10n_ga_check_issue_views.xml',
+        'views/res_company_views.xml',
+        'views/menus.xml',
+    ],
+    'external_dependencies': {'python': ['openpyxl', 'xlsxwriter']},
+    'license': 'OPL-1',
+}

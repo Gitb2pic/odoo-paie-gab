@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Rapport PDF générique d'une déclaration (patron 9) : lit uniquement les valeurs stockées
+        (cases, détails, empreinte), jamais les bulletins du jour. Un imprimé peut poser son propre
+        rapport sur son type (report_id : ID10, DAS… étapes 4.2 à 4.4).
+    -->
+    <record id="action_report_declaration" model="ir.actions.report">
+        <field name="name">Déclaration (Gabon)</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_declaration</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_declaration</field>
+        <field name="print_report_name">'Déclaration - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_l10n_ga_declaration"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_declaration_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang or o.env.lang)"/>
+            <div class="page">
+                <h2>
+                    <span t-field="o.type_id.name"/> — <span t-field="o.name"/>
+                </h2>
+                <p>
+                    Société : <span t-field="o.company_id.name"/>
+                    <t t-if="o.company_id.l10n_ga_nif"> — NIF : <span t-field="o.company_id.l10n_ga_nif"/></t><br/>
+                    Période du <span t-field="o.date_from"/> au <span t-field="o.date_to"/>
+                    — échéance : <span t-field="o.due_date"/><br/>
+                    État : <span t-field="o.state"/>
+                    <t t-if="o.rectified_id"> — rectifie <span t-field="o.rectified_id.name"/></t>
+                </p>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr><th>Case</th><th>Libellé</th><th class="text-end">Valeur</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.line_ids" t-as="line">
+                            <td><span t-field="line.code"/></td>
+                            <td><span t-field="line.box_id.name"/></td>
+                            <td class="text-end">
+                                <span t-if="line.value_kind == 'amount'" t-field="line.value_amount"/>
+                                <span t-elif="line.value_kind in ('number', 'rate')" t-field="line.value_number"/>
+                                <span t-elif="line.value_kind == 'date'" t-field="line.value_date"/>
+                                <span t-else="" t-field="line.value_text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td/><td><strong>Total dû</strong></td>
+                            <td class="text-end"><strong t-field="o.amount_total"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <t t-if="o.detail_ids">
+                    <h4>Détail</h4>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr><th>Case</th><th>Salarié / tiers</th><th class="text-end">Montant</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.detail_ids" t-as="detail">
+                                <td><span t-field="detail.box_id.code"/></td>
+                                <td><span t-field="detail.label"/></td>
+                                <td class="text-end"><span t-field="detail.amount"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <p t-if="o.sha256" class="small text-muted">Empreinte SHA-256 : <span t-field="o.sha256"/></p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_declaration">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="l10n_ga_dgi_edi.report_declaration_document"/>
+            </t>
+        </t>
+    </template>
+</odoo>
