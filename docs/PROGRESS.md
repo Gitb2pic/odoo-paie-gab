@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (complétude C-4).
+Mis à jour le 25/09/2026 (FIX 01).
 
 ## Étapes
 
@@ -17,6 +17,7 @@ Mis à jour le 25/09/2026 (complétude C-4).
 | C-1 | `l10n_ga_hr_payroll` | complétude du module (`prompts/99_completude.md`) | **terminé** | 100 % (0 manque ; lint 0 erreur, noyau 483 tests couverture 100 %, 178 tests Odoo sur base neuve et en mise à jour) | `docs/completude/l10n_ga_hr_payroll_C-1.md` |
 | 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | **terminé** | 100 % (18/18 ; 28 tests Odoo, F16 compte par compte écart 0 ; installation sur société existante et désinstallation propres) | `docs/completude/l10n_ga_hr_payroll_account.md` |
 | C-2 | `l10n_ga_hr_payroll_account` | complétude du module | **terminé** | 100 % (3 manques corrigés, dont SYSCEBNL validé sans écriture ; 32 tests du module, 210 tests paie + comptabilité installées ensemble) | `docs/completude/l10n_ga_hr_payroll_account_C-2.md` |
+| FIX 01 | `l10n_ga_hr_payroll` | salaire de base sur 173,33 h, taux horaire unique | **terminé** | 100 % (T1-T10 ; 188 tests paie, 331 avec les 4 modules ; T9 écart 0 avec le calculateur) | `docs/completude/l10n_ga_hr_payroll_fix_01.md` |
 | 4.1 | `l10n_ga_dgi_edi` | moteur de déclarations | **terminé** | 100 % (24/24 ; 47 tests Odoo sur base neuve et en mise à jour, 258 avec paie + comptabilité ; F16 déclaré écart 0 ; installation sur base existante et désinstallation propres) | `docs/completude/l10n_ga_dgi_edi_4.1.md` |
 | 4.2 | `l10n_ga_dgi_edi` | ID10, ID28, quittances multiples (F11) | **terminé** | 100 % (20/20 ; 66 tests Odoo sur base neuve et en mise à jour, 277 avec paie + comptabilité ; F16 déclaré écart 0 ; D-74 NIF à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.2.md` |
 | 4.3 | `l10n_ga_dgi_edi` | DTS CNSS et CNAMGS | **terminé** (+ PDF au format Excel, 25/09) | 100 % (16/16 ; 75 tests Odoo sur base neuve et en mise à jour, 286 avec paie + comptabilité ; T3 F16 écart 0 ; D-83 format des portails à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.3.md` |
@@ -24,7 +25,7 @@ Mis à jour le 25/09/2026 (complétude C-4).
 | 4.5 | `l10n_ga_dgi_edi` | migration des déclarations V1 (ADR-12) | **reportée** (« go pour la 5 sans la 4.5 ») — bloquée par D-07 | — | — |
 | C-3 | `l10n_ga_dgi_edi` | complétude du module | à faire | — | — |
 | 5 | `l10n_ga_dgi_edi_account` | ID18, ID27, ID23, ID24, ID26 | **terminé** | 96 % (22/23 ; 16 tests du module, 316 avec les 4 modules ; `.xlsm` des annexes à brancher) | `docs/completude/l10n_ga_dgi_edi_account.md` |
-| C-4 | `l10n_ga_dgi_edi_account` | complétude du module | **terminé** — en attente du « go » | 96 % (23/24 ; 8 manques corrigés ; 22 tests du module, 322 avec les 4 modules ; `.xlsm` V1 à brancher) | `docs/completude/l10n_ga_dgi_edi_account_C-4.md` |
+| C-4 | `l10n_ga_dgi_edi_account` | complétude du module | **terminé** | 96 % (23/24 ; 8 manques corrigés ; 22 tests du module, 322 avec les 4 modules ; `.xlsm` V1 à brancher) | `docs/completude/l10n_ga_dgi_edi_account_C-4.md` |
 | 6 | `l10n_ga_hr_payroll_migration` | reprise `hr_payroll_gb` | à faire | — | — |
 | C-5 | `l10n_ga_hr_payroll_migration` | complétude du module | à faire | — | — |
 
