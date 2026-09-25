@@ -76,3 +76,11 @@
 | D-71 | N° CNSS manquant en déclaration | a) bloquant ; b) avertissement | a) | **Décidé** (25/09/2026, Q7) |
 | D-72 | Destinataire des activités | a) déclarant de la société, sinon 1er membre du groupe, sinon message ; b) responsable paie | a) | **Décidé** (25/09/2026, Q8) |
 | D-73 | `move_line_ids` du détail, `move_id` des quittances | a) ajoutés par `l10n_ga_dgi_edi_account` (règle d'or 14) ; b) dépendance `account` ici | a) | **Décidé** (25/09/2026, Q9) |
+| D-74 | Cellule du NIF sur les gabarits ID10 / ID28 (aucune zone de saisie fusionnée) | a) `E17` (ID10), `D17` (ID28) ; b) attendre un imprimé rempli | a) | **Décidé** (« Go », go anticipé avec recommandations, 25/09/2026, plan 4.2 Q1) — **à confirmer par Alex** sur un imprimé rempli |
+| D-75 | Cadre CFP de l'ID10 (formules du modèle fausses) | a) L1/L2/L5 = parts retenues dans l'assiette, L6 = Σ bases figées plafonnées par salarié, L7 = paramètre daté, montant = Σ `GA_CFP` ; b) formules du modèle | a) | **Décidé** (25/09/2026, Q2) |
+| D-76 | Option « CFP sur ID28 » | a) ID10 : cadre 3 vide ; ID28 ni préparée ni validable si CFP sur l'ID10 ; b) les deux imprimés | a) | **Décidé** (25/09/2026, Q3) |
+| D-77 | Signe des retenues dans les cases | a) codes signés `-CODE` en données, retrait du booléen `negate` ; b) booléen par case | a) | **Décidé** (25/09/2026, Q4) |
+| D-78 | Passage à « payée » | a) automatique depuis « déposée » quand Σ quittances ≥ total dû, retour à « déposée » sinon ; quittances dès « validée » ; sur-paiement = avertissement ; b) manuel | a) | **Décidé** (25/09/2026, Q5) |
+| D-79 | ID28 L4 « (L1 + L2 − L3) × taux art. 93 » | a) avantages en nature réellement valorisés (Σ `GA_AIK`) ; b) formule du modèle | a) | **Décidé** (25/09/2026, Q6) |
+| D-80 | Champs d'en-tête sans donnée (sigle, télécopie), boîte postale | a) vides, BP = rue de la société ; b) nouveaux champs société | a) | **Décidé** (25/09/2026, Q7) |
+| D-81 | Code rubrique `V39` de l'ID10 (table DGI absente) | a) vide ; b) paramètre | a) | **Décidé** (25/09/2026, Q8) |
