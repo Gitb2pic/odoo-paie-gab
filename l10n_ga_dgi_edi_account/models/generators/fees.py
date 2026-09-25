@@ -12,7 +12,7 @@ from odoo.addons.l10n_ga_dgi_edi.models.declaration_generator import BLOCKING, W
 from odoo.addons.l10n_ga_dgi_edi.renderers.xlsx_builder import XlsxDeclarationBuilder
 from odoo.tools import float_compare, float_round
 
-from ..res_partner import DAS_FEE_CATEGORIES, FEE_CATEGORIES
+from ..res_partner import FEE_CATEGORIES
 from .payments import settled_ht_by_partner, withholding_by_partner
 from .withholding import WITHHELD
 
@@ -191,85 +191,3 @@ class L10nGaDeclarationGeneratorFees(models.AbstractModel):
             landscape=True,
         )
         return builder.build()
-
-
-class L10nGaDeclarationGeneratorId23(models.AbstractModel):
-    """ID23 : commissions et honoraires versés au Gabon (art. 189), salariés (A) et non-salariés (B)."""
-
-    _name = 'l10n_ga.declaration.generator.id23'
-    _inherit = 'l10n_ga.declaration.generator.fees'
-    _description = 'ID23 — commissions et honoraires versés au Gabon'
-
-    @property
-    def _sections(self):
-        return (
-            ('employee', 'PAID_EMPLOYEE', self.env._('A) Bénéficiaires ayant la qualité de salarié')),
-            ('other', 'PAID_OTHER', self.env._('B) Bénéficiaires n’ayant pas la qualité de salarié')),
-        )
-
-    def _partner_domain(self, declaration):
-        return [('l10n_ga_is_resident', '=', True), ('l10n_ga_fee_category', 'in', DAS_FEE_CATEGORIES)]
-
-    def _section(self, declaration, partner):
-        return 'employee' if partner._l10n_ga_is_employee(declaration.company_id) else 'other'
-
-
-class L10nGaDeclarationGeneratorId24(models.AbstractModel):
-    """ID24 : commissions et honoraires versés hors du Gabon (art. 189), CEMAC / hors CEMAC, retenue 20 %."""
-
-    _name = 'l10n_ga.declaration.generator.id24'
-    _inherit = 'l10n_ga.declaration.generator.fees'
-    _description = 'ID24 — sommes versées hors du Gabon'
-
-    _kind = 'ras_20'
-    _monthly_type = 'ID27'
-    _nif_required = False
-
-    @property
-    def _sections(self):
-        return (
-            ('cemac', 'PAID_CEMAC', self.env._('A) Bénéficiaires de la CEMAC')),
-            ('other', 'PAID_OTHER', self.env._('B) Bénéficiaires hors CEMAC')),
-        )
-
-    def _partner_domain(self, declaration):
-        return [('l10n_ga_is_resident', '=', False), ('l10n_ga_fee_category', '!=', False)]
-
-    def _section(self, declaration, partner):
-        return 'cemac' if partner.l10n_ga_zone == 'cemac' else 'other'
-
-    def _columns(self):
-        env = self.env
-        return [
-            ('name', env._('Nom, prénom ou raison sociale')),
-            ('address', env._('Adresse du bénéficiaire')),
-            ('paid', env._('Montant versé')),
-            ('withheld', env._('Retenue à la source effectuée')),
-        ]
-
-
-class L10nGaDeclarationGeneratorId26(models.AbstractModel):
-    """ID26 : sommes versées aux prestataires non assujettis à la TVA et retenues de 9,5 % (art. 182, 189)."""
-
-    _name = 'l10n_ga.declaration.generator.id26'
-    _inherit = 'l10n_ga.declaration.generator.fees'
-    _description = 'ID26 — prestataires non assujettis à la TVA'
-
-    _kind = 'ras_095'
-    _monthly_type = 'ID18'
-
-    @property
-    def _sections(self):
-        return (('provider', 'PAID_PROVIDER', self.env._('Prestataires de services non assujettis à la TVA')),)
-
-    def _partner_domain(self, declaration):
-        return [('l10n_ga_withholding_kind', '=', 'ras_095')]
-
-    def _columns(self):
-        env = self.env
-        return [
-            ('name', env._('Nom, prénom ou raison sociale du prestataire')),
-            ('nif', env._('NIF du prestataire')),
-            ('paid', env._('Montant versé')),
-            ('withheld', env._('Montant de la retenue effectuée')),
-        ]

@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (étape 5).
+Mis à jour le 25/09/2026 (complétude C-4).
 
 ## Étapes
 
@@ -23,8 +23,8 @@ Mis à jour le 25/09/2026 (étape 5).
 | 4.4 | `l10n_ga_dgi_edi` | DAS ID19 à ID22, « Contrôle DAS », classeurs `.xlsm` | **terminé sans les `.xlsm`** (go d'Alex, D-87) | 94 % (16/17 ; 89 tests Odoo, 300 avec paie + comptabilité ; DAS = Σ ID10 écart 0 ; `.xlsm` à brancher) | `docs/completude/l10n_ga_dgi_edi_4.4.md` |
 | 4.5 | `l10n_ga_dgi_edi` | migration des déclarations V1 (ADR-12) | **reportée** (« go pour la 5 sans la 4.5 ») — bloquée par D-07 | — | — |
 | C-3 | `l10n_ga_dgi_edi` | complétude du module | à faire | — | — |
-| 5 | `l10n_ga_dgi_edi_account` | ID18, ID27, ID23, ID24, ID26 | **terminé** — en attente du « go » pour C-4 / 6 | 96 % (22/23 ; 16 tests du module, 316 avec les 4 modules ; `.xlsm` des annexes à brancher) | `docs/completude/l10n_ga_dgi_edi_account.md` |
-| C-4 | `l10n_ga_dgi_edi_account` | complétude du module | à faire | — | — |
+| 5 | `l10n_ga_dgi_edi_account` | ID18, ID27, ID23, ID24, ID26 | **terminé** | 96 % (22/23 ; 16 tests du module, 316 avec les 4 modules ; `.xlsm` des annexes à brancher) | `docs/completude/l10n_ga_dgi_edi_account.md` |
+| C-4 | `l10n_ga_dgi_edi_account` | complétude du module | **terminé** — en attente du « go » | 96 % (23/24 ; 8 manques corrigés ; 22 tests du module, 322 avec les 4 modules ; `.xlsm` V1 à brancher) | `docs/completude/l10n_ga_dgi_edi_account_C-4.md` |
 | 6 | `l10n_ga_hr_payroll_migration` | reprise `hr_payroll_gb` | à faire | — | — |
 | C-5 | `l10n_ga_hr_payroll_migration` | complétude du module | à faire | — | — |
 
@@ -43,4 +43,4 @@ Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Action
 
 ## Prochaine étape
 
-Au choix d'Alex : C-4 (complétude de `l10n_ga_dgi_edi_account`, `prompts/99_completude.md`), étape 6 (`l10n_ga_hr_payroll_migration`, bloquée par D-05 : schéma `hr_payroll_gb`), ou 4.5 / `.xlsm` dès réception de la V1 (D-07). Démo : `make demo MODULE=l10n_ga_dgi_edi_account` (installe le module ; les sociétés au plan « ga » reçoivent les retenues).
+Au choix d'Alex : étape 6 (`l10n_ga_hr_payroll_migration`, bloquée par D-05 : schéma `hr_payroll_gb`), C-3 (complétude de `l10n_ga_dgi_edi`), ou 4.5 / `.xlsm` dès réception de la V1 (D-07). Démo : `make demo MODULE=l10n_ga_dgi_edi_account` (mise à jour C-4).
