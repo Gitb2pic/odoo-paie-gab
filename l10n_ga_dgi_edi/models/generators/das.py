@@ -14,7 +14,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import models
 from odoo.tools import float_compare, float_round
 
-from ...renderers.xlsx_builder import PAPER_A3, XlsxDeclarationBuilder
+from ...renderers.xlsx_builder import PAPER_A3, SHEET_NAME_MAX, XlsxDeclarationBuilder
 from ..declaration_generator import BLOCKING, WARNING
 
 # Cases calculées par ce générateur (les autres cases sont alimentées par leurs sources en données).
@@ -23,6 +23,7 @@ ID20 = {'A': ('ID20_A_COUNT', 'ID20_A_TOTAL'), 'B': ('ID20_B_COUNT', 'ID20_B_TOT
 PAYMENT_BOXES = {'rs': 'PAID_RS', 'fnh': 'PAID_FNH', 'cfp': 'PAID_CFP', 'other': 'PAID_OTHER'}
 PRESENCE_NET = 'presence_net'  # cadre des termes « nets des cotisations » (option société, point 09-6)
 ID21_SECTIONS = ('id21', PRESENCE_NET)
+ID19_GAINS = ('C1', 'C5', 'C4', 'C2', 'C3')  # présence, congés, indemnités, avantages, nourriture
 NET_OPENING_FIELDS = {'contributions'}
 TOTAL_BOX, TAXES_BOX, EXEMPT_BOX = 'C6', 'C11', 'NT_TOTAL'
 PAYMENT_TYPES = ('ID10', 'ID28')
@@ -526,9 +527,10 @@ class DasWorkbook:
             payload = detail.payload or {}
             if not payload.get('id19'):
                 continue
-            name = f'ID19 {payload.get("name") or ""}'[:28]
-            while name.lower() in used:
-                name = f'{name[:25]} {len(used)}'
+            name = f'ID19 {payload.get("name") or ""}'[:SHEET_NAME_MAX]
+            while name.lower() in used:  # homonymes : suffixe numéroté, nom de feuille Excel borné
+                suffix = f' {len(used)}'
+                name = f'{name[: SHEET_NAME_MAX - len(suffix)]}{suffix}'
             used.add(name.lower())
 
             def amount(code, payload=payload):
@@ -558,7 +560,7 @@ class DasWorkbook:
                         'title': env._('Rémunérations de l’année'),
                         'headers': [env._('Désignation'), env._('Montant')],
                         'rows': [
-                            *[[self.names.get(code, code), amount(code)] for code in ('C1', 'C5', 'C4', 'C2', 'C3')],
+                            *[[self.names.get(code, code), amount(code)] for code in ID19_GAINS],
                             [self.names.get(TOTAL_BOX, TOTAL_BOX), gross],
                             [env._('À déduire : TCS de l’année'), amount('C7')],
                             [env._('Rémunération brute imposable'), gross - amount('C7')],
@@ -568,7 +570,8 @@ class DasWorkbook:
                                 for code in ('NT_HOUSING', 'NT_TRANSPORT', 'NT_DOMESTIC', 'NT_OTHER')
                             ],
                         ],
-                        'bold': {5, 7},
+                        # totaux en gras : total brut, puis rémunération brute imposable
+                        'bold': {len(ID19_GAINS), len(ID19_GAINS) + 2},
                     },
                 ],
                 title=self._title('ID19', env._('Bulletin individuel de justification')),

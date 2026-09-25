@@ -9,6 +9,7 @@ from odoo import models
 
 BLOCKING = 'blocking'
 WARNING = 'warning'
+MONTHS_PER_YEAR = 12  # calendrier
 VALIDATED_STATES = ('validated', 'paid')  # sprint 0 point 3 : plus d'état « done » en 19
 GENERATOR_PREFIX = 'l10n_ga.declaration.generator.'
 
@@ -118,7 +119,7 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
     @staticmethod
     def _month_of(declaration, day):
         """Rang du mois de ``day`` dans la période (0 = premier mois)."""
-        return (day.year - declaration.date_from.year) * 12 + day.month - declaration.date_from.month
+        return (day.year - declaration.date_from.year) * MONTHS_PER_YEAR + day.month - declaration.date_from.month
 
     def _month_index(self, declaration, slip):
         return self._month_of(declaration, slip[self._date_field(declaration)])

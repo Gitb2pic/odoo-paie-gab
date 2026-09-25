@@ -1,5 +1,6 @@
 from . import (
     test_checks,
+    test_completeness,
     test_das,
     test_dts,
     test_generator_registry,
