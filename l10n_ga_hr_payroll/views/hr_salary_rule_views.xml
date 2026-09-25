@@ -23,6 +23,8 @@
                             <field name="l10n_ga_severance_base"/>
                             <field name="l10n_ga_das_column"/>
                             <field name="l10n_ga_das_exempt_column"/>
+                            <field name="l10n_ga_print_code"/>
+                            <field name="l10n_ga_print_name"/>
                         </group>
                     </group>
                 </page>

@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 24/09/2026 (étape 2.7).
+Mis à jour le 25/09/2026 (étape 2.7, reprise du bulletin 2.7 b).
 
 ## Étapes
 
@@ -13,7 +13,7 @@ Mis à jour le 24/09/2026 (étape 2.7).
 | 2.4 | `l10n_ga_hr_payroll` | conventions, grilles, heures supplémentaires, absences | **terminé** | 100 % (18/18 ; 69 tests Odoo, 64 d'outillage, noyau 398 tests couverture 100 % ; 12 absences, ancienneté, grille bloquante, heures sup. sans taux par défaut) | `docs/completude/l10n_ga_hr_payroll_2.4.md` |
 | 2.5 | `l10n_ga_hr_payroll` | prêts salariés (F1), indemnités récurrentes (F15) | **terminé** | 100 % (20/20 ; 108 tests Odoo, 64 d'outillage, noyau 439 tests couverture 100 % ; prêts par spécifications, quotité saisissable, indemnités = ajustements datés) | `docs/completude/l10n_ga_hr_payroll_2.5.md` |
 | 2.6 | `l10n_ga_hr_payroll` | import Excel (F3), contrôles avant paie (F8), arrondi espèces (F2), cumuls d'ouverture (F12) | **terminé** | 100 % (22/22 ; 156 tests Odoo, 65 d'outillage, noyau 466 tests couverture 100 % ; lot bloqué RG26, F16 espèces 514 500 + reliquat 397, bascule en juillet = année complète) | `docs/completude/l10n_ga_hr_payroll_2.6.md` |
-| 2.7 | `l10n_ga_hr_payroll` | rapports : bulletin figé, livre de paie, virements, billetage | **terminé** — en attente du « go » pour C-1 | 100 % (16/16 ; 174 tests Odoo, 65 d'outillage, noyau 466 tests couverture 100 % ; bulletin réimprimé identique, livre / virements / billetage = lignes ; D-47 à confirmer) | `docs/completude/l10n_ga_hr_payroll_2.7.md` |
+| 2.7 | `l10n_ga_hr_payroll` | rapports : bulletin figé, livre de paie, virements, billetage | **terminé** (bulletin repris au format du modèle d'Alex, 2.7 b) — en attente du « go » pour C-1 | 100 % (16/16 + 9/9 écarts ; 178 tests Odoo, 72 d'outillage, noyau 483 tests couverture 100 % ; bulletin réimprimé identique ; D-47 à confirmer) | `docs/completude/l10n_ga_hr_payroll_2.7.md` |
 | C-1 | `l10n_ga_hr_payroll` | complétude du module (`prompts/99_completude.md`) | à faire | — | — |
 | 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | à faire | — | — |
 | C-2 | `l10n_ga_hr_payroll_account` | complétude du module | à faire | — | — |
@@ -39,7 +39,7 @@ Mis à jour le 24/09/2026 (étape 2.7).
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
+Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
 
 ## Prochaine étape
 

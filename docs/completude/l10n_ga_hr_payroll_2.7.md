@@ -89,3 +89,31 @@ Corrigé pendant C4 : attribut de test `run` masquant `TestCase.run` ; `Validati
 - En-tête `web.external_layout` (logo, adresse de la société) lu sur la société du jour, comme tous les rapports Odoo ; les identifiants fiscaux employeur imprimés dans le corps sont figés (D-48).
 - Rendu PDF binaire non exécuté en test automatique (limite wkhtmltopdf / serveur de test) ; le HTML transmis à wkhtmltopdf est testé.
 - Rapprochement comptable de l'état des charges : étape 3 (D-51).
+
+---
+
+# Reprise 2.7 b — bulletin au format du modèle fourni par Alex (25/09/2026)
+
+Origine : retour d'Alex (« pas okay ») et modèle `docs/model-Bulletin-paie.pdf` (données réelles : **ignoré par git**, rien recopié). Plan `docs/plans/2.7b.md` ; décisions D-54 à D-57.
+
+## Score de la reprise
+
+**9 / 9 écarts corrigés et testés = 100 %** (E1 à E9 du plan).
+
+| Écart | Correction | Test |
+|---|---|---|
+| E1 en-tête | cadre employeur (logo, adresse, NIF, CNSS) + cadre titre / identité ; bloc emploi, direction, département, catégorie, paiement ; bloc nom + ville | rendu visuel contrôlé (base jetable, données fictives) ; `test_validated_payslip_reprinted_identically` |
+| E2 colonnes, organismes sur une ligne | `print_code` partagé (CNSS salariale + PF + AT + AVID ; CNAMGS ; FNH ; CFP) | `test_rows_follow_the_model`, générateur `test_print_codes_follow_the_model` |
+| E3 base et taux | `l10n_ga_base` / `l10n_ga_rate` figés par ligne (noyau pur `print_bases`) | `test_line_bases_frozen`, noyau `test_print_bases.py` |
+| E4 salaire de base en deux lignes | affichage seulement (BASIC inchangé, B2) ; salaire contractuel figé | `test_basic_salary_split_for_unpaid_absence` |
+| E5 ordre du modèle | sections par plage de code (noyau pur `print_layout`), contrôlées par le générateur | `test_rows_follow_the_model`, `test_print_layout.py`, 6 cas de catalogue refusés |
+| E6 totaux | TOTAL BRUT (imposables, D-55), TOTAL COTISATIONS (salarial / patronal), avantages, TOTAL GAINS, TOTAL RETENUES ; TOTAL GAINS + TOTAL RETENUES = NET | `test_rows_follow_the_model`, `test_benefit_in_kind_rows` |
+| E7 cumuls Mois / Année | nouveaux cumuls figés (cotisations salariales, avantages, FNH, indemnités non imposables) + champs du cumul d'ouverture | `test_switch_in_july_gives_same_year_end_as_full_year` (11 cumuls identiques au témoin) |
+| E8 congés | base congés, jours acquis / pris / solde figés (D-56) | `test_leave_counters_frozen` |
+| E9 horaires, direction, ville, « Édité le », émargement | heures des prestations stockées ; date d'édition = date de validation (réimpression identique) | `test_leave_counters_frozen`, `test_validated_payslip_reprinted_identically` |
+
+Rendu contrôlé sur données fictives (salaire 450 000, transport 35 000, responsabilité 105 000, marié 2 enfants) : CNSS 555 000 × 5 % = −27 750 | 18 % = 99 900 ; CNAMGS −11 100 | 22 755 ; FNH 16 650 ; CFP 2 775 ; TCS 411 150 × 5 % = −13 058 ; TOTAL GAINS 590 000 ; TOTAL RETENUES −51 908 ; NET À PAYER 538 092.
+
+Corrigé pendant la reprise : `web.basic_layout` ouvrait un second document HTML (vérifié : un seul `<!DOCTYPE html>`).
+
+Non repris (D-57) : assurance décès-invalidité, base TCS lissée, avantage domesticité soumis CNAMGS (rubriques propres à l'entreprise du modèle).

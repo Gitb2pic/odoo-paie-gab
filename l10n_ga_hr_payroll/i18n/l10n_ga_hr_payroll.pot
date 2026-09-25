@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 22:42+0000\n"
-"PO-Revision-Date: 2026-09-24 22:42+0000\n"
+"POT-Creation-Date: 2026-09-25 03:44+0000\n"
+"PO-Revision-Date: 2026-09-25 03:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -170,16 +170,6 @@ msgid "(5) Salaire brut de congé"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "(avantage en nature, non versé)"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "(matricule"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_tax_parts_forced
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_version__l10n_ga_tax_parts_forced
 msgid "0 = parts calculées. Sinon, de 1 à 6,5 par demi-part, avec un motif."
@@ -226,77 +216,18 @@ msgid "4 — Non africains"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ": valeurs figées."
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"<br/>\n"
-"                            Catégorie :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"<br/>\n"
-"                            Embauche :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"<br/>\n"
-"                            Emploi :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"<br/>\n"
-"                            NIF :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"<br/>\n"
-"                            N° CNAMGS :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"<br/>\n"
-"                            N° CNSS :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"<br/>\n"
-"                            Payé le"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_form
 msgid "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"au\" title=\"au\"/>"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "<strong>BULLETIN DE SALAIRE</strong>"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_form
 msgid "<strong>Conditions d’octroi non remplies (RG20)</strong>"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "<strong>Employeur</strong><br/>"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "<strong>Salarié</strong><br/>"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -333,9 +264,20 @@ msgid "Absence pour sanction"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "Absences et congés non payés au salaire de base"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.leave.type,name:l10n_ga_hr_payroll.leave_type_ga_at
 #: model:hr.work.entry.type,name:l10n_ga_hr_payroll.work_entry_type_ga_at
 msgid "Accident du travail"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Acquis"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -416,6 +358,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Ancienneté depuis"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_loan_early_repayment_view_form
 msgid "Annuler"
@@ -429,6 +376,7 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__year
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_search
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Année"
 msgstr ""
 
@@ -516,7 +464,6 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_social_base
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__res_company__l10n_ga_cfp_base__social
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Assiette sociale"
 msgstr ""
 
@@ -585,7 +532,7 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_ga_hr_payroll.category_ga_aik
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_benefits_in_kind
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__benefits
 msgid "Avantages en nature"
 msgstr ""
 
@@ -628,16 +575,6 @@ msgid "Banque non renseignée"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Base / nombre"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Base IRPP"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__irpp_base
 msgid "Base IRPP cumulée"
 msgstr ""
@@ -649,8 +586,23 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_tcs_base
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Base TCS"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "Base TCS mensuelle"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Base congés"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_leave_base
+msgid "Base congés (12 mois)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -669,8 +621,17 @@ msgid "Base des indemnités de rupture"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_view_form_l10n_ga
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_line__l10n_ga_base
+msgid "Base imprimée"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Base ou nombre"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_view_form_l10n_ga
 msgid "Bases du mois"
 msgstr ""
 
@@ -718,7 +679,6 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__gross
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Brut"
 msgstr ""
 
@@ -764,17 +724,7 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Bulletin de paie —"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Bulletin non validé — document sans valeur légale."
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Bulletin validé le"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -817,7 +767,6 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_cnss_sal
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_cnss_employee
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__cnss
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "CNSS salariale"
 msgstr ""
 
@@ -841,6 +790,7 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__category
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Catégorie"
 msgstr ""
 
@@ -862,8 +812,12 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_ga_hr_payroll.category_ga_employer
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Charges patronales"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Charges sal."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -914,6 +868,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_job_code
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_job_code
 msgid "Code emploi (DGI)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__l10n_ga_print_code
+msgid "Code imprimé"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1051,6 +1010,16 @@ msgid "Congé pour décès"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_leave_acquired
+msgid "Congés acquis (jours)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_leave_taken
+msgid "Congés pris (jours)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_cfp
 msgid "Contribution à la formation professionnelle"
 msgstr ""
@@ -1104,6 +1073,17 @@ msgid "Corriger"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Cotisations patronales"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_employee_contributions
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__contributions
+msgid "Cotisations salariales"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_check_issue__create_uid
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_collective_agreement__create_uid
@@ -1142,6 +1122,11 @@ msgid "Cumul CNSS salariale"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_ytd_fnh
+msgid "Cumul FNH patronal"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_ytd_irpp
 msgid "Cumul IRPP"
 msgstr ""
@@ -1149,6 +1134,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_ytd_tcs
 msgid "Cumul TCS"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_ytd_benefits
+msgid "Cumul avantages en nature"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1162,6 +1152,11 @@ msgid "Cumul brut"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_ytd_contributions
+msgid "Cumul cotisations salariales"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_ytd_bonus_exempt
 msgid "Cumul gratifications exonérées"
 msgstr ""
@@ -1172,8 +1167,17 @@ msgid "Cumul imposable"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_view_form_l10n_ga
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_ytd_tax_exempt
+msgid "Cumul indemnités non imposables"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Cumuls"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_view_form_l10n_ga
 msgid "Cumuls de l’année"
 msgstr ""
 
@@ -1278,6 +1282,11 @@ msgid "Date d’effet"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Date d’embauche"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_hire_date
 msgid "Date d’embauche (figée)"
 msgstr ""
@@ -1296,6 +1305,16 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_work_entry_type__l10n_ga_overtime_period__sunday
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_overtime_rate__period__sunday
 msgid "Dimanche"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Direction"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_direction
+msgid "Direction (figée)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1364,6 +1383,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Département"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__derogation
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_form
 msgid "Dérogation RH"
@@ -1389,6 +1413,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_benefit_utilities
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_benefit_utilities
 msgid "Eau et électricité fournies"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Emploi"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1498,8 +1527,19 @@ msgid "FCFA."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "FNH"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_fnh_sal
 msgid "FNH part salariale"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_fnh_employer
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__fnh
+msgid "FNH patronal"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1597,7 +1637,7 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Gains"
+msgid "Gains et cotisations salariales"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1620,7 +1660,6 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_bonus_exempted
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__bonus_exempt
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Gratifications exonérées"
 msgstr ""
 
@@ -1686,11 +1725,6 @@ msgid "Has Message"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Heures"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_work_entry__l10n_ga_imported
 msgid "Heures créées par l’import Excel des variables (F3, D-43)."
 msgstr ""
@@ -1732,6 +1766,11 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_hs_dim
 #: model:hr.work.entry.type,name:l10n_ga_hr_payroll.work_entry_type_ga_hs_dim
 msgid "Heures supplémentaires du dimanche"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Horaires"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -1861,8 +1900,12 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_salary_rule__l10n_ga_tax_base__taxable
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Imposable"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Ind. non impos."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2005,6 +2048,11 @@ msgid "Indemnités"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__tax_exempt
+msgid "Indemnités non imposables"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__message_is_follower
 msgid "Is Follower"
 msgstr ""
@@ -2023,7 +2071,7 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Jours"
+msgid "Jours de congé"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2166,6 +2214,21 @@ msgid "Le prêt %s ne peut pas revenir en brouillon."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_salary_rule__l10n_ga_print_name
+msgid "Libellé de la ligne (vide : nom de la rubrique)."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_rule__l10n_ga_print_name
+msgid "Libellé imprimé"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Libellé rubrique"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payslip_input_import.py:0
 msgid ""
@@ -2204,6 +2267,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_benefit_housing
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_benefit_housing
 msgid "Logement fourni"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Logo"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2283,6 +2351,7 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payroll_report.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Matricule"
 msgstr ""
 
@@ -2368,8 +2437,14 @@ msgid "Modèle concerné"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Mois"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__amount
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__amount
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Montant"
 msgstr ""
 
@@ -2404,11 +2479,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Montants en francs CFA. Bulletin à conserver sans limitation de durée."
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_attachment__l10n_ga_forced_reason
 msgid "Motif (forcée imposable)"
 msgstr ""
@@ -2437,6 +2507,7 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_nif
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_nif
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "NIF"
 msgstr ""
 
@@ -2451,6 +2522,11 @@ msgid "NIF (figé)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "NIF :"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_company_nif
 msgid "NIF employeur (figé)"
 msgstr ""
@@ -2459,6 +2535,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payroll_report.py:0
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_net_pay
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Net à payer"
 msgstr ""
 
@@ -2489,9 +2566,19 @@ msgid "Nombre de coupures"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Nombre de parts"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/models/hr_version.py:0
 msgid "Nombre de parts forcé invalide : %(detail)s"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Nombre d’enfants"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2574,6 +2661,7 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_employee__l10n_ga_cnamgs_number
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_version__l10n_ga_cnamgs_number
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "N° CNAMGS"
 msgstr ""
 
@@ -2585,6 +2673,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_company_cnamgs
 msgid "N° CNAMGS employeur (figé)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "N° CNSS"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2620,6 +2713,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_form
 msgid "Origine des cumuls (ancien logiciel, bulletins papier…)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Paiement"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2675,6 +2773,11 @@ msgid "Parts majorées (personne seule)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,help:l10n_ga_hr_payroll.field_hr_salary_rule__l10n_ga_print_code
+msgid "Parts salariale et patronales d’un organisme : même code."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model,name:l10n_ga_hr_payroll.model_hr_payslip_run
 msgid "Pay Run"
 msgstr ""
@@ -2724,19 +2827,24 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_cnamgs_ceiling_used
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Plafond CNAMGS appliqué"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_cnss_ceiling_used
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Plafond CNSS appliqué"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_res_company__l10n_ga_loan_outstanding_cap
 msgid "Plafond d’encours des prêts"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid ""
+"Pour vous aider à faire valoir vos droits, conservez ce bulletin sans "
+"limitation de durée."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -2887,6 +2995,11 @@ msgid "Prime de trousseau"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Pris"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_work_entry_type__l10n_ga_pay_mode__cnss
 msgid "Pris en charge par la CNSS"
 msgstr ""
@@ -2941,6 +3054,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payroll_report.py:0
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_overtime_rate__period
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Période"
 msgstr ""
 
@@ -2952,11 +3066,6 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__date_from
 msgid "Période couverte du"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Période du"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3080,11 +3189,6 @@ msgid "Retenue"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Retenues"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.hr_payslip_view_form_l10n_ga
 msgid "Retenues du mois"
 msgstr ""
@@ -3102,7 +3206,6 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ga_hr_payroll/wizard/l10n_ga_payroll_report.py:0
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Rubrique"
 msgstr ""
 
@@ -3158,6 +3261,11 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_ga_hr_payroll.rule_ga_gross
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__res_company__l10n_ga_cfp_base__gross
 msgid "Salaire brut"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_wage
+msgid "Salaire contractuel (figé)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3256,7 +3364,7 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Situation :"
+msgid "Situation familiale"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3274,6 +3382,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payroll_report__company_id
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_ytd_opening__company_id
 msgid "Société"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Solde"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_leave_balance
+msgid "Solde de congés (jours)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3352,6 +3470,30 @@ msgid "TCS"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "TOTAL BRUT"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "TOTAL COTISATIONS"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "TOTAL GAINS"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "TOTAL RETENUES"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_salary_attachment__l10n_ga_rate
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
 msgid "Taux"
@@ -3365,6 +3507,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_agreement_grade__hourly_rate
 msgid "Taux horaire"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip_line__l10n_ga_rate
+msgid "Taux imprimé (%)"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3385,13 +3532,13 @@ msgid "Template Filename"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "Temps"
+#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_payslip_input_import__state__done
+msgid "Terminé"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__l10n_ga_payslip_input_import__state__done
-msgid "Terminé"
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Tot. av. nat."
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3401,6 +3548,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_employee_loan_view_list
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_ytd_opening_view_list
 msgid "Total"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ga_hr_payroll/models/hr_payslip.py:0
+msgid "Total avantages en nature"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3431,6 +3584,11 @@ msgstr ""
 #. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,help:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__activity_exception_decoration
 msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Tél. :"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
@@ -3501,6 +3659,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_hr_payslip__l10n_ga_employee_city
+msgid "Ville du salarié (figée)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_payslip__l10n_ga_payment_mode__transfer
 #: model:ir.model.fields.selection,name:l10n_ga_hr_payroll.selection__hr_version__l10n_ga_payment_mode__transfer
 msgid "Virement"
@@ -3560,13 +3723,6 @@ msgid "employee_ids"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid ""
-"enfant(s) —\n"
-"                            parts fiscales :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.l10n_ga_collective_agreement_view_form
 msgid "ex. Convention collective du commerce"
 msgstr ""
@@ -3619,6 +3775,21 @@ msgid "Échéancier"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Édité le"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Émargement employeur"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
+msgid "Émargement employé(e)"
+msgstr ""
+
+#. module: l10n_ga_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan__state
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_employee_loan_line__state
 #: model:ir.model.fields,field_description:l10n_ga_hr_payroll.field_l10n_ga_payroll_report__report_type
@@ -3650,15 +3821,12 @@ msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "— NIF :"
+msgid ""
+"—\n"
+"                                CNSS employeur :"
 msgstr ""
 
 #. module: l10n_ga_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "— N° CNAMGS :"
-msgstr ""
-
-#. module: l10n_ga_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ga_hr_payroll.report_payslip_ga
-msgid "— ancienneté depuis le"
+msgid "— CNAMGS :"
 msgstr ""
