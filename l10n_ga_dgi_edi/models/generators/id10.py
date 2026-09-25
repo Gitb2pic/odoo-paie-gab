@@ -36,7 +36,7 @@ def cfp_rounding_check(generator, declaration, facts):
         return []
     values = generator._fill(declaration, facts)
     base, rate, amount = (values.get(box.code) or 0.0 for box in (base_box, rate_box, amount_box))
-    employees = {fact['employee'] for fact in facts}
+    employees = {fact['employee'] for fact in facts['lines']}
     if abs(base * rate - amount) <= len(employees):
         return []
     message = declaration.env._(

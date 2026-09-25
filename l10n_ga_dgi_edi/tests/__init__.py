@@ -1,5 +1,6 @@
 from . import (
     test_checks,
+    test_dts,
     test_generator_registry,
     test_id10,
     test_id28,

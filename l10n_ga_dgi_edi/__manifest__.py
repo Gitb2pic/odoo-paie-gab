@@ -1,7 +1,7 @@
 {
     'name': 'Gabon - Déclarations DGI et sociales',
     'version': '19.0.2.0.0',
-    'summary': 'Déclarations de la paie : ID10, ID28, quittances ; moteur, contrôles, instantané figé, Excel, PDF',
+    'summary': 'Déclarations de la paie : ID10, ID28, DTS CNSS et CNAMGS, quittances ; instantané figé, Excel, PDF',
     'countries': ['ga'],
     'category': 'Human Resources/Payroll',
     'author': 'OMIAS Leadership Group',
@@ -16,7 +16,9 @@
         'report/report_declaration.xml',
         'report/report_id10.xml',
         'report/report_id28.xml',
+        'report/report_dts.xml',
         'data/l10n_ga_declaration_type_data.xml',
+        'data/l10n_ga_declaration_type_dts_data.xml',
         'views/l10n_ga_declaration_type_views.xml',
         'views/l10n_ga_declaration_views.xml',
         'views/l10n_ga_check_issue_views.xml',

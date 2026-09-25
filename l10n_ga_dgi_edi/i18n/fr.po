@@ -6,14 +6,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 08:04+0000\n"
-"PO-Revision-Date: 2026-09-25 08:04+0000\n"
+"POT-Creation-Date: 2026-09-25 08:34+0000\n"
+"PO-Revision-Date: 2026-09-25 08:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid ""
+"%(employee)s : %(box)s de %(month)s = %(amount)s, au-delà du plafond "
+"%(ceiling)s (plusieurs bulletins dans le mois)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "%(employee)s : n° CNAMGS absent."
+msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #. odoo-python
@@ -68,6 +82,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/l10n_ga_declaration.py:0
 msgid "%(name)s à déposer avant le %(date)s"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi.action_report_dts
+msgid "'DTS - %s' % (object.name)"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -148,6 +167,11 @@ msgid "<strong>N° du contribuable (NIF) :</strong>"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_at
+msgid "Accidents du travail (employeur)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_needaction
 msgid "Action Needed"
 msgstr ""
@@ -219,6 +243,12 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration__state__cancel
 msgid "Annulée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_hdr_year
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_hdr_year
+msgid "Année"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -503,6 +533,18 @@ msgid "Cellule du gabarit : « P40 » (1re feuille) ou « Feuille!P40 »."
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_slip_field
+msgid ""
+"Champ du bulletin validé additionné (ex. l10n_ga_social_base : assiette "
+"sociale, plancher SMIG compris)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__source_slip_field
+msgid "Champ figé du bulletin"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_type__template_path
 msgid ""
 "Chemin du gabarit dans un module (ex. "
@@ -584,6 +626,21 @@ msgid "Corriger"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_pat
+msgid "Cotisation patronale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_sal
+msgid "Cotisation salariale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_sal
+msgid "Cotisation salariale (pensions)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l3
 msgid "Cotisations CNSS"
 msgstr ""
@@ -634,6 +691,21 @@ msgid "DGI"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.actions.report,name:l10n_ga_dgi_edi.action_report_dts
+msgid "DTS (récapitulatif)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_dts_cnamgs
+msgid "DTS CNAMGS — déclaration trimestrielle des salaires"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_generator_dts_cnss
+msgid "DTS CNSS — déclaration trimestrielle des salaires"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_date
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__date
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__value_kind__date
@@ -645,6 +717,18 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_type__period_basis__payment_date
 msgid "Date de paiement"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "Date de sortie"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "Date d’entrée"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -672,6 +756,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_frozen_mixin__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_base__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_dts_cnamgs__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_dts_cnss__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id10__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id28__display_name
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_payslip__display_name
@@ -730,6 +816,16 @@ msgid "Déclaration fiscale ou sociale (Gabon)"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi.declaration_type_dts_cnamgs
+msgid "Déclaration trimestrielle des salaires CNAMGS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi.declaration_type_dts_cnss
+msgid "Déclaration trimestrielle des salaires CNSS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:mail.activity.type,name:l10n_ga_dgi_edi.mail_activity_type_declaration_fix
 msgid "Déclaration à corriger"
 msgstr ""
@@ -784,6 +880,16 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model,name:l10n_ga_dgi_edi.model_l10n_ga_declaration_detail
 msgid "Détail de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__monthly
+msgid "Détail mensuel"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
+msgid "Détail nominatif"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -918,6 +1024,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_frozen_mixin__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_base__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_dts_cnamgs__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_dts_cnss__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id10__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_id28__id
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_generator_payslip__id
@@ -1229,6 +1337,12 @@ msgid "Nom du contribuable"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "Nom et prénoms"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_detail__label
 msgid "Nom figé au calcul."
 msgstr ""
@@ -1241,6 +1355,17 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__value_number
 msgid "Nombre / taux"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__source_measure__count
+msgid "Nombre de salariés"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_employees
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_employees
+msgid "Nombre de salariés déclarés"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1280,6 +1405,18 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "N° CNAMGS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "N° CNSS"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__filing_number
 msgid "N° de dépôt"
 msgstr ""
@@ -1292,11 +1429,13 @@ msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_cnamgs
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_hdr_number
 msgid "N° employeur CNAMGS"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_cnss
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_hdr_number
 msgid "N° employeur CNSS"
 msgstr ""
 
@@ -1312,6 +1451,13 @@ msgid "Paramètre daté"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__ceiling_parameter
+msgid ""
+"Paramètre daté : un salarié ne doit pas dépasser ce plafond sur un mois "
+"(plusieurs bulletins)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #. odoo-python
 #: code:addons/l10n_ga_dgi_edi/models/checks.py:0
 msgid "Paramètre « %(code)s » sans valeur au %(date)s."
@@ -1320,6 +1466,11 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__source_measure__cfp
 msgid "Part retenue dans l’assiette CFP"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__source_measure__social
+msgid "Part soumise à cotisations"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1333,8 +1484,23 @@ msgid "Payée"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_avid
+msgid "Pensions (employeur)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_payment__attachment_ids
 msgid "Pièces jointes"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__ceiling_parameter
+msgid "Plafond mensuel contrôlé"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_pf
+msgid "Prestations familiales (employeur)"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1407,6 +1573,8 @@ msgstr ""
 
 #. module: l10n_ga_dgi_edi
 #: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__company_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_hdr_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_hdr_name
 #: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id10_hdr_name
 #: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_hdr_name
 msgid "Raison sociale"
@@ -1512,6 +1680,11 @@ msgid "Référence"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:ir.model.fields,help:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__monthly
+msgid "Répartie par mois de la période dans le détail nominatif (DTS, DAS)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
@@ -1519,6 +1692,18 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_id28_l1
 msgid "Salaires de base"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_base
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_base
+msgid "Salaires plafonnés"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_gross
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_gross
+msgid "Salaires soumis"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1625,6 +1810,18 @@ msgid "Total"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_total
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_total
+msgid "Total des cotisations"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "Total des salariés %(listed)s différent du total dû %(due)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration__amount_total
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_box__is_total
 #: model:ir.model.fields,field_description:l10n_ga_dgi_edi.field_l10n_ga_declaration_line__is_total
@@ -1634,6 +1831,17 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_payments
 msgid "Total dû :"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnamgs_hdr_quarter
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi.box_dts_cnss_hdr_quarter
+msgid "Trimestre"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi.selection__l10n_ga_declaration_box__auto_value__period_quarter
+msgid "Trimestre de la période"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi
@@ -1789,6 +1997,18 @@ msgstr ""
 #. module: l10n_ga_dgi_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi.report_declaration_document
 msgid "au"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "departure_date"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi/models/generators/dts.py:0
+msgid "hire_date"
 msgstr ""
 
 #. module: l10n_ga_dgi_edi

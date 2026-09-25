@@ -24,6 +24,9 @@ class MissingCnssNumber(DeclarationCheckRule):
 
     code = 'GA_DECL_NO_CNSS'
 
+    def applies(self, declaration):
+        return declaration._generator()._requires_cnss_number(declaration)
+
     def run(self, declaration, facts=None):
         employees = declaration.detail_ids.employee_id.filtered(lambda e: not e.ssnid)
         return [

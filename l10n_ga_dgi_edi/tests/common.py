@@ -39,6 +39,15 @@ class FakeGenerator:
     def _required_parameters(self, declaration):
         return list(self.parameters)
 
+    def _requires_cnss_number(self, declaration):
+        return True
+
+    def _detail_columns(self, declaration):
+        return []
+
+    def _applies(self, company):
+        return True
+
 
 class GaDeclarationCase(GaPayrollCase):
     @classmethod
@@ -98,6 +107,7 @@ class GaDeclarationCase(GaPayrollCase):
     @classmethod
     def _f16_employee(cls, name='F16', **values):
         values.setdefault('ssnid', f'CNSS-{name}')
+        values.setdefault('l10n_ga_cnamgs_number', f'CNAMGS-{name}')
         return cls._employee(name, 450_000, l10n_ga_transport_trips='2', l10n_ga_nif=f'NIF-{name}', **values)
 
     @classmethod

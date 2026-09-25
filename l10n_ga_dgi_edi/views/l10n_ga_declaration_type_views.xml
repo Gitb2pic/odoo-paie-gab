@@ -59,6 +59,9 @@
                             <field name="source_codes" optional="show"/>
                             <field name="source_categories" optional="show"/>
                             <field name="source_measure" optional="show"/>
+                            <field name="source_slip_field" optional="hide"/>
+                            <field name="monthly" optional="hide"/>
+                            <field name="ceiling_parameter" optional="hide"/>
                             <field name="sum_box_codes" optional="show"/>
                             <field name="parameter_code" optional="show"/>
                             <field name="section" optional="show"/>

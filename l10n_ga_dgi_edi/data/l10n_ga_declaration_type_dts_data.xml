@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    DTS CNSS et CNAMGS trimestrielles (base 03 §3 et §5, plan 4.3) : cases et rubriques sources.
+    Rattachement au mois de paie (D-82) ; échéance le 30 du mois suivant le trimestre (D-85).
+    Pas de gabarit officiel : classeur neuf à colonnes documentées (D-83, à confirmer).
+-->
+<odoo>
+    <record id="declaration_type_dts_cnss" model="l10n_ga.declaration.type">
+        <field name="code">DTS_CNSS</field>
+        <field name="name">Déclaration trimestrielle des salaires CNSS</field>
+        <field name="sequence">30</field>
+        <field name="authority">cnss</field>
+        <field name="periodicity">quarterly</field>
+        <field name="period_basis">period</field>
+        <field name="due_months">1</field>
+        <field name="due_day">30</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="generator_key">dts_cnss</field>
+        <field name="report_id" ref="action_report_dts"/>
+    </record>
+    <record id="box_dts_cnss_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+    </record>
+    <record id="box_dts_cnss_hdr_number" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">HDR_NUMBER</field>
+        <field name="name">N° employeur CNSS</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_cnss</field>
+    </record>
+    <record id="box_dts_cnss_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Année</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+    </record>
+    <record id="box_dts_cnss_hdr_quarter" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">HDR_QUARTER</field>
+        <field name="name">Trimestre</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_quarter</field>
+    </record>
+    <record id="box_dts_cnss_employees" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">EMPLOYEES</field>
+        <field name="name">Nombre de salariés déclarés</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">number</field>
+        <field name="source_codes">GA_CNSS_SAL</field>
+        <field name="source_measure">count</field>
+    </record>
+    <record id="box_dts_cnss_gross" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">GROSS</field>
+        <field name="name">Salaires soumis</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">amount</field>
+        <field name="source_slip_field">l10n_ga_social_base</field>
+        <field name="monthly" eval="True"/>
+    </record>
+    <record id="box_dts_cnss_base" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">BASE</field>
+        <field name="name">Salaires plafonnés</field>
+        <field name="sequence">70</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_CNSS_SAL</field>
+        <field name="source_measure">base</field>
+        <field name="monthly" eval="True"/>
+        <field name="ceiling_parameter">l10n_ga_cnss_ceiling</field>
+    </record>
+    <record id="box_dts_cnss_sal" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">SAL</field>
+        <field name="name">Cotisation salariale (pensions)</field>
+        <field name="sequence">80</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">-GA_CNSS_SAL</field>
+        <field name="is_total" eval="True"/>
+    </record>
+    <record id="box_dts_cnss_pf" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">PF</field>
+        <field name="name">Prestations familiales (employeur)</field>
+        <field name="sequence">90</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_CNSS_PF</field>
+        <field name="is_total" eval="True"/>
+    </record>
+    <record id="box_dts_cnss_at" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">AT</field>
+        <field name="name">Accidents du travail (employeur)</field>
+        <field name="sequence">100</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_CNSS_AT</field>
+        <field name="is_total" eval="True"/>
+    </record>
+    <record id="box_dts_cnss_avid" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">AVID</field>
+        <field name="name">Pensions (employeur)</field>
+        <field name="sequence">110</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_CNSS_AVID</field>
+        <field name="is_total" eval="True"/>
+    </record>
+    <record id="box_dts_cnss_total" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnss"/>
+        <field name="code">TOTAL</field>
+        <field name="name">Total des cotisations</field>
+        <field name="sequence">120</field>
+        <field name="value_kind">amount</field>
+        <field name="sum_box_codes">SAL, PF, AT, AVID</field>
+    </record>
+
+    <record id="declaration_type_dts_cnamgs" model="l10n_ga.declaration.type">
+        <field name="code">DTS_CNAMGS</field>
+        <field name="name">Déclaration trimestrielle des salaires CNAMGS</field>
+        <field name="sequence">40</field>
+        <field name="authority">cnamgs</field>
+        <field name="periodicity">quarterly</field>
+        <field name="period_basis">period</field>
+        <field name="due_months">1</field>
+        <field name="due_day">30</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="generator_key">dts_cnamgs</field>
+        <field name="report_id" ref="action_report_dts"/>
+    </record>
+    <record id="box_dts_cnamgs_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+    </record>
+    <record id="box_dts_cnamgs_hdr_number" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">HDR_NUMBER</field>
+        <field name="name">N° employeur CNAMGS</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_cnamgs</field>
+    </record>
+    <record id="box_dts_cnamgs_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Année</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+    </record>
+    <record id="box_dts_cnamgs_hdr_quarter" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">HDR_QUARTER</field>
+        <field name="name">Trimestre</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_quarter</field>
+    </record>
+    <record id="box_dts_cnamgs_employees" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">EMPLOYEES</field>
+        <field name="name">Nombre de salariés déclarés</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">number</field>
+        <field name="source_codes">GA_CNAMGS_SAL</field>
+        <field name="source_measure">count</field>
+    </record>
+    <record id="box_dts_cnamgs_gross" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">GROSS</field>
+        <field name="name">Salaires soumis</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">amount</field>
+        <field name="source_slip_field">l10n_ga_social_base</field>
+        <field name="monthly" eval="True"/>
+    </record>
+    <record id="box_dts_cnamgs_base" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">BASE</field>
+        <field name="name">Salaires plafonnés</field>
+        <field name="sequence">70</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_CNAMGS_SAL</field>
+        <field name="source_measure">base</field>
+        <field name="monthly" eval="True"/>
+        <field name="ceiling_parameter">l10n_ga_cnamgs_ceiling</field>
+    </record>
+    <record id="box_dts_cnamgs_sal" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">SAL</field>
+        <field name="name">Cotisation salariale</field>
+        <field name="sequence">80</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">-GA_CNAMGS_SAL</field>
+        <field name="is_total" eval="True"/>
+    </record>
+    <record id="box_dts_cnamgs_pat" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">PAT</field>
+        <field name="name">Cotisation patronale</field>
+        <field name="sequence">90</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_CNAMGS_PAT</field>
+        <field name="is_total" eval="True"/>
+    </record>
+    <record id="box_dts_cnamgs_total" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_dts_cnamgs"/>
+        <field name="code">TOTAL</field>
+        <field name="name">Total des cotisations</field>
+        <field name="sequence">100</field>
+        <field name="value_kind">amount</field>
+        <field name="sum_box_codes">SAL, PAT</field>
+    </record>
+</odoo>

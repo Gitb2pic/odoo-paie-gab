@@ -60,6 +60,15 @@ class L10nGaDeclarationGeneratorBase(models.AbstractModel):
         """L'imprimé concerne-t-il la société ? Sinon ni l'Observer ni le cron ne le préparent."""
         return True
 
+    def _requires_cnss_number(self, declaration):
+        """Le contrôle commun « n° CNSS manquant » s'applique-t-il à cet imprimé ?"""
+        return True
+
+    def _detail_columns(self, declaration):
+        """Colonnes du détail nominatif ``[(clé du payload, libellé, nature)]`` (nature : amount, text,
+        date) ; vide = détail par case."""
+        return []
+
 
 class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
     """Générateur générique piloté par les cases (codes de rubriques et catégories en données, prompt 04).
@@ -86,35 +95,53 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
 
     # --- collecte --------------------------------------------------------------------------------
 
-    def _payslip_domain(self, declaration):
-        date_field = 'l10n_ga_payment_date' if declaration.type_id.period_basis == 'payment_date' else 'date_to'
+    def _date_field(self, declaration):
+        return 'l10n_ga_payment_date' if declaration.type_id.period_basis == 'payment_date' else 'date_to'
+
+    def _payslip_domain(self, declaration, prefix='slip_id.'):
+        date_field = self._date_field(declaration)
         return [
-            ('slip_id.company_id', '=', declaration.company_id.id),
-            ('slip_id.state', 'in', VALIDATED_STATES),
-            (f'slip_id.{date_field}', '>=', declaration.date_from),
-            (f'slip_id.{date_field}', '<=', declaration.date_to),
+            (f'{prefix}company_id', '=', declaration.company_id.id),
+            (f'{prefix}state', 'in', VALIDATED_STATES),
+            (f'{prefix}{date_field}', '>=', declaration.date_from),
+            (f'{prefix}{date_field}', '<=', declaration.date_to),
         ]
 
+    @staticmethod
+    def _month_of(declaration, day):
+        """Rang du mois de ``day`` dans la période (0 = premier mois)."""
+        return (day.year - declaration.date_from.year) * 12 + day.month - declaration.date_from.month
+
+    def _month_index(self, declaration, slip):
+        return self._month_of(declaration, slip[self._date_field(declaration)])
+
+    def _month_count(self, declaration):
+        return self._month_of(declaration, declaration.date_to) + 1
+
     def _collect(self, declaration):
-        """Lignes agrégées par (salarié, rubrique) : code, catégorie, montant, base, part exclue, lignes."""
+        """Bulletins de la période et leurs lignes agrégées par (bulletin, rubrique)."""
         boxes = self._boxes(declaration)
         codes = sorted({code for box in boxes for code, _sign in box._source_codes()})
         categories = sorted({code for box in boxes for code, _sign in box._source_categories()})
+        slips = self.env['hr.payslip'].search(self._payslip_domain(declaration, prefix=''))
+        facts = {'slips': slips, 'lines': []}
         if not (codes or categories):
-            return []
+            return facts
         groups = self.env['hr.payslip.line']._read_group(
             [
-                *self._payslip_domain(declaration),
+                ('slip_id', 'in', slips.ids),
                 '|',
                 ('code', 'in', codes),
                 ('salary_rule_id.category_id.code', 'in', categories),
             ],
-            ['employee_id', 'salary_rule_id'],
+            ['slip_id', 'salary_rule_id'],
             ['total:sum', 'l10n_ga_base:sum', 'l10n_ga_social_excluded:sum', 'id:recordset'],
         )
-        return [
+        facts['lines'] = [
             {
-                'employee': employee,
+                'employee': slip.employee_id,
+                'slip': slip,
+                'month': self._month_index(declaration, slip),
                 'code': rule.code,
                 'category': rule.category_id.code,
                 'total': total,
@@ -122,13 +149,14 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
                 'social_excluded': excluded,
                 'lines': lines,
             }
-            for employee, rule, total, base, excluded, lines in groups
+            for slip, rule, total, base, excluded, lines in groups
         ]
+        return facts
 
     def _measure(self, declaration, fact, measure):
         if measure == 'base':
             return fact['base']
-        if measure == 'cfp' and declaration.company_id.l10n_ga_cfp_base != 'gross':
+        if measure == 'social' or (measure == 'cfp' and declaration.company_id.l10n_ga_cfp_base != 'gross'):
             return fact['total'] - fact['social_excluded']
         return fact['total']
 
@@ -140,25 +168,42 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
         return dict(box._source_categories()).get(fact['category'], 0)
 
     def _contributions(self, declaration, facts):
-        """``{case: {salarié: [montant, lignes]}}`` pour les cases alimentées par les bulletins."""
+        """``{case: {salarié: {'amount', 'lines', 'months'}}}`` pour les cases alimentées par les bulletins."""
+        months = self._month_count(declaration)
         result = {}
+
+        def entry(per_employee, employee):
+            return per_employee.setdefault(
+                employee, {'amount': 0.0, 'lines': self.env['hr.payslip.line'], 'months': [0.0] * months}
+            )
+
         for box in self._boxes(declaration).filtered(lambda b: b._has_source()):
             per_employee = result.setdefault(box.code, {})
-            for fact in facts:
+            for fact in facts['lines']:
                 sign = self._sign(box, fact)
                 if sign:
-                    entry = per_employee.setdefault(fact['employee'], [0.0, self.env['hr.payslip.line']])
-                    entry[0] += sign * self._measure(declaration, fact, box.source_measure)
-                    entry[1] |= fact['lines']
+                    value = sign * self._measure(declaration, fact, box.source_measure)
+                    item = entry(per_employee, fact['employee'])
+                    item['amount'] += value
+                    item['months'][fact['month']] += value
+                    item['lines'] |= fact['lines']
+            if box.source_slip_field:
+                for slip in facts['slips']:
+                    item = entry(per_employee, slip.employee_id)
+                    item['amount'] += slip[box.source_slip_field]
+                    item['months'][self._month_index(declaration, slip)] += slip[box.source_slip_field]
         return result
 
     def _fill(self, declaration, facts):
+        boxes = self._boxes(declaration)
+        measures = dict(boxes.mapped(lambda b: (b.code, b.source_measure)))
         values = {
-            code: sum(amount for amount, _lines in per_employee.values())
+            code: len(per_employee)
+            if measures[code] == 'count'
+            else sum(item['amount'] for item in per_employee.values())
             for code, per_employee in self._contributions(declaration, facts).items()
         }
         Parameter = self.env['hr.rule.parameter'].sudo()
-        boxes = self._boxes(declaration)
         for box in boxes.filtered('parameter_code'):
             values[box.code] = Parameter._get_parameter_from_code(
                 box.parameter_code, declaration.date_to, raise_if_not_found=False
@@ -168,19 +213,24 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
         return values
 
     def _details(self, declaration, facts):
+        """Détail par case et par salarié (hors cases de comptage)."""
+        counted = set(self._boxes(declaration).filtered(lambda b: b.source_measure == 'count').mapped('code'))
         details = []
         for box_code, per_employee in self._contributions(declaration, facts).items():
-            for employee, (amount, lines) in sorted(per_employee.items(), key=lambda i: (i[0].name or '', i[0].id)):
+            if box_code in counted:
+                continue
+            for employee, item in sorted(per_employee.items(), key=lambda i: (i[0].name or '', i[0].id)):
                 details.append(
                     {
                         'box_code': box_code,
                         'employee_id': employee.id,
                         'label': employee.name,
-                        'amount': amount,
-                        'payslip_line_ids': lines.ids,
+                        'amount': item['amount'],
+                        'payslip_line_ids': item['lines'].ids,
                     }
                 )
         return details
 
     def _required_parameters(self, declaration):
-        return sorted(set(self._boxes(declaration).filtered('parameter_code').mapped('parameter_code')))
+        boxes = self._boxes(declaration)
+        return sorted(set(boxes.mapped('parameter_code') + boxes.mapped('ceiling_parameter')) - {False})

@@ -12,6 +12,7 @@ AUTO_VALUES = [
     ('company_website', 'Site Internet'),
     ('company_tax_center', 'Code résidence (centre des impôts)'),
     ('period_month', 'Mois de la période'),
+    ('period_quarter', 'Trimestre de la période'),
     ('period_year', 'Année de la période'),
     ('date_from', 'Début de période'),
     ('date_to', 'Fin de période'),
@@ -56,12 +57,25 @@ class L10nGaDeclarationBox(models.Model):
             ('total', 'Montant de la ligne'),
             ('base', 'Base figée de la ligne'),
             ('cfp', 'Part retenue dans l’assiette CFP'),
+            ('social', 'Part soumise à cotisations'),
+            ('count', 'Nombre de salariés'),
         ],
         string='Mesure',
         default='total',
         required=True,
         help='Base figée : base imprimée à la validation (base plafonnée). Part CFP : montant moins la part '
         'exclue de l’assiette sociale, ou montant entier si la société a choisi l’assiette « brut ».',
+    )
+    source_slip_field = fields.Char(
+        string='Champ figé du bulletin',
+        help='Champ du bulletin validé additionné (ex. l10n_ga_social_base : assiette sociale, plancher SMIG compris).',
+    )
+    monthly = fields.Boolean(
+        string='Détail mensuel', help='Répartie par mois de la période dans le détail nominatif (DTS, DAS).'
+    )
+    ceiling_parameter = fields.Char(
+        string='Plafond mensuel contrôlé',
+        help='Paramètre daté : un salarié ne doit pas dépasser ce plafond sur un mois (plusieurs bulletins).',
     )
     sum_box_codes = fields.Char(
         string='Somme des cases', help='Case égale à la somme d’autres cases (codes séparés par des virgules).'
@@ -97,4 +111,4 @@ class L10nGaDeclarationBox(models.Model):
 
     def _has_source(self):
         self.ensure_one()
-        return bool(self._source_codes() or self._source_categories())
+        return bool(self._source_codes() or self._source_categories() or self.source_slip_field)

@@ -38,6 +38,25 @@
         </table>
     </template>
 
+    <template id="report_declaration_nominative">
+        <table class="table table-sm" style="font-size: 9px;">
+            <thead>
+                <tr><th t-foreach="columns" t-as="column"><span t-out="column[1]"/></th></tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="o.detail_ids" t-as="detail">
+                    <t t-foreach="columns" t-as="column">
+                        <t t-set="value" t-value="(detail.payload or {}).get(column[0])"/>
+                        <td t-if="column[2] == 'amount'" class="text-end">
+                            <span t-out="'{:,.0f}'.format(value or 0).replace(',', ' ')"/>
+                        </td>
+                        <td t-else=""><span t-out="value or ''"/></td>
+                    </t>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
     <template id="report_declaration_identity">
         <p>
             <strong>N° du contribuable (NIF) :</strong> <span t-field="o.company_id.l10n_ga_nif"/><br/>
@@ -95,7 +114,12 @@
                 </p>
                 <t t-set="lines" t-value="o.line_ids"/>
                 <t t-call="l10n_ga_dgi_edi.report_declaration_box_table"/>
-                <t t-if="o.detail_ids">
+                <t t-set="columns" t-value="o._l10n_ga_detail_columns()"/>
+                <t t-if="o.detail_ids and columns">
+                    <h4>Détail nominatif</h4>
+                    <t t-call="l10n_ga_dgi_edi.report_declaration_nominative"/>
+                </t>
+                <t t-elif="o.detail_ids">
                     <h4>Détail</h4>
                     <table class="table table-sm">
                         <thead>

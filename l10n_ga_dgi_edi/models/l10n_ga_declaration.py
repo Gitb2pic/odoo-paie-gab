@@ -247,6 +247,7 @@ class L10nGaDeclaration(models.Model):
             'company_website': company.website,
             'company_tax_center': company.l10n_ga_tax_center,
             'period_month': self.date_to.month,
+            'period_quarter': (self.date_to.month - 1) // PERIOD_MONTHS['quarterly'] + 1,
             'period_year': self.date_to.year,
             'date_from': self.date_from,
             'date_to': self.date_to,
@@ -592,13 +593,27 @@ class L10nGaDeclaration(models.Model):
             [self.env._('Case'), self.env._('Libellé'), self.env._('Valeur')],
             [(line.box_id.code, line.box_id.name, line._value()) for line in self.line_ids],
         )
-        builder.table(
-            self.env._('Détails'),
-            0,
-            [(detail.box_id.code, detail.label, detail.amount) for detail in self.detail_ids],
-            headers=[self.env._('Case'), self.env._('Salarié / tiers'), self.env._('Montant')],
-        )
+        columns = self._l10n_ga_detail_columns()
+        if columns:  # détail nominatif (DTS, DAS) : une ligne par salarié, colonnes du générateur
+            builder.table(
+                self.env._('Détails'),
+                0,
+                [[(detail.payload or {}).get(column[0]) for column in columns] for detail in self.detail_ids],
+                headers=[column[1] for column in columns],
+            )
+        else:
+            builder.table(
+                self.env._('Détails'),
+                0,
+                [(detail.box_id.code, detail.label, detail.amount) for detail in self.detail_ids],
+                headers=[self.env._('Case'), self.env._('Salarié / tiers'), self.env._('Montant')],
+            )
         return builder.build(), 'xlsx'
+
+    def _l10n_ga_detail_columns(self):
+        """Colonnes du détail nominatif, fournies par le générateur (rendus Excel et PDF)."""
+        self.ensure_one()
+        return self._generator()._detail_columns(self)
 
     def _render_pdf(self):
         self.ensure_one()
