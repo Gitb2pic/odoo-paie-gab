@@ -23,7 +23,7 @@ from ..lib.ga_fiscal_core.print_bases import print_bases
 from ..lib.ga_fiscal_core.rounding import CASH_ADJUST, CASH_PAY, CASH_PREV, CASH_VALUES, cash_round, round_fcfa
 from ..lib.ga_fiscal_core.treatment import NONE, social_group, tax_group
 from .hr_version import PAYMENT_MODE_SELECTION
-from .l10n_ga_payroll_check import BLOCKING
+from .l10n_ga_payroll_check import BLOCKING, PAYROLL_CHECKS
 
 GA_CODE = 'GA'
 AIK_CATEGORY = 'GA_AIK'
@@ -497,6 +497,10 @@ class HrPayslip(models.Model):
             else:
                 raise ValueError(f'Gain calculé inconnu : {code!r}')
         return gains[code]
+
+    def _l10n_ga_payroll_checks(self):
+        """Chaîne des contrôles avant paie (F8), complétée par les modules supérieurs (patron 8)."""
+        return PAYROLL_CHECKS
 
     def _l10n_ga_blocking_issues(self):
         """Anomalies bloquantes Gabon : salaire sous le minimum de la grille (RG18), heures sans taux."""

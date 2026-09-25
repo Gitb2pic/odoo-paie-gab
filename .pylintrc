@@ -4,6 +4,10 @@ score=n
 jobs=1
 # Analyse statique du code Odoo Community (pas d'exécution)
 init-hook='import sys; sys.path.append("/home/ubuntu/odoo/odoo"); sys.path.append("l10n_ga_hr_payroll/lib")'
+# Modules du dépôt importés par les modules supérieurs (odoo.addons.l10n_ga_*) : le paquet
+# odoo/ de Community est un paquet ordinaire, astroid ne peut pas y greffer ce dépôt. Les
+# imports sont vérifiés à l'exécution par les tests Odoo (étape 3).
+ignored-modules=odoo.addons.l10n_ga_hr_payroll
 
 [ODOOLINT]
 valid-odoo-versions=19.0

@@ -60,3 +60,10 @@
 | D-55 | Contenu de « TOTAL BRUT » imprimé | a) gains en espèces imposables ; exonérés / partiellement exonérés listés après TCS et IRPP ; TOTAL GAINS = tous les gains ; b) brut complet | a) (modèle) | **Décidé** (25/09/2026, Q2) |
 | D-56 | Tableau des congés du bulletin | a) base congés, jours acquis / pris / solde du type « Congé payé » figés à la validation ; b) aucun | a) | **Décidé** (25/09/2026, Q3) |
 | D-57 | Lignes propres au modèle (assurance décès-invalidité, base TCS lissée, avantage domesticité soumis CNAMGS) | a) non reprises ; b) ajoutées | a) (absentes du catalogue gabonais) | **Décidé** (25/09/2026, Q4) |
+| D-58 | Contrepartie des avantages en nature (débit 6617) | a) crédit 781 « Transferts de charges d'exploitation » ; b) pas d'écriture | a) | **Décidé** (« go avec tes recommandations », 25/09/2026, plan 3 Q1) |
+| D-59 | 422 non lettrable dans SYSCOHADA (bloque « Enregistrer un paiement ») | a) lettrable à la configuration ; b) inchangé | a) | **Décidé** (25/09/2026, Q2) |
+| D-60 | Reconfiguration d'une société déjà paramétrée | a) remplir les comptes vides seulement, écrasement par action explicite ; b) écraser toujours | a) | **Décidé** (25/09/2026, Q3) |
+| D-61 | Charges sociales du personnel non national (6642) | a) 6641 pour tous en V1 ; b) surcharge par nationalité | a) | **Décidé** (25/09/2026, Q4) |
+| D-62 | Plan `ga_syscebnl` (comptes de paie absents) | a) hors périmètre V1, contrôle `GA_NO_ACCOUNT` ; b) table dédiée | a) | **Décidé** (25/09/2026, Q5) |
+| D-63 | Dépendance `l10n_ga` du module comptable | a) ajoutée (modèle Kenya) ; b) non | a) | **Décidé** (25/09/2026, Q6) |
+| D-64 | Écriture de décaissement d'un prêt | a) saisie manuelle hors paie ; b) pièce générée | a) | **Décidé** (25/09/2026, Q7) |

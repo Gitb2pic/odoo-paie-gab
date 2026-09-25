@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tiers = salarié sur les lignes du net (lettrage du 422 au paiement) et des avances / prêts. -->
+    <record id="l10n_ga_hr_payroll.rule_ga_net" model="hr.salary.rule">
+        <field name="employee_move_line" eval="True"/>
+    </record>
+    <record id="l10n_ga_hr_payroll.rule_ga_loan" model="hr.salary.rule">
+        <field name="employee_move_line" eval="True"/>
+    </record>
+    <record id="l10n_ga_hr_payroll.rule_ga_advance" model="hr.salary.rule">
+        <field name="employee_move_line" eval="True"/>
+    </record>
+</odoo>

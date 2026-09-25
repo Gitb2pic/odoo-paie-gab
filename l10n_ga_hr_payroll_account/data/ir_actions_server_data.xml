@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Reconfiguration explicite d'une société : écrase les comptes existants (décision D-60). -->
+    <record id="action_l10n_ga_configure_payroll_accounts" model="ir.actions.server">
+        <field name="name">Configurer les comptes de paie Gabon</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="binding_model_id" ref="base.model_res_company"/>
+        <field name="group_ids" eval="[(4, ref('hr_payroll.group_hr_payroll_manager'))]"/>
+        <field name="state">code</field>
+        <field name="code">env['account.chart.template'].sudo()._l10n_ga_configure_payroll_accounts(records, overwrite=True)</field>
+    </record>
+</odoo>

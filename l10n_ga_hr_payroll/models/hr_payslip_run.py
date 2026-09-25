@@ -46,7 +46,7 @@ class HrPayslipRun(models.Model):
             Issue.search([('payslip_run_id', '=', run.id)]).unlink()
             values = []
             for slip in run.slip_ids.filtered(lambda s: s.state == 'draft' and s.l10n_ga_is_ga):
-                for severity, code, message, record in run_checks(slip):
+                for severity, code, message, record in run_checks(slip, slip._l10n_ga_payroll_checks()):
                     values.append(
                         {
                             'company_id': run.company_id.id,

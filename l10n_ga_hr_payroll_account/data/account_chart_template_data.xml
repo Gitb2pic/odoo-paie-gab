@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sociétés déjà au plan « ga » à l'installation : même configuration qu'au chargement du plan
+         (E/hr_payroll_account/models/account_chart_template.py:21-24). -->
+    <data noupdate="1">
+        <function model="account.chart.template" name="_load_payroll_accounts">
+            <value eval="[]"/>
+            <value>ga</value>
+            <value model="res.company" eval="obj().search([('chart_template', '=', 'ga')])"/>
+        </function>
+    </data>
+</odoo>

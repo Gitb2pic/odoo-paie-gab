@@ -1,6 +1,6 @@
 {
     'name': 'Gabon - Paie',
-    'version': '19.0.1.6.0',
+    'version': '19.0.1.6.1',
     'summary': 'Paie gabonaise : cotisations, impôts, rubriques, absences, prêts, import, contrôles, arrondi',
     'countries': ['ga'],
     'category': 'Human Resources/Payroll',
