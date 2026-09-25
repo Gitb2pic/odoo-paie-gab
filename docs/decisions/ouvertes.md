@@ -84,3 +84,8 @@
 | D-79 | ID28 L4 « (L1 + L2 − L3) × taux art. 93 » | a) avantages en nature réellement valorisés (Σ `GA_AIK`) ; b) formule du modèle | a) | **Décidé** (25/09/2026, Q6) |
 | D-80 | Champs d'en-tête sans donnée (sigle, télécopie), boîte postale | a) vides, BP = rue de la société ; b) nouveaux champs société | a) | **Décidé** (25/09/2026, Q7) |
 | D-81 | Code rubrique `V39` de l'ID10 (table DGI absente) | a) vide ; b) paramètre | a) | **Décidé** (25/09/2026, Q8) |
+| D-82 | Rattachement des bulletins au trimestre des DTS | a) mois de paie (`date_to`) ; b) date de paiement (comme l'ID10) | a) (décret 599 art. 36) | **Décidé** (« Go », go anticipé avec recommandations, 25/09/2026, plan 4.3 Q1) |
+| D-83 | Format « attendu par les portails » CNSS / CNAMGS (non documenté) | a) colonnes de la base 03 §5 en Excel neuf ; b) attendre un export des portails | a) | **Décidé** (25/09/2026, Q2) — **à confirmer par Alex** avec un export ou un modèle des portails |
+| D-84 | Régularisation annuelle du plafond CNSS (option base 03 §1) | a) hors DTS, dépassement mensuel signalé ; b) calcul de régularisation | a) | **Décidé** (25/09/2026, Q3) |
+| D-85 | Échéance des DTS | a) le 30 du mois suivant le trimestre, sans décalage ; b) autre | a) | **Décidé** (25/09/2026, Q4) |
+| D-86 | N° CNSS sur la DTS CNAMGS | a) non exigé, n° CNAMGS exigé (bloquant) ; b) les deux | a) | **Décidé** (25/09/2026, Q5) |

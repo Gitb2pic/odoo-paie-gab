@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (étape 4.2).
+Mis à jour le 25/09/2026 (étape 4.3).
 
 ## Étapes
 
@@ -18,8 +18,8 @@ Mis à jour le 25/09/2026 (étape 4.2).
 | 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | **terminé** | 100 % (18/18 ; 28 tests Odoo, F16 compte par compte écart 0 ; installation sur société existante et désinstallation propres) | `docs/completude/l10n_ga_hr_payroll_account.md` |
 | C-2 | `l10n_ga_hr_payroll_account` | complétude du module | **terminé** | 100 % (3 manques corrigés, dont SYSCEBNL validé sans écriture ; 32 tests du module, 210 tests paie + comptabilité installées ensemble) | `docs/completude/l10n_ga_hr_payroll_account_C-2.md` |
 | 4.1 | `l10n_ga_dgi_edi` | moteur de déclarations | **terminé** | 100 % (24/24 ; 47 tests Odoo sur base neuve et en mise à jour, 258 avec paie + comptabilité ; F16 déclaré écart 0 ; installation sur base existante et désinstallation propres) | `docs/completude/l10n_ga_dgi_edi_4.1.md` |
-| 4.2 | `l10n_ga_dgi_edi` | ID10, ID28, quittances multiples (F11) | **terminé** — en attente du « go » pour 4.3 | 100 % (20/20 ; 66 tests Odoo sur base neuve et en mise à jour, 277 avec paie + comptabilité ; F16 déclaré écart 0 ; D-74 NIF à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.2.md` |
-| 4.3 | `l10n_ga_dgi_edi` | DTS CNSS et CNAMGS | à faire | — | — |
+| 4.2 | `l10n_ga_dgi_edi` | ID10, ID28, quittances multiples (F11) | **terminé** | 100 % (20/20 ; 66 tests Odoo sur base neuve et en mise à jour, 277 avec paie + comptabilité ; F16 déclaré écart 0 ; D-74 NIF à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.2.md` |
+| 4.3 | `l10n_ga_dgi_edi` | DTS CNSS et CNAMGS | **terminé** — en attente du « go » pour 4.4 | 100 % (16/16 ; 75 tests Odoo sur base neuve et en mise à jour, 286 avec paie + comptabilité ; T3 F16 écart 0 ; D-83 format des portails à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.3.md` |
 | 4.4 | `l10n_ga_dgi_edi` | DAS ID19 à ID22, « Contrôle DAS », classeurs `.xlsm` | à faire | — | — |
 | 4.5 | `l10n_ga_dgi_edi` | migration des déclarations V1 (ADR-12) | à faire | — | — |
 | C-3 | `l10n_ga_dgi_edi` | complétude du module | à faire | — | — |
@@ -39,8 +39,8 @@ Mis à jour le 25/09/2026 (étape 4.2).
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle), D-58 à D-64 (3, comptabilisation), D-65 à D-73 (4.1, moteur de déclarations, go anticipé), D-74 à D-81 (4.2, ID10 / ID28 / quittances ; D-74 cellule du NIF à confirmer). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
+Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle), D-58 à D-64 (3, comptabilisation), D-65 à D-73 (4.1, moteur de déclarations, go anticipé), D-74 à D-81 (4.2, ID10 / ID28 / quittances ; D-74 cellule du NIF à confirmer), D-82 à D-86 (4.3, DTS ; D-83 format des portails à confirmer). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
 
 ## Prochaine étape
 
-Étape 4.3 — `l10n_ga_dgi_edi`, DTS CNSS et CNAMGS (trimestrielles) : plan `docs/plans/4.3.md` à présenter, puis « go » d'Alex. Démo possible : `make demo MODULE=l10n_ga_dgi_edi` (mise à jour 4.2, redémarre le service `odoo19`).
+Étape 4.4 — `l10n_ga_dgi_edi`, DAS ID19 à ID22, écran « Contrôle DAS », classeurs `.xlsm`. **Prérequis bloquant (D-07)** : gabarits `edi-annexe-ID19/21/23/26.xlsm` de la V1 dans `/home/ubuntu/odoo/v1_l10n_ga_dgi_edi` (absent au 25/09/2026). Démo possible : `make demo MODULE=l10n_ga_dgi_edi` (mise à jour 4.3).
