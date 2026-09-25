@@ -63,4 +63,14 @@
             </t>
         </t>
     </template>
+
+    <!-- A3 paysage (DAS) : 406 mm utiles. -->
+    <template id="report_declaration_a3">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="page_width" t-value="1500"/>
+                <t t-call="l10n_ga_dgi_edi.report_declaration_page"/>
+            </t>
+        </t>
+    </template>
 </odoo>

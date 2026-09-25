@@ -1,4 +1,5 @@
 from odoo import fields, models
+from odoo.addons.l10n_ga_hr_payroll.models.hr_salary_rule import DAS_COLUMN_SELECTION
 
 AUTO_VALUES = [
     ('company_name', 'Raison sociale'),
@@ -70,6 +71,20 @@ class L10nGaDeclarationBox(models.Model):
         string='Champ figé du bulletin',
         help='Champ du bulletin validé additionné (ex. l10n_ga_social_base : assiette sociale, plancher SMIG compris).',
     )
+    source_das_column = fields.Selection(
+        DAS_COLUMN_SELECTION,
+        string='Colonne DAS source',
+        help='Somme des parts de lignes classées dans cette colonne DAS par leur rubrique : part imposable '
+        '(montant − part exonérée figée) pour la colonne imposable, part exonérée pour la colonne exonérée.',
+    )
+    opening_fields = fields.Char(
+        string='Cumuls d’ouverture',
+        help='Champs des cumuls d’ouverture de l’année ajoutés à la case (F12), signés : « taxable, -benefits ».',
+    )
+    control_boxes = fields.Char(
+        string='Rapprochement',
+        help='Cases d’autres imprimés de la même année dont la somme doit égaler cette case : « ID10.L41 ».',
+    )
     monthly = fields.Boolean(
         string='Détail mensuel', help='Répartie par mois de la période dans le détail nominatif (DTS, DAS).'
     )
@@ -111,4 +126,15 @@ class L10nGaDeclarationBox(models.Model):
 
     def _has_source(self):
         self.ensure_one()
-        return bool(self._source_codes() or self._source_categories() or self.source_slip_field)
+        return bool(
+            self._source_codes() or self._source_categories() or self.source_slip_field or self.source_das_column
+        )
+
+    def _opening_fields(self):
+        self.ensure_one()
+        return self._signed(self.opening_fields)
+
+    def _control_boxes(self):
+        """« ID10.L41, -ID28.L7 » → [('ID10', 'L41', 1), ('ID28', 'L7', -1)]."""
+        self.ensure_one()
+        return [(*ref.split('.', 1), sign) for ref, sign in self._signed(self.control_boxes)]

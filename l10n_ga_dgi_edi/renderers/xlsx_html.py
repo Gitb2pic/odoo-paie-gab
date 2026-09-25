@@ -18,6 +18,7 @@ FONT_STACK = "Roboto, Lato, 'DejaVu Sans', sans-serif"
 DEFAULT_COLUMN_WIDTH = 8.43  # caractères (valeur Excel par défaut)
 DEFAULT_ROW_HEIGHT = 15.0  # points
 DEFAULT_FONT_SIZE = 11.0
+MAX_UPSCALE = 1.35
 MIN_VISIBLE_PX = 12
 # Bootstrap 5 laisse une bordure visible sur tbody / thead dans wkhtmltopdf (cf. bootstrap_review_report.scss).
 NO_BORDER = 'border:0 none !important;'  # en deçà, une cellule dont le texte ne peut pas déborder n'affiche rien
@@ -117,7 +118,8 @@ def sheet_to_html(sheet, page_width_px):
     min_row, max_row, min_col, max_col = _bounds(sheet)
     columns = [c for c in range(min_col, max_col + 1) if _visible(sheet.column_dimensions, get_column_letter(c))]
     widths = {c: _column_px(sheet.column_dimensions[get_column_letter(c)].width) for c in columns}
-    scale = min(1.0, page_width_px / max(sum(widths.values()), 1))
+    # Réduction à la largeur de la page ; agrandissement modéré des feuilles étroites (formulaires).
+    scale = min(MAX_UPSCALE, page_width_px / max(sum(widths.values()), 1))
     merged, covered = {}, set()
     for merge in sheet.merged_cells.ranges:
         merged[merge.min_row, merge.min_col] = merge

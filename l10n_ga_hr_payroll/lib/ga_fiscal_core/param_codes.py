@@ -311,6 +311,10 @@ PARAMETERS = (
         'Gabon : quotité saisissable (art. 729 CPC)',
         RATE_BRACKETS,
     ),
+    # Déclaration annuelle des salaires (l10n_ga_dgi_edi, étape 4.4) : lus par le générateur DAS
+    _p(None, 'l10n_ga_das_id19_threshold', 'das.seuil_id19_mensuel', 'Gabon : DAS, seuil mensuel de l’ID19'),
+    _p(None, 'l10n_ga_das_id20_threshold', 'das.seuil_id20_mensuel', 'Gabon : DAS, seuil des tranches de l’ID20'),
+    _p(None, 'l10n_ga_das_id21_lines', 'das.lignes_par_feuille_id21', 'Gabon : DAS, lignes par feuille de l’ID21'),
 )
 
 _BY_CODE = MappingProxyType({spec.code: spec for spec in PARAMETERS})

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    DAS annuelle ID19 à ID22 (base 06 §3, art. 167 ter CGI ; plan 4.4). Colonnes de l'ID21 alimentées
+    par la colonne DAS des rubriques (catalogue), impôts par codes signés comme l'ID10, cumuls
+    d'ouverture (F12) et rapprochement avec les ID10 / ID28 de l'année (base 06 §4) en données.
+    Échéance : 30 avril N+1. Préparée par le cron J-10 et l'assistant, jamais à chaque bulletin (D-93).
+    Gabarits .xlsm de la V1 absents (D-87) : classeur neuf.
+-->
+<odoo>
+    <record id="declaration_type_das" model="l10n_ga.declaration.type">
+        <field name="code">DAS</field>
+        <field name="name">Déclaration annuelle des salaires (ID19 à ID22)</field>
+        <field name="sequence">50</field>
+        <field name="authority">dgi</field>
+        <field name="periodicity">yearly</field>
+        <field name="period_basis">payment_date</field>
+        <field name="due_months">4</field>
+        <field name="due_day">30</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="prepare_on_payslip" eval="False"/>
+        <field name="generator_key">das</field>
+        <field name="report_id" ref="action_report_das"/>
+    </record>
+    <record id="box_das_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+    </record>
+    <record id="box_das_hdr_nif" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">HDR_NIF</field>
+        <field name="name">NIF</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_nif</field>
+    </record>
+    <record id="box_das_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Exercice</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+    </record>
+    <record id="box_das_employees" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">EMPLOYEES</field>
+        <field name="name">Nombre de salariés (ID21)</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">number</field>
+    </record>
+    <record id="box_das_id19_count" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">ID19_COUNT</field>
+        <field name="name">Nombre de bulletins individuels ID19</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">number</field>
+    </record>
+    <record id="box_das_c1" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C1</field>
+        <field name="name">(1) Salaire brut de présence</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">presence</field>
+        <field name="source_codes">GA_CNSS_SAL, GA_CNAMGS_SAL</field>
+        <field name="opening_fields">taxable, -benefits, -contributions</field>
+        <field name="section">presence_net</field>
+    </record>
+    <record id="box_das_c2" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C2</field>
+        <field name="name">(2) Avantages en nature (logement, eau et électricité, domesticité)</field>
+        <field name="sequence">70</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">benefit</field>
+        <field name="opening_fields">benefits</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c3" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C3</field>
+        <field name="name">(3) Nourriture</field>
+        <field name="sequence">80</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">food</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c4" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C4</field>
+        <field name="name">(4) Indemnités imposables</field>
+        <field name="sequence">90</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">taxable_allowance</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c5" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C5</field>
+        <field name="name">(5) Salaire brut de congé</field>
+        <field name="sequence">100</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">leave</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c6" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C6</field>
+        <field name="name">(6) Total (1) à (5)</field>
+        <field name="sequence">110</field>
+        <field name="value_kind">amount</field>
+        <field name="sum_box_codes">C1, C2, C3, C4, C5</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c7" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C7</field>
+        <field name="name">(7) TCS retenue</field>
+        <field name="sequence">120</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">-GA_TCS</field>
+        <field name="opening_fields">tcs</field>
+        <field name="control_boxes">ID10.L41</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c8" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C8</field>
+        <field name="name">(8) IRPP retenu</field>
+        <field name="sequence">130</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">-GA_IRPP, -GA_IRPP_REGUL</field>
+        <field name="opening_fields">irpp</field>
+        <field name="control_boxes">ID10.L40</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c9" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C9</field>
+        <field name="name">(9) CFP</field>
+        <field name="sequence">140</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_CFP</field>
+        <field name="control_boxes">ID10.R56, ID28.L7</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c10" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C10</field>
+        <field name="name">(10) FNH</field>
+        <field name="sequence">150</field>
+        <field name="value_kind">amount</field>
+        <field name="source_codes">GA_FNH, -GA_FNH_SAL</field>
+        <field name="opening_fields">fnh</field>
+        <field name="control_boxes">ID10.L42</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_c11" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">C11</field>
+        <field name="name">(11) Total (7) à (10)</field>
+        <field name="sequence">160</field>
+        <field name="value_kind">amount</field>
+        <field name="sum_box_codes">C7, C8, C9, C10</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_nt_housing" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">NT_HOUSING</field>
+        <field name="name">Non imposable : logement</field>
+        <field name="sequence">170</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">nt_housing</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_nt_transport" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">NT_TRANSPORT</field>
+        <field name="name">Non imposable : transport</field>
+        <field name="sequence">180</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">nt_transport</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_nt_domestic" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">NT_DOMESTIC</field>
+        <field name="name">Non imposable : domesticité, gaz</field>
+        <field name="sequence">190</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">nt_domestic</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_nt_other" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">NT_OTHER</field>
+        <field name="name">Non imposable : autres</field>
+        <field name="sequence">200</field>
+        <field name="value_kind">amount</field>
+        <field name="source_das_column">nt_other</field>
+        <field name="opening_fields">tax_exempt</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_nt_total" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">NT_TOTAL</field>
+        <field name="name">Total non imposable</field>
+        <field name="sequence">210</field>
+        <field name="value_kind">amount</field>
+        <field name="sum_box_codes">NT_HOUSING, NT_TRANSPORT, NT_DOMESTIC, NT_OTHER</field>
+        <field name="section">id21</field>
+    </record>
+    <record id="box_das_id20_b_count" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">ID20_B_COUNT</field>
+        <field name="name">ID20 : salariés sous le seuil mensuel</field>
+        <field name="sequence">220</field>
+        <field name="value_kind">number</field>
+    </record>
+    <record id="box_das_id20_b_total" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">ID20_B_TOTAL</field>
+        <field name="name">ID20 : rémunérations sous le seuil mensuel</field>
+        <field name="sequence">230</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_das_id20_a_count" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">ID20_A_COUNT</field>
+        <field name="name">ID20 : salariés au seuil mensuel ou au-delà</field>
+        <field name="sequence">240</field>
+        <field name="value_kind">number</field>
+    </record>
+    <record id="box_das_id20_a_total" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">ID20_A_TOTAL</field>
+        <field name="name">ID20 : rémunérations au seuil mensuel ou au-delà</field>
+        <field name="sequence">250</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_das_paid_rs" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">PAID_RS</field>
+        <field name="name">ID22 : versé au titre des retenues (IRPP, TCS)</field>
+        <field name="sequence">260</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_das_paid_fnh" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">PAID_FNH</field>
+        <field name="name">ID22 : versé au titre du FNH</field>
+        <field name="sequence">270</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_das_paid_cfp" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">PAID_CFP</field>
+        <field name="name">ID22 : versé au titre de la CFP</field>
+        <field name="sequence">280</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_das_paid_other" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">PAID_OTHER</field>
+        <field name="name">ID22 : autres versements</field>
+        <field name="sequence">290</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_das_paid_total" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_das"/>
+        <field name="code">PAID_TOTAL</field>
+        <field name="name">ID22 : total versé</field>
+        <field name="sequence">300</field>
+        <field name="value_kind">amount</field>
+        <field name="sum_box_codes">PAID_RS, PAID_FNH, PAID_CFP, PAID_OTHER</field>
+    </record>
+</odoo>

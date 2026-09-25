@@ -164,3 +164,8 @@ prets:                            # prêts salariés : architecture 08 F1, RG20 
     - {de: 75000,  a: 100000, taux: 0.25}
     - {de: 100000, a: 150000, taux: 0.30}
     - {de: 150000, a: null,   taux: 1.00}
+
+das:                              # DAS ID19 à ID22 : base 06 §3.2 (plan 4.4, décision D-88)
+  seuil_id19_mensuel: 80000        # ID19 pour chaque salarié percevant plus de 80 000 FCFA par mois
+  seuil_id20_mensuel: 1000000      # ID20 : deux tranches, < 1 000 000 et >= 1 000 000 FCFA par mois
+  lignes_par_feuille_id21: 39      # ID21 : 39 salariés par feuille (modèle DGI)

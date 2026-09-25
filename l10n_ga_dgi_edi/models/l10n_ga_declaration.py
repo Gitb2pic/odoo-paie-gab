@@ -590,6 +590,9 @@ class L10nGaDeclaration(models.Model):
 
     def _render_new_workbook(self):
         """Classeur neuf mis en forme (sans gabarit officiel : DTS, DAS…)."""
+        own = self._generator()._render_workbook(self)
+        if own is not None:
+            return own
         env = self.env
         builder = XlsxDeclarationBuilder(title=self.type_id.name, subtitle=self.name)
         auto_lines = self.line_ids.filtered(lambda line: line.box_id.auto_value)
@@ -699,7 +702,7 @@ class L10nGaDeclaration(models.Model):
         """Bulletins validés, payés, annulés ou remis en brouillon : déclarations de leur période à jour."""
         slips = slips.filtered('l10n_ga_is_ga')
         periods = set()
-        for decl_type in self._l10n_ga_auto_types():
+        for decl_type in self._l10n_ga_auto_types().filtered('prepare_on_payslip'):
             generator = self.env['l10n_ga.declaration.generator']._get(decl_type.generator_key)
             for slip in slips.filtered(lambda s, generator=generator: generator._applies(s.company_id)):
                 day = slip.l10n_ga_payment_date if decl_type.period_basis == 'payment_date' else slip.date_to

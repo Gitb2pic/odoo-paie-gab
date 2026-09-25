@@ -16,7 +16,8 @@ from .base import DeclarationBuilder
 FONT = 'Arial'
 AMOUNT = '#,##0'
 SHEET_NAME_MAX = 31
-MIN_WIDTH, MAX_WIDTH, HEADER_WRAP = 9, 45, 14
+MIN_WIDTH, MAX_WIDTH, HEADER_WRAP = 6, 70, 14
+PAPER_A4, PAPER_A3 = 9, 8  # codes de format xlsxwriter
 GREY = '#D9D9D9'
 LIGHT = '#F2F2F2'
 
@@ -75,15 +76,19 @@ class XlsxDeclarationBuilder(DeclarationBuilder):
         return len(str(value or ''))
 
     def _widths(self, headers, rows):
-        widths = {column: min(HEADER_WRAP, len(str(header))) for column, header in enumerate(headers)}
+        # L'en-tête passe à la ligne : il n'impose que la longueur de son plus long mot.
+        widths = {
+            column: min(HEADER_WRAP, max((len(word) for word in str(header).split()), default=0))
+            for column, header in enumerate(headers)
+        }
         for row in rows:
             for column, value in enumerate(row):
                 widths[column] = max(widths.get(column, 0), self._text_length(value))
         return {column: max(MIN_WIDTH, min(MAX_WIDTH, width + 2)) for column, width in widths.items()}
 
-    def _sheet(self, name, landscape=False):
+    def _sheet(self, name, landscape=False, paper=PAPER_A4):
         sheet = self._book.add_worksheet(str(name)[:SHEET_NAME_MAX])
-        sheet.set_paper(9)  # A4
+        sheet.set_paper(paper)
         if landscape:
             sheet.set_landscape()
         sheet.fit_to_pages(1, 0)
@@ -162,6 +167,80 @@ class XlsxDeclarationBuilder(DeclarationBuilder):
         if totals:
             for column, value in enumerate(totals):
                 self._write(worksheet, line, column, value, bold=True)
+
+    def form(self, name, blocks, *, title='', subtitle='', landscape=False, paper=PAPER_A4):
+        """Feuille d'imprimé composée de blocs, dans l'ordre :
+
+        - ``{'title': str, 'pairs': [(libellé, valeur)]}`` : bloc d'identification ;
+        - ``{'title': str, 'headers': [...], 'rows': [[...]], 'totals': [...] | None, 'bold': {index}}`` :
+          tableau encadré (lignes ``bold`` en gras) ;
+        - ``{'text': str}`` : paragraphe (note explicative).
+
+        Largeurs de colonnes : maximum des blocs ; en-tête de tableau grisé.
+        """
+        sheet = self._sheet(name, landscape=landscape, paper=paper)
+        widths = self._form_widths(blocks)
+        span = max(widths) if widths else 1
+        for column, width in widths.items():
+            sheet.set_column(column, column, width)
+        line = self._titles(sheet, 0, title, subtitle)
+        for block in blocks:
+            if block.get('title'):
+                self._write(sheet, line, 0, block['title'], kind='section')
+                line += 1
+            if 'pairs' in block:
+                line = self._form_pairs(sheet, line, block['pairs'], span)
+            elif 'headers' in block:
+                line = self._form_table(sheet, line, block)
+            elif 'text' in block:
+                self._write(sheet, line, 0, block['text'], kind='subtitle')
+                line += 1
+            line += 1
+        return sheet
+
+    def _form_widths(self, blocks):
+        widths = {}
+        for block in blocks:
+            if 'headers' in block:
+                rows = [*block['rows'], *([block['totals']] if block.get('totals') else [])]
+                for column, width in self._widths(block['headers'], rows).items():
+                    widths[column] = max(widths.get(column, 0), width)
+            elif 'pairs' in block:
+                widths[0] = max(widths.get(0, MIN_WIDTH), *(len(str(label)) + 2 for label, _v in block['pairs']))
+        pairs = [pair for block in blocks for pair in block.get('pairs', [])]
+        if pairs:  # la valeur d'un couple occupe les colonnes suivantes : elles doivent pouvoir la contenir
+            needed = max(self._text_length(value) for _label, value in pairs) + 2
+            others = [column for column in widths if column]
+            available = sum(widths[column] for column in others)
+            if available < needed:
+                target = others[-1] if others else 1
+                widths[target] = widths.get(target, MIN_WIDTH) + needed - available
+        return widths
+
+    def _form_pairs(self, sheet, line, pairs, span):
+        for label, value in pairs:
+            self._write(sheet, line, 0, label, kind='label')
+            if span > 1:
+                sheet.merge_range(line, 1, line, span, None, self._f['cell'])
+            self._write(sheet, line, 1, value)
+            line += 1
+        return line
+
+    def _form_table(self, sheet, line, block):
+        sheet.set_row(line, 30)
+        for column, value in enumerate(block['headers']):
+            self._write(sheet, line, column, value, kind='head')
+        line += 1
+        bold = block.get('bold', set())
+        for index, row in enumerate(block['rows']):
+            for column, value in enumerate(row):
+                self._write(sheet, line, column, value, bold=index in bold)
+            line += 1
+        if block.get('totals'):
+            for column, value in enumerate(block['totals']):
+                self._write(sheet, line, column, value, bold=True)
+            line += 1
+        return line
 
     def build(self):
         self._book.close()

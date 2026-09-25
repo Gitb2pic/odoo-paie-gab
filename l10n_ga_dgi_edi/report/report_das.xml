@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- PDF de la DAS : rendu du classeur (ID20, ID21 paginé, ID22, ID19 par salarié), A3 paysage. -->
+    <record id="paperformat_l10n_ga_das" model="report.paperformat">
+        <field name="name">A3 paysage (DAS Gabon)</field>
+        <field name="default" eval="False"/>
+        <field name="format">A3</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">7</field>
+        <field name="margin_bottom">7</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+        <field name="disable_shrinking" eval="True"/>
+    </record>
+
+    <record id="action_report_das" model="ir.actions.report">
+        <field name="name">DAS (ID19 à ID22)</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_declaration_a3</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_declaration_a3</field>
+        <field name="print_report_name">'DAS - %s' % (object.name)</field>
+        <field name="paperformat_id" ref="paperformat_l10n_ga_das"/>
+    </record>
+</odoo>

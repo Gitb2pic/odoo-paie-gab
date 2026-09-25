@@ -31,6 +31,18 @@
         parent="menu_l10n_ga_declaration_root"
         sequence="30"/>
     <menuitem
+        id="menu_l10n_ga_das_wizard"
+        name="Préparer la DAS"
+        action="l10n_ga_das_wizard_action"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="40"/>
+    <menuitem
+        id="menu_l10n_ga_das_checks"
+        name="Contrôle DAS"
+        action="l10n_ga_check_issue_action_das"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="45"/>
+    <menuitem
         id="menu_l10n_ga_declaration_type"
         name="Types de déclaration"
         action="l10n_ga_declaration_type_action"

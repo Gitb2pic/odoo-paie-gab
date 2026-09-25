@@ -48,6 +48,9 @@ class FakeGenerator:
     def _applies(self, company):
         return True
 
+    def _render_workbook(self, declaration):
+        return None
+
 
 class GaDeclarationCase(GaPayrollCase):
     @classmethod
@@ -108,7 +111,8 @@ class GaDeclarationCase(GaPayrollCase):
     def _f16_employee(cls, name='F16', **values):
         values.setdefault('ssnid', f'CNSS-{name}')
         values.setdefault('l10n_ga_cnamgs_number', f'CNAMGS-{name}')
-        return cls._employee(name, 450_000, l10n_ga_transport_trips='2', l10n_ga_nif=f'NIF-{name}', **values)
+        values.setdefault('l10n_ga_nif', f'NIF-{name}')
+        return cls._employee(name, 450_000, l10n_ga_transport_trips='2', **values)
 
     @classmethod
     def _f16_slip(cls, employee=None, period=SEPT, validate=True, payment_date=None):

@@ -55,6 +55,11 @@ class L10nGaDeclarationType(models.Model):
         default=True,
         help='Créée et recalculée à la validation des bulletins et par le cron des échéances (ADR-10).',
     )
+    prepare_on_payslip = fields.Boolean(
+        string='Préparée à chaque bulletin',
+        default=True,
+        help='Sinon, préparée seulement par le cron des échéances ou à la demande (DAS annuelle).',
+    )
     generator_key = fields.Char(string='Générateur', required=True, help='Clé du registre des générateurs.')
     template_path = fields.Char(
         string='Gabarit Excel',

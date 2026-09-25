@@ -627,5 +627,35 @@
             <field name="date_from">2000-01-01</field>
             <field name="parameter_value">[(0, 25000, 0.05), (25000, 50000, 0.1), (50000, 75000, 0.2), (75000, 100000, 0.25), (100000, 150000, 0.3), (150000, None, 1.0)]</field>
         </record>
+        <record id="rule_parameter_das_id19_threshold" model="hr.rule.parameter">
+            <field name="name">Gabon : DAS, seuil mensuel de l’ID19</field>
+            <field name="code">l10n_ga_das_id19_threshold</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_das_id19_threshold_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_das_id19_threshold"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">80000</field>
+        </record>
+        <record id="rule_parameter_das_id20_threshold" model="hr.rule.parameter">
+            <field name="name">Gabon : DAS, seuil des tranches de l’ID20</field>
+            <field name="code">l10n_ga_das_id20_threshold</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_das_id20_threshold_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_das_id20_threshold"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">1000000</field>
+        </record>
+        <record id="rule_parameter_das_id21_lines" model="hr.rule.parameter">
+            <field name="name">Gabon : DAS, lignes par feuille de l’ID21</field>
+            <field name="code">l10n_ga_das_id21_lines</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_das_id21_lines_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_das_id21_lines"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">39</field>
+        </record>
     </data>
 </odoo>

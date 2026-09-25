@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_ga_das_wizard_view_form" model="ir.ui.view">
+        <field name="name">l10n_ga.das.wizard.form</field>
+        <field name="model">l10n_ga.das.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <p class="text-muted">
+                    Prépare la déclaration annuelle des salaires (ID19 à ID22) à partir des bulletins validés
+                    de l'année et des cumuls d'ouverture, puis contrôle son rapprochement avec les ID10.
+                </p>
+                <group>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="year" options="{'format': false}"/>
+                </group>
+                <footer>
+                    <button name="action_prepare" type="object" string="Préparer la DAS" class="btn-primary"/>
+                    <button name="action_open_checks" type="object" string="Contrôle DAS"/>
+                    <button special="cancel" string="Annuler"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="l10n_ga_das_wizard_action" model="ir.actions.act_window">
+        <field name="name">Préparer la DAS</field>
+        <field name="res_model">l10n_ga.das.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Écran « Contrôle DAS » (repris de la V1) : anomalies des DAS, vue liste partagée. -->
+    <record id="l10n_ga_check_issue_action_das" model="ir.actions.act_window">
+        <field name="name">Contrôle DAS</field>
+        <field name="res_model">l10n_ga.check.issue</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="l10n_ga_check_issue_view_list_declaration"/>
+        <field name="domain">[('declaration_id.type_id.code', '=', 'DAS')]</field>
+        <field name="context">{'search_default_group_declaration': 1}</field>
+    </record>
+</odoo>

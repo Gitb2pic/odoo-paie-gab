@@ -64,6 +64,10 @@ class L10nGaDeclarationGeneratorBase(models.AbstractModel):
         """Le contrôle commun « n° CNSS manquant » s'applique-t-il à cet imprimé ?"""
         return True
 
+    def _render_workbook(self, declaration):
+        """Classeur propre à l'imprimé (DAS : ID20, ID21 paginé, ID22, ID19), ou ``None`` = classeur standard."""
+        return None
+
     def _detail_columns(self, declaration):
         """Colonnes du détail nominatif ``[(clé du payload, libellé, nature)]`` (nature : amount, text,
         date) ; vide = détail par case."""
@@ -123,19 +127,30 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
         boxes = self._boxes(declaration)
         codes = sorted({code for box in boxes for code, _sign in box._source_codes()})
         categories = sorted({code for box in boxes for code, _sign in box._source_categories()})
+        das_columns = sorted(set(boxes.mapped('source_das_column')) - {False})
         slips = self.env['hr.payslip'].search(self._payslip_domain(declaration, prefix=''))
         facts = {'slips': slips, 'lines': []}
-        if not (codes or categories):
+        if not (codes or categories or das_columns):
             return facts
         groups = self.env['hr.payslip.line']._read_group(
             [
                 ('slip_id', 'in', slips.ids),
                 '|',
+                '|',
+                '|',
                 ('code', 'in', codes),
                 ('salary_rule_id.category_id.code', 'in', categories),
+                ('salary_rule_id.l10n_ga_das_column', 'in', das_columns),
+                ('salary_rule_id.l10n_ga_das_exempt_column', 'in', das_columns),
             ],
             ['slip_id', 'salary_rule_id'],
-            ['total:sum', 'l10n_ga_base:sum', 'l10n_ga_social_excluded:sum', 'id:recordset'],
+            [
+                'total:sum',
+                'l10n_ga_base:sum',
+                'l10n_ga_social_excluded:sum',
+                'l10n_ga_tax_exempt:sum',
+                'id:recordset',
+            ],
         )
         facts['lines'] = [
             {
@@ -147,9 +162,12 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
                 'total': total,
                 'base': base,
                 'social_excluded': excluded,
+                'tax_exempt': exempt,
+                'das_column': rule.l10n_ga_das_column,
+                'das_exempt_column': rule.l10n_ga_das_exempt_column,
                 'lines': lines,
             }
-            for slip, rule, total, base, excluded, lines in groups
+            for slip, rule, total, base, excluded, exempt, lines in groups
         ]
         return facts
 
@@ -160,12 +178,25 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
             return fact['total'] - fact['social_excluded']
         return fact['total']
 
-    def _sign(self, box, fact):
+    def _sign(self, box, fact, declaration=None):
         """Signe de la ligne pour la case, ou 0 si elle n'y entre pas (le code prime sur la catégorie)."""
         codes = dict(box._source_codes())
         if fact['code'] in codes:
             return codes[fact['code']]
         return dict(box._source_categories()).get(fact['category'], 0)
+
+    @staticmethod
+    def _das_value(box, fact):
+        """Part de la ligne classée dans la colonne DAS de la case (imposable et / ou exonérée, F16)."""
+        column = box.source_das_column
+        if not column:
+            return 0.0
+        value = 0.0
+        if fact['das_column'] == column:
+            value += fact['total'] - fact['tax_exempt']
+        if fact['das_exempt_column'] == column:
+            value += fact['tax_exempt']
+        return value
 
     def _contributions(self, declaration, facts):
         """``{case: {salarié: {'amount', 'lines', 'months'}}}`` pour les cases alimentées par les bulletins."""
@@ -180,9 +211,10 @@ class L10nGaDeclarationGeneratorPayslip(models.AbstractModel):
         for box in self._boxes(declaration).filtered(lambda b: b._has_source()):
             per_employee = result.setdefault(box.code, {})
             for fact in facts['lines']:
-                sign = self._sign(box, fact)
-                if sign:
-                    value = sign * self._measure(declaration, fact, box.source_measure)
+                sign = self._sign(box, fact, declaration)
+                das = self._das_value(box, fact)
+                if sign or das:
+                    value = sign * self._measure(declaration, fact, box.source_measure) + das
                     item = entry(per_employee, fact['employee'])
                     item['amount'] += value
                     item['months'][fact['month']] += value
