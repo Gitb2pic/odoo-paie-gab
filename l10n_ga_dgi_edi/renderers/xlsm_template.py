@@ -78,7 +78,38 @@ class XlsmTemplateRenderer(DeclarationBuilder):
             for column, value in enumerate(row, start=1):
                 self._write(worksheet.cell(row=start_row + offset + 1, column=column), value)
 
+    def sheet_names(self):
+        return self._book.sheetnames
+
+    def copy_sheet(self, name, title):
+        """Feuillet supplémentaire : copie d'une feuille du gabarit (avant remplissage)."""
+        copy = self._book.copy_worksheet(self._book[name])
+        copy.title = title[:31]
+        return copy.title
+
+    def remove_sheet(self, name):
+        self._book.remove(self._book[name])
+
+    def rows(self, sheet, start_row, rows, columns, capacity=None):
+        """Lignes écrites dans les colonnes ``columns`` (lettres) à partir de ``start_row`` (numéro Excel) ;
+        les lignes restantes de la zone (``capacity``) sont vidées : aucune formule du gabarit ne subsiste."""
+        worksheet = self._book[sheet]
+        rows = list(rows)
+        for offset in range(max(capacity or 0, len(rows))):
+            values = rows[offset] if offset < len(rows) else [None] * len(columns)
+            for column, value in zip(columns, values, strict=True):
+                self._write(worksheet[f'{column}{start_row + offset}'], value)
+
+    def _strip_formulas(self):
+        """Règle d'or 10 : les formules restantes du gabarit (souvent fausses, base 06 §3.3) sont retirées."""
+        for worksheet in self._book.worksheets:
+            for row in worksheet.iter_rows():
+                for cell in row:
+                    if cell.data_type == 'f':
+                        cell.value = None
+
     def build(self):
+        self._strip_formulas()
         stream = io.BytesIO()
         self._book.save(stream)
         self.close()

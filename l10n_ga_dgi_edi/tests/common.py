@@ -51,6 +51,9 @@ class FakeGenerator:
     def _render_workbook(self, declaration):
         return None
 
+    def _fill_template(self, declaration, renderer):
+        return None
+
 
 class GaDeclarationCase(GaPayrollCase):
     @classmethod

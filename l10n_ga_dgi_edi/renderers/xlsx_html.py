@@ -165,6 +165,16 @@ def _free_right(sheet, row, last_col, columns):
     return not following or sheet.cell(row=row, column=following[0]).value in (None, '')
 
 
+def _overflow_px(sheet, row, last_col, columns):
+    """Largeur disponible à droite pour un texte qui déborde : jusqu'à la prochaine cellule remplie."""
+    width = 0
+    for column in (c for c in columns if c > last_col):
+        if sheet.cell(row=row, column=column).value not in (None, ''):
+            break
+        width += _column_px(sheet.column_dimensions[get_column_letter(column)].width)
+    return width
+
+
 def _cell_html(sheet, position, merge, columns, scale):
     row, column = position
     cell = sheet.cell(row=row, column=column)
@@ -208,7 +218,12 @@ def _cell_html(sheet, position, merge, columns, scale):
     fill = cell.fill
     if fill is not None and fill.fill_type == 'solid' and _color(fill.fgColor):
         style.append(f'background-color:{_color(fill.fgColor)};')
-    return f'<td{span} style="{"".join(style)}">{escape(text)}</td>'
+    content = escape(text)
+    if text and free_right and horizontal == 'left' and not cell.alignment.wrap_text:
+        # Comme Excel : le débordement s'arrête à la prochaine cellule remplie de la ligne.
+        limit = (width + _overflow_px(sheet, row, last_col, columns)) * scale
+        content = f'<div style="width:{limit:.0f}px;overflow:hidden;white-space:nowrap;">{content}</div>'
+    return f'<td{span} style="{"".join(style)}">{content}</td>'
 
 
 def workbook_to_html(content, page_width_px):

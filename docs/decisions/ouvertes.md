@@ -97,3 +97,12 @@
 | D-92 | Cumuls d'ouverture sans ventilation | a) imposable − avantages − cotisations en (1), avantages en (2), non imposable en « autres », CFP non reprise (avertissement) ; comptés dans le rapprochement ID10 ; b) saisie par colonne | a) | **Décidé** (25/09/2026) |
 | D-93 | Préparation de la DAS | a) cron J-10 et assistant, jamais à chaque bulletin ; b) à chaque bulletin | a) | **Décidé** (25/09/2026) |
 | D-94 | Codes nationalité / sexe / situation | a) 1-4 / 1-2 / 1 marié, 2 célibataire (et concubin), 3 veuf, 4 divorcé ; b) autre | a) (base 06 §3.1) | **Décidé** (25/09/2026) |
+| D-95 | Compte des retenues 9,5 % / 20 % | a) 4478 « Autres taxes et contributions » ; b) 4471 (IRPP des salaires) | a) (rapprochements séparés) | **Décidé** (« go pour la 5 sans la 4.5 », go avec recommandations, 25/09/2026, plan 5) |
+| D-96 | « Position fiscale automatique » | a) positions « RAS 9,5 % » / « RAS 20 % » par société, affectées au tiers selon son classement, retenue ajoutée aux lignes de facture ; b) saisie manuelle | a) | **Décidé** (25/09/2026) |
+| D-97 | Sommes versées (ID23, ID24, ID26) | a) montant réglé par les paiements validés de l'année, réparti entre leurs factures, ramené au HT ; b) lettrages | a) (en Odoo 19, un paiement sans compte d'attente n'a pas d'écriture avant rapprochement) | **Décidé** (25/09/2026) |
+| D-98 | ID23 « qualité de salarié » | a) tiers = contact de travail d'un salarié ; profession = catégorie ; b) champ dédié | a) | **Décidé** (25/09/2026) |
+| D-99 | Rendus | a) ID18 / ID27 sur les gabarits officiels (listes, feuillets supplémentaires) ; ID23 / 24 / 26 en classeur neuf ; b) tout en classeur neuf | a) | **Décidé** (25/09/2026) — `.xlsm` V1 à brancher (D-87) |
+| D-100 | NIF d'un tiers | a) champ `vat` ; b) champ dédié | a) | **Décidé** (25/09/2026) |
+| D-101 | Champ du 9,5 % | a) résident non assujetti à la TVA classé A / B / C / prestations (loyers exclus) ; b) tous les non-assujettis | a) | **Décidé** (25/09/2026) |
+| D-102 | Déclenchement | a) validation des paiements (ID18, ID27) + cron J-10 ; b) cron seul | a) | **Décidé** (25/09/2026) |
+| D-103 | Taux non-résidents (point 09-7) | a) 20 % sur la taxe, modifiable par société ; b) 25 % (PwC) | a) | **Décidé** (25/09/2026) — **à confirmer par Alex** (texte CGI art. 206 à jour) |

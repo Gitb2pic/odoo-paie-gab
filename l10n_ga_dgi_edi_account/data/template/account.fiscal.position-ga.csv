@@ -1,0 +1,3 @@
+"id","sequence","name","auto_apply","l10n_ga_withholding_kind","note"
+"l10n_ga_fp_ras_095","20","Prestataire non assujetti à la TVA (RAS 9,5 %)","0","ras_095","Précompte IRPP de 9,5 % retenu au paiement (art. 182 CGI)."
+"l10n_ga_fp_ras_20","21","Non-résident (RAS 20 %)","0","ras_20","Retenue à la source de 20 % au paiement (art. 206 CGI) ; jamais cumulée avec le 9,5 %."

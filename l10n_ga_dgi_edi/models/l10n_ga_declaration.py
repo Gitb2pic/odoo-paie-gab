@@ -307,6 +307,8 @@ class L10nGaDeclaration(models.Model):
                     'amount': float_round(detail.get('amount') or 0.0, precision_digits=0),
                     'payload': detail.get('payload') or False,
                     'payslip_line_ids': [fields.Command.set(detail.get('payslip_line_ids') or [])],
+                    # champs ajoutés par les modules supérieurs (ex. move_line_ids de l10n_ga_dgi_edi_account)
+                    **(detail.get('extra_values') or {}),
                 }
             )
         self.env['l10n_ga.declaration.detail'].create(vals_list)
@@ -584,6 +586,7 @@ class L10nGaDeclaration(models.Model):
         if template:
             builder = XlsmTemplateRenderer(template)
             builder.boxes(self._box_cells())
+            self._generator()._fill_template(self, builder)
             extension = 'xlsm' if self.type_id.template_path.lower().endswith('.xlsm') else 'xlsx'
             return builder.build(), extension
         return self._render_new_workbook(), 'xlsx'

@@ -1,0 +1,638 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_ga_dgi_edi_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-25 13:20+0000\n"
+"PO-Revision-Date: 2026-09-25 13:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "%(partner)s : %(paid)s versés sans retenue."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/withholding.py:0
+msgid "%(partner)s : NIF absent."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/withholding.py:0
+msgid "%(partner)s : bénéficiaire non classé (catégorie DGI)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/withholding.py:0
+msgid ""
+"%(partner)s : retenues de 9,5 %% et de 20 %% cumulées ou non-résident retenu"
+" à 9,5 %%."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/account_move_line.py:0
+msgid ""
+"%(partner)s est non-résident : seule la retenue de 20 %% s’applique, jamais "
+"celle de 9,5 %%."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/withholding.py:0
+msgid "%(payment)s : paiement de %(partner)s sans retenue."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.actions.report,print_report_name:l10n_ga_dgi_edi_account.action_report_das_annex
+msgid "'%s' % (object.name)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_fee_category__a
+msgid "A - Administrateurs, commissaires aux comptes"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "A) Bénéficiaires ayant la qualité de salarié"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "A) Bénéficiaires de la CEMAC"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id23_paid_employee
+msgid "A) Sommes versées aux bénéficiaires salariés"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id24_paid_cemac
+msgid "A) Sommes versées dans la CEMAC"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_account_chart_template
+msgid "Account Chart Template"
+msgstr "Modèle de plan comptable"
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Adresse du bénéficiaire"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_email
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_email
+msgid "Adresse e-mail"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.actions.report,name:l10n_ga_dgi_edi_account.action_report_das_annex
+msgid "Annexe DAS (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_partner__l10n_ga_vat_subject
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_users__l10n_ga_vat_subject
+msgid "Assujetti à la TVA"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_fee_category__b
+msgid "B - Courtiers, autres intermédiaires"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "B) Bénéficiaires hors CEMAC"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "B) Bénéficiaires n’ayant pas la qualité de salarié"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id23_paid_other
+msgid "B) Sommes versées aux bénéficiaires non salariés"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id24_paid_other
+msgid "B) Sommes versées hors CEMAC"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_street
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_street
+msgid "Boîte postale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_fee_category__c
+msgid "C - Avocats, notaires, huissiers, experts-comptables (honoraires)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_zone__cemac
+msgid "CEMAC"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_partner__l10n_ga_fee_category
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_users__l10n_ga_fee_category
+msgid "Catégorie de bénéficiaire (DGI)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi_account.res_partner_view_form_l10n_ga_dgi
+msgid "Classement du bénéficiaire"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_tax_center
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_tax_center
+msgid "Code résidence"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi_account.declaration_type_id23
+msgid "Commissions et honoraires versés au Gabon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi_account.declaration_type_id24
+msgid "Commissions et honoraires versés hors du Gabon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_fiscal_position__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_payment__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_payment_withholding_line__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_tax__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_detail__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_fees__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id18__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id23__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id24__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id26__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id27__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_withholding__display_name
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Déclarant"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_detail
+msgid "Détail de déclaration (Gabon)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_year
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id23_hdr_year
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id24_hdr_year
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id26_hdr_year
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_year
+msgid "Exercice"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_account_fiscal_position
+msgid "Fiscal Position"
+msgstr "Position fiscale"
+
+#. module: l10n_ga_dgi_edi_account
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi_account.res_partner_view_form_l10n_ga_dgi
+msgid "Gabon — DGI"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_zone__other
+msgid "Hors CEMAC"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_chart_template__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_fiscal_position__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_payment__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_payment_withholding_line__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_tax__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_detail__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_fees__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id18__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id23__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id24__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id26__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_id27__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_generator_withholding__id
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_generator_id18
+msgid "ID18 — précompte IRPP 9,5 % sur prestations"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_generator_id23
+msgid "ID23 — commissions et honoraires versés au Gabon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_generator_id24
+msgid "ID24 — sommes versées hors du Gabon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_generator_id26
+msgid "ID26 — prestataires non assujettis à la TVA"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_generator_id27
+msgid "ID27 — retenue à la source 20 % sur non-résidents"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_account_move_line
+msgid "Journal Item"
+msgstr "Écriture comptable"
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_l10n_ga_declaration_detail__move_line_ids
+msgid "Lignes d’écriture"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_fee_category__rent
+msgid "Loyers"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_month
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_month
+msgid "Mois"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_total_base
+msgid "Montant brut des sommes versées"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Montant de la retenue effectuée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_total_base
+msgid "Montant des prestations facturées"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_total_withheld
+msgid "Montant des précomptes de 9,5 %"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_total_withheld
+msgid "Montant des retenues à la source"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Montant versé"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_nif
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id23_hdr_nif
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id24_hdr_nif
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id26_hdr_nif
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_nif
+msgid "NIF"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "NIF du prestataire"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,help:l10n_ga_dgi_edi_account.field_account_tax__l10n_ga_withholding_kind
+msgid ""
+"Nature de la retenue à la source (Gabon) : lue par les déclarations ID18, "
+"ID27, ID24 et ID26."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_taxpayer
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_taxpayer
+msgid "Nom du contribuable"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Nom, prénom ou raison sociale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Nom, prénom ou raison sociale du prestataire"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,help:l10n_ga_dgi_edi_account.field_res_partner__l10n_ga_withholding_kind
+#: model:ir.model.fields,help:l10n_ga_dgi_edi_account.field_res_users__l10n_ga_withholding_kind
+msgid ""
+"Non-résident : 20 % seulement ; résident non assujetti à la TVA classé : 9,5"
+" %."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model_terms:ir.ui.view,arch_db:l10n_ga_dgi_edi_account.res_partner_view_form_l10n_ga_dgi
+msgid ""
+"Non-résident : retenue de 20 % seulement (ID27, ID24). Résident non assujetti à la TVA\n"
+"                            classé : précompte de 9,5 % (ID18, ID26). La position fiscale suit ce classement."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,help:l10n_ga_dgi_edi_account.field_res_partner__l10n_ga_zone
+#: model:ir.model.fields,help:l10n_ga_dgi_edi_account.field_res_users__l10n_ga_zone
+msgid "Non-résidents (ID24) : déduite du pays, modifiable."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_account_payment_withholding_line
+msgid "Payment withholding line"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_account_payment
+msgid "Payments"
+msgstr "Paiements"
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Prestataires de services non assujettis à la TVA"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi_account.declaration_type_id26
+msgid "Prestataires non assujettis à la TVA et retenues de 9,5 %"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_fee_category__service
+msgid "Prestations de services"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Profession, qualité ou fonction"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi_account.declaration_type_id18
+msgid "Précomptes de l’IRPP sur les prestations de services (9,5 %)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_withholding_kind__ras_20
+msgid "RAS 20 %"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__account_fiscal_position__l10n_ga_withholding_kind__ras_20
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__account_tax__l10n_ga_withholding_kind__ras_20
+msgid "RAS 20 % (non-résidents, ID27)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__res_partner__l10n_ga_withholding_kind__ras_095
+msgid "RAS 9,5 %"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__account_fiscal_position__l10n_ga_withholding_kind__ras_095
+#: model:ir.model.fields.selection,name:l10n_ga_dgi_edi_account.selection__account_tax__l10n_ga_withholding_kind__ras_095
+msgid "RAS 9,5 % (prestataires, ID18)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id23_hdr_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id24_hdr_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id26_hdr_name
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_name
+msgid "Raison sociale"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_fiscal_position__l10n_ga_withholding_kind
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_account_tax__l10n_ga_withholding_kind
+msgid "Retenue gabonaise"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_partner__l10n_ga_withholding_kind
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_users__l10n_ga_withholding_kind
+msgid "Retenue à la source"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,help:l10n_ga_dgi_edi_account.field_account_fiscal_position__l10n_ga_withholding_kind
+msgid ""
+"Retenue à la source ajoutée aux lignes des factures fournisseurs de cette "
+"position (D-96)."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Retenue à la source effectuée"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid ""
+"Retenues de l’année %(annex)s, déclarées sur les %(type)s : %(declared)s."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_generator_withholding
+msgid "Retenues à la source du mois (base commune ID18 / ID27)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.type,name:l10n_ga_dgi_edi_account.declaration_type_id27
+msgid "Retenues à la source sur les non-résidents (20 %)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_partner__l10n_ga_is_resident
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_users__l10n_ga_is_resident
+msgid "Résident au Gabon"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_web
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_web
+msgid "Site Internet"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Sommes versées"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id26_paid_provider
+msgid "Sommes versées aux prestataires"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_l10n_ga_declaration_generator_fees
+msgid ""
+"Sommes versées aux tiers dans l’année (base commune ID23 / ID24 / ID26)"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model,name:l10n_ga_dgi_edi_account.model_account_tax
+msgid "Tax"
+msgstr "Taxe"
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "Total"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id26_total_withheld
+msgid "Total des retenues de 9,5 %"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id24_total_withheld
+msgid "Total des retenues à la source"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id23_total_paid
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id24_total_paid
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id26_total_paid
+msgid "Total des sommes versées"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_phone
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_phone
+msgid "Téléphone"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/account_move_line.py:0
+msgid "Une retenue de 9,5 % et une retenue de 20 % ne se cumulent jamais."
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id18_hdr_city
+#: model:l10n_ga.declaration.box,name:l10n_ga_dgi_edi_account.box_id27_hdr_city
+msgid "Ville"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_partner__l10n_ga_zone
+#: model:ir.model.fields,field_description:l10n_ga_dgi_edi_account.field_res_users__l10n_ga_zone
+msgid "Zone"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "address"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "nif"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "other"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "paid"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "profession"
+msgstr ""
+
+#. module: l10n_ga_dgi_edi_account
+#. odoo-python
+#: code:addons/l10n_ga_dgi_edi_account/models/generators/fees.py:0
+msgid "withheld"
+msgstr ""

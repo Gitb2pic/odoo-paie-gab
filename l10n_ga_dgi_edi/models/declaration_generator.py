@@ -64,6 +64,10 @@ class L10nGaDeclarationGeneratorBase(models.AbstractModel):
         """Le contrôle commun « n° CNSS manquant » s'applique-t-il à cet imprimé ?"""
         return True
 
+    def _fill_template(self, declaration, renderer):
+        """Compléments d'un gabarit officiel après les cases (listes nominatives des bordereaux)."""
+        return None
+
     def _render_workbook(self, declaration):
         """Classeur propre à l'imprimé (DAS : ID20, ID21 paginé, ID22, ID19), ou ``None`` = classeur standard."""
         return None

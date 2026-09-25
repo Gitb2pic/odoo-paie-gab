@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_partner_view_form_l10n_ga_dgi" model="ir.ui.view">
+        <field name="name">res.partner.form.l10n_ga_dgi</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Gabon — DGI" name="l10n_ga_dgi">
+                    <group>
+                        <group string="Classement du bénéficiaire">
+                            <field name="l10n_ga_fee_category"/>
+                            <field name="l10n_ga_is_resident"/>
+                            <field name="l10n_ga_zone" invisible="l10n_ga_is_resident"/>
+                            <field name="l10n_ga_vat_subject"/>
+                            <field name="l10n_ga_withholding_kind"/>
+                        </group>
+                        <div class="text-muted">
+                            Non-résident : retenue de 20 % seulement (ID27, ID24). Résident non assujetti à la TVA
+                            classé : précompte de 9,5 % (ID18, ID26). La position fiscale suit ce classement.
+                        </div>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

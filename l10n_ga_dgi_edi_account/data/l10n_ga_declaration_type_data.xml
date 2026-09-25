@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Déclarations de la comptabilité, périmètre V1.0 (ADR-13, F9 ; plan 5) : ID18 et ID27 mensuelles
+    (gabarits officiels, cellules d'en-tête lues sur les fusions ; NIF supposé en D16, cf. D-74),
+    annexes DAS ID23, ID24, ID26 annuelles (classeur neuf, D-99). Préparées par le cron J-10 et à la
+    validation des paiements (ID18, ID27), jamais à chaque bulletin.
+-->
+<odoo>
+    <!-- Annexes DAS : rendu en paysage (tableaux à plusieurs colonnes). -->
+    <record id="action_report_das_annex" model="ir.actions.report">
+        <field name="name">Annexe DAS (Gabon)</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_declaration_landscape</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_declaration_landscape</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+        <field name="paperformat_id" ref="l10n_ga_dgi_edi.paperformat_l10n_ga_dts"/>
+    </record>
+
+    <record id="declaration_type_id18" model="l10n_ga.declaration.type">
+        <field name="code">ID18</field>
+        <field name="name">Précomptes de l’IRPP sur les prestations de services (9,5 %)</field>
+        <field name="sequence">60</field>
+        <field name="authority">dgi</field>
+        <field name="periodicity">monthly</field>
+        <field name="period_basis">payment_date</field>
+        <field name="due_months">1</field>
+        <field name="due_day">15</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="prepare_on_payslip" eval="False"/>
+        <field name="generator_key">id18</field>
+        <field name="template_path">l10n_ga_dgi_edi_account/static/templates/ID18.xlsx</field>
+        <field name="report_id" ref="l10n_ga_dgi_edi.action_report_declaration"/>
+    </record>
+    <record id="box_id18_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Exercice</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+        <field name="cell_ref">E12</field>
+    </record>
+    <record id="box_id18_hdr_month" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_MONTH</field>
+        <field name="name">Mois</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_month</field>
+        <field name="cell_ref">L12</field>
+    </record>
+    <record id="box_id18_hdr_nif" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_NIF</field>
+        <field name="name">NIF</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_nif</field>
+        <field name="cell_ref">D16</field>
+    </record>
+    <record id="box_id18_hdr_taxpayer" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_TAXPAYER</field>
+        <field name="name">Nom du contribuable</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+        <field name="cell_ref">C18</field>
+    </record>
+    <record id="box_id18_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+        <field name="cell_ref">C19</field>
+    </record>
+    <record id="box_id18_hdr_street" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_STREET</field>
+        <field name="name">Boîte postale</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_street</field>
+        <field name="cell_ref">C20</field>
+    </record>
+    <record id="box_id18_hdr_city" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_CITY</field>
+        <field name="name">Ville</field>
+        <field name="sequence">70</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_city</field>
+        <field name="cell_ref">L20</field>
+    </record>
+    <record id="box_id18_hdr_phone" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_PHONE</field>
+        <field name="name">Téléphone</field>
+        <field name="sequence">80</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_phone</field>
+        <field name="cell_ref">C21</field>
+    </record>
+    <record id="box_id18_hdr_email" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_EMAIL</field>
+        <field name="name">Adresse e-mail</field>
+        <field name="sequence">90</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_email</field>
+        <field name="cell_ref">C22</field>
+    </record>
+    <record id="box_id18_hdr_web" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_WEB</field>
+        <field name="name">Site Internet</field>
+        <field name="sequence">100</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_website</field>
+        <field name="cell_ref">L22</field>
+    </record>
+    <record id="box_id18_hdr_tax_center" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">HDR_TAX_CENTER</field>
+        <field name="name">Code résidence</field>
+        <field name="sequence">110</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_tax_center</field>
+        <field name="cell_ref">N24</field>
+    </record>
+    <record id="box_id18_total_base" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">TOTAL_BASE</field>
+        <field name="name">Montant des prestations facturées</field>
+        <field name="sequence">120</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id18_total_withheld" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id18"/>
+        <field name="code">TOTAL_WITHHELD</field>
+        <field name="name">Montant des précomptes de 9,5 %</field>
+        <field name="sequence">130</field>
+        <field name="value_kind">amount</field>
+        <field name="is_total" eval="True"/>
+    </record>
+
+    <record id="declaration_type_id27" model="l10n_ga.declaration.type">
+        <field name="code">ID27</field>
+        <field name="name">Retenues à la source sur les non-résidents (20 %)</field>
+        <field name="sequence">61</field>
+        <field name="authority">dgi</field>
+        <field name="periodicity">monthly</field>
+        <field name="period_basis">payment_date</field>
+        <field name="due_months">1</field>
+        <field name="due_day">15</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="prepare_on_payslip" eval="False"/>
+        <field name="generator_key">id27</field>
+        <field name="template_path">l10n_ga_dgi_edi_account/static/templates/ID27.xlsx</field>
+        <field name="report_id" ref="l10n_ga_dgi_edi.action_report_declaration"/>
+    </record>
+    <record id="box_id27_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Exercice</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+        <field name="cell_ref">E12</field>
+    </record>
+    <record id="box_id27_hdr_month" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_MONTH</field>
+        <field name="name">Mois</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_month</field>
+        <field name="cell_ref">L12</field>
+    </record>
+    <record id="box_id27_hdr_nif" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_NIF</field>
+        <field name="name">NIF</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_nif</field>
+        <field name="cell_ref">D16</field>
+    </record>
+    <record id="box_id27_hdr_taxpayer" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_TAXPAYER</field>
+        <field name="name">Nom du contribuable</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+        <field name="cell_ref">C18</field>
+    </record>
+    <record id="box_id27_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+        <field name="cell_ref">C19</field>
+    </record>
+    <record id="box_id27_hdr_street" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_STREET</field>
+        <field name="name">Boîte postale</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_street</field>
+        <field name="cell_ref">C20</field>
+    </record>
+    <record id="box_id27_hdr_city" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_CITY</field>
+        <field name="name">Ville</field>
+        <field name="sequence">70</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_city</field>
+        <field name="cell_ref">L20</field>
+    </record>
+    <record id="box_id27_hdr_phone" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_PHONE</field>
+        <field name="name">Téléphone</field>
+        <field name="sequence">80</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_phone</field>
+        <field name="cell_ref">C21</field>
+    </record>
+    <record id="box_id27_hdr_email" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_EMAIL</field>
+        <field name="name">Adresse e-mail</field>
+        <field name="sequence">90</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_email</field>
+        <field name="cell_ref">C22</field>
+    </record>
+    <record id="box_id27_hdr_web" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_WEB</field>
+        <field name="name">Site Internet</field>
+        <field name="sequence">100</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_website</field>
+        <field name="cell_ref">L22</field>
+    </record>
+    <record id="box_id27_hdr_tax_center" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">HDR_TAX_CENTER</field>
+        <field name="name">Code résidence</field>
+        <field name="sequence">110</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_tax_center</field>
+        <field name="cell_ref">M24</field>
+    </record>
+    <record id="box_id27_total_base" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">TOTAL_BASE</field>
+        <field name="name">Montant brut des sommes versées</field>
+        <field name="sequence">120</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id27_total_withheld" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id27"/>
+        <field name="code">TOTAL_WITHHELD</field>
+        <field name="name">Montant des retenues à la source</field>
+        <field name="sequence">130</field>
+        <field name="value_kind">amount</field>
+        <field name="is_total" eval="True"/>
+    </record>
+
+    <record id="declaration_type_id23" model="l10n_ga.declaration.type">
+        <field name="code">ID23</field>
+        <field name="name">Commissions et honoraires versés au Gabon</field>
+        <field name="sequence">70</field>
+        <field name="authority">dgi</field>
+        <field name="periodicity">yearly</field>
+        <field name="period_basis">payment_date</field>
+        <field name="due_months">4</field>
+        <field name="due_day">30</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="prepare_on_payslip" eval="False"/>
+        <field name="generator_key">id23</field>
+        <field name="report_id" ref="action_report_das_annex"/>
+    </record>
+    <record id="box_id23_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id23"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+    </record>
+    <record id="box_id23_hdr_nif" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id23"/>
+        <field name="code">HDR_NIF</field>
+        <field name="name">NIF</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_nif</field>
+    </record>
+    <record id="box_id23_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id23"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Exercice</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+    </record>
+    <record id="box_id23_paid_employee" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id23"/>
+        <field name="code">PAID_EMPLOYEE</field>
+        <field name="name">A) Sommes versées aux bénéficiaires salariés</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id23_paid_other" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id23"/>
+        <field name="code">PAID_OTHER</field>
+        <field name="name">B) Sommes versées aux bénéficiaires non salariés</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id23_total_paid" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id23"/>
+        <field name="code">TOTAL_PAID</field>
+        <field name="name">Total des sommes versées</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">amount</field>
+    </record>
+
+    <record id="declaration_type_id24" model="l10n_ga.declaration.type">
+        <field name="code">ID24</field>
+        <field name="name">Commissions et honoraires versés hors du Gabon</field>
+        <field name="sequence">71</field>
+        <field name="authority">dgi</field>
+        <field name="periodicity">yearly</field>
+        <field name="period_basis">payment_date</field>
+        <field name="due_months">4</field>
+        <field name="due_day">30</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="prepare_on_payslip" eval="False"/>
+        <field name="generator_key">id24</field>
+        <field name="report_id" ref="action_report_das_annex"/>
+    </record>
+    <record id="box_id24_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id24"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+    </record>
+    <record id="box_id24_hdr_nif" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id24"/>
+        <field name="code">HDR_NIF</field>
+        <field name="name">NIF</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_nif</field>
+    </record>
+    <record id="box_id24_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id24"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Exercice</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+    </record>
+    <record id="box_id24_paid_cemac" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id24"/>
+        <field name="code">PAID_CEMAC</field>
+        <field name="name">A) Sommes versées dans la CEMAC</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id24_paid_other" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id24"/>
+        <field name="code">PAID_OTHER</field>
+        <field name="name">B) Sommes versées hors CEMAC</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id24_total_paid" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id24"/>
+        <field name="code">TOTAL_PAID</field>
+        <field name="name">Total des sommes versées</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id24_total_withheld" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id24"/>
+        <field name="code">TOTAL_WITHHELD</field>
+        <field name="name">Total des retenues à la source</field>
+        <field name="sequence">70</field>
+        <field name="value_kind">amount</field>
+    </record>
+
+    <record id="declaration_type_id26" model="l10n_ga.declaration.type">
+        <field name="code">ID26</field>
+        <field name="name">Prestataires non assujettis à la TVA et retenues de 9,5 %</field>
+        <field name="sequence">72</field>
+        <field name="authority">dgi</field>
+        <field name="periodicity">yearly</field>
+        <field name="period_basis">payment_date</field>
+        <field name="due_months">4</field>
+        <field name="due_day">30</field>
+        <field name="lead_days">10</field>
+        <field name="auto_create" eval="True"/>
+        <field name="prepare_on_payslip" eval="False"/>
+        <field name="generator_key">id26</field>
+        <field name="report_id" ref="action_report_das_annex"/>
+    </record>
+    <record id="box_id26_hdr_name" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id26"/>
+        <field name="code">HDR_NAME</field>
+        <field name="name">Raison sociale</field>
+        <field name="sequence">10</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_name</field>
+    </record>
+    <record id="box_id26_hdr_nif" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id26"/>
+        <field name="code">HDR_NIF</field>
+        <field name="name">NIF</field>
+        <field name="sequence">20</field>
+        <field name="value_kind">text</field>
+        <field name="auto_value">company_nif</field>
+    </record>
+    <record id="box_id26_hdr_year" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id26"/>
+        <field name="code">HDR_YEAR</field>
+        <field name="name">Exercice</field>
+        <field name="sequence">30</field>
+        <field name="value_kind">number</field>
+        <field name="auto_value">period_year</field>
+    </record>
+    <record id="box_id26_paid_provider" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id26"/>
+        <field name="code">PAID_PROVIDER</field>
+        <field name="name">Sommes versées aux prestataires</field>
+        <field name="sequence">40</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id26_total_paid" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id26"/>
+        <field name="code">TOTAL_PAID</field>
+        <field name="name">Total des sommes versées</field>
+        <field name="sequence">50</field>
+        <field name="value_kind">amount</field>
+    </record>
+    <record id="box_id26_total_withheld" model="l10n_ga.declaration.box">
+        <field name="type_id" ref="declaration_type_id26"/>
+        <field name="code">TOTAL_WITHHELD</field>
+        <field name="name">Total des retenues de 9,5 %</field>
+        <field name="sequence">60</field>
+        <field name="value_kind">amount</field>
+    </record>
+</odoo>
