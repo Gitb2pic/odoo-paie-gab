@@ -6,8 +6,9 @@ from .common import GaPayrollCase
 
 SEPT = (date(2026, 9, 1), date(2026, 9, 30))  # 22 jours ouvrés, 176 heures
 ABSENCE = (date(2026, 9, 7), date(2026, 9, 8))  # lundi et mardi : 2 jours, 16 heures
-WAGE = 440_000  # 2 500 par heure de présence
-FULL, REDUCED = WAGE, WAGE * 160 / 176  # 400 000
+WAGE = 440_000
+H_REF = 173.33  # mois de référence légal (arrêté 016/MTEPS art. 5), paramètre l10n_ga_hours_month_ref
+FULL, REDUCED = WAGE, WAGE * (H_REF - 16) / H_REF  # FIX 01 : 16 h retirées des 173,33 h (≈ 399 384)
 
 # Effet de chaque absence F4 sur le salaire de base (avec subrogation CNSS, défaut D-26).
 EXPECTED_BASIC = {
@@ -28,7 +29,8 @@ EXPECTED_BASIC = {
 
 @tagged('post_install', '-at_install')
 class TestAbsences(GaPayrollCase):
-    """F4 : 12 absences gabonaises ; BASIC proratisé par les prestations, jamais par une retenue (B2)."""
+    """F4 : 12 absences gabonaises ; BASIC = heures de référence − heures non payées (FIX 01), jamais une
+    retenue (B2)."""
 
     def _slip_with_absence(self, code, name=None, **employee_values):
         employee = self._employee(name or f'Absence {code}', WAGE, **employee_values)
@@ -64,7 +66,8 @@ class TestAbsences(GaPayrollCase):
         self.assertEqual(sum(reference.mapped('total')), WAGE + 6_000_000)
         self._absence(employee, 'GA_CP', *ABSENCE)
         slip = self._payslip(employee, *SEPT)
-        # 6 440 000 × 1/12 × (2 jours ouvrés × 6/5 = 2,4 jours ouvrables) / 24 jours = 53 667 > maintien 40 000
+        # 6 440 000 × 1/12 × (2 jours ouvrés × 6/5 = 2,4 jours ouvrables) / 24 jours = 53 667
+        # > maintien 40 617 (16 h sur 173,33, FIX 01)
         self.assertEqual(self._totals(slip)['GA_CONGE'], 53_667)
 
     def test_leave_allowance_minor(self):

@@ -113,7 +113,7 @@ class TestBasicHours(GaPayrollCase):
         self.assertEqual(out_hours, 88)  # 11 jours ouvrés du 1er au 15 janvier
         self.assertEqual(self.company.l10n_ga_entry_exit_hours, 'deduct')  # (a) par défaut (D-104)
         self.assertAlmostEqual(slip._l10n_ga_basic_hours(), 85.33, places=2)
-        self.assertEqual(self._basic(slip), 64_000)
+        self.assertEqual(self._basic(slip), 63_999)  # 85,33 × 130 000 / 173,33 = 63 998,96
         self.company.l10n_ga_entry_exit_hours = 'prorata'  # (b)
         slip.compute_sheet()
         self.assertAlmostEqual(slip._l10n_ga_basic_hours(), self._reference_hours(slip) * 96 / 184, places=2)
@@ -154,7 +154,7 @@ class TestBasicHours(GaPayrollCase):
         sources = [*MODULE_DIR.glob('models/*.py'), MODULE_DIR / 'data' / 'hr_salary_rule_data.xml']
         sources += [*MODULE_DIR.glob('lib/ga_fiscal_core/*.py'), *MODULE_DIR.glob('report/*.xml')]
         literal = re.compile(r'173[.,]33')
-        division = re.compile(r'wage\s*/\s*(?!self\._rule_parameter|reference_hours)')
+        division = re.compile(r'wage\s*/(?!\s*(?:self\._rule_parameter|reference_hours))')
         for path in sources:
             text = path.read_text(encoding='utf-8')
             with self.subTest(path=path.name):

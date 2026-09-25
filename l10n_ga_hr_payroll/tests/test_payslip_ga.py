@@ -127,7 +127,9 @@ class TestPayslipGa(GaPayrollCase):
         ratio = slip._l10n_ga_paid_ratio()
         self.assertTrue(0 < ratio < 1)
         totals = self._totals(slip)
-        self.assertEqual(totals['BASIC'], slip.paid_amount)
+        # FIX 01 : 10 jours hors contrat (80 h) retirés des 173,33 h → 93,33 h × 300 000 / 173,33.
+        self.assertEqual(totals['BASIC'], 161_536)
+        self.assertEqual(totals['BASIC'], slip._l10n_ga_basic_amount())
         self.assertAlmostEqual(totals['GA_SURSAL'], 40_000 * ratio, delta=0.5)  # proratisée, au franc
         self.assertEqual(totals['GA_INTERIM'], 10_000)  # non proratisée
         lines = [

@@ -92,7 +92,8 @@ KINDS = ('standard', 'input', 'core')
 # Règles standard conformes à hr_payroll (E/hr_payroll/data/hr_salary_rule_data.xml:10-123) ;
 # le brut Gabon ajoute les avantages en nature, le net unique ne les contient pas (non versés).
 STANDARD_FORMULAS = {
-    'BASIC': 'result = payslip.paid_amount',
+    # FIX 01 : mois de référence de 173,33 h (paramètre daté), taux horaire unique.
+    'BASIC': 'result = payslip._l10n_ga_basic_amount()',
     'GROSS': "result = categories['BASIC'] + categories['ALW'] + categories['GA_AIK']",
     'NET': "result = categories['BASIC'] + categories['ALW'] + categories['DED']",
 }

@@ -32,6 +32,17 @@ class ResCompany(models.Model):
         default='social',
         help='Décision D-10 : assiette sociale par défaut (cas de référence), brut disponible en option.',
     )
+    l10n_ga_entry_exit_hours = fields.Selection(
+        [
+            ('deduct', 'Retirer les heures hors contrat (comme une absence)'),
+            ('prorata', 'Prorata des heures du contrat sur les heures prévues du mois'),
+        ],
+        string='Entrée / sortie en cours de mois',
+        default='deduct',
+        required=True,
+        help='Salaire de base sur le mois de référence (FIX 01, D-104) : (a) référence − heures hors contrat ; '
+        '(b) référence × heures du contrat / heures prévues du mois.',
+    )
     l10n_ga_cash_rounding = fields.Integer(
         string='Arrondi des paies en espèces',
         default=lambda self: self._l10n_ga_default_cash_rounding(),

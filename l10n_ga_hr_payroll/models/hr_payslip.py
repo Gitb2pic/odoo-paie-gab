@@ -14,6 +14,7 @@ from odoo.exceptions import UserError
 from odoo.fields import Command
 
 from ..lib.ga_fiscal_core import print_layout as layout
+from ..lib.ga_fiscal_core.basic import DEDUCT, basic_amount, basic_quantity, hourly_rate
 from ..lib.ga_fiscal_core.benefits import benefit_code
 from ..lib.ga_fiscal_core.engine import PayslipFacts, compute
 from ..lib.ga_fiscal_core.exemptions import GainLine
@@ -31,6 +32,8 @@ BASIC_CATEGORY = 'BASIC'
 BENEFIT_PREFIX = 'benefit:'
 CACHE_KEY = 'l10n_ga_hr_payroll.payslip'
 VALIDATED_STATES = ('validated', 'paid')  # sprint 0 point 3 : pas d'état « done » en 19
+BASIC_CODE = 'BASIC'
+OUT_OF_CONTRACT = 'OUT'  # prestation hors contrat (E/hr_payroll/models/hr_payslip.py:951)
 OVERTIME_PREFIX = 'overtime:'
 ALLOWANCE_PAY_MODE = 'allowance'  # congé payé : hors BASIC, payé par GA_CONGE (F4)
 MONTHS_PER_YEAR = 12  # période de référence de l'allocation de congé et droits annuels (base 05 §5)
@@ -175,12 +178,43 @@ class HrPayslip(models.Model):
         return self.company_id._l10n_ga_fiscal_params(self.date_to, raise_if_not_found=True)
 
     def _l10n_ga_paid_ratio(self):
-        """Part payée du mois : même proratisation que ``BASIC`` (``paid_amount`` / salaire)."""
+        """Part payée du mois : même proratisation que ``BASIC`` (salaire de base payé / salaire)."""
         self.ensure_one()
         wage = self._get_contract_wage()
         if not wage:
             return 1.0
-        return min(1.0, max(0.0, self.paid_amount / wage))
+        return min(1.0, max(0.0, self._l10n_ga_basic_amount() / wage))
+
+    # --- salaire de base sur le mois de référence (FIX 01, arrêté 016/MTEPS art. 5, base 05 §2) ----
+
+    def _l10n_ga_reference_hours(self):
+        """Heures mensuelles de référence (paramètre daté l10n_ga_hours_month_ref) : base unique du taux horaire."""
+        return self._rule_parameter('l10n_ga_hours_month_ref')
+
+    def _l10n_ga_uses_reference_hours(self):
+        return self.wage_type != 'hourly' and self.struct_id.use_worked_day_lines
+
+    def _l10n_ga_basic_hours(self):
+        """Heures payées par le salaire de base : référence − heures non payées (jamais négatives).
+
+        Heures non payées : prestations du contrat non payées par la base (``is_paid`` faux : absences non
+        rémunérées, congé payé réglé par l'allocation, CNSS sans subrogation) et heures hors contrat
+        (``OUT``, E/hr_payroll/models/hr_payslip.py:920-959) selon l'option société (D-104).
+        """
+        self.ensure_one()
+        lines = self._l10n_ga_month_lines()
+        out_hours = sum(lines.filtered(lambda wd: wd.code == OUT_OF_CONTRACT).mapped('number_of_hours'))
+        unpaid = sum(lines.filtered(lambda wd: wd.code != OUT_OF_CONTRACT and not wd.is_paid).mapped('number_of_hours'))
+        planned = sum(lines.mapped('number_of_hours'))
+        method = self.company_id.l10n_ga_entry_exit_hours or DEDUCT
+        return basic_quantity(self._l10n_ga_reference_hours(), unpaid, out_hours, planned, method=method)
+
+    def _l10n_ga_basic_amount(self):
+        """Montant de ``BASIC`` : salaire exact sur un mois complet, sinon heures payées × taux horaire."""
+        self.ensure_one()
+        if not self._l10n_ga_uses_reference_hours():
+            return self.paid_amount  # salaire horaire ou structure sans prestations : standard
+        return basic_amount(self._get_contract_wage(), self._l10n_ga_reference_hours(), self._l10n_ga_basic_hours())
 
     def _l10n_ga_days_worked(self):
         """Jours de présence (prestations de travail, hors absences) : exonération transport journalière."""
@@ -391,7 +425,7 @@ class HrPayslip(models.Model):
         self.ensure_one()
         if self.wage_type == 'hourly':
             return self.version_id.hourly_wage
-        return self.version_id.contract_wage / self._rule_parameter('l10n_ga_hours_month_ref')
+        return hourly_rate(self.version_id.contract_wage, self._l10n_ga_reference_hours())
 
     def _l10n_ga_overtime_hours(self, period):
         self.ensure_one()
@@ -457,10 +491,8 @@ class HrPayslip(models.Model):
         leave_lines = self._l10n_ga_leave_lines()
         if not leave_lines:
             return 0
-        attendance_hours = sum(
-            line.number_of_hours for line in self.worked_days_line_ids if not line.work_entry_type_id.is_extra_hours
-        )
-        share = sum(leave_lines.mapped('number_of_hours')) / attendance_hours if attendance_hours else 0
+        # Même base horaire que la ligne de base (FIX 01) : heures de congé / heures de référence.
+        share = min(1.0, sum(leave_lines.mapped('number_of_hours')) / self._l10n_ga_reference_hours())
         # Maintien : salaire et indemnités « base congés » proratisées, au prorata des heures de congé.
         prorated = self.struct_id.rule_ids.filtered(lambda r: r.l10n_ga_prorate and r.l10n_ga_leave_base)
         monthly = self.version_id.contract_wage
@@ -774,6 +806,8 @@ class HrPayslip(models.Model):
                 values[line] = bases[code]
             elif code and code.startswith(OVERTIME_PREFIX):
                 values[line] = (self._l10n_ga_overtime_hours(code.removeprefix(OVERTIME_PREFIX)), None)
+            elif line.code == BASIC_CODE and self._l10n_ga_uses_reference_hours():
+                values[line] = (self._l10n_ga_basic_hours(), self._l10n_ga_hourly_rate())  # figés (F7)
         return values
 
     # --- bulletin imprimé (F7, RG24, plan 2.7 b) ---------------------------------------------------
@@ -826,7 +860,11 @@ class HrPayslip(models.Model):
         data['payment_mode_label'] = dict(PAYMENT_MODE_SELECTION).get(data['l10n_ga_payment_mode'], '')
         marital = dict(self.env['hr.version']._fields['marital']._description_selection(self.env))
         data['marital_label'] = marital.get(data['l10n_ga_marital_used'], data['l10n_ga_marital_used'] or '')
-        data['month_hours'] = sum(self._l10n_ga_month_lines().mapped('number_of_hours'))
+        basic = self.line_ids.filtered(lambda line: line.code == BASIC_CODE)[:1]
+        # « Horaires » : quantité (figée) de la ligne de base (FIX 01), pas le total du calendrier.
+        data['month_hours'] = data['line_values'].get(basic, (None, None))[0] if basic else None
+        if not data['month_hours']:  # bulletin figé avant le FIX 01 : heures du calendrier
+            data['month_hours'] = sum(self._l10n_ga_month_lines().mapped('number_of_hours'))
         totals = self._l10n_ga_line_totals()
         data['net_pay'] = totals.get('GA_NET_PAY', totals.get('NET', 0.0))
         return data
@@ -883,23 +921,23 @@ class HrPayslip(models.Model):
         )
 
     def _l10n_ga_basic_rows(self, row, data):
-        """Salaire de base en deux lignes (E4, affichage seulement) : mensuel, puis absences non payées."""
+        """Salaire de base en deux lignes (E4, affichage) : mois de référence au taux horaire unique, puis
+        heures non payées (FIX 01). Base et taux lus sur la ligne figée."""
         wage = data.get('l10n_ga_wage') or 0.0
-        hours = data['month_hours']
-        if self.wage_type == 'hourly' or not wage or not hours:
+        quantity, rate = row['base'], row['rate']
+        if self.wage_type == 'hourly' or not wage or not rate:
             return [row]
-        hourly = wage / hours
+        reference = self._l10n_ga_reference_hours()  # paramètre daté à la date du bulletin
         basic = row['amount'] or 0.0
-        rows = [dict(row, amount=wage, base=hours, rate=hourly, base_digits=2)]
+        rows = [dict(row, amount=wage, base=reference, rate=rate, base_digits=2)]
         if round_fcfa(basic) != round_fcfa(wage):
-            absent = sum(self._l10n_ga_month_lines().filtered(lambda wd: not wd.amount).mapped('number_of_hours'))
             rows.append(
                 self._l10n_ga_row(
                     str(layout.ABSENCE),
                     self.env._('Absences et congés non payés au salaire de base'),
                     amount=basic - wage,
-                    base=absent or None,
-                    rate=-hourly,
+                    base=(reference - (quantity or 0.0)) or None,
+                    rate=-rate,
                     base_digits=2,
                 )
             )

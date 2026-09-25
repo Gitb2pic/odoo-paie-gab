@@ -13,7 +13,7 @@
             <field name="struct_id" ref="structure_ga_employee"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = payslip.paid_amount</field>
+            <field name="amount_python_compute">result = payslip._l10n_ga_basic_amount()</field>
             <field name="bold" eval="True"/>
             <field name="l10n_ga_social_base">subject</field>
             <field name="l10n_ga_tax_base">taxable</field>
