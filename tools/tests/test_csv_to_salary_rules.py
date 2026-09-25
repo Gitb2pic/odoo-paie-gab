@@ -54,7 +54,7 @@ def _write_catalogue(tmp_path, mutate):
 def test_catalogue_opens_in_excel_with_accents():
     """BOM UTF-8 : Excel reconnaît l'encodage et affiche les accents (retour d'Alex, 25/09/2026)."""
     assert gen.CSV_PATH.read_bytes().startswith(b'\xef\xbb\xbf')
-    assert 'Prime d\'ancienneté' in gen.CSV_PATH.read_text(encoding='utf-8-sig')
+    assert "Prime d'ancienneté" in gen.CSV_PATH.read_text(encoding='utf-8-sig')
 
 
 def test_catalogue_size(rows):
