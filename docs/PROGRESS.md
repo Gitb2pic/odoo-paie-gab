@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (FIX 01).
+Mis à jour le 25/09/2026 (FIX 02).
 
 ## Étapes
 
@@ -18,6 +18,7 @@ Mis à jour le 25/09/2026 (FIX 01).
 | 3 | `l10n_ga_hr_payroll_account` | comptabilisation SYSCOHADA | **terminé** | 100 % (18/18 ; 28 tests Odoo, F16 compte par compte écart 0 ; installation sur société existante et désinstallation propres) | `docs/completude/l10n_ga_hr_payroll_account.md` |
 | C-2 | `l10n_ga_hr_payroll_account` | complétude du module | **terminé** | 100 % (3 manques corrigés, dont SYSCEBNL validé sans écriture ; 32 tests du module, 210 tests paie + comptabilité installées ensemble) | `docs/completude/l10n_ga_hr_payroll_account_C-2.md` |
 | FIX 01 | `l10n_ga_hr_payroll` | salaire de base sur 173,33 h, taux horaire unique | **terminé** | 100 % (T1-T10 ; 188 tests paie, 331 avec les 4 modules ; T9 écart 0 avec le calculateur) | `docs/completude/l10n_ga_hr_payroll_fix_01.md` |
+| FIX 02 | dépôt / `l10n_ga_hr_payroll` | mise à jour bloquée (service non redémarré) : garde-fous | **terminé** | 100 % (6/6 ; cause A prouvée ; contrôle `view-fields` dans `make lint`) | `docs/completude/l10n_ga_hr_payroll_fix_02.md` |
 | 4.1 | `l10n_ga_dgi_edi` | moteur de déclarations | **terminé** | 100 % (24/24 ; 47 tests Odoo sur base neuve et en mise à jour, 258 avec paie + comptabilité ; F16 déclaré écart 0 ; installation sur base existante et désinstallation propres) | `docs/completude/l10n_ga_dgi_edi_4.1.md` |
 | 4.2 | `l10n_ga_dgi_edi` | ID10, ID28, quittances multiples (F11) | **terminé** | 100 % (20/20 ; 66 tests Odoo sur base neuve et en mise à jour, 277 avec paie + comptabilité ; F16 déclaré écart 0 ; D-74 NIF à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.2.md` |
 | 4.3 | `l10n_ga_dgi_edi` | DTS CNSS et CNAMGS | **terminé** (+ PDF au format Excel, 25/09) | 100 % (16/16 ; 75 tests Odoo sur base neuve et en mise à jour, 286 avec paie + comptabilité ; T3 F16 écart 0 ; D-83 format des portails à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.3.md` |
