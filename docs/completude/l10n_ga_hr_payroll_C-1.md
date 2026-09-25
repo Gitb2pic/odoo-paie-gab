@@ -13,7 +13,7 @@ Les inventaires détaillés par étape restent dans `docs/completude/l10n_ga_hr_
 | RG | Objet | Test / preuve |
 |---|---|---|
 | RG01, RG07, RG08 | société, bulletin, lignes | modèles standard Odoo, exercés par tous les tests de bulletin |
-| RG02-RG04 | versions, parts, convention | `test_agreements`, tests des parts |
+| RG02-RG04 | versions, parts, convention | `test_agreement.py`, `test_tax_parts.py`, `test_hr_version_ga.py` |
 | RG05, RG06, RG22 | rubriques, paramètres datés, code unique | tests 2.2 |
 | RG18 | grille : salaire ≥ minimum | tests 2.4 |
 | RG19-RG21 | prêts, échéances | tests 2.5 |
