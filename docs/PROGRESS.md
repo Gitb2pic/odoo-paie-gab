@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (étape 4.4).
+Mis à jour le 25/09/2026 (étape 5).
 
 ## Étapes
 
@@ -20,10 +20,10 @@ Mis à jour le 25/09/2026 (étape 4.4).
 | 4.1 | `l10n_ga_dgi_edi` | moteur de déclarations | **terminé** | 100 % (24/24 ; 47 tests Odoo sur base neuve et en mise à jour, 258 avec paie + comptabilité ; F16 déclaré écart 0 ; installation sur base existante et désinstallation propres) | `docs/completude/l10n_ga_dgi_edi_4.1.md` |
 | 4.2 | `l10n_ga_dgi_edi` | ID10, ID28, quittances multiples (F11) | **terminé** | 100 % (20/20 ; 66 tests Odoo sur base neuve et en mise à jour, 277 avec paie + comptabilité ; F16 déclaré écart 0 ; D-74 NIF à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.2.md` |
 | 4.3 | `l10n_ga_dgi_edi` | DTS CNSS et CNAMGS | **terminé** (+ PDF au format Excel, 25/09) | 100 % (16/16 ; 75 tests Odoo sur base neuve et en mise à jour, 286 avec paie + comptabilité ; T3 F16 écart 0 ; D-83 format des portails à confirmer) | `docs/completude/l10n_ga_dgi_edi_4.3.md` |
-| 4.4 | `l10n_ga_dgi_edi` | DAS ID19 à ID22, « Contrôle DAS », classeurs `.xlsm` | **terminé sans les `.xlsm`** (go d'Alex, D-87) — en attente du « go » pour 4.5 | 94 % (16/17 ; 89 tests Odoo, 300 avec paie + comptabilité ; DAS = Σ ID10 écart 0 ; `.xlsm` à brancher) | `docs/completude/l10n_ga_dgi_edi_4.4.md` |
-| 4.5 | `l10n_ga_dgi_edi` | migration des déclarations V1 (ADR-12) | à faire | — | — |
+| 4.4 | `l10n_ga_dgi_edi` | DAS ID19 à ID22, « Contrôle DAS », classeurs `.xlsm` | **terminé sans les `.xlsm`** (go d'Alex, D-87) | 94 % (16/17 ; 89 tests Odoo, 300 avec paie + comptabilité ; DAS = Σ ID10 écart 0 ; `.xlsm` à brancher) | `docs/completude/l10n_ga_dgi_edi_4.4.md` |
+| 4.5 | `l10n_ga_dgi_edi` | migration des déclarations V1 (ADR-12) | **reportée** (« go pour la 5 sans la 4.5 ») — bloquée par D-07 | — | — |
 | C-3 | `l10n_ga_dgi_edi` | complétude du module | à faire | — | — |
-| 5 | `l10n_ga_dgi_edi_account` | ID18, ID27, ID23, ID24, ID26 | à faire | — | — |
+| 5 | `l10n_ga_dgi_edi_account` | ID18, ID27, ID23, ID24, ID26 | **terminé** — en attente du « go » pour C-4 / 6 | 96 % (22/23 ; 16 tests du module, 316 avec les 4 modules ; `.xlsm` des annexes à brancher) | `docs/completude/l10n_ga_dgi_edi_account.md` |
 | C-4 | `l10n_ga_dgi_edi_account` | complétude du module | à faire | — | — |
 | 6 | `l10n_ga_hr_payroll_migration` | reprise `hr_payroll_gb` | à faire | — | — |
 | C-5 | `l10n_ga_hr_payroll_migration` | complétude du module | à faire | — | — |
@@ -39,8 +39,8 @@ Mis à jour le 25/09/2026 (étape 4.4).
 
 ## Bloquants et questions ouvertes
 
-Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle), D-58 à D-64 (3, comptabilisation), D-65 à D-73 (4.1, moteur de déclarations, go anticipé), D-74 à D-81 (4.2, ID10 / ID28 / quittances ; D-74 cellule du NIF à confirmer), D-82 à D-86 (4.3, DTS ; D-83 format des portails à confirmer), D-87 à D-94 (4.4, DAS ; D-87 `.xlsm` à brancher, D-90 / D-91 point 09-6 à confirmer). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
+Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle), D-58 à D-64 (3, comptabilisation), D-65 à D-73 (4.1, moteur de déclarations, go anticipé), D-74 à D-81 (4.2, ID10 / ID28 / quittances ; D-74 cellule du NIF à confirmer), D-82 à D-86 (4.3, DTS ; D-83 format des portails à confirmer), D-87 à D-94 (4.4, DAS ; D-87 `.xlsm` à brancher, D-90 / D-91 point 09-6 à confirmer), D-95 à D-103 (5, retenues ; D-103 taux 20 / 25 % à confirmer). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
 
 ## Prochaine étape
 
-Étape 4.5 — `l10n_ga_dgi_edi`, migration des déclarations V1 (ADR-12). **Bloquant (D-07)** : code et schéma de la V1 (`/home/ubuntu/odoo/v1_l10n_ga_dgi_edi`), idéalement une base V1 anonymisée. Les mêmes fichiers permettront de brancher les gabarits `.xlsm` de la DAS (D-87).
+Au choix d'Alex : C-4 (complétude de `l10n_ga_dgi_edi_account`, `prompts/99_completude.md`), étape 6 (`l10n_ga_hr_payroll_migration`, bloquée par D-05 : schéma `hr_payroll_gb`), ou 4.5 / `.xlsm` dès réception de la V1 (D-07). Démo : `make demo MODULE=l10n_ga_dgi_edi_account` (installe le module ; les sociétés au plan « ga » reçoivent les retenues).
