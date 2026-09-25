@@ -158,7 +158,8 @@ def _check_row(row):
 
 def load_catalogue(path=CSV_PATH):
     """Lit et valide le catalogue ; retourne la liste des lignes (dict) dans l'ordre du fichier."""
-    with open(path, encoding='utf-8', newline='') as stream:
+    # utf-8-sig : le catalogue porte un BOM pour qu'Excel affiche les accents ; accepté sans BOM aussi.
+    with open(path, encoding='utf-8-sig', newline='') as stream:
         reader = csv.DictReader(stream)
         missing = set(COLUMNS) - set(reader.fieldnames or ())
         if missing:

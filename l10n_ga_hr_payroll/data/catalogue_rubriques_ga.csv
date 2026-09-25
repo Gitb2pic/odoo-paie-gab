@@ -1,4 +1,4 @@
-code,name,kind,category,sequence,input_kind,core_value,social_base,social_cap_group,tax_base,tax_cap_group,prorate,leave_base,severance_base,das_column,das_exempt_column,account,print_code,print_name,source
+﻿code,name,kind,category,sequence,input_kind,core_value,social_base,social_cap_group,tax_base,tax_cap_group,prorate,leave_base,severance_base,das_column,das_exempt_column,account,print_code,print_name,source
 BASIC,Salaire de base,standard,BASIC,1,,,subject,,taxable,,0,1,1,presence,none,pcg_6611,10000,,Base 05 §1 BASE ; CT art. 169 ; règle standard hr_payroll (paid_amount)
 GA_SURSAL,Sursalaire,input,ALW,10,attachment,,subject,,taxable,,1,1,1,presence,none,pcg_6611,10100,,Base 05 §1 SURSAL
 GA_ANC,Prime d'ancienneté,core,ALW,11,,seniority,subject,,taxable,,1,1,1,presence,none,pcg_6612,10150,,"Base 05 §1 ANC et §4 (tronc commun) ; règle d'ancienneté de la convention (F5, D-25), base = minimum du grade ou salaire"
