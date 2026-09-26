@@ -223,13 +223,18 @@ class TestDas(GaDeclarationCase):
         texts = [str(c.value) for row in book['ID22'].iter_rows() for c in row if c.value is not None]
         self.assertIn('Récapitulatif des feuilles de l’ID21', texts)
         html = base64.b64decode((declaration.snapshot_attachment_ids - xlsx).datas).decode()
+        # ADR-20 : PDF figé = imprimés au format de la V1 (ID20, ID22, ID21 puis un ID19 par salarié)
         for title in (
-            'ID20 — État de la masse salariale',
-            'ID21 — Bordereau détaillé',
-            'ID22 — Bordereau récapitulatif',
-            'ID19 — Bulletin individuel',
+            'ÉTAT DE LA MASSE SALARIALE',
+            'BORDEREAU RÉCAPITULATIF',
+            'BORDEREAU DÉTAILLÉ DES SALAIRES VERSÉS PAR EMPLOYÉ',
         ):
             self.assertIn(title, html)
+        self.assertEqual(html.count('BULLETIN DE JUSTIFICATION'), 2)
+        # le classeur reste imprimable (rapport secondaire)
+        self.assertEqual(declaration._l10n_ga_workbook_report(), self.env.ref('l10n_ga_dgi_edi.action_report_das'))
+        workbook_html = str(declaration._l10n_ga_excel_html(1500))
+        self.assertIn('ID20', workbook_html)
 
     def test_check_screen(self):
         wizard = self.env['l10n_ga.das.wizard'].create({'company_id': self.company.id, 'year': YEAR})

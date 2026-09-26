@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    FIX 03 : les imprimés de la comptabilité (ID18, ID27, ID23, ID24, ID26) sont rangés dans
+    Comptabilité → Analyse, et seulement eux (scope = account) ; les déclarations de salaires restent dans
+    la Paie. Mêmes vues que le moteur (l10n_ga_dgi_edi).
+-->
+<odoo>
+    <record id="l10n_ga_declaration_action_account_dashboard" model="ir.actions.act_window">
+        <field name="name">Échéances DGI (comptabilité)</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">kanban,calendar,list,form</field>
+        <field name="domain">[('scope', '=', 'account')]</field>
+        <field name="context">{'search_default_to_file': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Aucune déclaration à déposer</p>
+            <p>Les ID18 et ID27 sont préparées à la validation des paiements ; les annexes ID23, ID24 et ID26
+               dix jours avant le 30 avril.</p>
+        </field>
+    </record>
+
+    <record id="l10n_ga_declaration_action_account" model="ir.actions.act_window">
+        <field name="name">Déclarations DGI (comptabilité)</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form,kanban,calendar</field>
+        <field name="domain">[('scope', '=', 'account')]</field>
+        <field name="context">{'search_default_group_type': 1}</field>
+    </record>
+
+    <record id="l10n_ga_declaration_action_id18" model="ir.actions.act_window">
+        <field name="name">ID18 — Précomptes 9,5 %</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type_code', '=', 'ID18')]</field>
+    </record>
+
+    <record id="l10n_ga_declaration_action_id27" model="ir.actions.act_window">
+        <field name="name">ID27 — Retenues non-résidents</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type_code', '=', 'ID27')]</field>
+    </record>
+
+    <record id="l10n_ga_declaration_action_annexes" model="ir.actions.act_window">
+        <field name="name">Annexes DAS (ID23, ID24, ID26)</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type_code', 'in', ('ID23', 'ID24', 'ID26'))]</field>
+    </record>
+
+    <record id="l10n_ga_declaration_payment_action_account" model="ir.actions.act_window">
+        <field name="name">Quittances DGI (comptabilité)</field>
+        <field name="res_model">l10n_ga.declaration.payment</field>
+        <field name="view_mode">list</field>
+        <field name="domain">[('declaration_id.scope', '=', 'account')]</field>
+    </record>
+
+    <menuitem
+        id="menu_l10n_ga_declaration_account_root"
+        name="Déclarations DGI"
+        parent="account.menu_finance_reports"
+        groups="account.group_account_readonly"
+        sequence="80"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_account_dashboard"
+        name="Échéances"
+        action="l10n_ga_declaration_action_account_dashboard"
+        parent="menu_l10n_ga_declaration_account_root"
+        sequence="10"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_account"
+        name="Toutes les déclarations"
+        action="l10n_ga_declaration_action_account"
+        parent="menu_l10n_ga_declaration_account_root"
+        sequence="20"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_id18"
+        name="ID18 — Précomptes 9,5 %"
+        action="l10n_ga_declaration_action_id18"
+        parent="menu_l10n_ga_declaration_account_root"
+        sequence="30"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_id27"
+        name="ID27 — Retenues non-résidents"
+        action="l10n_ga_declaration_action_id27"
+        parent="menu_l10n_ga_declaration_account_root"
+        sequence="35"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_annexes"
+        name="Annexes DAS (ID23, ID24, ID26)"
+        action="l10n_ga_declaration_action_annexes"
+        parent="menu_l10n_ga_declaration_account_root"
+        sequence="40"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_payment_account"
+        name="Quittances"
+        action="l10n_ga_declaration_payment_action_account"
+        parent="menu_l10n_ga_declaration_account_root"
+        sequence="50"/>
+</odoo>

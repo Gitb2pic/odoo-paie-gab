@@ -65,6 +65,7 @@ class TestDasFees(GaWithholdingCase):
         id26.with_user(self.declarant).action_validate()
         report = id26.snapshot_attachment_ids.filtered(lambda a: not a.name.endswith('.xlsx'))
         html = base64.b64decode(report.datas).decode()
-        self.assertIn('ID26 — Prestataires non assujettis', html)
+        self.assertIn(id26.type_id.name.upper(), html)  # imprimé au format V1 (ADR-20)
+        self.assertIn('BORDEREAU RÉCAPITULATIF', html)
         self.assertIn('Prestataire local', html)
         self.assertEqual(id26.due_date, date(2027, 4, 30))

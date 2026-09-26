@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Imprimés de la comptabilité au format de la V1 (ADR-20, FIX 03) : ID18 / ID27 (bordereaux mensuels
+        des retenues, portrait) et annexes DAS ID23 / ID24 / ID26 (paysage). Lecture seule des cases et
+        détails stockés ; briques communes de l10n_ga_dgi_edi.
+    -->
+
+    <!-- ======================= ID18 / ID27 ======================= -->
+    <template id="form_withholding">
+        <t t-set="rows" t-value="doc._l10n_ga_details()"/>
+        <t t-set="non_resident" t-value="doc.type_id.code == 'ID27'"/>
+        <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: 11px;">
+            <div class="row">
+                <div class="col-9"><t t-call="l10n_ga_dgi_edi.dgi_bloc_ministere"/></div>
+                <div class="col-3">
+                    <t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="doc.type_id.code"/></t>
+                </div>
+            </div>
+            <div class="text-center mt-2" style="font-size: 12px;">
+                <div class="fw-bold" t-out="doc.type_id.name.upper()"/>
+                <div>
+                    Mois : <strong t-out="doc._l10n_ga_month_label()"/>
+                    <span class="mx-2">|</span>
+                    NIF : <strong t-out="v.get('HDR_NIF') or 'Non renseigné'"/>
+                </div>
+            </div>
+            <div class="border-bottom border-dark border-2 mt-2"/>
+        </div>
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="doc._name"
+             t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.context.get('lang')">
+            <div class="page" style="font-size: 11px;">
+                <t t-call="l10n_ga_dgi_edi.dgi_alert_blocking"/>
+                <h6 class="bg-light p-1 mt-2">1 - Identification du contribuable</h6>
+                <t t-call="l10n_ga_dgi_edi.dgi_identification"/>
+                <h6 class="bg-light p-1">2 - Détail des retenues du mois</h6>
+                <table class="table table-sm table-bordered mb-2">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">N°</th>
+                            <th style="width: 16%;">NIF</th>
+                            <th>Nom ou raison sociale du bénéficiaire</th>
+                            <th t-if="non_resident" style="width: 14%;">Pays</th>
+                            <th class="text-end" style="width: 18%;" t-out="doc._l10n_ga_names().get('TOTAL_BASE')"/>
+                            <th class="text-end" style="width: 18%;" t-out="doc._l10n_ga_names().get('TOTAL_WITHHELD')"/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="rows" t-as="row">
+                            <td t-out="row_index + 1"/>
+                            <td t-out="row.get('nif')"/>
+                            <td t-out="row.get('name')"/>
+                            <td t-if="non_resident" t-out="row.get('country')"/>
+                            <td class="text-end" t-out="fmt(row.get('base'))"/>
+                            <td class="text-end" t-out="fmt(row.get('withheld'))"/>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="fw-bold table-light">
+                            <td t-att-colspan="4 if non_resident else 3" class="text-end">Totaux :</td>
+                            <td class="text-end" t-out="fmt(v.get('TOTAL_BASE'))"/>
+                            <td class="text-end" t-out="fmt(v.get('TOTAL_WITHHELD'))"/>
+                        </tr>
+                    </tfoot>
+                </table>
+                <t t-call="l10n_ga_dgi_edi.dgi_reglement"/>
+            </div>
+        </div>
+        <t t-call="l10n_ga_dgi_edi.dgi_footer">
+            <t t-set="footer_note">Date limite de dépôt : <t t-out="doc._l10n_ga_date(doc.due_date)"/></t>
+        </t>
+    </template>
+
+    <!-- ======================= ID23 / ID24 / ID26 ======================= -->
+    <template id="form_fees">
+        <t t-set="columns" t-value="doc._l10n_ga_fee_columns()"/>
+        <t t-set="money" t-value="('paid', 'withheld')"/>
+        <t t-set="cell" t-value="'border: 1px solid #000; padding: 2px 3px;'"/>
+        <t t-set="num" t-value="'border: 1px solid #000; padding: 2px 3px; text-align: right;'"/>
+        <t t-set="head" t-value="'border: 1px solid #000; padding: 2px; text-align: center; font-weight: normal;'"/>
+        <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: 9px;">
+            <div class="row">
+                <div class="col-3"><t t-call="l10n_ga_dgi_edi.dgi_bloc_ministere"/></div>
+                <div class="col-7 text-center">
+                    <div class="fw-bold" style="font-size: 14px;" t-out="doc.type_id.name.upper()"/>
+                    <div style="font-size: 12px;">
+                        Exercice : <strong t-out="doc.date_to.year"/>
+                        <span style="font-size: 9px;">(au titre duquel les versements ont été effectués)</span>
+                    </div>
+                    <div class="fw-bold" style="font-size: 11px;">BORDEREAU RÉCAPITULATIF</div>
+                </div>
+                <div class="col-2">
+                    <t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="doc.type_id.code"/></t>
+                </div>
+            </div>
+            <div class="row mt-1" style="font-size: 10px;">
+                <div class="col-3"/>
+                <div class="col-9">
+                    <div class="fw-bold">NOM DE L'ENTREPRISE OU RAISON SOCIALE :
+                        <span style="font-weight: normal;" t-out="v.get('HDR_NAME')"/></div>
+                    <div class="fw-bold">NIF :
+                        <t t-call="l10n_ga_dgi_edi.dgi_cases_nif"><t t-set="nif" t-value="v.get('HDR_NIF')"/></t>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-1"><t t-call="l10n_ga_dgi_edi.dgi_mention_depot"/></div>
+        </div>
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="doc._name"
+             t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.context.get('lang')">
+            <div class="page" style="font-size: 9px;">
+                <t t-call="l10n_ga_dgi_edi.dgi_alert_blocking"/>
+                <div class="fw-bold mb-1" style="font-size: 11px;">
+                    L'admission de ces sommes en frais généraux est subordonnée à la production d'un bulletin
+                    individuel n° ID19
+                </div>
+                <t t-foreach="doc._l10n_ga_fee_sections()" t-as="section">
+                    <div class="fw-bold mt-2" style="font-size: 11px; text-decoration: underline;" t-out="section[0]"/>
+                    <table style="width: 100%; border-collapse: collapse; border: 2px solid #000;">
+                        <thead>
+                            <tr>
+                                <th t-att-style="head + 'width: 24px;'">N°</th>
+                                <th t-foreach="columns" t-as="column" t-att-style="head" t-out="column[1]"/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="section[1]" t-as="row">
+                                <td t-att-style="cell + 'text-align: center;'" t-out="row_index + 1"/>
+                                <t t-foreach="columns" t-as="column">
+                                    <td t-if="column[0] in money" t-att-style="num" t-out="fmt(row.get(column[0]))"/>
+                                    <td t-else="" t-att-style="cell" t-out="row.get(column[0])"/>
+                                </t>
+                            </tr>
+                            <tr t-foreach="range(max(0, 3 - len(section[1])))" t-as="blank" style="height: 16px;">
+                                <td t-att-style="cell"/>
+                                <td t-foreach="columns" t-as="column" t-att-style="cell"/>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight: bold;">
+                                <td t-att-style="cell + 'text-align: center;'">TOTAUX</td>
+                                <t t-foreach="columns" t-as="column">
+                                    <td t-if="column[0] in money" t-att-style="num"
+                                        t-out="fmt(sum(row.get(column[0]) or 0 for row in section[1]))"/>
+                                    <td t-else="" t-att-style="cell"/>
+                                </t>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </t>
+                <table class="mt-3" style="border-collapse: collapse; font-size: 10px; min-width: 45%;">
+                    <tr t-foreach="doc.line_ids.filtered(lambda l: not l.box_id.auto_value)" t-as="line">
+                        <td t-att-style="cell" t-out="line.box_id.name"/>
+                        <td t-att-style="num" t-out="fmt(line._value())"/>
+                    </tr>
+                </table>
+                <div class="text-end mt-3" style="font-size: 10px;">
+                    À <t t-out="company.city or '..................'"/>, le ..............................
+                    <div class="fst-italic">Cachet et signature de l'employeur</div>
+                </div>
+            </div>
+        </div>
+        <t t-call="l10n_ga_dgi_edi.dgi_footer"/>
+    </template>
+</odoo>

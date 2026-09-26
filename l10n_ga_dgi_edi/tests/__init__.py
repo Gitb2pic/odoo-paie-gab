@@ -3,6 +3,7 @@ from . import (
     test_completeness,
     test_das,
     test_dts,
+    test_forms,
     test_generator_registry,
     test_id10,
     test_id28,

@@ -16,6 +16,14 @@ class GaPayrollAccountCase(GaPayrollCase):
     def setUpClass(cls):
         super().setUpClass()
         cls._load_chart(cls.company)
+        cls._default_agreement(cls.company)
+
+    @classmethod
+    def _default_agreement(cls, company):
+        """Convention par défaut sans prime d'ancienneté (D-106 : sinon GA_NO_AGREEMENT bloque le lot)."""
+        company.l10n_ga_default_agreement_id = cls.env['l10n_ga.collective.agreement'].create(
+            {'name': f'Convention {company.name}', 'code': f'C{company.id}', 'company_id': company.id}
+        )
 
     @classmethod
     def _load_chart(cls, company):
@@ -27,6 +35,7 @@ class GaPayrollAccountCase(GaPayrollCase):
             {'name': name, 'country_id': cls.env.ref('base.ga').id, 'currency_id': cls.env.ref('base.XAF').id}
         )
         cls.env.user.company_ids |= company
+        cls._default_agreement(company)
         return company
 
     @classmethod

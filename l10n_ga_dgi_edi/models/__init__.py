@@ -6,6 +6,7 @@ from . import (
     l10n_ga_declaration,
     l10n_ga_declaration_box,
     l10n_ga_declaration_detail,
+    l10n_ga_declaration_form,
     l10n_ga_declaration_frozen_mixin,
     l10n_ga_declaration_line,
     l10n_ga_declaration_payment,

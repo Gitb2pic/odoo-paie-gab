@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Imprimés au format de la V1 (ADR-20, FIX 03). Présentation reprise des imprimés QWeb de la V1
+        (~/supergel-compta/l10n_ga_dgi_edi/report), réécrite pour le modèle V2 : chaque gabarit lit
+        UNIQUEMENT les cases et détails stockés (doc._l10n_ga_values(), doc._l10n_ga_details()).
+        Les div .header, .article et .footer sont frères sous web.html_container : l'en-tête et le pied
+        se répètent sur chaque page.
+    -->
+
+    <!-- ======================= Formats de page ======================= -->
+    <record id="paperformat_l10n_ga_form_portrait" model="report.paperformat">
+        <field name="name">Imprimé DGI portrait (Gabon, format V1)</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">14</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_l10n_ga_form_landscape" model="report.paperformat">
+        <field name="name">Imprimé DGI paysage (Gabon, format V1)</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">34</field>
+        <field name="margin_bottom">12</field>
+        <field name="margin_left">6</field>
+        <field name="margin_right">6</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- ======================= Actions : imprimé officiel de chaque type (report_id) ======================= -->
+    <record id="action_report_form_portrait" model="ir.actions.report">
+        <field name="name">Imprimé officiel (portrait)</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_form</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_form</field>
+        <field name="print_report_name">'%s - %s' % (object.type_id.code, object.name)</field>
+        <field name="paperformat_id" ref="paperformat_l10n_ga_form_portrait"/>
+    </record>
+
+    <record id="action_report_form_landscape" model="ir.actions.report">
+        <field name="name">Imprimé officiel (paysage)</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_ga_dgi_edi.report_form</field>
+        <field name="report_file">l10n_ga_dgi_edi.report_form</field>
+        <field name="print_report_name">'%s - %s' % (object.type_id.code, object.name)</field>
+        <field name="paperformat_id" ref="paperformat_l10n_ga_form_landscape"/>
+    </record>
+
+    <!-- ======================= Briques communes ======================= -->
+
+    <!-- Bloc d'identité de l'administration, en haut à gauche. -->
+    <template id="dgi_bloc_ministere">
+        <div style="text-align: center; font-size: 9px; line-height: 1.3;">
+            <div class="fw-bold">RÉPUBLIQUE GABONAISE</div>
+            <div class="fw-bold">MINISTÈRE DE L'ÉCONOMIE</div>
+            <div>---------------</div>
+            <div class="fw-bold">Direction Générale des Impôts</div>
+            <div>BP 37 / 45 - Libreville</div>
+        </div>
+    </template>
+
+    <!-- Code de l'imprimé encadré. Paramètre : code. -->
+    <template id="dgi_code">
+        <div style="text-align: right;">
+            <span style="display: inline-block; border: 2px solid #000; padding: 2px 10px; font-weight: bold; font-size: 12px;"
+                  t-out="code"/>
+        </div>
+    </template>
+
+    <!-- NIF en cases : « |_|_|_|_|_|_|_| |_| ». Paramètre : nif. -->
+    <template id="dgi_cases_nif">
+        <t t-set="nif_chars" t-value="list((nif or '').replace(' ', '')) or [' '] * 8"/>
+        <span style="white-space: nowrap;">
+            <t t-foreach="nif_chars" t-as="nif_char">
+                <span t-if="nif_char_last and len(nif_chars) &gt; 1"
+                      style="display: inline-block; width: 8px; border-left: 1px solid #000; height: 13px; vertical-align: bottom;"/>
+                <span style="display: inline-block; min-width: 13px; border-left: 1px solid #000; border-bottom: 1px solid #000; text-align: center; padding: 0 2px; vertical-align: bottom;"
+                      t-out="nif_char"/>
+            </t>
+            <span style="display: inline-block; border-left: 1px solid #000; height: 13px; vertical-align: bottom;"/>
+        </span>
+    </template>
+
+    <!-- Mention d'échéance des déclarations annuelles. -->
+    <template id="dgi_mention_depot">
+        <div class="fw-bold text-center" style="font-size: 9px;">
+            La présente déclaration est à déposer avant le 30 avril simultanément aux
+            déclarations n° ID01 ou ID14
+        </div>
+    </template>
+
+    <!-- Pied de page commun. -->
+    <template id="dgi_footer">
+        <div t-attf-class="footer o_company_#{company.id}_layout" style="font-size: 8px;">
+            <div class="d-flex justify-content-between border-top pt-1">
+                <div class="fst-italic me-3">
+                    <t t-if="footer_note"><t t-out="footer_note"/> — </t>
+                    Édité depuis Odoo — <t t-out="doc.name"/>
+                    <t t-if="doc.sha256"> — empreinte SHA-256 : <t t-out="doc.sha256"/></t>
+                </div>
+                <div t-if="report_type == 'pdf'" class="text-nowrap">Page <span class="page"/> sur <span class="topage"/></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Anomalies bloquantes : l'imprimé n'est pas encore déposable. -->
+    <template id="dgi_alert_blocking">
+        <div t-if="doc.blocking_count" class="alert alert-warning py-1 mb-2" role="alert" style="font-size: 9px;">
+            Déclaration à compléter avant dépôt : <t t-out="doc.blocking_count"/> anomalie(s) bloquante(s).
+        </div>
+    </template>
+
+    <!-- ======================= Rapports (un par format de page) ======================= -->
+    <template id="report_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="company" t-value="doc.company_id.sudo()"/>
+                <t t-set="v" t-value="doc._l10n_ga_values()"/>
+                <t t-set="fmt" t-value="doc._l10n_ga_fmt"/>
+                <t t-call="{{ doc._l10n_ga_form_template() }}"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- ======================= ID10 ======================= -->
+    <template id="form_id10">
+        <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: 11px;">
+            <div class="row" style="font-size: 12px;">
+                <div class="col-9">
+                    <strong>RÉPUBLIQUE GABONAISE</strong><br/>
+                    MINISTÈRE DE L'ÉCONOMIE<br/>
+                    <strong>DIRECTION GÉNÉRALE DES IMPÔTS</strong><br/>
+                    BP 37 / 45 - Libreville
+                </div>
+                <div class="col-3 text-end">
+                    <span class="border border-dark border-2 px-3 py-1 fw-bold fs-6">ID 10</span>
+                </div>
+            </div>
+            <div class="text-center mt-2" style="font-size: 12px;">
+                <div class="fw-bold">DÉCLARATION</div>
+                <div>RETENUES À LA SOURCE SUR LES SALAIRES ET</div>
+                <div>CONTRIBUTION À LA FORMATION PROFESSIONNELLE</div>
+                <div>
+                    Exercice : <strong t-out="doc.date_to.year"/>
+                    <span class="mx-2">|</span>
+                    Mois : <strong t-out="doc._l10n_ga_month_label()"/>
+                    <span class="mx-2">|</span>
+                    NIF : <strong t-out="v.get('HDR_NIF') or 'Non renseigné'"/>
+                </div>
+            </div>
+            <div class="border-bottom border-dark border-2 mt-2"/>
+        </div>
+
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="doc._name"
+             t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.context.get('lang')">
+            <div class="page" style="font-size: 12px;">
+                <t t-call="l10n_ga_dgi_edi.dgi_alert_blocking"/>
+
+                <h6 class="bg-light p-1 mt-2">1 - Identification du contribuable</h6>
+                <table class="table table-sm table-borderless mb-1">
+                    <tr>
+                        <td style="width: 22%;">Raison sociale :</td>
+                        <td style="width: 33%;" t-out="v.get('HDR_NAME')"/>
+                        <td style="width: 22%;">Code de résidence :</td>
+                        <td t-out="v.get('HDR_TAX_CENTER')"/>
+                    </tr>
+                    <tr>
+                        <td>Boîte postale :</td>
+                        <td t-out="v.get('HDR_STREET')"/>
+                        <td>Ville :</td>
+                        <td t-out="v.get('HDR_CITY')"/>
+                    </tr>
+                    <tr>
+                        <td>Téléphone :</td>
+                        <td t-out="v.get('HDR_PHONE')"/>
+                        <td>Site Internet :</td>
+                        <td t-out="v.get('HDR_WEB')"/>
+                    </tr>
+                    <tr>
+                        <td>Adresse e-mail :</td>
+                        <td colspan="3" t-out="v.get('HDR_EMAIL')"/>
+                    </tr>
+                </table>
+
+                <h6 class="bg-light p-1">2 - Détermination des retenues sur salaires à payer</h6>
+                <table class="table table-sm table-bordered mb-2">
+                    <thead>
+                        <tr>
+                            <th>Désignation de l'impôt</th>
+                            <th class="text-end" style="width: 30%;">Montant des retenues</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Impôt sur le Revenu des Personnes Physiques</td>
+                            <td class="text-end" t-out="fmt(v.get('L40'))"/>
+                        </tr>
+                        <tr>
+                            <td>Taxe complémentaire sur les Traitements et Salaires</td>
+                            <td class="text-end" t-out="fmt(v.get('L41'))"/>
+                        </tr>
+                        <tr>
+                            <td>Prélèvement pour le Fonds National de l'Habitat</td>
+                            <td class="text-end" t-out="fmt(v.get('L42'))"/>
+                        </tr>
+                        <tr class="fw-bold table-light">
+                            <td class="text-end">Montant global dû :</td>
+                            <td class="text-end" t-out="fmt(v.get('L43'))"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h6 class="bg-light p-1">3 - Détermination de la Contribution à la Formation Professionnelle à payer</h6>
+                <p t-if="v.get('R55') is None" class="fst-italic mb-2">
+                    CFP déclarée sur l'imprimé ID28 (option de la société) : cadre non renseigné.
+                </p>
+                <table t-else="" class="table table-sm table-bordered mb-2">
+                    <thead>
+                        <tr>
+                            <th style="width: 8%;">Ligne</th>
+                            <th>Désignation</th>
+                            <th class="text-end" style="width: 30%;">Montant global versé</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Salaire de base</td><td class="text-end" t-out="fmt(v.get('R49'))"/></tr>
+                        <tr><td>2</td><td>Avantages en numéraire</td><td class="text-end" t-out="fmt(v.get('R50'))"/></tr>
+                        <tr><td>3</td><td>Montant des cotisations CNSS</td><td class="text-end" t-out="fmt(v.get('R51'))"/></tr>
+                        <tr><td>4</td><td>Montant des cotisations CNAMGS</td><td class="text-end" t-out="fmt(v.get('R52'))"/></tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Avantages en nature (L1+L2-L3-L4) x taux fixés à l'article 93 du CGI</td>
+                            <td class="text-end" t-out="fmt(v.get('R53'))"/>
+                        </tr>
+                        <tr><td>6</td><td>Base CFP (plafonnée par salarié)</td><td class="text-end" t-out="fmt(v.get('R54'))"/></tr>
+                        <tr><td>7</td><td>Taux</td><td class="text-end"><t t-out="fmt((v.get('R55') or 0) * 100, 2)"/> %</td></tr>
+                        <tr class="fw-bold table-light">
+                            <td/>
+                            <td class="text-end">Montant global dû (L6 x L7) :</td>
+                            <td class="text-end" t-out="fmt(v.get('R56'))"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <t t-call="l10n_ga_dgi_edi.dgi_reglement"/>
+            </div>
+        </div>
+        <t t-call="l10n_ga_dgi_edi.dgi_footer">
+            <t t-set="footer_note">Le dépôt de la déclaration doit s'accompagner du paiement. Date limite :
+                <t t-out="doc._l10n_ga_date(doc.due_date)"/></t>
+        </t>
+    </template>
+
+    <!-- Cadre « Règlement de l'impôt » (ID10, ID28, ID18, ID27) : quittances, total, signature. -->
+    <template id="dgi_reglement">
+        <h6 class="bg-light p-1">4 - Règlement de l'impôt</h6>
+        <table class="table table-sm table-borderless mb-1">
+            <tr>
+                <td style="width: 22%;">Mode de versement :</td>
+                <td style="width: 33%;" t-out="doc._l10n_ga_payment_modes()"/>
+                <td class="fw-bold" style="width: 22%;">Total à payer :</td>
+                <td class="fw-bold" t-out="fmt(doc.amount_total)"/>
+            </tr>
+        </table>
+        <table t-if="doc.payment_ids" class="table table-sm table-bordered mb-1" style="font-size: 11px;">
+            <thead>
+                <tr><th>Quittance</th><th>Date</th><th>Nature</th><th class="text-end">Montant</th></tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="doc.payment_ids" t-as="payment">
+                    <td t-out="payment.receipt_number"/>
+                    <td t-out="doc._l10n_ga_date(payment.date)"/>
+                    <td><span t-field="payment.kind"/></td>
+                    <td class="text-end" t-out="fmt(payment.amount)"/>
+                </tr>
+            </tbody>
+        </table>
+        <div class="border border-dark p-2 mb-1" t-if="doc.amount_total_words">
+            Arrêté le présent imprimé à la somme de <strong t-out="doc.amount_total_words"/>.
+        </div>
+        <div class="row mt-3" style="page-break-inside: avoid;">
+            <div class="col-6">
+                <div class="fst-italic">Cachet de la Recette</div>
+                <div class="border border-dark mt-1" style="height: 13mm;"/>
+            </div>
+            <div class="col-6 text-center">
+                <div>
+                    Fait à <t t-out="company.city or '....................'"/>, le
+                    <t t-out="doc._l10n_ga_date(doc.validated_date) or '....................'"/>
+                </div>
+                <div class="fst-italic mt-1">Signature et cachet du contribuable</div>
+                <div class="border-bottom border-dark" style="height: 11mm;"/>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======================= ID28 ======================= -->
+    <template id="form_id28">
+        <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: 11px;">
+            <div class="row">
+                <div class="col-9"><t t-call="l10n_ga_dgi_edi.dgi_bloc_ministere"/></div>
+                <div class="col-3">
+                    <t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="'ID 28'"/></t>
+                </div>
+            </div>
+            <div class="text-center mt-2" style="font-size: 12px;">
+                <div class="fw-bold">DÉCLARATION DE LA CONTRIBUTION À LA FORMATION PROFESSIONNELLE</div>
+                <div>
+                    Mois : <strong t-out="doc._l10n_ga_month_label()"/>
+                    <span class="mx-2">|</span>
+                    NIF : <strong t-out="v.get('HDR_NIF') or 'Non renseigné'"/>
+                </div>
+            </div>
+            <div class="border-bottom border-dark border-2 mt-2"/>
+        </div>
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="doc._name"
+             t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.context.get('lang')">
+            <div class="page" style="font-size: 12px;">
+                <t t-call="l10n_ga_dgi_edi.dgi_alert_blocking"/>
+                <h6 class="bg-light p-1 mt-2">1 - Identification du contribuable</h6>
+                <t t-call="l10n_ga_dgi_edi.dgi_identification"/>
+                <h6 class="bg-light p-1">2 - Détermination de la contribution à payer</h6>
+                <table class="table table-sm table-bordered mb-2">
+                    <thead>
+                        <tr><th style="width: 8%;">Ligne</th><th>Désignation</th>
+                            <th class="text-end" style="width: 30%;">Montant</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Salaires de base</td><td class="text-end" t-out="fmt(v.get('L1'))"/></tr>
+                        <tr><td>2</td><td>Avantages en numéraire</td><td class="text-end" t-out="fmt(v.get('L2'))"/></tr>
+                        <tr><td>3</td><td>Cotisations CNSS</td><td class="text-end" t-out="fmt(v.get('L3'))"/></tr>
+                        <tr><td>4</td><td>Avantages en nature</td><td class="text-end" t-out="fmt(v.get('L4'))"/></tr>
+                        <tr><td>5</td><td>Base CFP (plafonnée par salarié)</td><td class="text-end" t-out="fmt(v.get('L5'))"/></tr>
+                        <tr><td>6</td><td>Taux</td><td class="text-end"><t t-out="fmt((v.get('L6') or 0) * 100, 2)"/> %</td></tr>
+                        <tr class="fw-bold table-light">
+                            <td/><td class="text-end">Montant global dû :</td>
+                            <td class="text-end" t-out="fmt(v.get('L7'))"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <t t-call="l10n_ga_dgi_edi.dgi_reglement"/>
+            </div>
+        </div>
+        <t t-call="l10n_ga_dgi_edi.dgi_footer">
+            <t t-set="footer_note">Date limite de dépôt : <t t-out="doc._l10n_ga_date(doc.due_date)"/></t>
+        </t>
+    </template>
+
+    <!-- Identification du contribuable (cases HDR_* des imprimés mensuels). -->
+    <template id="dgi_identification">
+        <table class="table table-sm table-borderless mb-1">
+            <tr>
+                <td style="width: 22%;">Raison sociale :</td>
+                <td style="width: 33%;" t-out="v.get('HDR_NAME')"/>
+                <td style="width: 22%;">Code de résidence :</td>
+                <td t-out="v.get('HDR_TAX_CENTER')"/>
+            </tr>
+            <tr>
+                <td>Boîte postale :</td><td t-out="v.get('HDR_STREET')"/>
+                <td>Ville :</td><td t-out="v.get('HDR_CITY')"/>
+            </tr>
+            <tr>
+                <td>Téléphone :</td><td t-out="v.get('HDR_PHONE')"/>
+                <td>Adresse e-mail :</td><td t-out="v.get('HDR_EMAIL')"/>
+            </tr>
+        </table>
+    </template>
+
+    <!-- ======================= DTS CNSS / CNAMGS ======================= -->
+    <template id="form_dts">
+        <t t-set="columns" t-value="doc._l10n_ga_detail_columns()"/>
+        <t t-set="rows" t-value="doc._l10n_ga_details(employees=True)"/>
+        <t t-set="cell" t-value="'border: 1px solid #000; padding: 1px 3px;'"/>
+        <t t-set="num" t-value="'border: 1px solid #000; padding: 1px 3px; text-align: right;'"/>
+        <t t-set="head" t-value="'border: 1px solid #000; padding: 2px; text-align: center; background-color: #e6e6e6;'"/>
+        <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: 10px;">
+            <div class="row align-items-end">
+                <div class="col-6">
+                    <div class="fw-bold" style="font-size: 13px;" t-out="v.get('HDR_NAME')"/>
+                    <div><t t-out="doc._l10n_ga_names().get('HDR_NUMBER')"/> :
+                        <t t-out="v.get('HDR_NUMBER') or 'Non renseigné'"/></div>
+                </div>
+                <div class="col-6 text-end">
+                    <div class="fw-bold" style="font-size: 13px;" t-out="doc.type_id.name.upper()"/>
+                    <div>
+                        Trimestre <t t-out="fmt(v.get('HDR_QUARTER'))"/> <t t-out="doc.date_to.year"/> :
+                        du <t t-out="doc._l10n_ga_date(doc.date_from)"/> au <t t-out="doc._l10n_ga_date(doc.date_to)"/>
+                        <span class="mx-2">|</span>
+                        <t t-out="fmt(v.get('EMPLOYEES'))"/> salarié(s)
+                    </div>
+                </div>
+            </div>
+            <div class="border-bottom border-dark mt-1"/>
+        </div>
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="doc._name"
+             t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.context.get('lang')">
+            <div class="page" style="font-size: 8px;">
+                <t t-call="l10n_ga_dgi_edi.dgi_alert_blocking"/>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr><th t-foreach="columns" t-as="column" t-att-style="head" t-out="column[1]"/></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="rows" t-as="row">
+                            <t t-foreach="columns" t-as="column">
+                                <td t-if="column[2] == 'amount'" t-att-style="num" t-out="fmt(row.get(column[0]))"/>
+                                <td t-elif="column[2] == 'date'" t-att-style="cell" t-out="doc._l10n_ga_date(row.get(column[0]))"/>
+                                <td t-else="" t-att-style="cell" t-out="row.get(column[0])"/>
+                            </t>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="font-weight: bold;">
+                            <t t-foreach="columns" t-as="column">
+                                <td t-if="column_first" t-att-style="cell">Total</td>
+                                <td t-elif="column[2] == 'amount'" t-att-style="num"
+                                    t-out="fmt(sum(row.get(column[0]) or 0 for row in rows))"/>
+                                <td t-else="" t-att-style="cell"/>
+                            </t>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <table class="mt-3" style="border-collapse: collapse; font-size: 10px; min-width: 45%;">
+                    <tr t-foreach="doc.line_ids.filtered(lambda l: not l.box_id.auto_value)" t-as="line">
+                        <td t-att-style="cell" t-out="line.box_id.name"/>
+                        <td t-att-style="num + (line.box_id.sum_box_codes and 'font-weight: bold;' or '')"
+                            t-out="fmt(line._value())"/>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <t t-call="l10n_ga_dgi_edi.dgi_footer">
+            <t t-set="footer_note">État à reporter sur les portails de la CNSS et de la CNAMGS</t>
+        </t>
+    </template>
+
+    <!-- ======================= DAS : ID20, ID22, ID21, ID19 ======================= -->
+    <template id="form_das">
+        <t t-set="rows" t-value="doc._l10n_ga_details(employees=True)"/>
+        <t t-set="names" t-value="doc._l10n_ga_names()"/>
+        <t t-set="year" t-value="doc.date_to.year"/>
+        <t t-set="cell" t-value="'border: 1px solid #000; padding: 1px 3px;'"/>
+        <t t-set="num" t-value="'border: 1px solid #000; padding: 1px 3px; text-align: right;'"/>
+        <t t-set="head" t-value="'border: 1px solid #000; padding: 1px 2px; text-align: center; font-weight: normal;'"/>
+        <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: 9px;">
+            <div class="row">
+                <div class="col-3"><t t-call="l10n_ga_dgi_edi.dgi_bloc_ministere"/></div>
+                <div class="col-7 text-center">
+                    <div class="fw-bold" style="font-size: 14px;">DÉCLARATION ANNUELLE DES SALAIRES</div>
+                    <div style="font-size: 11px;">ID19 · ID20 · ID21 · ID22 — Exercice <strong t-out="year"/></div>
+                    <div style="font-size: 10px;">
+                        <strong t-out="v.get('HDR_NAME')"/> — NIF :
+                        <t t-call="l10n_ga_dgi_edi.dgi_cases_nif"><t t-set="nif" t-value="v.get('HDR_NIF')"/></t>
+                    </div>
+                </div>
+                <div class="col-2"><t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="'DAS'"/></t></div>
+            </div>
+            <div class="mt-1"><t t-call="l10n_ga_dgi_edi.dgi_mention_depot"/></div>
+        </div>
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="doc._name"
+             t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.context.get('lang')">
+            <div class="page" style="font-size: 10px;">
+                <t t-call="l10n_ga_dgi_edi.dgi_alert_blocking"/>
+
+                <!-- ID20 : état de la masse salariale -->
+                <t t-set="seuil" t-value="fmt(doc._l10n_ga_parameter('l10n_ga_das_id20_threshold'))"/>
+                <t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="'ID20'"/></t>
+                <div class="text-center fw-bold" style="font-size: 14px;">ÉTAT DE LA MASSE SALARIALE</div>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 4mm; font-size: 12px;">
+                    <thead>
+                        <tr style="height: 10mm;">
+                            <th style="border: 1px solid #000; width: 42%; text-align: center;">Rubrique</th>
+                            <th style="border: 1px solid #000; width: 23%; text-align: center;">Nombre de salariés</th>
+                            <th style="border: 1px solid #000; text-align: center;">
+                                Total des rémunérations payées en <t t-out="year"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="height: 10mm;">
+                            <td style="border: 1px solid #000; padding: 4px;">
+                                Employés percevant un salaire brut inférieur à <t t-out="seuil"/> francs CFA par mois</td>
+                            <td style="border: 1px solid #000; text-align: center;" t-out="fmt(v.get('ID20_B_COUNT'))"/>
+                            <td style="border: 1px solid #000; text-align: right; padding-right: 6px;" t-out="fmt(v.get('ID20_B_TOTAL'))"/>
+                        </tr>
+                        <tr style="height: 10mm;">
+                            <td style="border: 1px solid #000; padding: 4px;">
+                                Employés percevant un salaire brut égal ou supérieur à <t t-out="seuil"/> francs CFA par mois</td>
+                            <td style="border: 1px solid #000; text-align: center;" t-out="fmt(v.get('ID20_A_COUNT'))"/>
+                            <td style="border: 1px solid #000; text-align: right; padding-right: 6px;" t-out="fmt(v.get('ID20_A_TOTAL'))"/>
+                        </tr>
+                        <tr style="height: 10mm; font-weight: bold;">
+                            <td style="border: 1px solid #000; text-align: center;">TOTAL</td>
+                            <td style="border: 1px solid #000; text-align: center;"
+                                t-out="fmt((v.get('ID20_A_COUNT') or 0) + (v.get('ID20_B_COUNT') or 0))"/>
+                            <td style="border: 1px solid #000; text-align: right; padding-right: 6px;"
+                                t-out="fmt((v.get('ID20_A_TOTAL') or 0) + (v.get('ID20_B_TOTAL') or 0))"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mt-2"><strong>NB</strong> : prendre les salaires bruts versés après déduction des
+                    retenues pour retraite et sécurité sociale.</div>
+
+                <!-- ID22 : bordereau récapitulatif -->
+                <div style="page-break-before: always;"/>
+                <t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="'ID22'"/></t>
+                <div class="text-center fw-bold" style="font-size: 13px;">
+                    DÉCLARATION DES TRAITEMENTS, SALAIRES, PENSIONS VERSÉS — BORDEREAU RÉCAPITULATIF</div>
+                <div class="text-end fw-bold">Nombre de salariés : <t t-out="fmt(v.get('EMPLOYEES'))"/></div>
+                <t t-set="id22_codes" t-value="['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'NT_TOTAL']"/>
+                <div class="row" style="font-size: 8px;">
+                    <div class="col-9" style="padding-right: 4px;">
+                        <table style="width: 100%; border-collapse: collapse; border: 2px solid #000;">
+                            <thead>
+                                <tr>
+                                    <th t-att-style="head + 'font-weight: bold;'" colspan="13">RÉCAPITULATION</th>
+                                </tr>
+                                <tr>
+                                    <th t-att-style="head">N°</th>
+                                    <th t-foreach="id22_codes" t-as="code" t-att-style="head" t-out="names.get(code)"/>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="rows" t-as="row">
+                                    <td t-att-style="cell + 'text-align: center;'" t-out="row_index + 1"/>
+                                    <td t-foreach="id22_codes" t-as="code" t-att-style="num" t-out="fmt(row.get(code))"/>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                    <td t-att-style="cell + 'text-align: center;'">TOTAUX</td>
+                                    <td t-foreach="id22_codes" t-as="code" t-att-style="num" t-out="fmt(v.get(code))"/>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="col-3" style="padding-left: 4px;">
+                        <table style="width: 100%; border-collapse: collapse; border: 2px solid #000;">
+                            <thead>
+                                <tr><th t-att-style="head + 'font-weight: bold;'" colspan="3">
+                                    RÉCAPITULATION DES VERSEMENTS</th></tr>
+                                <tr>
+                                    <th t-att-style="head">Mois</th>
+                                    <th t-att-style="head">Montant (12)</th>
+                                    <th t-att-style="head">Date et n° de quittance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc._l10n_ga_details(employees=False)" t-as="payment">
+                                    <t t-if="payment.get('number')">
+                                        <td t-att-style="cell + 'text-align: center;'">
+                                            <t t-out="payment.get('month')"/>
+                                            <t t-if="payment.get('kind') != 'rs'"> (<t t-out="payment.get('kind', '').upper()"/>)</t>
+                                        </td>
+                                        <td t-att-style="num" t-out="fmt(payment.get('_amount'))"/>
+                                        <td t-att-style="cell">
+                                            <t t-out="doc._l10n_ga_date(payment.get('date'))"/>
+                                            — <t t-out="payment.get('number')"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                    <td t-att-style="cell">Total</td>
+                                    <td t-att-style="num" t-out="fmt(v.get('PAID_TOTAL'))"/>
+                                    <td t-att-style="cell"/>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div style="border: 1px solid #000; padding: 4px; margin-top: 6px;">
+                            Le total des versements (col. 12) doit être égal à celui des retenues
+                            (<t t-out="names.get('C11')"/>). À défaut, produire une note explicative.
+                            <table style="width: 100%; margin-top: 3px;">
+                                <tr><td>Total des versements</td><td style="text-align: right;" t-out="fmt(v.get('PAID_TOTAL'))"/></tr>
+                                <tr><td>Total des retenues</td><td style="text-align: right;" t-out="fmt(v.get('C11'))"/></tr>
+                                <tr class="fw-bold"><td>Écart</td>
+                                    <td style="text-align: right;" t-out="fmt((v.get('PAID_TOTAL') or 0) - (v.get('C11') or 0))"/></tr>
+                            </table>
+                            <div class="mt-2">À <t t-out="company.city or '..................'"/>, le .................</div>
+                            <div>Cachet et signature de l'employeur</div>
+                            <div style="height: 14mm;"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ID21 : bordereau détaillé par salarié -->
+                <div style="page-break-before: always;"/>
+                <t t-set="columns" t-value="doc._l10n_ga_detail_columns()"/>
+                <t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="'ID21'"/></t>
+                <div class="text-center fw-bold" style="font-size: 13px;">BORDEREAU DÉTAILLÉ DES SALAIRES VERSÉS PAR EMPLOYÉ</div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 7px; margin-top: 2mm;">
+                    <thead>
+                        <tr><th t-foreach="columns" t-as="column" t-att-style="head" t-out="column[1]"/></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="rows" t-as="row">
+                            <t t-foreach="columns" t-as="column">
+                                <td t-if="column[2] == 'amount'" t-att-style="num" t-out="fmt(row.get(column[0]))"/>
+                                <td t-else="" t-att-style="cell" t-out="row.get(column[0])"/>
+                            </t>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="font-weight: bold;">
+                            <t t-foreach="columns" t-as="column">
+                                <td t-if="column_first" t-att-style="cell">Totaux</td>
+                                <td t-elif="column[2] == 'amount'" t-att-style="num" t-out="fmt(v.get(column[0]))"/>
+                                <td t-else="" t-att-style="cell"/>
+                            </t>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- ID19 : un bulletin de justification par salarié au-delà du seuil -->
+                <t t-foreach="[row for row in rows if row.get('id19')]" t-as="row">
+                    <div style="page-break-before: always;"/>
+                    <t t-call="l10n_ga_dgi_edi.form_id19_bulletin"/>
+                </t>
+            </div>
+        </div>
+        <t t-call="l10n_ga_dgi_edi.dgi_footer"/>
+    </template>
+
+    <!-- Bulletin ID19 d'un salarié (paramètres : row, v, fmt, company). -->
+    <template id="form_id19_bulletin">
+        <t t-set="b" t-value="'border: 1px solid #000; padding: 4px;'"/>
+        <t t-set="bn" t-value="'border: 1px solid #000; padding: 4px; text-align: right;'"/>
+        <div class="row">
+            <div class="col-8 text-center">
+                <div class="fw-bold" style="font-size: 14px;">BULLETIN DE JUSTIFICATION</div>
+                <div class="fw-bold" style="font-size: 12px;">TRAITEMENTS, SALAIRES, PENSIONS ET RENTES VIAGÈRES</div>
+                <div style="font-size: 10px;">(Salariés percevant plus de
+                    <t t-out="fmt(doc._l10n_ga_parameter('l10n_ga_das_id19_threshold'))"/> FCFA par mois)</div>
+            </div>
+            <div class="col-4"><t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="'ID19'"/></t></div>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 6px;">
+            <tr>
+                <td t-att-style="b + 'width: 50%; vertical-align: top;'">
+                    <div class="fw-bold">PERSONNE RÉMUNÉRÉE</div>
+                    <div>NIF : <strong t-out="row.get('nif')"/></div>
+                    <div>Nom et prénoms : <strong t-out="row.get('name')"/></div>
+                    <div>Profession : <t t-out="row.get('job')"/></div>
+                    <div>Situation de famille (code) : <t t-out="row.get('marital')"/> — Nombre d'enfants :
+                        <t t-out="row.get('children')"/></div>
+                    <div>Période de rémunération : <t t-out="row.get('period')"/></div>
+                </td>
+                <td t-att-style="b + 'width: 50%; vertical-align: top;'">
+                    <div class="fw-bold">EMPLOYEUR</div>
+                    <div>Désignation : <strong t-out="v.get('HDR_NAME')"/></div>
+                    <div>NIF : <t t-out="v.get('HDR_NIF')"/></div>
+                    <div>Adresse : <t t-out="company.street"/> <t t-out="company.city"/></div>
+                    <div>Téléphone : <t t-out="company.phone"/></div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px;">
+            <tr>
+                <th t-att-style="b + 'text-align: left;'">1 – Montant payé en espèces ou crédité en compte</th>
+                <th t-att-style="b + 'width: 140px;'">Présence</th>
+                <th t-att-style="b + 'width: 140px;'">Congés</th>
+            </tr>
+            <tr>
+                <td t-att-style="b">Montant versé (après déduction des retenues pour retraite et sécurité sociale)</td>
+                <td t-att-style="bn" t-out="fmt(row.get('C1'))"/>
+                <td t-att-style="bn" t-out="fmt(row.get('C5'))"/>
+            </tr>
+            <tr>
+                <td t-att-style="b">Avantages en nature : logement, eau et électricité, domesticité</td>
+                <td colspan="2" t-att-style="bn" t-out="fmt(row.get('C2'))"/>
+            </tr>
+            <tr>
+                <td t-att-style="b">Avantages en nature : nourriture</td>
+                <td colspan="2" t-att-style="bn" t-out="fmt(row.get('C3'))"/>
+            </tr>
+            <tr>
+                <td t-att-style="b">Indemnités imposables</td>
+                <td colspan="2" t-att-style="bn" t-out="fmt(row.get('C4'))"/>
+            </tr>
+            <tr class="fw-bold">
+                <td t-att-style="b + 'text-align: right;'">TOTAL BRUT :</td>
+                <td colspan="2" t-att-style="bn" t-out="fmt(row.get('C6'))"/>
+            </tr>
+            <tr>
+                <td t-att-style="b + 'text-align: right;'">À déduire : taxe complémentaire retenue pour l'année</td>
+                <td colspan="2" t-att-style="bn" t-out="fmt(row.get('C7'))"/>
+            </tr>
+            <tr class="fw-bold">
+                <td t-att-style="b + 'text-align: right;'">RÉMUNÉRATION BRUTE IMPOSABLE :</td>
+                <td colspan="2" t-att-style="bn" t-out="fmt((row.get('C6') or 0) - (row.get('C7') or 0))"/>
+            </tr>
+            <tr>
+                <td t-att-style="b + 'text-align: right;'">IRPP retenu pour l'année</td>
+                <td colspan="2" t-att-style="bn" t-out="fmt(row.get('C8'))"/>
+            </tr>
+        </table>
+        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px;">
+            <tr>
+                <th t-att-style="b + 'text-align: left;'">2 – Indemnités non imposables</th>
+                <th t-att-style="b + 'width: 280px;'">Montant</th>
+            </tr>
+            <tr t-foreach="['NT_HOUSING', 'NT_TRANSPORT', 'NT_DOMESTIC', 'NT_OTHER']" t-as="code">
+                <td t-att-style="b" t-out="names.get(code)"/>
+                <td t-att-style="bn" t-out="fmt(row.get(code))"/>
+            </tr>
+            <tr class="fw-bold">
+                <td t-att-style="b + 'text-align: right;'">TOTAL :</td>
+                <td t-att-style="bn" t-out="fmt(row.get('NT_TOTAL'))"/>
+            </tr>
+        </table>
+        <div class="text-end mt-3" style="font-size: 11px;">
+            À <t t-out="company.city or '..................'"/>, le ..............................
+            <div class="fst-italic">Signature et cachet de l'employeur</div>
+        </div>
+    </template>
+
+    <!-- ======================= Imprimé générique (types sans gabarit dédié) ======================= -->
+    <template id="form_generic">
+        <t t-set="columns" t-value="doc._l10n_ga_detail_columns()"/>
+        <div t-attf-class="header o_company_#{company.id}_layout" style="font-size: 10px;">
+            <div class="row">
+                <div class="col-3"><t t-call="l10n_ga_dgi_edi.dgi_bloc_ministere"/></div>
+                <div class="col-7 text-center">
+                    <div class="fw-bold" style="font-size: 14px;" t-out="doc.type_id.name.upper()"/>
+                    <div>du <t t-out="doc._l10n_ga_date(doc.date_from)"/> au <t t-out="doc._l10n_ga_date(doc.date_to)"/></div>
+                    <div><strong t-out="doc.company_id.name"/> — NIF :
+                        <t t-call="l10n_ga_dgi_edi.dgi_cases_nif"><t t-set="nif" t-value="doc.company_id.l10n_ga_nif"/></t>
+                    </div>
+                </div>
+                <div class="col-2"><t t-call="l10n_ga_dgi_edi.dgi_code"><t t-set="code" t-value="doc.type_id.code"/></t></div>
+            </div>
+        </div>
+        <div t-attf-class="article o_company_#{company.id}_layout" t-att-data-oe-model="doc._name"
+             t-att-data-oe-id="doc.id" t-att-data-oe-lang="doc.env.context.get('lang')">
+            <div class="page" style="font-size: 10px;">
+                <t t-call="l10n_ga_dgi_edi.dgi_alert_blocking"/>
+                <table class="table table-sm table-bordered">
+                    <tr t-foreach="doc.line_ids.filtered(lambda l: not l.box_id.auto_value)" t-as="line">
+                        <td t-out="line.box_id.name"/>
+                        <td class="text-end" t-out="fmt(line._value())"/>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <t t-call="l10n_ga_dgi_edi.dgi_footer"/>
+    </template>
+</odoo>

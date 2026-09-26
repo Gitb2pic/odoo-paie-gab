@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Comptables (FIX 03) : ils ne voient que les imprimés de la comptabilité (scope = account : ID18, ID27,
+    ID23, ID24, ID26), jamais les déclarations de salaires. Les règles de groupe s'additionnent : la règle
+    « paie : tout » rend aux gestionnaires de paie (comptables ou non) l'ensemble des déclarations.
+    Les règles multi-société globales du moteur restent en vigueur (règle d'or 11).
+-->
+<odoo>
+    <record id="rule_l10n_ga_declaration_account" model="ir.rule">
+        <field name="name">Déclaration : comptables, imprimés de la comptabilité</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration"/>
+        <field name="domain_force">[('scope', '=', 'account')]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_readonly'))]"/>
+    </record>
+    <record id="rule_l10n_ga_declaration_payroll" model="ir.rule">
+        <field name="name">Déclaration : gestionnaires de paie, tous les imprimés</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_payroll.group_hr_payroll_user'))]"/>
+    </record>
+
+    <record id="rule_l10n_ga_declaration_line_account" model="ir.rule">
+        <field name="name">Valeur de case : comptables, imprimés de la comptabilité</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration_line"/>
+        <field name="domain_force">[('declaration_id.scope', '=', 'account')]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_readonly'))]"/>
+    </record>
+    <record id="rule_l10n_ga_declaration_line_payroll" model="ir.rule">
+        <field name="name">Valeur de case : gestionnaires de paie, tous les imprimés</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_payroll.group_hr_payroll_user'))]"/>
+    </record>
+
+    <record id="rule_l10n_ga_declaration_detail_account" model="ir.rule">
+        <field name="name">Détail de déclaration : comptables, imprimés de la comptabilité</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration_detail"/>
+        <field name="domain_force">[('declaration_id.scope', '=', 'account')]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_readonly'))]"/>
+    </record>
+    <record id="rule_l10n_ga_declaration_detail_payroll" model="ir.rule">
+        <field name="name">Détail de déclaration : gestionnaires de paie, tous les imprimés</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration_detail"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_payroll.group_hr_payroll_user'))]"/>
+    </record>
+
+    <record id="rule_l10n_ga_declaration_payment_account" model="ir.rule">
+        <field name="name">Quittance : comptables, imprimés de la comptabilité</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration_payment"/>
+        <field name="domain_force">[('declaration_id.scope', '=', 'account')]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_readonly'))]"/>
+    </record>
+    <record id="rule_l10n_ga_declaration_payment_payroll" model="ir.rule">
+        <field name="name">Quittance : gestionnaires de paie, tous les imprimés</field>
+        <field name="model_id" ref="l10n_ga_dgi_edi.model_l10n_ga_declaration_payment"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_payroll.group_hr_payroll_user'))]"/>
+    </record>
+
+    <record id="rule_l10n_ga_check_issue_account" model="ir.rule">
+        <field name="name">Anomalie : comptables, imprimés de la comptabilité</field>
+        <field name="model_id" ref="l10n_ga_hr_payroll.model_l10n_ga_check_issue"/>
+        <field name="domain_force">[('declaration_id.scope', '=', 'account')]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_readonly'))]"/>
+    </record>
+    <record id="rule_l10n_ga_check_issue_payroll" model="ir.rule">
+        <field name="name">Anomalie : gestionnaires de paie, toutes</field>
+        <field name="model_id" ref="l10n_ga_hr_payroll.model_l10n_ga_check_issue"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_payroll.group_hr_payroll_user'))]"/>
+    </record>
+</odoo>

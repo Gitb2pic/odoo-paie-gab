@@ -2,7 +2,7 @@
 <odoo>
     <!-- Imprimé ID28 : PDF identique au gabarit officiel rempli (report_declaration). -->
     <record id="action_report_id28" model="ir.actions.report">
-        <field name="name">Déclaration ID28</field>
+        <field name="name">Classeur ID28 (PDF)</field>
         <field name="model">l10n_ga.declaration</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">l10n_ga_dgi_edi.report_declaration</field>

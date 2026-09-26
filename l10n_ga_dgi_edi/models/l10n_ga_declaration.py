@@ -66,6 +66,7 @@ class L10nGaDeclaration(models.Model):
     type_id = fields.Many2one('l10n_ga.declaration.type', string='Imprimé', required=True, ondelete='restrict')
     type_code = fields.Char(related='type_id.code', string='Code imprimé')
     authority = fields.Selection(related='type_id.authority')
+    scope = fields.Selection(related='type_id.scope', store=True, index=True)
     date_from = fields.Date(string='Du', required=True)
     date_to = fields.Date(string='Au', required=True)
     due_date = fields.Date(
@@ -306,7 +307,12 @@ class L10nGaDeclaration(models.Model):
                     'label': detail.get('label', False),
                     'amount': float_round(detail.get('amount') or 0.0, precision_digits=0),
                     'payload': detail.get('payload') or False,
-                    'payslip_line_ids': [fields.Command.set(detail.get('payslip_line_ids') or [])],
+                    # seulement si fournies : un comptable calcule les imprimés de la comptabilité sans accès à la paie
+                    **(
+                        {'payslip_line_ids': [fields.Command.set(detail['payslip_line_ids'])]}
+                        if detail.get('payslip_line_ids')
+                        else {}
+                    ),
                     # champs ajoutés par les modules supérieurs (ex. move_line_ids de l10n_ga_dgi_edi_account)
                     **(detail.get('extra_values') or {}),
                 }
@@ -667,7 +673,7 @@ class L10nGaDeclaration(models.Model):
 
     def _render_pdf(self):
         self.ensure_one()
-        report = self.type_id.report_id or self.env.ref('l10n_ga_dgi_edi.action_report_declaration')
+        report = self.type_id.report_id or self.env.ref('l10n_ga_dgi_edi.action_report_form_portrait')  # ADR-20
         return self.env['ir.actions.report'].sudo()._render_qweb_pdf(report, self.ids)
 
     # --- Observer : bulletins et échéances (ADR-10) --------------------------------------------

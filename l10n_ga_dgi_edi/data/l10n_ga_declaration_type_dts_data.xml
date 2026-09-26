@@ -17,7 +17,7 @@
         <field name="lead_days">10</field>
         <field name="auto_create" eval="True"/>
         <field name="generator_key">dts_cnss</field>
-        <field name="report_id" ref="action_report_dts"/>
+        <field name="report_id" ref="action_report_form_landscape"/>
     </record>
     <record id="box_dts_cnss_hdr_name" model="l10n_ga.declaration.box">
         <field name="type_id" ref="declaration_type_dts_cnss"/>
@@ -137,7 +137,7 @@
         <field name="lead_days">10</field>
         <field name="auto_create" eval="True"/>
         <field name="generator_key">dts_cnamgs</field>
-        <field name="report_id" ref="action_report_dts"/>
+        <field name="report_id" ref="action_report_form_landscape"/>
     </record>
     <record id="box_dts_cnamgs_hdr_name" model="l10n_ga.declaration.box">
         <field name="type_id" ref="declaration_type_dts_cnamgs"/>
