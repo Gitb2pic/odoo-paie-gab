@@ -5,7 +5,7 @@ Tout ce qui est affiché ou imprimé est **lu** sur les cases et détails stock�
 stockés de la vue ID10 ; la valeur déclarée reste celle, figée, de la case (règle d'or 8).
 """
 
-from babel.dates import format_date as babel_format_date
+from babel.dates import format_date as babel_format_date  # pylint: disable=import-error
 
 from odoo import api, fields, models
 

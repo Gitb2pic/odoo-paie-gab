@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 25/09/2026 (complétude C-3).
+Mis à jour le 26/09/2026 (FIX 03).
 
 ## Étapes
 
@@ -27,6 +27,7 @@ Mis à jour le 25/09/2026 (complétude C-3).
 | C-3 | `l10n_ga_dgi_edi` | complétude du module (4.1 à 4.4) | **terminé** — en attente du « go » | 97 % (77/79 ; 6 manques corrigés ; 95 tests du module, 337 avec les 4 modules ; manques = V1) | `docs/completude/l10n_ga_dgi_edi_C-3.md` |
 | 5 | `l10n_ga_dgi_edi_account` | ID18, ID27, ID23, ID24, ID26 | **terminé** | 96 % (22/23 ; 16 tests du module, 316 avec les 4 modules ; `.xlsm` des annexes à brancher) | `docs/completude/l10n_ga_dgi_edi_account.md` |
 | C-4 | `l10n_ga_dgi_edi_account` | complétude du module | **terminé** | 96 % (23/24 ; 8 manques corrigés ; 22 tests du module, 322 avec les 4 modules ; `.xlsm` V1 à brancher) | `docs/completude/l10n_ga_dgi_edi_account_C-4.md` |
+| FIX 03 | paie + déclarations | écarts V1 (D-105 à D-110), convention par défaut + contrôles GA_NO_AGREEMENT / GA_OVERTIME_NO_RATE, menus Comptabilité → Analyse, vue ID10 et imprimés au format V1 (ADR-20) | **terminé** | 100 % (16/16 ; 360 tests des 4 modules, mise à jour depuis la version démo OK) | `docs/completude/fix_03_ecarts_v1_menus_imprimes.md` |
 | 6 | `l10n_ga_hr_payroll_migration` | reprise `hr_payroll_gb` | à faire | — | — |
 | C-5 | `l10n_ga_hr_payroll_migration` | complétude du module | à faire | — | — |
 
@@ -44,5 +45,8 @@ Mis à jour le 25/09/2026 (complétude C-3).
 Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). Actions attendues d'Alex : D-05 (avant l'étape 6), D-07 (avant l'étape 4.4). Décidés : D-18 à D-22 (2.3), D-23 à D-28 (2.4), D-29 à D-37 (2.5), D-38 à D-46 (2.6), D-47 à D-53 (2.7, go anticipé ; D-47 mentions du bulletin à confirmer), D-54 à D-57 (2.7 b, bulletin au format du modèle), D-58 à D-64 (3, comptabilisation), D-65 à D-73 (4.1, moteur de déclarations, go anticipé), D-74 à D-81 (4.2, ID10 / ID28 / quittances ; D-74 cellule du NIF à confirmer), D-82 à D-86 (4.3, DTS ; D-83 format des portails à confirmer), D-87 à D-94 (4.4, DAS ; D-87 `.xlsm` à brancher, D-90 / D-91 point 09-6 à confirmer), D-95 à D-103 (5, retenues ; D-103 taux 20 / 25 % à confirmer). Dette de 2.5 (régularisation IRPP sans cumuls d'ouverture) soldée par F12.
 
 ## Prochaine étape
+
+FIX 03 : renseigner la convention par défaut de la société démo, puis `make update-demo MODULE=l10n_ga_hr_payroll`. La V1 (`~/supergel-compta`) est disponible (D-110) : 4.5 et `.xlsm` débloqués.
+
 
 Au choix d'Alex : étape 6 (`l10n_ga_hr_payroll_migration`, bloquée par D-05 : schéma `hr_payroll_gb`), ou 4.5 et `.xlsm` dès réception de la V1 (D-07). Démo : `make update-demo MODULE=l10n_ga_hr_payroll` (met à jour les quatre modules Gabon).
