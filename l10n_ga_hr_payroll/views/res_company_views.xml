@@ -22,6 +22,7 @@
                             <field name="l10n_ga_entry_exit_hours"/>
                             <field name="l10n_ga_cash_rounding"/>
                             <field name="l10n_ga_cnss_subrogation"/>
+                            <field name="l10n_ga_default_agreement_id" options="{'no_create': True}"/>
                             <field name="l10n_ga_loan_outstanding_cap"/>
                         </group>
                     </group>

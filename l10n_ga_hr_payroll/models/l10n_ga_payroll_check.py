@@ -7,6 +7,7 @@ Les données indispensables au calcul bloquent ; celles qui servent au paiement 
 déclarations avertissent (elles bloquent dans les déclarations, étape 4).
 """
 
+from ..lib.ga_fiscal_core.labour import completed_years, overtime_amount
 from ..lib.ga_fiscal_core.loans import LoanFacts, MaxInstallmentRatio
 from ..lib.ga_fiscal_core.parts import MARITAL_CODES
 
@@ -110,6 +111,46 @@ class WageBelowGradeMinimum(CheckRule):
             date=slip.date_to,
         )
         return [self.issue(message, version)]
+
+
+class MissingAgreementForSeniority(CheckRule):
+    """D-106 : sans convention (version ni société), la prime d'ancienneté ne serait pas calculée."""
+
+    code = 'GA_NO_AGREEMENT'
+
+    def applies(self, slip):
+        return bool(slip.version_id) and not slip.version_id._l10n_ga_agreement()
+
+    def run(self, slip):
+        version = slip.version_id
+        years = completed_years(version._l10n_ga_seniority_start(), slip.date_to)
+        threshold = slip._rule_parameter('l10n_ga_seniority_check_years')
+        if years < threshold:
+            return []
+        message = slip.env._(
+            '%(employee)s : %(years)s ans d’ancienneté sans convention collective — prime d’ancienneté non '
+            'calculable. Renseignez la convention de la version ou la convention par défaut de la société.',
+            employee=slip.employee_id.name,
+            years=years,
+        )
+        return [self.issue(message, version)]
+
+
+class OvertimeWithoutRate(CheckRule):
+    """D-107 : heures supplémentaires sans tranche de majoration dans la convention effective."""
+
+    code = 'GA_OVERTIME_NO_RATE'
+
+    def run(self, slip):
+        agreement = slip.version_id._l10n_ga_agreement()
+        issues = []
+        for period, _label in slip.env['l10n_ga.overtime.rate']._fields['period'].selection:
+            hours = slip._l10n_ga_overtime_hours(period)
+            try:
+                overtime_amount(1, hours, agreement._overtime_tranches(period) if agreement else ())
+            except ValueError as error:
+                issues.append(self.issue(slip._l10n_ga_overtime_message(period, error), agreement or slip.version_id))
+        return issues
 
 
 class AllowanceForcedWithoutReason(CheckRule):
@@ -221,6 +262,8 @@ PAYROLL_CHECKS = (
     MissingMarital(),
     ForcedPartsWithoutReason(),
     WageBelowGradeMinimum(),
+    MissingAgreementForSeniority(),
+    OvertimeWithoutRate(),
     AllowanceForcedWithoutReason(),
     MissingCnssNumber(),
     MissingNif(),

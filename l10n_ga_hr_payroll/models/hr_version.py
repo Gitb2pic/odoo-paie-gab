@@ -116,6 +116,11 @@ class HrVersion(models.Model):
         self.ensure_one()
         return self.l10n_ga_seniority_date or self.employee_id._get_first_contract_date()
 
+    def _l10n_ga_agreement(self):
+        """Convention effective : celle de la version, sinon la convention par défaut de la société (D-106)."""
+        self.ensure_one()
+        return self.l10n_ga_agreement_id or self.company_id.l10n_ga_default_agreement_id
+
     def _l10n_ga_grade_minimum(self, on_date):
         """Minimum du grade en vigueur à ``on_date`` (0 sans grade ou avant la première date d'effet)."""
         self.ensure_one()

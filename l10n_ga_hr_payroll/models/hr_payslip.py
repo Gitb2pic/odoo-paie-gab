@@ -411,7 +411,7 @@ class HrPayslip(models.Model):
         """Prime d'ancienneté du mois complet (proratisée ensuite par la règle, RG04, D-25)."""
         self.ensure_one()
         version = self.version_id
-        agreement = version.l10n_ga_agreement_id
+        agreement = version._l10n_ga_agreement()
         if not agreement:
             return 0
         rate = agreement._seniority_rate_at(version._l10n_ga_seniority_start(), self.date_to)
@@ -439,7 +439,7 @@ class HrPayslip(models.Model):
         """Heures supplémentaires d'une période, majorées selon la convention (aucun taux par défaut)."""
         self.ensure_one()
         hours = self._l10n_ga_overtime_hours(period)
-        agreement = self.version_id.l10n_ga_agreement_id
+        agreement = self.version_id._l10n_ga_agreement()
         tranches = agreement._overtime_tranches(period) if agreement else ()
         try:
             return overtime_amount(self._l10n_ga_hourly_rate() if hours else 0, hours, tranches)
@@ -550,7 +550,7 @@ class HrPayslip(models.Model):
                     date=self.date_to,
                 )
             )
-        agreement = version.l10n_ga_agreement_id
+        agreement = version._l10n_ga_agreement()
         for period, _label in self.env['l10n_ga.overtime.rate']._fields['period'].selection:
             hours = self._l10n_ga_overtime_hours(period)
             try:
@@ -565,6 +565,7 @@ class HrPayslip(models.Model):
             'version_id.wage',
             'version_id.l10n_ga_grade_id',
             'version_id.l10n_ga_agreement_id',
+            'version_id.company_id.l10n_ga_default_agreement_id',
             'worked_days_line_ids',
             'l10n_ga_issue_ids.severity',
         ]

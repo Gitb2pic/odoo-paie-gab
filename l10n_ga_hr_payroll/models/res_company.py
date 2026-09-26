@@ -54,6 +54,13 @@ class ResCompany(models.Model):
         help='Vrai : salaire maintenu pendant la maternité et l’accident du travail, indemnités journalières '
         'remboursées par la CNSS à l’employeur. Faux : ces jours sortent du salaire de base (décision D-26).',
     )
+    l10n_ga_default_agreement_id = fields.Many2one(
+        'l10n_ga.collective.agreement',
+        string='Convention collective par défaut',
+        domain="[('company_id', '=', id)]",
+        help='Appliquée aux salariés dont la version du contrat ne précise pas de convention : ancienneté et '
+        'heures supplémentaires (décision D-106). Vide : un salarié ancien sans convention bloque la paie.',
+    )
     l10n_ga_loan_outstanding_cap = fields.Monetary(
         string='Plafond d’encours des prêts', help='Encours total des prêts d’un salarié. 0 = pas de plafond.'
     )

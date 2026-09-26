@@ -107,6 +107,16 @@
             <field name="date_from">2000-01-01</field>
             <field name="parameter_value">18</field>
         </record>
+        <record id="rule_parameter_seniority_check_years" model="hr.rule.parameter">
+            <field name="name">Gabon : ancienneté (années) à partir de laquelle une convention est exigée</field>
+            <field name="code">l10n_ga_seniority_check_years</field>
+            <field name="country_id" ref="base.ga"/>
+        </record>
+        <record id="rule_parameter_seniority_check_years_20000101" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="rule_parameter_seniority_check_years"/>
+            <field name="date_from">2000-01-01</field>
+            <field name="parameter_value">2</field>
+        </record>
         <record id="rule_parameter_cnss_ceiling" model="hr.rule.parameter">
             <field name="name">Gabon : plafond mensuel CNSS</field>
             <field name="code">l10n_ga_cnss_ceiling</field>

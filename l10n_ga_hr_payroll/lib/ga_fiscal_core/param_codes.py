@@ -82,6 +82,13 @@ PARAMETERS = (
         'Gabon : jours ouvrables par semaine',
     ),
     _p(None, 'l10n_ga_majority_age', 'conges.age_majorite', 'Gabon : âge de la majorité (congés des mineurs)'),
+    # Ancienneté sans convention (D-106) : seuil du contrôle avant paie GA_NO_AGREEMENT
+    _p(
+        None,
+        'l10n_ga_seniority_check_years',
+        'anciennete.annees_controle_sans_convention',
+        'Gabon : ancienneté (années) à partir de laquelle une convention est exigée',
+    ),
     # CNSS
     _p('cnss_ceiling', 'l10n_ga_cnss_ceiling', 'cnss.plafond_mensuel', 'Gabon : plafond mensuel CNSS'),
     _p('cnss_employee_rate', 'l10n_ga_cnss_employee_rate', 'cnss.taux_salarial', 'Gabon : taux salarial CNSS'),

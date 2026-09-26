@@ -69,6 +69,15 @@ class TestAgreement(GaPayrollCase):
         employee.version_id.l10n_ga_seniority_date = False
         self.assertEqual(employee.version_id._l10n_ga_seniority_start(), date(2025, 1, 1))
 
+    def test_seniority_from_company_default_agreement(self):
+        """D-106 : sans convention sur la version, la convention par défaut de la société s'applique."""
+        employee = self._employee('Défaut société', 350_000, l10n_ga_seniority_date=date(2020, 9, 1))
+        slip = self._payslip(employee, *SEPT)
+        self.assertNotIn('GA_ANC', self._totals(slip))
+        self.company.l10n_ga_default_agreement_id = self.agreement
+        slip.compute_sheet()
+        self.assertEqual(self._totals(slip)['GA_ANC'], round(350_000 * 0.06))  # base : salaire (pas de grade)
+
     def test_invalid_seniority_rule(self):
         with self.assertRaisesRegex(ValidationError, 'négatives'):
             self.agreement.seniority_step_rate = -0.01
