@@ -1,4 +1,5 @@
-import sys; sys.path.insert(0,'.')
+import sys
+sys.path.insert(0, 'l10n_ga_hr_payroll/lib')  # à lancer depuis la racine du dépôt
 from datetime import date
 from ga_fiscal_core.params import load_from_yaml
 from ga_fiscal_core.engine import compute, PayslipFacts
