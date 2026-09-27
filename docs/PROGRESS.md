@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 26/09/2026 (FIX 03).
+Mis à jour le 27/09/2026 (FIX 04).
 
 ## Étapes
 
@@ -28,6 +28,7 @@ Mis à jour le 26/09/2026 (FIX 03).
 | 5 | `l10n_ga_dgi_edi_account` | ID18, ID27, ID23, ID24, ID26 | **terminé** | 96 % (22/23 ; 16 tests du module, 316 avec les 4 modules ; `.xlsm` des annexes à brancher) | `docs/completude/l10n_ga_dgi_edi_account.md` |
 | C-4 | `l10n_ga_dgi_edi_account` | complétude du module | **terminé** | 96 % (23/24 ; 8 manques corrigés ; 22 tests du module, 322 avec les 4 modules ; `.xlsm` V1 à brancher) | `docs/completude/l10n_ga_dgi_edi_account_C-4.md` |
 | FIX 03 | paie + déclarations | écarts V1 (D-105 à D-110), convention par défaut + contrôles GA_NO_AGREEMENT / GA_OVERTIME_NO_RATE, menus Comptabilité → Analyse, vue ID10 et imprimés au format V1 (ADR-20) | **terminé** | 100 % (16/16 ; 360 tests des 4 modules, mise à jour depuis la version démo OK) | `docs/completude/fix_03_ecarts_v1_menus_imprimes.md` |
+| FIX 04 | `l10n_ga_hr_payroll` | convention « Tronc commun » et grade par défaut (D-111), action pour les salariés existants, migration 19.0.1.8.0 | **terminé** | 100 % (199 tests paie ; 367 tests des 4 modules sur base mise à jour depuis la version démo) | `docs/plans/fix_04_convention_par_defaut.md` |
 | 6 | `l10n_ga_hr_payroll_migration` | reprise `hr_payroll_gb` | à faire | — | — |
 | C-5 | `l10n_ga_hr_payroll_migration` | complétude du module | à faire | — | — |
 

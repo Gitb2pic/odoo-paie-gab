@@ -78,6 +78,80 @@ class TestAgreement(GaPayrollCase):
         slip.compute_sheet()
         self.assertEqual(self._totals(slip)['GA_ANC'], round(350_000 * 0.06))  # base : salaire (pas de grade)
 
+    # --- convention et grade par défaut (D-111) ------------------------------------------------
+
+    def test_new_company_gets_its_own_default_agreement(self):
+        default = self.default_agreement
+        self.assertEqual(default.company_id, self.company)
+        self.assertEqual(default.code, 'TRONC_COMMUN')
+        self.assertEqual(len(default.grade_ids), 5)
+        self.assertNotEqual(default, self.env.ref('l10n_ga_hr_payroll.agreement_example_common'))
+        other = self.env['res.company'].create({'name': 'Hors Gabon', 'country_id': self.env.ref('base.fr').id})
+        self.assertFalse(other.l10n_ga_default_agreement_id)
+        # idempotent : pas de seconde copie
+        self.company.l10n_ga_default_agreement_id = False
+        self.company._l10n_ga_ensure_default_agreement()
+        self.assertEqual(self.company.l10n_ga_default_agreement_id, default)
+
+    def test_new_employee_gets_default_agreement_and_grade(self):
+        self.company.l10n_ga_default_agreement_id = self.default_agreement
+        employee = self._employee('Nouveau', 300_000, start=date(2020, 9, 1))
+        version = employee.version_id
+        self.assertEqual(version.l10n_ga_agreement_id, self.default_agreement)
+        self.assertEqual(version.l10n_ga_grade_id.category, 'C1')  # plus haut minimum ≤ 300 000
+        slip = self._payslip(employee, *SEPT)
+        self.assertEqual(self._totals(slip)['GA_ANC'], round(295_400 * 0.06))  # 6 ans, base conventionnelle
+        # modifiable : le grade choisi n'est jamais écrasé
+        cat7 = self.default_agreement.grade_ids.filtered(lambda g: g.category == '7')
+        version.l10n_ga_grade_id = cat7
+        version.wage = 310_000
+        self.assertEqual(version.l10n_ga_grade_id, cat7)
+
+    def test_grade_follows_wage_when_empty(self):
+        self.company.l10n_ga_default_agreement_id = self.default_agreement
+        employee = self._employee('Sous la grille', 90_000)
+        version = employee.version_id
+        self.assertEqual(version.l10n_ga_agreement_id, self.default_agreement)
+        self.assertFalse(version.l10n_ga_grade_id)  # sous le plus bas minimum (105 000)
+        version.wage = 160_000
+        self.assertEqual(version.l10n_ga_grade_id.category, '7')
+
+    def test_explicit_agreement_kept(self):
+        self.company.l10n_ga_default_agreement_id = self.default_agreement
+        employee = self._employee('Autre convention', 350_000, l10n_ga_agreement_id=self.agreement.id)
+        self.assertEqual(employee.version_id.l10n_ga_agreement_id, self.agreement)
+        self.assertEqual(employee.version_id.l10n_ga_grade_id.category, 'C2')  # grille de la convention choisie
+
+    def test_changing_agreement_resets_grade(self):
+        self.company.l10n_ga_default_agreement_id = self.default_agreement
+        version = self._employee('Changement', 300_000).version_id
+        self.assertEqual(version.l10n_ga_grade_id.agreement_id, self.default_agreement)
+        version.l10n_ga_agreement_id = self.agreement
+        self.assertEqual(version.l10n_ga_grade_id, self.grade_c1)  # grade de la nouvelle convention
+        version.l10n_ga_agreement_id = False
+        self.assertFalse(version.l10n_ga_grade_id)
+
+    def test_grade_for_wage_uses_dated_values(self):
+        agreement = self.default_agreement
+        c1 = agreement.grade_ids.filtered(lambda g: g.category == 'C1')
+        self.env['l10n_ga.agreement.grade'].create(
+            {'agreement_id': agreement.id, 'category': 'C1', 'date_from': date(2026, 1, 1), 'minimum_wage': 350_000}
+        )
+        self.assertEqual(agreement._l10n_ga_grade_for_wage(300_000, date(2025, 6, 30)), c1)
+        self.assertEqual(agreement._l10n_ga_grade_for_wage(300_000, date(2026, 6, 30)).category, 'AM1')
+        self.assertFalse(agreement._l10n_ga_grade_for_wage(50_000, date(2026, 6, 30)))
+
+    def test_apply_default_agreement_to_existing_employees(self):
+        employee = self._employee('Ancien sans convention', 200_000, start=date(2020, 1, 1))
+        self.assertFalse(employee.version_id.l10n_ga_agreement_id)
+        self.company.l10n_ga_default_agreement_id = self.default_agreement
+        action = employee.action_l10n_ga_apply_default_agreement()
+        self.assertEqual(action['params']['type'], 'success')
+        self.assertEqual(employee.version_id.l10n_ga_agreement_id, self.default_agreement)
+        self.assertEqual(employee.version_id.l10n_ga_grade_id.category, 'AM1')
+        server_action = self.env.ref('l10n_ga_hr_payroll.action_server_l10n_ga_apply_default_agreement')
+        self.assertEqual(server_action.binding_model_id.model, 'hr.employee')
+
     def test_invalid_seniority_rule(self):
         with self.assertRaisesRegex(ValidationError, 'négatives'):
             self.agreement.seniority_step_rate = -0.01
@@ -153,12 +227,20 @@ class TestAgreement(GaPayrollCase):
 
     # --- données et sécurité ---------------------------------------------------------------------
 
-    def test_example_agreement_marked_and_without_overtime_rates(self):
-        example = self.env.ref('l10n_ga_hr_payroll.agreement_example_common')
-        self.assertTrue(example.is_example)
-        self.assertIn('EXEMPLE', example.name)
-        self.assertFalse(example.overtime_rate_ids)
-        self.assertEqual(len(example.grade_ids), 5)
+    def test_default_agreement_data(self):
+        """D-111 : « Tronc commun » livré (2 % après 2 ans, +1 % par an, grille Commerce 2012), sans heures sup."""
+        template = self.env.ref('l10n_ga_hr_payroll.agreement_example_common')
+        self.assertEqual(template.code, 'TRONC_COMMUN')
+        self.assertFalse(template.is_example)
+        self.assertEqual(
+            (template.seniority_start_years, template.seniority_start_rate, template.seniority_step_rate),
+            (2, 0.02, 0.01),
+        )
+        self.assertEqual(template.seniority_base, 'grade_minimum')
+        self.assertEqual(
+            sorted(template.grade_ids.mapped('minimum_wage')), [105_000, 153_500, 194_600, 295_400, 592_600]
+        )
+        self.assertFalse(template.overtime_rate_ids)
 
     def test_multi_company_rule(self):
         other_company = self.env['res.company'].create(

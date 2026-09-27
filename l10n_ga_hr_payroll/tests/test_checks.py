@@ -221,7 +221,8 @@ class TestPayrollChecks(GaPayrollCase):
 
     def test_company_default_agreement_is_effective(self):
         employee = self._complete('Par défaut')
-        self.assertFalse(employee.version_id.l10n_ga_agreement_id)
+        self.assertEqual(employee.version_id.l10n_ga_agreement_id, self.agreement)  # recopiée à la création (D-111)
+        employee.version_id.l10n_ga_agreement_id = False  # salarié repris sans convention
         self.assertEqual(employee.version_id._l10n_ga_agreement(), self.agreement)
         run = self._run(employee)
         run.action_l10n_ga_check()

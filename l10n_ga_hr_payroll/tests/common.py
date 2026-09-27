@@ -24,6 +24,10 @@ class GaPayrollCase(TransactionCase):
                 'currency_id': cls.env.ref('base.XAF').id,
             }
         )
+        # D-111 : la société reçoit le « Tronc commun » ; les tests partent d'une société sans convention
+        # (cas chiffrés de référence), ceux qui en ont besoin la renseignent (test_agreement, test_checks).
+        cls.default_agreement = cls.company.l10n_ga_default_agreement_id
+        cls.company.l10n_ga_default_agreement_id = False
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=[cls.company.id]))
         cls.structure_type = cls.env.ref(f'{MODULE}.structure_type_ga_employee')
         cls.structure = cls.env.ref(f'{MODULE}.structure_ga_employee')
