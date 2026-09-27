@@ -17,6 +17,19 @@ class L10nGaDeclarationGeneratorId23(models.AbstractModel):
             ('other', 'PAID_OTHER', self.env._('B) Bénéficiaires n’ayant pas la qualité de salarié')),
         )
 
+    _official_template = ('l10n_ga_dgi_edi_account/static/templates/edi-annexe-ID23.xlsm', 17, 2000)
+    # libellés de la liste « Nature de la qualité » du classeur officiel (feuille Referentiel)
+    QUALITY = {'employee': 'Qualité de salarié', 'other': 'Qualité de non salarié'}
+
+    def _official_row(self, payload):
+        return {
+            'B': payload.get('name'),
+            'C': payload.get('nif'),
+            'D': payload.get('profession'),
+            'E': self.QUALITY.get(payload.get('section')),
+            'F': payload.get('paid') or 0,
+        }
+
     def _partner_domain(self, declaration):
         return [('l10n_ga_is_resident', '=', True), ('l10n_ga_fee_category', 'in', DAS_FEE_CATEGORIES)]
 

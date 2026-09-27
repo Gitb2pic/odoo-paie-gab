@@ -63,7 +63,8 @@ class TestDasFees(GaWithholdingCase):
         self._pay(self._bill(self.provider, 100_000, day=date(2026, 1, 10)), day=date(2026, 1, 20))
         id26 = self._annual('ID26')
         id26.with_user(self.declarant).action_validate()
-        report = id26.snapshot_attachment_ids.filtered(lambda a: not a.name.endswith('.xlsx'))
+        report = id26.snapshot_attachment_ids.filtered(lambda a: a.name.endswith(('.html', '.pdf')))
+        self.assertEqual(len(id26.snapshot_attachment_ids.filtered(lambda a: a.name.endswith('.xlsm'))), 1)  # D-87
         html = base64.b64decode(report.datas).decode()
         self.assertIn(id26.type_id.name.upper(), html)  # imprimé au format V1 (ADR-20)
         self.assertIn('BORDEREAU RÉCAPITULATIF', html)

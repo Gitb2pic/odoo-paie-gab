@@ -15,6 +15,13 @@ class L10nGaDeclarationGeneratorId26(models.AbstractModel):
     def _sections(self):
         return (('provider', 'PAID_PROVIDER', self.env._('Prestataires de services non assujettis à la TVA')),)
 
+    # colonne E (retenue) calculée par le classeur officiel : jamais écrite
+    _official_template = ('l10n_ga_dgi_edi_account/static/templates/edi-annexe-ID26.xlsm', 18, 2000)
+
+    def _official_row(self, payload):
+        name = ' — '.join(filter(None, [payload.get('name'), payload.get('address')]))
+        return {'B': name, 'C': payload.get('nif'), 'D': payload.get('paid') or 0}
+
     def _partner_domain(self, declaration):
         return [('l10n_ga_withholding_kind', '=', 'ras_095')]
 

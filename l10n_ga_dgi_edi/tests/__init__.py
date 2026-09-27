@@ -8,6 +8,7 @@ from . import (
     test_id10,
     test_id28,
     test_observer_cron,
+    test_official_workbooks,
     test_payments,
     test_report_layout,
     test_security,

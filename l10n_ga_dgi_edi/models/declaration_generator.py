@@ -69,6 +69,17 @@ class L10nGaDeclarationGeneratorBase(models.AbstractModel):
         """Compléments d'un gabarit officiel après les cases (listes nominatives des bordereaux)."""
         return None
 
+    def _has_official_workbooks(self, declaration):
+        """L'imprimé a-t-il des classeurs officiels ``.xlsm`` (bouton de téléchargement) ?"""
+        return False
+
+    def _official_workbooks(self, declaration):
+        """Classeurs officiels de la DGI remplis (``.xlsm``) : ``[(code de l'annexe, contenu)]`` (D-87).
+
+        Lus sur les cases et détails stockés de la déclaration ; joints à l'instantané de validation.
+        """
+        return []
+
     def _render_workbook(self, declaration):
         """Classeur propre à l'imprimé (DAS : ID20, ID21 paginé, ID22, ID19), ou ``None`` = classeur standard."""
         return None

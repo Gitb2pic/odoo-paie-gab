@@ -10,6 +10,8 @@ repos:
       - id: check-merge-conflict
       - id: check-added-large-files
         args: [--maxkb=2048]
+        # classeurs officiels de la DGI (D-87) : fichiers tiers, taille imposée
+        exclude: 'static/templates/edi-annexe-ID\d+\.xlsm$'
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: debug-statements
