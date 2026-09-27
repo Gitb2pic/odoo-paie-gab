@@ -86,13 +86,13 @@ class TestOfficialWorkbooks(GaDeclarationCase):
         self.assertEqual(workbook.value('M18'), '1234.5')
         self.assertEqual(workbook.value('K18'), str((date(2026, 1, 1) - date(1899, 12, 30)).days))
         with self.assertRaisesRegex(ValueError, 'formule'):
-            workbook.write('R18', 1)  # total de ligne du classeur
+            workbook.put('R18', 1)  # total de ligne du classeur
         with self.assertRaisesRegex(ValueError, 'invalide'):
-            workbook.write('18B', 1)
+            workbook.put('18B', 1)
         with self.assertRaisesRegex(ValueError, 'booléenne'):
-            workbook.write('B18', True)
-        workbook.write('B5000', 'hors des lignes existantes')  # ligne créée à sa place
-        workbook.write('C18', '')
+            workbook.put('B18', True)
+        workbook.put('B5000', 'hors des lignes existantes')  # ligne créée à sa place
+        workbook.put('C18', '')
         self.assertIsNone(workbook.value('C18'))
         sheet = load_workbook(io.BytesIO(workbook.build()))['SAISIE']
         self.assertEqual(sheet['K18'].value.date(), date(2026, 1, 1))

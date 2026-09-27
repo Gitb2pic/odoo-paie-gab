@@ -17,7 +17,7 @@ import re
 import zipfile
 from datetime import date, datetime
 
-from lxml import etree
+from lxml import etree  # pylint: disable=import-error
 
 NS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
 REL_NS = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
@@ -164,7 +164,7 @@ class SaisieWorkbook:
             new.set('s', style)
         return new
 
-    def write(self, ref, value):
+    def put(self, ref, value):
         """Valeur d'une cellule (texte, nombre, date) ; ``None`` ou chaîne vide = cellule vidée."""
         cell = self._cell(ref)
         if cell.find(_q('f')) is not None:
@@ -209,8 +209,8 @@ class SaisieWorkbook:
     def fill(self, header, first_row, rows):
         """En-tête ``{référence: valeur}`` puis lignes ``[{lettre de colonne: valeur}]`` dès ``first_row``."""
         for ref, value in header.items():
-            self.write(ref, value)
+            self.put(ref, value)
         for offset, row in enumerate(rows):
             for letters, value in row.items():
-                self.write(f'{letters}{first_row + offset}', value)
+                self.put(f'{letters}{first_row + offset}', value)
         return self
