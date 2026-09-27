@@ -91,6 +91,22 @@ class HrEmployee(models.Model):
             )
             employee.l10n_ga_loan_count = loans.get(employee, 0)
 
+    def action_l10n_ga_apply_default_agreement(self):
+        """D-111 : convention par défaut de la société et grade suggéré sur la version courante, si vides."""
+        self.version_id._l10n_ga_apply_default_agreement()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success',
+                'message': self.env._(
+                    '%(count)s salarié(s) : convention et grade par défaut appliqués aux champs vides.',
+                    count=len(self),
+                ),
+                'next': {'type': 'ir.actions.act_window_close'},
+            },
+        }
+
     def action_l10n_ga_allowances(self):
         self.ensure_one()
         return {

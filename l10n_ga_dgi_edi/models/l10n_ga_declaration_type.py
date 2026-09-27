@@ -25,6 +25,13 @@ class L10nGaDeclarationType(models.Model):
     name = fields.Char(string='Libellé', required=True, translate=True)
     sequence = fields.Integer(default=10)
     active = fields.Boolean(default=True)
+    scope = fields.Selection(
+        [('payroll', 'Paie'), ('account', 'Comptabilité')],
+        string='Application',
+        required=True,
+        default='payroll',
+        help='Menu où l’imprimé est rangé : Paie (déclarations de salaires) ou Comptabilité → Analyse.',
+    )
     authority = fields.Selection(
         [('dgi', 'DGI'), ('cnss', 'CNSS'), ('cnamgs', 'CNAMGS')], string='Organisme', required=True, default='dgi'
     )

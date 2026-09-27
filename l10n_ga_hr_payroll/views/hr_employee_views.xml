@@ -51,4 +51,14 @@
             </group>
         </field>
     </record>
+    <!-- D-111 : convention et grade par défaut pour les salariés existants (champs vides seulement). -->
+    <record id="action_server_l10n_ga_apply_default_agreement" model="ir.actions.server">
+        <field name="name">Appliquer la convention et le grade par défaut (Gabon)</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[(4, ref('hr_payroll.group_hr_payroll_user'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_l10n_ga_apply_default_agreement()</field>
+    </record>
 </odoo>

@@ -50,6 +50,10 @@
                             invisible="state not in ('draft', 'computed')"/>
                     <button name="action_check_integrity" type="object" string="Vérifier l'empreinte"
                             invisible="not sha256"/>
+                    <button name="action_print_form" type="object" string="Imprimer l'imprimé"
+                            invisible="state in ('draft', 'cancel')"/>
+                    <button name="action_print_workbook" type="object" string="Classeur (PDF)"
+                            invisible="state in ('draft', 'cancel')"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,computed,validated,filed,paid"/>
                 </header>
                 <sheet>
@@ -225,6 +229,7 @@
         <field name="name">Échéances des déclarations</field>
         <field name="res_model">l10n_ga.declaration</field>
         <field name="view_mode">kanban,calendar,list,form</field>
+        <field name="domain">[('scope', '=', 'payroll')]</field>
         <field name="context">{'search_default_to_file': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Aucune déclaration à déposer</p>
@@ -269,11 +274,13 @@
         <field name="name">Quittances</field>
         <field name="res_model">l10n_ga.declaration.payment</field>
         <field name="view_mode">list</field>
+        <field name="domain">[('declaration_id.scope', '=', 'payroll')]</field>
     </record>
 
     <record id="l10n_ga_declaration_action" model="ir.actions.act_window">
         <field name="name">Déclarations</field>
         <field name="res_model">l10n_ga.declaration</field>
         <field name="view_mode">list,form,kanban,calendar</field>
+        <field name="domain">[('scope', '=', 'payroll')]</field>
     </record>
 </odoo>

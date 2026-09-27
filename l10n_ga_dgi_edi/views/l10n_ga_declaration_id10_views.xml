@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Vue ID10 au format de la V1 (ADR-20, FIX 03) : cadres 1 à 4 de l'imprimé. Les montants sont lus
+        sur les cases stockées (champs id10_* non stockés, jamais recalculés) ; les actions sont celles du
+        moteur. Formulaire utilisé par le menu « ID10 » (vue forcée par l'action).
+    -->
+    <record id="l10n_ga_declaration_view_form_id10" model="ir.ui.view">
+        <field name="name">l10n_ga.declaration.form.id10</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <form string="ID10 - Retenues sur salaires et CFP">
+                <header>
+                    <button name="action_compute" type="object" string="Actualiser depuis la paie" class="btn-primary"
+                            invisible="state not in ('draft', 'computed')"/>
+                    <button name="action_print_form" type="object" string="Imprimer l'ID10" class="btn-secondary"
+                            invisible="state in ('draft', 'cancel')"/>
+                    <button name="action_validate" type="object" string="Valider" class="btn-primary"
+                            invisible="state != 'computed'" groups="l10n_ga_dgi_edi.group_l10n_ga_declarant"/>
+                    <button name="action_mark_filed" type="object" string="Marquer déposée" class="btn-primary"
+                            invisible="state != 'validated'" groups="l10n_ga_dgi_edi.group_l10n_ga_declarant"/>
+                    <button name="action_mark_paid" type="object" string="Marquer payée" class="btn-primary"
+                            invisible="state != 'filed'" groups="l10n_ga_dgi_edi.group_l10n_ga_declarant"/>
+                    <button name="action_unvalidate" type="object" string="Annuler la validation"
+                            invisible="state != 'validated'" groups="l10n_ga_dgi_edi.group_l10n_ga_declarant"
+                            confirm="L'instantané et ses fichiers seront retirés. Continuer ?"/>
+                    <button name="action_create_rectification" type="object" string="Créer une rectificative"
+                            invisible="state not in ('filed', 'paid')"/>
+                    <button name="action_reset_draft" type="object" string="Remettre en brouillon"
+                            invisible="state not in ('computed', 'cancel')"/>
+                    <button name="action_print_workbook" type="object" string="Classeur (PDF)"
+                            invisible="state in ('draft', 'cancel')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,computed,validated,filed,paid"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Rectificative" bg_color="text-bg-warning"
+                            invisible="not rectified_id"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="rectified_id" invisible="1"/>
+                    <div class="alert alert-danger" role="alert" invisible="not blocking_count">
+                        <field name="blocking_count" nolabel="1" class="oe_inline"/> anomalie(s) bloquante(s) :
+                        voir l'onglet « Anomalies ».
+                    </div>
+                    <group>
+                        <group string="Période">
+                            <field name="type_id" readonly="state != 'draft'" options="{'no_create': True}"
+                                   domain="[('code', '=', 'ID10')]"/>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                            <field name="due_date" readonly="state not in ('draft', 'computed')"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="Total">
+                            <field name="id10_withholding_total"/>
+                            <field name="id10_cfp_amount" invisible="id10_cfp_blank"/>
+                            <field name="amount_total" class="oe_subtotal_footer_separator"/>
+                            <field name="amount_total_words"/>
+                            <field name="amount_residual" invisible="not payment_ids"/>
+                        </group>
+                    </group>
+                    <group string="2 - Détermination des retenues sur salaires à payer">
+                        <group>
+                            <field name="id10_irpp"/>
+                            <field name="id10_tcs"/>
+                            <field name="id10_fnh"/>
+                        </group>
+                        <group>
+                            <field name="id10_withholding_total" class="oe_subtotal_footer_separator"/>
+                        </group>
+                    </group>
+                    <field name="id10_cfp_blank" invisible="1"/>
+                    <div class="text-muted fst-italic" invisible="not id10_cfp_blank">
+                        3 - CFP déclarée sur l'ID28 (option de la société) : cadre non renseigné.
+                    </div>
+                    <group string="3 - Détermination de la contribution à la formation professionnelle"
+                           invisible="id10_cfp_blank">
+                        <group>
+                            <field name="id10_cfp_l1"/>
+                            <field name="id10_cfp_l2"/>
+                            <field name="id10_cfp_l3"/>
+                            <field name="id10_cfp_l4"/>
+                            <field name="id10_cfp_l5"/>
+                        </group>
+                        <group>
+                            <field name="id10_cfp_base"/>
+                            <field name="id10_cfp_rate"/>
+                            <field name="id10_cfp_amount" class="oe_subtotal_footer_separator"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="1 - Identification du contribuable" name="identification">
+                            <group>
+                                <group>
+                                    <field name="id10_nif"/>
+                                    <field name="id10_company_name"/>
+                                    <field name="id10_tax_center"/>
+                                </group>
+                                <group>
+                                    <field name="id10_street"/>
+                                    <field name="id10_city"/>
+                                    <field name="id10_phone"/>
+                                    <field name="id10_email"/>
+                                    <field name="id10_website"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="4 - Règlement de l'impôt" name="payments"
+                              invisible="state not in ('validated', 'filed', 'paid')">
+                            <group>
+                                <group>
+                                    <field name="filing_date" readonly="state not in ('validated', 'filed')"/>
+                                    <field name="filing_number" readonly="state not in ('validated', 'filed')"/>
+                                </group>
+                                <group>
+                                    <field name="amount_paid"/>
+                                    <field name="amount_residual"/>
+                                </group>
+                            </group>
+                            <separator string="Quittances"/>
+                            <field name="payment_ids" nolabel="1" readonly="state not in ('validated', 'filed', 'paid')">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="receipt_number"/>
+                                    <field name="kind"/>
+                                    <field name="mode"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="attachment_ids" widget="many2many_binary"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Anomalies" name="issues">
+                            <field name="issue_ids" readonly="1"
+                                   context="{'list_view_ref': 'l10n_ga_dgi_edi.l10n_ga_check_issue_view_list_declaration'}"/>
+                        </page>
+                        <page string="Détail par salarié" name="details">
+                            <field name="detail_ids" readonly="1">
+                                <list>
+                                    <field name="box_id"/>
+                                    <field name="label"/>
+                                    <field name="employee_id" optional="show"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Fichiers" name="files" invisible="not snapshot_attachment_ids">
+                            <group>
+                                <field name="validated_date"/>
+                                <field name="validated_by_id"/>
+                                <field name="sha256"/>
+                            </group>
+                            <field name="snapshot_attachment_ids" widget="many2many_binary" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="l10n_ga_declaration_view_list_id10" model="ir.ui.view">
+        <field name="name">l10n_ga.declaration.list.id10</field>
+        <field name="model">l10n_ga.declaration</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <list string="Déclarations ID10" decoration-danger="blocking_count" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="id10_withholding_total" sum="Total"/>
+                <field name="id10_cfp_amount" sum="Total"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="due_date" widget="remaining_days" invisible="state in ('filed', 'paid', 'cancel')"/>
+                <field name="blocking_count" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                <field name="state" widget="badge" decoration-info="state in ('draft', 'computed')"
+                       decoration-warning="state == 'validated'" decoration-success="state in ('filed', 'paid')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="l10n_ga_declaration_action_id10" model="ir.actions.act_window">
+        <field name="name">ID10 - Retenues mensuelles</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type_code', '=', 'ID10')]</field>
+        <field name="context" eval="{'default_type_id': ref('l10n_ga_dgi_edi.declaration_type_id10')}"/>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('l10n_ga_declaration_view_list_id10')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('l10n_ga_declaration_view_form_id10')}),
+        ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Créer une déclaration ID10</p>
+            <p>Retenues à la source sur les salaires (IRPP, TCS, FNH) et contribution à la formation
+               professionnelle. Dépôt au plus tard le 15 du mois suivant ; préparée à la validation des bulletins.</p>
+        </field>
+    </record>
+
+    <record id="l10n_ga_declaration_action_id28" model="ir.actions.act_window">
+        <field name="name">ID28 - Formation professionnelle</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type_code', '=', 'ID28')]</field>
+        <field name="context" eval="{'default_type_id': ref('l10n_ga_dgi_edi.declaration_type_id28')}"/>
+    </record>
+
+    <record id="l10n_ga_declaration_action_dts" model="ir.actions.act_window">
+        <field name="name">DTS - Cotisations trimestrielles</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type_code', 'in', ('DTS_CNSS', 'DTS_CNAMGS'))]</field>
+    </record>
+
+    <record id="l10n_ga_declaration_action_das" model="ir.actions.act_window">
+        <field name="name">DAS - ID19 à ID22 (annuelle)</field>
+        <field name="res_model">l10n_ga.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type_code', '=', 'DAS')]</field>
+        <field name="context" eval="{'default_type_id': ref('l10n_ga_dgi_edi.declaration_type_das')}"/>
+    </record>
+</odoo>

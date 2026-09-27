@@ -3,6 +3,8 @@ from odoo.exceptions import ValidationError
 
 from ..lib.ga_fiscal_core.labour import completed_years, seniority_rate
 
+TEMPLATE_XMLID = 'l10n_ga_hr_payroll.agreement_example_common'
+
 
 class L10nGaCollectiveAgreement(models.Model):
     """Convention collective (RG04, F5) : règle d'ancienneté, grille, taux d'heures supplémentaires."""
@@ -59,6 +61,50 @@ class L10nGaCollectiveAgreement(models.Model):
     def _seniority_rate_at(self, start, on_date):
         """Taux d'ancienneté à ``on_date`` pour une date d'ancienneté ``start``."""
         return self._seniority_rate(completed_years(start, on_date))
+
+    # --- convention par défaut (D-111) ---------------------------------------------------------------
+
+    @api.model
+    def _l10n_ga_template(self):
+        """Convention « Tronc commun » livrée par le module (données, modifiables par l'utilisateur)."""
+        return self.env.ref(TEMPLATE_XMLID, raise_if_not_found=False) or self.browse()
+
+    @api.model
+    def _l10n_ga_default_for(self, company):
+        """Convention « Tronc commun » de ``company`` : le modèle livré, sinon sa copie pour la société."""
+        template = self._l10n_ga_template().sudo()
+        if not template or template.company_id == company:
+            return template
+        existing = self.sudo().search([('company_id', '=', company.id), ('code', '=', template.code)], limit=1)
+        if existing:
+            return existing
+        agreement = template.copy({'company_id': company.id, 'name': template.name})
+        for grade in template.grade_ids:
+            grade.copy({'agreement_id': agreement.id})
+        return agreement
+
+    def _l10n_ga_grid_at(self, on_date):
+        """``{(catégorie, échelon): grade}`` : valeur de chaque grade en vigueur à ``on_date``."""
+        self.ensure_one()
+        current = {}
+        for grade in self.grade_ids.filtered(lambda g: g.date_from <= on_date).sorted('date_from'):
+            current[grade.category, grade.echelon or ''] = grade
+        return current
+
+    def _l10n_ga_grade_for_wage(self, wage, on_date, check_date=None):
+        """Grade suggéré : le plus élevé de la grille en vigueur à ``on_date`` dont le minimum ≤ ``wage``.
+
+        ``check_date`` (date de la version) : le minimum en vigueur à cette date doit aussi être atteint
+        (contrôle RG18). Aucun grade si le salaire est sous le plus bas minimum.
+        """
+        self.ensure_one()
+        at_check = self._l10n_ga_grid_at(check_date) if check_date else {}
+        eligible = [
+            grade
+            for key, grade in self._l10n_ga_grid_at(on_date).items()
+            if grade.minimum_wage <= wage and (key not in at_check or at_check[key].minimum_wage <= wage)
+        ]
+        return max(eligible, key=lambda g: g.minimum_wage) if eligible else self.env['l10n_ga.agreement.grade']
 
     def _overtime_tranches(self, period):
         """Tranches ``((de, a, majoration), ...)`` d'une période, triées (``a`` = None sans limite)."""

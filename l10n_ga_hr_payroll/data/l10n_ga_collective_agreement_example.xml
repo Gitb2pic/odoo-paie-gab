@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Décision D-27 : convention d'EXEMPLE, à remplacer par celle du client. Ancienneté du tronc commun
-         (base 05 §4 : 2 % à 2 ans, +1 % par an ; plafond propre à chaque convention, non renseigné) ;
-         grille Commerce 2012 de la base 05 §4 (à actualiser). Aucun taux d'heures supplémentaires
-         (point 09-11) : des heures supplémentaires sans taux bloquent le bulletin. -->
+    <!-- D-111 (remplace D-27) : convention par défaut des sociétés gabonaises, modifiable. Ancienneté du
+         tronc commun des conventions collectives (base 05 §4, confirmée par les sources : 2 % après 2 ans
+         de présence, +1 % par an, sur le salaire de base conventionnel ; plafond propre à chaque
+         convention, non renseigné) ; grille Commerce 2012 de la base 05 §4 (seule grille des sources,
+         à actualiser). Aucun taux d'heures supplémentaires (point 09-11). noupdate : les modifications
+         de l'utilisateur sont conservées ; la migration 19.0.1.8.0 renomme l'ancien « EXEMPLE ». -->
     <data noupdate="1">
         <record id="agreement_example_common" model="l10n_ga.collective.agreement">
-            <field name="name">EXEMPLE — Tronc commun (grille Commerce 2012, à actualiser)</field>
-            <field name="code">EXEMPLE</field>
+            <field name="name">Tronc commun des conventions collectives (grille Commerce 2012, à actualiser)</field>
+            <field name="code">TRONC_COMMUN</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="is_example" eval="True"/>
+            <field name="is_example" eval="False"/>
             <field name="seniority_start_years">2</field>
             <field name="seniority_start_rate">0.02</field>
             <field name="seniority_step_rate">0.01</field>

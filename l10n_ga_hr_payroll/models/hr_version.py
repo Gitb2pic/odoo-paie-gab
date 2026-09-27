@@ -116,6 +116,54 @@ class HrVersion(models.Model):
         self.ensure_one()
         return self.l10n_ga_seniority_date or self.employee_id._get_first_contract_date()
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if 'l10n_ga_agreement_id' not in vals:
+                company = self.env['res.company'].browse(vals.get('company_id')) or self.env.company
+                agreement = company.l10n_ga_default_agreement_id
+                if agreement:
+                    vals['l10n_ga_agreement_id'] = agreement.id
+        versions = super().create(vals_list)
+        versions.filtered(lambda v: not v.l10n_ga_grade_id)._l10n_ga_fill_grade()
+        return versions
+
+    def write(self, vals):
+        refill = 'l10n_ga_grade_id' not in vals and bool({'wage', 'l10n_ga_agreement_id'} & set(vals))
+        if 'l10n_ga_agreement_id' in vals and 'l10n_ga_grade_id' not in vals:
+            new_agreement = vals['l10n_ga_agreement_id'] or False
+            if any(v.l10n_ga_grade_id.agreement_id.id not in (new_agreement, False) for v in self):
+                vals = {**vals, 'l10n_ga_grade_id': False}  # le grade suit la convention, puis est re-suggéré
+        result = super().write(vals)
+        if refill:
+            self.filtered(lambda v: not v.l10n_ga_grade_id)._l10n_ga_fill_grade()
+        return result
+
+    def _l10n_ga_fill_grade(self):
+        """Grade vide : le plus élevé de la grille compatible avec le salaire (D-111), modifiable ensuite."""
+        today = fields.Date.context_today(self)
+        for version in self.filtered(lambda v: v.l10n_ga_agreement_id and v.wage):
+            # grille en vigueur aujourd'hui (une version ancienne précède souvent la grille), minimum RG18
+            # vérifié à la date de la version
+            start = version.date_version or today
+            grade = version.l10n_ga_agreement_id._l10n_ga_grade_for_wage(
+                version.wage, max(start, today), check_date=start
+            )
+            if grade:
+                version.l10n_ga_grade_id = grade
+
+    def _l10n_ga_apply_default_agreement(self):
+        """Convention par défaut de la société si vide, puis grade suggéré si vide (rien n'est écrasé)."""
+        for version in self:
+            if not version.l10n_ga_agreement_id and version.company_id.l10n_ga_default_agreement_id:
+                version.l10n_ga_agreement_id = version.company_id.l10n_ga_default_agreement_id
+        self.filtered(lambda v: not v.l10n_ga_grade_id)._l10n_ga_fill_grade()
+
+    def _l10n_ga_agreement(self):
+        """Convention effective : celle de la version, sinon la convention par défaut de la société (D-106)."""
+        self.ensure_one()
+        return self.l10n_ga_agreement_id or self.company_id.l10n_ga_default_agreement_id
+
     def _l10n_ga_grade_minimum(self, on_date):
         """Minimum du grade en vigueur à ``on_date`` (0 sans grade ou avant la première date d'effet)."""
         self.ensure_one()

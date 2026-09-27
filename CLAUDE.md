@@ -14,9 +14,9 @@ Ordre de développement (ne jamais sauter une étape) :
 | 0 | socle du dépôt | outillage, vérifications Enterprise |
 | 1 | `l10n_ga_hr_payroll` | noyau fiscal pur + paie Gabon complète |
 | 2 | `l10n_ga_hr_payroll_account` | imputations SYSCOHADA (auto_install) |
-| 3 | `l10n_ga_dgi_edi` | moteur de déclarations, ID10, ID28, DTS, DAS ID19-ID22, migration V1 |
+| 3 | `l10n_ga_dgi_edi` | moteur de déclarations, ID10, ID28, DTS, DAS ID19-ID22 (migration V1 abandonnée, D-112) |
 | 4 | `l10n_ga_dgi_edi_account` | périmètre V1.0 : ID18, ID27, ID23, ID24, ID26 |
-| 5 | `l10n_ga_hr_payroll_migration` | reprise jetable depuis `hr_payroll_gb` |
+| ~~5~~ | ~~`l10n_ga_hr_payroll_migration`~~ | **abandonné (D-112)** : aucune donnée de paie réelle à reprendre ; saisie manuelle (import Excel, cumuls d'ouverture) |
 
 ## 2. Sources de vérité (par ordre de priorité)
 
@@ -40,7 +40,7 @@ En cas de contradiction entre deux sources : ne tranche pas seul. Écris le conf
 9. Arrondi **au franc, à la ligne** (`float_round(x, precision_digits=0)`), jamais sur les totaux intermédiaires.
 10. Excel : `xlsxwriter` pour les états neufs ; `openpyxl.load_workbook(..., keep_vba=True)` pour les classeurs DGI `.xlsm`. On écrit des **valeurs, jamais de formules**. **Aucune génération XML** (ADR-08).
 11. Multi-société : `company_id` obligatoire sur les nouveaux modèles métier, `check_company=True` sur les Many2one, règles d'enregistrement `company_id in company_ids`.
-12. Aucune dépendance à `hr_payroll_gb`. Le module de reprise le lit en **SQL lecture seule** uniquement.
+12. Aucune dépendance à `hr_payroll_gb` (module de reprise abandonné, D-112).
 13. Point fiscal non tranché (fichier 09) = **paramètre daté ou option société** avec valeur par défaut documentée — jamais un choix silencieux dans le code.
 14. Aucun module Gabon ne dépend d'un module « plus haut » (règle de dépendance du fichier 01 §3).
 
@@ -57,6 +57,7 @@ En cas de contradiction entre deux sources : ne tranche pas seul. Écris le conf
 ## 5. Commandes (voir `Makefile`, créé au sprint 0 sur l'installation Odoo existante du VPS)
 
 Sur le VPS : ne jamais toucher aux bases existantes (bases de test préfixées `test_ga_`), ne jamais arrêter le service Odoo pour lancer des tests, ne jamais modifier les autres modules présents dans `extra-addon`.
+Après toute modification d'un fichier `.py`, **redémarrer le service Odoo avant de mettre à jour le module** (`make demo` / `make update-demo` : processus neuf `-u … --stop-after-init`, puis redémarrage) ; **ne jamais utiliser le bouton « Mettre à jour » de l'interface pour du code modifié** : le service en cours garde l'ancien Python et refuse les vues qui citent de nouveaux champs (incident FIX 02 du 25/09/2026).
 Seule exception (décision D-09) : la base de démonstration `odoo19` d'Alex reçoit les modules `l10n_ga_*` **validés**, uniquement via `make demo MODULE=...` (installation ou mise à jour, puis redémarrage du service) ; jamais de tests ni de données de test dans `odoo19`.
 
 ```bash
@@ -65,6 +66,7 @@ make test-core                     # pytest l10n_ga_hr_payroll/lib --cov (sans O
 make test MODULE=l10n_ga_hr_payroll   # base neuve, -i MODULE --test-tags /MODULE --stop-after-init
 make upgrade MODULE=...            # -u MODULE sur une base existante (test de mise à jour)
 make demo MODULE=...               # installe / met à jour un module validé dans la base de démo odoo19 (D-09)
+make update-demo MODULE=...        # alias de demo : processus neuf puis redémarrage (jamais le bouton de l'interface)
 ```
 
 ## 6. Déroulé d'une session (obligatoire)
@@ -88,7 +90,7 @@ Une étape n'est **terminée** que lorsque ce protocole passe entièrement. Tu n
 - `grep -rnE "TODO|FIXME|XXX|HACK|NotImplementedError|pass\s*$|\.\.\.\s*$"` sur le module (hors interfaces abstraites documentées) ;
 - fichiers cités dans `__manifest__.py` absents, ou fichiers XML/CSV présents mais non déclarés ;
 - modèles sans ligne dans `ir.model.access.csv`, modèles multi-société sans record rule ;
-- champs référencés dans une vue/rapport mais inexistants sur le modèle ;
+- champs référencés dans une vue/rapport mais inexistants sur le modèle (automatique pour les champs `l10n_ga_*` des vues : `tools/check_view_fields.py`, lancé par `make lint`) ;
 - nombres littéraux dans `amount_python_compute`, les générateurs ou le noyau (autres que 0, 1, 100 et index) → doivent venir d'un paramètre ;
 - imports `odoo` dans `lib/ga_fiscal_core` ;
 - `_sql_constraints`, `attrs=`, `<tree` (syntaxe pré-19) ;

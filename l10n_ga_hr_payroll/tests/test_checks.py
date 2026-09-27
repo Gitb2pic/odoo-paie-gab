@@ -1,5 +1,5 @@
 import re
-from datetime import date
+from datetime import date, datetime
 
 from odoo.exceptions import UserError
 from odoo.tests import tagged
@@ -26,6 +26,8 @@ class TestPayrollChecks(GaPayrollCase):
                 'grade_ids': [(0, 0, {'category': 'C1', 'date_from': date(2012, 1, 1), 'minimum_wage': 295_400})],
             }
         )
+        # D-106 : convention par défaut de la société (sinon GA_NO_AGREEMENT pour les salariés anciens)
+        cls.company.l10n_ga_default_agreement_id = cls.agreement
 
     def _complete(self, name, start=date(2020, 1, 1), **values):
         """Salarié sans anomalie : n° CNSS, NIF, compte bancaire pour le virement."""
@@ -85,6 +87,8 @@ class TestPayrollChecks(GaPayrollCase):
                 'GA_NO_MARITAL',
                 'GA_FORCED_PARTS_NO_REASON',
                 'GA_BELOW_GRADE',
+                'GA_NO_AGREEMENT',
+                'GA_OVERTIME_NO_RATE',
                 'GA_ALLOWANCE_FORCED_NO_REASON',
                 'GA_NO_CNSS',
                 'GA_NO_NIF',
@@ -101,6 +105,8 @@ class TestPayrollChecks(GaPayrollCase):
                 'GA_NO_MARITAL',
                 'GA_FORCED_PARTS_NO_REASON',
                 'GA_BELOW_GRADE',
+                'GA_NO_AGREEMENT',
+                'GA_OVERTIME_NO_RATE',
                 'GA_ALLOWANCE_FORCED_NO_REASON',
             },
         )
@@ -196,6 +202,44 @@ class TestPayrollChecks(GaPayrollCase):
         august = self._run(employee, period=AUG)
         august.action_l10n_ga_check()
         self.assertEqual(self._codes(august, 'blocking'), [])
+
+    def test_no_agreement_blocks_senior_employee(self):
+        """D-106 : ≥ 2 ans d'ancienneté sans convention (version ni société) → bloquant."""
+        self.company.l10n_ga_default_agreement_id = False
+        senior = self._complete('Ancien sans convention')
+        recent = self._complete('Récent sans convention', start=date(2025, 6, 1))
+        run = self._run(senior, recent)
+        run.action_l10n_ga_check()
+        issues = run.l10n_ga_issue_ids.filtered(lambda i: i.code == 'GA_NO_AGREEMENT')
+        self.assertEqual(issues.mapped('res_id'), [senior.version_id.id])
+        self.assertEqual(issues.severity, 'blocking')
+        self.assertIn('6 ans', issues.message)
+        # la convention de la version suffit
+        senior.version_id.l10n_ga_agreement_id = self.agreement
+        run.action_l10n_ga_check()
+        self.assertEqual(self._codes(run, 'blocking'), [])
+
+    def test_company_default_agreement_is_effective(self):
+        employee = self._complete('Par défaut')
+        self.assertEqual(employee.version_id.l10n_ga_agreement_id, self.agreement)  # recopiée à la création (D-111)
+        employee.version_id.l10n_ga_agreement_id = False  # salarié repris sans convention
+        self.assertEqual(employee.version_id._l10n_ga_agreement(), self.agreement)
+        run = self._run(employee)
+        run.action_l10n_ga_check()
+        self.assertEqual(self._codes(run, 'blocking'), [])
+
+    def test_overtime_without_rate(self):
+        """D-107 : heures sup. sans tranche dans la convention effective → bloquant avant le calcul."""
+        employee = self._complete('Heures sans taux')
+        self._extra_hours(employee, 'GA_HS_J', datetime(2026, 9, 5, 8, 0), datetime(2026, 9, 5, 12, 0))
+        run = self._run(employee)
+        run.action_l10n_ga_check()
+        self.assertEqual(self._codes(run, 'blocking'), ['GA_OVERTIME_NO_RATE'])
+        issue = run.l10n_ga_issue_ids
+        self.assertEqual((issue.res_model, issue.res_id), ('l10n_ga.collective.agreement', self.agreement.id))
+        self.agreement.overtime_rate_ids = [(0, 0, {'period': 'day', 'hours_from': 0, 'hours_to': 0, 'rate': 0.1})]
+        run.action_l10n_ga_check()
+        self.assertEqual(self._codes(run, 'blocking'), [])
 
     def test_allowance_forced_without_reason(self):
         employee = self._complete('Indemnité forcée')

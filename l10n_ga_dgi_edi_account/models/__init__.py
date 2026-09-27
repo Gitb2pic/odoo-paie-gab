@@ -6,6 +6,7 @@ from . import (
     account_payment_withholding_line,
     account_tax,
     generators,
+    l10n_ga_declaration,
     l10n_ga_declaration_detail,
     res_partner,
 )

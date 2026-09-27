@@ -14,10 +14,34 @@
         sequence="10"/>
     <menuitem
         id="menu_l10n_ga_declaration"
-        name="Déclarations"
+        name="Toutes les déclarations"
         action="l10n_ga_declaration_action"
         parent="menu_l10n_ga_declaration_root"
         sequence="20"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_id10"
+        name="ID10 - Retenues mensuelles"
+        action="l10n_ga_declaration_action_id10"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="21"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_id28"
+        name="ID28 - Formation professionnelle"
+        action="l10n_ga_declaration_action_id28"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="22"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_dts"
+        name="DTS - Cotisations trimestrielles"
+        action="l10n_ga_declaration_action_dts"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="23"/>
+    <menuitem
+        id="menu_l10n_ga_declaration_das"
+        name="DAS - ID19 à ID22"
+        action="l10n_ga_declaration_action_das"
+        parent="menu_l10n_ga_declaration_root"
+        sequence="24"/>
     <menuitem
         id="menu_l10n_ga_declaration_payment"
         name="Quittances"

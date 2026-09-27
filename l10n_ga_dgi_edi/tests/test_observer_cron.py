@@ -20,7 +20,12 @@ class TestObserverCron(GaDeclarationCase):
 
     def _declarations(self, period=SEPT):
         return self.env['l10n_ga.declaration'].search(
-            [('type_id', '=', self.auto_type.id), ('date_from', '=', period[0]), ('date_to', '=', period[1])]
+            [
+                ('company_id', '=', self.company.id),  # base mise à jour : d'autres sociétés peuvent exister
+                ('type_id', '=', self.auto_type.id),
+                ('date_from', '=', period[0]),
+                ('date_to', '=', period[1]),
+            ]
         )
 
     def test_payslip_validation_prepares_declaration(self):

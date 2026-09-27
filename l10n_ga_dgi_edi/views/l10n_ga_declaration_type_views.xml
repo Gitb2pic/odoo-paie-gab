@@ -8,6 +8,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="code"/>
                 <field name="name"/>
+                <field name="scope"/>
                 <field name="authority"/>
                 <field name="periodicity"/>
                 <field name="generator_key"/>
@@ -30,6 +31,7 @@
                     </div>
                     <group>
                         <group string="Imprimé">
+                            <field name="scope"/>
                             <field name="authority"/>
                             <field name="periodicity"/>
                             <field name="period_basis"/>

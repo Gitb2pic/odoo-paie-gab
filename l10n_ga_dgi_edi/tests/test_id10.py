@@ -44,7 +44,7 @@ class TestId10(GaDeclarationCase):
     def test_type_data(self):
         self.assertEqual((self.id10.periodicity, self.id10.period_basis), ('monthly', 'payment_date'))
         self.assertEqual(self.id10._due_date(date(2026, 9, 30)), date(2026, 10, 15))
-        self.assertEqual(self.id10.report_id, self.env.ref('l10n_ga_dgi_edi.action_report_id10'))
+        self.assertEqual(self.id10.report_id, self.env.ref('l10n_ga_dgi_edi.action_report_form_portrait'))  # ADR-20
         self.assertTrue(self.id10._template_bytes().startswith(b'PK'))
         cells = dict(self.id10.box_ids.mapped(lambda b: (b.code, b.cell_ref)))
         self.assertEqual((cells['L40'], cells['L43'], cells['R56'], cells['HDR_YEAR']), ('P40', 'P43', 'R56', 'K15'))

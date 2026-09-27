@@ -20,7 +20,7 @@
         <field name="auto_create" eval="True"/>
         <field name="prepare_on_payslip" eval="False"/>
         <field name="generator_key">das</field>
-        <field name="report_id" ref="action_report_das"/>
+        <field name="report_id" ref="action_report_form_landscape"/>
     </record>
     <record id="box_das_hdr_name" model="l10n_ga.declaration.box">
         <field name="type_id" ref="declaration_type_das"/>
