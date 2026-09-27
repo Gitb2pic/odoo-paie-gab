@@ -3,7 +3,8 @@ noupdate : non mises à jour par le chargement du module), puis chaque société
 défaut la reçoit. Les salariés existants ne sont pas modifiés : action « Appliquer la convention et le grade
 par défaut (Gabon) » sur la liste des salariés."""
 
-from odoo import SUPERUSER_ID, api
+from odoo import api
+from odoo.api import SUPERUSER_ID
 
 OLD_CODE = 'EXEMPLE'
 

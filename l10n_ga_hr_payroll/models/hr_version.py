@@ -141,9 +141,13 @@ class HrVersion(models.Model):
 
     def _l10n_ga_fill_grade(self):
         """Grade vide : le plus élevé de la grille compatible avec le salaire (D-111), modifiable ensuite."""
+        today = fields.Date.context_today(self)
         for version in self.filtered(lambda v: v.l10n_ga_agreement_id and v.wage):
+            # grille en vigueur aujourd'hui (une version ancienne précède souvent la grille), minimum RG18
+            # vérifié à la date de la version
+            start = version.date_version or today
             grade = version.l10n_ga_agreement_id._l10n_ga_grade_for_wage(
-                version.wage, version.date_version or fields.Date.context_today(version)
+                version.wage, max(start, today), check_date=start
             )
             if grade:
                 version.l10n_ga_grade_id = grade

@@ -140,6 +140,20 @@ class TestAgreement(GaPayrollCase):
         self.assertEqual(agreement._l10n_ga_grade_for_wage(300_000, date(2025, 6, 30)), c1)
         self.assertEqual(agreement._l10n_ga_grade_for_wage(300_000, date(2026, 6, 30)).category, 'AM1')
         self.assertFalse(agreement._l10n_ga_grade_for_wage(50_000, date(2026, 6, 30)))
+        # la valeur à la date de la version doit aussi être atteinte (RG18)
+        self.assertEqual(
+            agreement._l10n_ga_grade_for_wage(360_000, date(2026, 6, 30), check_date=date(2025, 6, 30)).category, 'C1'
+        )
+        self.assertEqual(
+            agreement._l10n_ga_grade_for_wage(300_000, date(2026, 6, 30), check_date=date(2011, 1, 1)).category,
+            'AM1',
+        )
+
+    def test_version_before_grid_gets_current_grade(self):
+        """Version antérieure à la grille (2012) : grade de la grille en vigueur aujourd'hui."""
+        self.company.l10n_ga_default_agreement_id = self.default_agreement
+        version = self._employee('Ancien 2005', 600_000, start=date(2005, 3, 1)).version_id
+        self.assertEqual(version.l10n_ga_grade_id.category, 'C4')
 
     def test_apply_default_agreement_to_existing_employees(self):
         employee = self._employee('Ancien sans convention', 200_000, start=date(2020, 1, 1))

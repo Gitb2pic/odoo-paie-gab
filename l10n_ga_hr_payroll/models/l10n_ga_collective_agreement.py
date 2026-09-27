@@ -83,16 +83,27 @@ class L10nGaCollectiveAgreement(models.Model):
             grade.copy({'agreement_id': agreement.id})
         return agreement
 
-    def _l10n_ga_grade_for_wage(self, wage, on_date):
-        """Grade suggéré : le plus élevé de la grille en vigueur à ``on_date`` dont le minimum ≤ ``wage``.
-
-        Aucun grade si le salaire est sous le plus bas minimum (le contrôle RG18 le refuserait).
-        """
+    def _l10n_ga_grid_at(self, on_date):
+        """``{(catégorie, échelon): grade}`` : valeur de chaque grade en vigueur à ``on_date``."""
         self.ensure_one()
         current = {}
         for grade in self.grade_ids.filtered(lambda g: g.date_from <= on_date).sorted('date_from'):
-            current[grade.category, grade.echelon or ''] = grade  # dernière valeur en vigueur
-        eligible = [grade for grade in current.values() if grade.minimum_wage <= wage]
+            current[grade.category, grade.echelon or ''] = grade
+        return current
+
+    def _l10n_ga_grade_for_wage(self, wage, on_date, check_date=None):
+        """Grade suggéré : le plus élevé de la grille en vigueur à ``on_date`` dont le minimum ≤ ``wage``.
+
+        ``check_date`` (date de la version) : le minimum en vigueur à cette date doit aussi être atteint
+        (contrôle RG18). Aucun grade si le salaire est sous le plus bas minimum.
+        """
+        self.ensure_one()
+        at_check = self._l10n_ga_grid_at(check_date) if check_date else {}
+        eligible = [
+            grade
+            for key, grade in self._l10n_ga_grid_at(on_date).items()
+            if grade.minimum_wage <= wage and (key not in at_check or at_check[key].minimum_wage <= wage)
+        ]
         return max(eligible, key=lambda g: g.minimum_wage) if eligible else self.env['l10n_ga.agreement.grade']
 
     def _overtime_tranches(self, period):
