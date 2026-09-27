@@ -1,6 +1,6 @@
 {
     'name': 'Gabon - Déclarations DGI de la comptabilité (V1.0)',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
     'summary': 'Retenues 9,5 % et 20 % au paiement, ID18, ID27, annexes DAS ID23, ID24, ID26',
     'countries': ['ga'],
     'category': 'Accounting/Localizations',

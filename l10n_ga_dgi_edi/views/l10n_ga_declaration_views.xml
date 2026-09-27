@@ -54,6 +54,9 @@
                             invisible="state in ('draft', 'cancel')"/>
                     <button name="action_print_workbook" type="object" string="Classeur (PDF)"
                             invisible="state in ('draft', 'cancel')"/>
+                    <field name="has_official_workbooks" invisible="1"/>
+                    <button name="action_download_official_workbooks" type="object" string="Classeurs DGI (.xlsm)"
+                            invisible="not has_official_workbooks or state in ('draft', 'cancel')"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,computed,validated,filed,paid"/>
                 </header>
                 <sheet>

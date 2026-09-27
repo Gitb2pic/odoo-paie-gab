@@ -13,7 +13,9 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import models
 from odoo.tools import float_compare, float_round
+from odoo.tools.misc import file_open
 
+from ...renderers.xlsm_saisie import SaisieWorkbook
 from ...renderers.xlsx_builder import PAPER_A3, SHEET_NAME_MAX, XlsxDeclarationBuilder
 from ..declaration_generator import BLOCKING, WARNING
 
@@ -29,6 +31,50 @@ TOTAL_BOX, TAXES_BOX, EXEMPT_BOX = 'C6', 'C11', 'NT_TOTAL'
 PAYMENT_TYPES = ('ID10', 'ID28')
 MARITAL = {'married': '1', 'single': '2', 'cohabitant': '2', 'widower': '3', 'divorced': '4'}
 GENDER = {'male': '1', 'female': '2'}
+
+# --- classeurs officiels « edi-annexe » de la DGI (D-87, FIX 05) ---------------------------------------
+# Mise en page des classeurs (feuille SAISIE) et libellés exacts de leurs listes (feuille Referentiel) :
+# des données de présentation, pas des règles fiscales ; vérifiées sur les gabarits par les tests.
+OFFICIAL_TEMPLATES = {
+    # code : (gabarit, première ligne de données, lignes couvertes par les formules du classeur)
+    'ID19': ('l10n_ga_dgi_edi/static/templates/edi-annexe-ID19.xlsm', 18, 1997),
+    'ID21': ('l10n_ga_dgi_edi/static/templates/edi-annexe-ID21.xlsm', 18, 3001),
+}
+HEADER_CELLS = ('C9', 'C11', 'C13')  # NIF du déclarant, exercice, période
+ANNUAL = 'Annuel'
+# codes DAS de la charge utile → libellés des listes du classeur ID21
+ID21_NATIONALITY = {'1': 'Gabonais', '2': 'CEMAC', '3': 'Autres africains', '4': 'Non africains'}
+ID21_GENDER = {'1': 'Masculin', '2': 'Féminin'}
+ID21_MARITAL = {'1': 'Marié', '2': 'Celibataire', '3': 'Veuf', '4': 'Divorcé'}
+# ID19 : le régime matrimonial n'est pas connu d'Odoo → communauté de biens par défaut (D-113)
+ID19_MARITAL = {
+    '1': 'Marié(e) en régime de communauté de biens',
+    '2': 'Célibataire',
+    '3': 'Veuf(ve)',
+    '4': 'Divorcé(e)',
+}
+ID19_MARITAL_UNKNOWN = 'Non précisé'
+ID19_NATURES = {
+    'presence': 'Présence - Montant versé (après déduction des retenues pour retraite et sécurité sociale '
+    'et avant déduction des retenues pour logement, nourriture etc)',
+    'leave': 'Congés - Montant versé (après déduction des retenues pour retraite et sécurité sociale '
+    'et avant déduction des retenues pour logement, nourriture etc)',
+    'housing': 'Avantage en nature : logement',
+    'utilities': 'Avantage en nature :  eau, electricité',
+    'domestic': 'Avantage en nature :  domesticité',
+    'food': 'Avantage en nature :  nourriture',
+    'tcs': "Taxe complémentaire à déduire pour l'année",
+    'irpp': "IRPP retenu pour l'année",
+    'exempt': "Montant des indemnités (non imposable)  lors qu'elle n'est pas reversée en numéraire",
+}
+# avantages en nature : clé de la charge utile, rubriques de paie, paramètre du taux d'évaluation (art. 93)
+AIK_KINDS = (
+    ('housing', 'aik_housing', ('GA_AN_LOGT',), 'l10n_ga_aik_housing_rate'),
+    ('utilities', 'aik_utilities', ('GA_AN_EAU',), 'l10n_ga_aik_utilities_rate'),
+    ('domestic', 'aik_domestic', ('GA_AN_DOM',), 'l10n_ga_aik_domestic_rate'),
+)
+FOOD_RATE = 'l10n_ga_aik_food_rate'
+BENEFIT_BOX, FOOD_BOX = 'C2', 'C3'
 
 
 class L10nGaDeclarationGeneratorDas(models.AbstractModel):
@@ -172,7 +218,23 @@ class L10nGaDeclarationGeneratorDas(models.AbstractModel):
             'marital': MARITAL.get(last.l10n_ga_marital_used or version.marital or '', ''),
             'children': last.l10n_ga_children_used if last else version.children,
             'period': f'{start:%d/%m} – {end:%d/%m}',
+            'date_start': str(start),
+            'date_end': str(end),
+            'phone': employee.private_phone or '',
+            'street': version.private_street or '',
+            'city': version.private_city or '',
         }
+
+    @staticmethod
+    def _benefits_by_kind(slips, total):
+        """Avantages logement / eau-électricité / domesticité par nature (ID19) ; le reste de la colonne (2)
+        (cumuls d'ouverture, sans ventilation) est rattaché au logement."""
+        split = {
+            key: float_round(sum(slips.line_ids.filtered(lambda line, c=codes: line.code in c).mapped('total')), 0)
+            for _kind, key, codes, _rate in AIK_KINDS
+        }
+        split[AIK_KINDS[0][1]] += (total or 0.0) - sum(split.values())
+        return split
 
     def _details(self, declaration, facts):
         id19 = self._parameter(declaration, 'l10n_ga_das_id19_threshold') or 0.0
@@ -183,9 +245,11 @@ class L10nGaDeclarationGeneratorDas(models.AbstractModel):
             months = self._months_paid(declaration, facts, employee) or 1
             base = values.get(TOTAL_BOX, 0.0) + (values.get(EXEMPT_BOX, 0.0) if with_exempt else 0.0)
             average = float_round(base / months, precision_digits=0)
+            slips = facts['slips'].filtered(lambda s, e=employee: s.employee_id == e)
             payload = {
                 **self._identity(declaration, facts, employee),
                 **values,
+                **self._benefits_by_kind(slips, values.get(BENEFIT_BOX)),
                 'months': months,
                 'average': average,
                 'tranche': 'A' if float_compare(average, id20, precision_digits=0) >= 0 else 'B',
@@ -237,6 +301,45 @@ class L10nGaDeclarationGeneratorDas(models.AbstractModel):
         codes = {box.code for box in declaration.type_id.box_ids}
         return {code: value for code, value in values.items() if code in codes}
 
+    def _has_official_workbooks(self, declaration):
+        return True
+
+    def _official_workbooks(self, declaration):
+        books = OfficialWorkbooks(declaration)
+        return [('ID19', books.build('ID19', books.id19_rows())), ('ID21', books.build('ID21', books.id21_rows()))]
+
+    def _capacity_issues(self, declaration):
+        """Plus de lignes que n'en couvrent les formules du classeur officiel : bouton « Ajouter des lignes »."""
+        books = OfficialWorkbooks(declaration)
+        issues = []
+        for code, rows in (('ID19', books.id19_rows()), ('ID21', books.id21_rows())):
+            capacity = OFFICIAL_TEMPLATES[code][2]
+            if len(rows) > capacity:
+                message = self.env._(
+                    '%(code)s : %(count)s lignes pour %(capacity)s préparées dans le classeur officiel ; utilisez '
+                    'son bouton « Ajouter des lignes » avant de générer le XML.',
+                    code=code,
+                    count=len(rows),
+                    capacity=capacity,
+                )
+                issues.append((WARNING, 'GA_DAS_XLSM_CAPACITY', message, declaration))
+        return issues
+
+    def _id19_address_issues(self, details):
+        """ID19 : BP et ville du salarié obligatoires dans le classeur officiel (avertissement)."""
+        issues = []
+        for detail in details:
+            payload = detail.get('payload') or {}
+            if (
+                detail.get('employee_id')
+                and payload.get('id19')
+                and not (payload.get('street') and payload.get('city'))
+            ):
+                employee = self.env['hr.employee'].browse(detail['employee_id'])
+                message = self.env._('%(employee)s : BP ou ville personnelle absente (ID19).', employee=employee.name)
+                issues.append((WARNING, 'GA_DAS_ID19_ADDRESS', message, employee))
+        return issues
+
     def _detail_columns(self, declaration):
         env = self.env
         identity = [
@@ -265,6 +368,8 @@ class L10nGaDeclarationGeneratorDas(models.AbstractModel):
             + self._reconciliation_issues(declaration, values, facts)
             + self._missing_id10_issues(declaration, facts)
             + self._employee_issues(declaration, details)
+            + self._id19_address_issues(details)
+            + self._capacity_issues(declaration)
             + self._payment_issues(declaration, values)
             + self._opening_issues(declaration, facts)
         )
@@ -586,3 +691,88 @@ class DasWorkbook:
         self._id22(pages, amount_keys)
         self._id19()
         return self.builder.build()
+
+
+class OfficialWorkbooks:
+    """ID19 et ID21 : classeurs officiels remplis à partir des détails figés de la DAS (D-87)."""
+
+    def __init__(self, declaration):
+        self.declaration = declaration
+        self.rows = declaration._l10n_ga_details(employees=True)
+        self.header_values = (
+            declaration.company_id.l10n_ga_nif or '',
+            declaration.date_to.year,
+            ANNUAL,
+        )
+
+    @staticmethod
+    def _date(value):
+        return date.fromisoformat(value) if value else None
+
+    def _rate(self, code):
+        return self.declaration._l10n_ga_parameter(code) or 0.0
+
+    def id21_rows(self):
+        return [
+            {
+                'B': row.get('nif'),
+                'C': row.get('name'),
+                'D': row.get('job_code'),
+                'E': row.get('level_code'),
+                'F': ID21_NATIONALITY.get(str(row.get('nationality') or '')),
+                'G': row.get('age') if row.get('age') != '' else None,
+                'H': ID21_GENDER.get(str(row.get('gender') or '')),
+                'I': ID21_MARITAL.get(str(row.get('marital') or '')),
+                'J': row.get('children') or 0,
+                'K': self._date(row.get('date_start')),
+                'L': self._date(row.get('date_end')),
+                'M': row.get('C1') or 0,
+                'N': row.get('C2') or 0,
+                'O': row.get('C3') or 0,
+                'P': row.get('C5') or 0,
+                'Q': row.get('C4') or 0,
+                'S': row.get('C7') or 0,
+                'T': row.get('C8') or 0,
+                'U': row.get('C10') or 0,
+                'W': row.get('NT_TOTAL') or 0,
+            }
+            for row in self.rows
+        ]
+
+    def _id19_amounts(self, row):
+        """``[(nature, montant de la colonne V)]`` d'un salarié : pour un avantage en nature, V est la base
+        dont le classeur tire l'avantage (colonne AG = V × taux) ; ailleurs V est le montant (taux 100 %)."""
+        amounts = [('presence', (row.get('C1') or 0) + (row.get('C4') or 0)), ('leave', row.get('C5') or 0)]
+        benefits = [(kind, row.get(key) or 0, rate) for kind, key, _codes, rate in AIK_KINDS]
+        benefits.append(('food', row.get(FOOD_BOX) or 0, FOOD_RATE))
+        for kind, amount, rate_code in benefits:
+            rate = self._rate(rate_code)
+            if amount and rate:
+                amounts.append((kind, float_round(amount / rate, precision_digits=0)))
+        amounts += [('tcs', row.get('C7') or 0), ('irpp', row.get('C8') or 0), ('exempt', row.get('NT_TOTAL') or 0)]
+        return [(kind, value) for kind, value in amounts if value or kind == 'presence']
+
+    def id19_rows(self):
+        lines = []
+        for row in (r for r in self.rows if r.get('id19')):
+            identity = {
+                'B': row.get('nif'),
+                'C': row.get('name'),
+                'D': row.get('job'),
+                'E': row.get('phone'),
+                'F': row.get('street'),
+                'G': row.get('city'),
+                'H': ID19_MARITAL.get(str(row.get('marital') or ''), ID19_MARITAL_UNKNOWN),
+                'I': row.get('children') or 0,
+                'J': self._date(row.get('date_start')),
+                'K': self._date(row.get('date_end')),
+            }
+            lines += [{**identity, 'T': ID19_NATURES[kind], 'V': value} for kind, value in self._id19_amounts(row)]
+        return lines
+
+    def build(self, code, rows):
+        path, first_row, _capacity = OFFICIAL_TEMPLATES[code]
+        with file_open(path, 'rb') as template:
+            workbook = SaisieWorkbook(template.read())
+        header = dict(zip(HEADER_CELLS, self.header_values, strict=True))
+        return workbook.fill(header, first_row, rows).build()

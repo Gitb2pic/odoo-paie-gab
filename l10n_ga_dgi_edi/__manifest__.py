@@ -1,6 +1,6 @@
 {
     'name': 'Gabon - Déclarations DGI et sociales',
-    'version': '19.0.2.1.0',
+    'version': '19.0.2.2.0',
     'summary': 'Déclarations de la paie : ID10, ID28, DTS, DAS (ID19 à ID22), quittances ; instantané figé, Excel, PDF',
     'countries': ['ga'],
     'category': 'Human Resources/Payroll',

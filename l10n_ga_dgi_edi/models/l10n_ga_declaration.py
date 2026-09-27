@@ -1,6 +1,8 @@
 import base64
 import hashlib
+import io
 import json
+import zipfile
 from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
@@ -28,6 +30,7 @@ STATES = [
 # Champs de l'instantané : non modifiables une fois la déclaration validée (RG14).
 FROZEN_FIELDS = {'company_id', 'type_id', 'date_from', 'date_to', 'rectified_id', 'sha256', 'amount_total'}
 ENGINE = 'l10n_ga_declaration_engine'
+XLSM_MIMETYPE = 'application/vnd.ms-excel.sheet.macroEnabled.12'
 DECLARANT_GROUP = 'l10n_ga_dgi_edi.group_l10n_ga_declarant'
 ACTIVITY_DUE = 'l10n_ga_dgi_edi.mail_activity_type_declaration_due'
 ACTIVITY_FIX = 'l10n_ga_dgi_edi.mail_activity_type_declaration_fix'
@@ -563,14 +566,51 @@ class L10nGaDeclaration(models.Model):
             ' ', '_'
         ).replace('/', '-')
 
+    def _l10n_ga_official_workbooks(self):
+        """``[(nom de fichier, contenu .xlsm)]`` : classeurs officiels de la DGI remplis (D-87)."""
+        self.ensure_one()
+        nif = (self.company_id.l10n_ga_nif or 'NIF').replace(' ', '').replace('/', '-')
+        return [
+            (f'{nif}-{code}-{self.date_to:%Y}.xlsm', content)
+            for code, content in self._generator()._official_workbooks(self)
+        ]
+
+    def action_download_official_workbooks(self):
+        """Classeurs officiels ``.xlsm`` à déposer sur e-t@x : celui de l'instantané s'il existe, sinon calculé
+        sur les valeurs stockées ; plusieurs classeurs sont regroupés dans une archive ZIP."""
+        self.ensure_one()
+        frozen = self.snapshot_attachment_ids.filtered(lambda a: a.name.endswith('.xlsm'))
+        files = [(a.name, base64.b64decode(a.datas)) for a in frozen] or self._l10n_ga_official_workbooks()
+        if not files:
+            raise UserError(
+                self.env._('Aucun classeur officiel de la DGI pour l’imprimé %(type)s.', type=self.type_id.code)
+            )
+        if len(files) == 1:
+            name, content = files[0]
+            mimetype = XLSM_MIMETYPE
+        else:
+            buffer = io.BytesIO()
+            with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as archive:
+                for filename, data in files:
+                    archive.writestr(filename, data)
+            name, content, mimetype = f'{self._file_basename()}-classeurs-DGI.zip', buffer.getvalue(), 'application/zip'
+        attachment = (
+            self.env['ir.attachment']
+            .sudo()
+            .create({'name': name, 'datas': base64.b64encode(content), 'mimetype': mimetype, 'res_model': False})
+        )
+        return {'type': 'ir.actions.act_url', 'url': f'/web/content/{attachment.id}?download=true', 'target': 'self'}
+
     def _render_attachments(self):
         content, extension = self._render_xlsx()
         mimetype = (
-            'application/vnd.ms-excel.sheet.macroEnabled.12'
+            XLSM_MIMETYPE
             if extension == 'xlsm'
             else 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
         attachments = self._attachment(f'{self._file_basename()}.{extension}', content, mimetype)
+        for filename, workbook in self._l10n_ga_official_workbooks():
+            attachments |= self._attachment(filename, workbook, XLSM_MIMETYPE)
         pdf, report_type = self._render_pdf()
         if report_type == 'pdf':
             attachments |= self._attachment(f'{self._file_basename()}.pdf', pdf, 'application/pdf')

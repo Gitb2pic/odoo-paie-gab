@@ -222,7 +222,8 @@ class TestDas(GaDeclarationCase):
         self.assertEqual(len([n for n in book.sheetnames if n.startswith('ID19')]), 2)
         texts = [str(c.value) for row in book['ID22'].iter_rows() for c in row if c.value is not None]
         self.assertIn('Récapitulatif des feuilles de l’ID21', texts)
-        html = base64.b64decode((declaration.snapshot_attachment_ids - xlsx).datas).decode()
+        report = declaration.snapshot_attachment_ids.filtered(lambda a: a.name.endswith(('.html', '.pdf')))
+        html = base64.b64decode(report.datas).decode()
         # ADR-20 : PDF figé = imprimés au format de la V1 (ID20, ID22, ID21 puis un ID19 par salarié)
         for title in (
             'ÉTAT DE LA MASSE SALARIALE',

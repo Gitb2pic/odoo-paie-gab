@@ -48,6 +48,12 @@ class FakeGenerator:
     def _applies(self, company):
         return True
 
+    def _has_official_workbooks(self, declaration):
+        return False
+
+    def _official_workbooks(self, declaration):
+        return []
+
     def _render_workbook(self, declaration):
         return None
 

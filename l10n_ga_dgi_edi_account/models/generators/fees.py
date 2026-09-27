@@ -9,14 +9,18 @@ gabarits .xlsm de la V1 sont absents (D-87, D-99).
 
 from odoo import fields, models
 from odoo.addons.l10n_ga_dgi_edi.models.declaration_generator import BLOCKING, WARNING
+from odoo.addons.l10n_ga_dgi_edi.renderers.xlsm_saisie import SaisieWorkbook
 from odoo.addons.l10n_ga_dgi_edi.renderers.xlsx_builder import XlsxDeclarationBuilder
 from odoo.tools import float_compare, float_round
+from odoo.tools.misc import file_open
 
 from ..res_partner import FEE_CATEGORIES
 from .payments import settled_ht_by_partner, withholding_by_partner
 from .withholding import WITHHELD
 
 PAID = 'TOTAL_PAID'
+HEADER_CELLS = ('C9', 'C11', 'C13')  # NIF du déclarant, exercice, période des classeurs officiels (D-87)
+ANNUAL = 'Annuel'
 
 
 class L10nGaDeclarationGeneratorFees(models.AbstractModel):
@@ -29,8 +33,42 @@ class L10nGaDeclarationGeneratorFees(models.AbstractModel):
     _sections = ()  # [(code de section, case des sommes versées, libellé)]
     _nif_required = True
 
+    # classeur officiel de la DGI : (gabarit, première ligne, lignes couvertes par ses formules) ; None = aucun
+    _official_template = None
+
     def _requires_cnss_number(self, declaration):
         return False
+
+    def _official_row(self, payload):
+        """Colonnes de la feuille SAISIE d'un bénéficiaire : ``{lettre: valeur}``."""
+        raise NotImplementedError  # interface abstraite : annexes à classeur officiel
+
+    def _has_official_workbooks(self, declaration):
+        return bool(self._official_template)
+
+    def _official_workbooks(self, declaration):
+        if not self._official_template:
+            return []
+        path, first_row, _capacity = self._official_template
+        rows = [self._official_row(detail.payload or {}) for detail in declaration.detail_ids]
+        header = dict(
+            zip(HEADER_CELLS, (declaration.company_id.l10n_ga_nif or '', declaration.date_to.year, ANNUAL), strict=True)
+        )
+        with file_open(path, 'rb') as template:
+            content = SaisieWorkbook(template.read()).fill(header, first_row, rows).build()
+        return [(declaration.type_id.code, content)]
+
+    def _capacity_issues(self, declaration, details):
+        if not self._official_template or len(details) <= self._official_template[2]:
+            return []
+        message = self.env._(
+            '%(code)s : %(count)s bénéficiaires pour %(capacity)s lignes préparées dans le classeur officiel ; '
+            'utilisez son bouton « Ajouter des lignes » avant de générer le XML.',
+            code=declaration.type_id.code,
+            count=len(details),
+            capacity=self._official_template[2],
+        )
+        return [(WARNING, 'GA_RAS_XLSM_CAPACITY', message, declaration)]
 
     def _partner_domain(self, declaration):
         raise NotImplementedError  # interface abstraite : bénéficiaires de l'annexe
@@ -116,7 +154,8 @@ class L10nGaDeclarationGeneratorFees(models.AbstractModel):
                     '%(partner)s : %(paid)s versés sans retenue.', partner=partner.name, paid=payload['paid']
                 )
                 issues.append((WARNING, 'GA_RAS_MISSING', message, partner))
-        return issues + self._monthly_issues(declaration, facts)
+        details = self._details(declaration, facts)
+        return issues + self._monthly_issues(declaration, facts) + self._capacity_issues(declaration, details)
 
     def _monthly_issues(self, declaration, facts):
         """Retenues de l'annexe = Σ des déclarations mensuelles de l'année (ID26 ↔ ID18, ID24 ↔ ID27)."""

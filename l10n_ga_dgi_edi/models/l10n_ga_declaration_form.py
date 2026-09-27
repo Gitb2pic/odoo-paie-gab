@@ -66,6 +66,7 @@ GENERIC_WORKBOOK_REPORT = 'l10n_ga_dgi_edi.action_report_declaration'
 class L10nGaDeclaration(models.Model):
     _inherit = 'l10n_ga.declaration'
 
+    has_official_workbooks = fields.Boolean(string='Classeurs officiels DGI', compute='_compute_has_official_workbooks')
     amount_total_words = fields.Char(string='Total en lettres', compute='_compute_amount_total_words')
     id10_irpp = fields.Monetary(string='IRPP', compute='_compute_id10_values')
     id10_tcs = fields.Monetary(string='TCS', compute='_compute_id10_values')
@@ -99,6 +100,15 @@ class L10nGaDeclaration(models.Model):
                 decl[field_name] = values.get(code) or False
             decl.id10_cfp_rate = (values.get(ID10_RATE_BOX) or 0.0) * PERCENT
             decl.id10_cfp_blank = ID10_RATE_BOX in values and values[ID10_RATE_BOX] is None
+
+    @api.depends('type_id')
+    def _compute_has_official_workbooks(self):
+        registry = self.env['l10n_ga.declaration.generator']
+        for decl in self:
+            key = decl.type_id.generator_key
+            decl.has_official_workbooks = bool(
+                key and registry._has(key) and decl._generator()._has_official_workbooks(decl)
+            )
 
     @api.depends('amount_total', 'currency_id')
     def _compute_amount_total_words(self):

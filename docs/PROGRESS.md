@@ -1,6 +1,6 @@
 # Avancement — Paie Gabon & déclarations DGI V2
 
-Mis à jour le 27/09/2026 (D-112).
+Mis à jour le 27/09/2026 (FIX 05).
 
 ## Étapes
 
@@ -29,6 +29,7 @@ Mis à jour le 27/09/2026 (D-112).
 | C-4 | `l10n_ga_dgi_edi_account` | complétude du module | **terminé** | 96 % (23/24 ; 8 manques corrigés ; 22 tests du module, 322 avec les 4 modules ; `.xlsm` V1 à brancher) | `docs/completude/l10n_ga_dgi_edi_account_C-4.md` |
 | FIX 03 | paie + déclarations | écarts V1 (D-105 à D-110), convention par défaut + contrôles GA_NO_AGREEMENT / GA_OVERTIME_NO_RATE, menus Comptabilité → Analyse, vue ID10 et imprimés au format V1 (ADR-20) | **terminé** | 100 % (16/16 ; 360 tests des 4 modules, mise à jour depuis la version démo OK) | `docs/completude/fix_03_ecarts_v1_menus_imprimes.md` |
 | FIX 04 | `l10n_ga_hr_payroll` | convention « Tronc commun » et grade par défaut (D-111), action pour les salariés existants, migration 19.0.1.8.0 | **terminé** | 100 % (199 tests paie ; 367 tests des 4 modules sur base mise à jour depuis la version démo) | `docs/plans/fix_04_convention_par_defaut.md` |
+| FIX 05 | `l10n_ga_dgi_edi` (+ compta) | classeurs officiels `.xlsm` ID19, ID21, ID23, ID26 (D-87 soldé), écrivain XML sans perte (macros, boutons, listes) | **terminé** | 100 % (115 tests déclarations, 34 compta) | `docs/plans/fix_05_classeurs_xlsm.md` |
 | 6 | `l10n_ga_hr_payroll_migration` | reprise `hr_payroll_gb` | **abandonnée** (D-112 : aucune donnée de paie réelle) | — | — |
 | C-5 | `l10n_ga_hr_payroll_migration` | complétude du module | **sans objet** (D-112) | — | — |
 
@@ -47,4 +48,4 @@ Voir `docs/decisions/ouvertes.md`. D-04 abandonné par Alex (24/09/2026). D-05 e
 
 ## Prochaine étape
 
-Reste : branchement des gabarits `.xlsm` de la V1 (ID19, ID21, ID23, ID26 ; D-87, sources dans `~/supergel-compta`), puis complétude finale du dépôt (`prompts/99_completude.md`, 4 modules). Reprise `hr_payroll_gb` (6) et migration V1 (4.5) abandonnées (D-112). Démo : `make update-demo MODULE=l10n_ga_hr_payroll`.
+Reste : complétude finale du dépôt (`prompts/99_completude.md`, 4 modules). Reprise `hr_payroll_gb` (6) et migration V1 (4.5) abandonnées (D-112). Démo : `make update-demo MODULE=l10n_ga_hr_payroll`.
